@@ -1,0 +1,11 @@
+{
+  "artifacts": [
+    {
+      "assetType": "Material",
+      "sourcePath": ".internal/wire-gizmo.mat",
+      "uuid": "eaf3de94b91141828e73159eb14fe63f"
+    }
+  ],
+  "settings": {},
+  "sourcePath": ".internal/wire-gizmo.mat"
+}

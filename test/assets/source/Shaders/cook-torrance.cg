@@ -1,0 +1,109 @@
+#pragma vertex VSMain
+#pragma fragment PSMain
+
+struct appdata
+{
+	float3 pos : POSITION;
+	float3 nor : NORMAL;
+	float2 tex : TEXCOORD0;
+};
+
+struct v2p
+{
+	float4 pos : SV_Position;
+	float3 nor : NORMAL;
+	float2 tex : TEXCOORD0;
+	float3 lightDir : TEXCOORD1;
+	float3 viewDir : TEXCOORD2;
+};
+
+uniform float uRMS;
+uniform float uShininess;
+uniform float4 uSpecColor;
+uniform float4 uAmbientColor;
+uniform float4 uLightColor;
+uniform float4 uLightPos;
+uniform float4 uCameraPos;
+uniform float4x4 uMtxModel;
+uniform float4x4 uMtxMVP;
+uniform float4x4 uMtxNormal;
+uniform sampler2D uDiffuseTex;
+uniform float4 uDiffuseTex_ST;
+uniform float4 uDiffuseColor;
+
+v2p VSMain(appdata input)
+{
+	float4 worldPos = mul(float4(input.pos, 1.0), uMtxModel);
+
+	v2p output;
+	output.pos = mul(float4(input.pos, 1.0), uMtxMVP);
+	output.nor = mul(float4(input.nor, 0.0), uMtxNormal).rgb;
+	output.tex = input.tex * uDiffuseTex_ST.xy + uDiffuseTex_ST.zw;
+	output.lightDir = normalize(uLightPos).xyz;
+	output.viewDir = normalize(uCameraPos - worldPos).xyz;
+	return output;
+}
+
+float Roughness(float nh, float m)
+{
+	float PI = 3.1415926535897932384626433;
+	float nh_nh = nh * nh;
+	float mm_nh_nh = m * m * nh_nh;
+	float simp = (1 - nh_nh) / mm_nh_nh; // should actully be (nh_nh - 1)
+	return exp(-simp) / (PI * mm_nh_nh * nh_nh);
+}
+
+float Fresnel_Schlick(float reflectance, float vh) {
+    return reflectance + (1.0 - reflectance) * pow(1 - vh, 5);
+}
+
+float4 CookTorrance(
+    float3 albedo, float alpha, float3 normal, float specular,
+    float gloss, float4 lightCol, float4 specCol, float RMS,
+    float3 lightDir, float3 viewDir, float atten)
+{
+	float3 h = normalize(lightDir + viewDir);
+	float nh = dot(normal, h);
+	float nv = dot(normal, viewDir);
+	float nl = dot(normal, lightDir);
+	float vh = dot(viewDir, h);
+    
+    float nh2 = 2 * nh;
+    float geomAtten = saturate(min((nh2 * nv) / vh, (nh2 * nl) / vh));
+    
+	float diff = saturate(nl);
+    float fresnel = Fresnel_Schlick(1 - specular, vh);
+    float roughness = Roughness(nh, RMS);
+	float spec = saturate(roughness * fresnel * gloss / nv);
+    
+	float4 lightColAtt = lightCol * geomAtten * atten;
+	float4 finalSpecCol = specCol * spec;
+    
+    float4 c;
+	c.rgb = (albedo * diff + finalSpecCol.rgb) * lightColAtt.rgb;
+    c.a = alpha + lightColAtt.a * finalSpecCol.a;
+	return c;
+}
+
+float4 PSMain(v2p input) : COLOR0
+{
+	float4 col = tex2D(uDiffuseTex, input.tex) * uDiffuseColor;
+
+	float4 lighting = uAmbientColor;
+	lighting += CookTorrance(
+		col.rgb,
+		col.a,
+		normalize(input.nor),
+		uShininess,
+		col.a, // gloss
+		uLightColor,
+		uSpecColor,
+		uRMS,
+		normalize(input.lightDir),
+		normalize(input.viewDir),
+		1.0); // directional light, no atten
+	
+	col.rgb *= lighting.rgb;
+
+	return col;
+}

@@ -1,0 +1,15 @@
+{
+  "artifacts": [
+    {
+      "assetType": "Texture",
+      "sourcePath": "Textures/IBeam.png",
+      "uuid": "47f42cb233d74e66bdfc539f80ff6336"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
+  },
+  "sourcePath": "Textures/IBeam.png"
+}

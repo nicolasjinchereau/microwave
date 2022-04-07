@@ -1,0 +1,14 @@
+{
+  "artifacts": [
+    {
+      "assetType": "AudioClip",
+      "sourcePath": "Audio/Sounds/Land.wav",
+      "uuid": "24618083fdb74959a1a30677793bdc50"
+    }
+  ],
+  "settings": {
+    "fileFormat": "Wav",
+    "streamFromDisk": false
+  },
+  "sourcePath": "Audio/Sounds/Land.wav"
+}

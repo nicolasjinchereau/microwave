@@ -1,0 +1,24 @@
+R"MW_MAT_SOURCE(
+{
+  "alphaBlendOperation": "Add",
+  "colorBlendOperation": "Add",
+  "cullMode": "Back",
+  "depthTest": "LessOrEqual",
+  "depthWriteEnabled": false,
+  "destAlphaBlendFactor": "Zero",
+  "destColorBlendFactor": "Zero",
+  "name": "WireGizmo",
+  "objectType": "Material",
+  "properties": {
+    "name": "",
+    "objectType": "MaterialPropertyBlock",
+    "properties": {},
+    "uuid": "351b7e833b014d1abb92b99f0bbe1280"
+  },
+  "renderQueue": 4000,
+  "shader": "02572e9709754e9bb23a37301752a15a",
+  "sourceAlphaBlendFactor": "One",
+  "sourceColorBlendFactor": "One",
+  "uuid": "cb6216df2b184922aeaf76dc44177ec8"
+}
+)MW_MAT_SOURCE"

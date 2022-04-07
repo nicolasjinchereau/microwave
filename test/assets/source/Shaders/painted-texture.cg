@@ -1,0 +1,39 @@
+#pragma vertex VSMain
+#pragma fragment PSMain
+
+struct VSInput
+{
+    float3 pos : POSITION;
+    float2 tex : TEXCOORD0;
+    float4 col : COLOR;
+};
+
+struct v2p
+{
+    float4 pos : SV_Position;
+    float4 col : COLOR;
+    float2 tex : TEXCOORD0;
+};
+
+uniform sampler2D uDiffuseTex;
+uniform float4    uDiffuseTex_ST;
+uniform float4    uDiffuseColor;
+
+uniform float4x4 uMtxMVP;
+
+v2p VSMain(VSInput input)
+{
+    v2p output;
+    output.pos = mul(float4(input.pos, 1.0), uMtxMVP);
+    output.col = input.col;
+    output.tex = input.tex * uDiffuseTex_ST.xy + uDiffuseTex_ST.zw;
+    return output;
+}
+
+
+
+float4 PSMain(v2p input) : COLOR0
+{
+    float4 tex = tex2D(uDiffuseTex, input.tex);
+    return input.col * uDiffuseColor * tex;
+}

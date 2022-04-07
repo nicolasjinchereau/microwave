@@ -1,0 +1,15 @@
+{
+  "artifacts": [
+    {
+      "assetType": "Texture",
+      "sourcePath": "Textures/WallLight.png",
+      "uuid": "28088b64ba94414b83090ac654a96ae3"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
+  },
+  "sourcePath": "Textures/WallLight.png"
+}

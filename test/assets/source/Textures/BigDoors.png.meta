@@ -1,0 +1,15 @@
+{
+  "artifacts": [
+    {
+      "assetType": "Texture",
+      "sourcePath": "Textures/BigDoors.png",
+      "uuid": "b371a58b339a476983b39891889e130e"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
+  },
+  "sourcePath": "Textures/BigDoors.png"
+}

@@ -1,0 +1,14 @@
+{
+  "artifacts": [
+    {
+      "assetType": "AudioClip",
+      "sourcePath": "Audio/Sounds/Coin.wav",
+      "uuid": "5631e0df775c443ca1ea5d4c2bcda3b8"
+    }
+  ],
+  "settings": {
+    "fileFormat": "Wav",
+    "streamFromDisk": false
+  },
+  "sourcePath": "Audio/Sounds/Coin.wav"
+}

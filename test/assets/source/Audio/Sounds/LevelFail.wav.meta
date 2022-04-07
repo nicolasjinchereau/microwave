@@ -1,0 +1,14 @@
+{
+  "artifacts": [
+    {
+      "assetType": "AudioClip",
+      "sourcePath": "Audio/Sounds/LevelFail.wav",
+      "uuid": "9df74eb203d6455dbc87f048eb2d859e"
+    }
+  ],
+  "settings": {
+    "fileFormat": "Wav",
+    "streamFromDisk": false
+  },
+  "sourcePath": "Audio/Sounds/LevelFail.wav"
+}

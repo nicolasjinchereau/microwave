@@ -1,0 +1,15 @@
+{
+  "artifacts": [
+    {
+      "assetType": "Texture",
+      "sourcePath": "Textures/LightBarrel.png",
+      "uuid": "d4e2baa787d74fe387c62031f38abacd"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
+  },
+  "sourcePath": "Textures/LightBarrel.png"
+}

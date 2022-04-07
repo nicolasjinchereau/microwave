@@ -1,0 +1,85 @@
+{
+  "artifacts": [
+    {
+      "assetType": "Material",
+      "sourcePath": "Models/BigDoors.fbx/BigDoors.mat",
+      "uuid": "bb286a43bf564d489135d99639edd634"
+    },
+    {
+      "assetType": "Node",
+      "sourcePath": "Models/BigDoors.fbx",
+      "uuid": "3e81643a0a93450e98af37db97c5c29a"
+    },
+    {
+      "assetType": "Mesh",
+      "sourcePath": "Models/BigDoors.fbx/InnerDoorRight.mesh",
+      "uuid": "932e596761ed42328feeade25dcfdb92"
+    },
+    {
+      "assetType": "Mesh",
+      "sourcePath": "Models/BigDoors.fbx/InnerDoorLeft.mesh",
+      "uuid": "3931c7903d38470fbb011c0188f352f9"
+    },
+    {
+      "assetType": "Mesh",
+      "sourcePath": "Models/BigDoors.fbx/BigDoors.mesh",
+      "uuid": "c233807e550b4f88a5808681783591c3"
+    },
+    {
+      "assetType": "Mesh",
+      "sourcePath": "Models/BigDoors.fbx/OuterDoorRight.mesh",
+      "uuid": "d30154c0f9124fb0a04e96e1c7128464"
+    },
+    {
+      "assetType": "Mesh",
+      "sourcePath": "Models/BigDoors.fbx/OuterDoorLeft.mesh",
+      "uuid": "f95937869c0e49e39505ed37ea349470"
+    },
+    {
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/BigDoors.fbx/OpenDoors.clip",
+      "uuid": "47a580c3b3d3411a9c4ccb45c35b78e7"
+    },
+    {
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/BigDoors.fbx/CloseDoors.clip",
+      "uuid": "2194a23854ac4122a9ddd83a3a6e8bd5"
+    }
+  ],
+  "settings": {
+    "clipSpecs": [
+      {
+        "name": "OpenDoors",
+        "start": 0,
+        "stop": 30,
+        "wrapMode": "Sustain"
+      },
+      {
+        "name": "CloseDoors",
+        "start": 30,
+        "stop": 60,
+        "wrapMode": "Sustain"
+      }
+    ],
+    "keepRootTransform": false,
+    "materialSettings": [
+      [
+        "bb286a43bf564d489135d99639edd634",
+        {
+          "shaderBinding": {
+            "filename": "default.cg",
+            "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+          },
+          "textureBindings": {
+            "uDiffuseTex": {
+              "filename": "BigDoors.png",
+              "uuid": "b371a58b339a476983b39891889e130e"
+            }
+          }
+        }
+      ]
+    ],
+    "scaleFactor": 1.0
+  },
+  "sourcePath": "Models/BigDoors.fbx"
+}

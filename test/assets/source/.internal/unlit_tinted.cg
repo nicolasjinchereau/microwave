@@ -1,0 +1,29 @@
+
+#pragma vertex VSMain
+#pragma fragment PSMain
+struct appdata
+{
+	float3 pos : POSITION;
+};
+
+struct v2p
+{
+	float4 pos : SV_Position;
+};
+
+uniform float4x4 uMtxMVP;
+
+v2p VSMain(appdata input)
+{
+	v2p output;
+	output.pos = mul(float4(input.pos, 1.0), uMtxMVP);
+	return output;
+}
+
+uniform float4 uColor;
+
+float4 PSMain(v2p input) : COLOR0
+{
+	return uColor;
+}
+

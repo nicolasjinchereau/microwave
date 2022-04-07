@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DBBACCE3-4725-815A-9063-3200FC0C5FAF}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>freetype2</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\..\lib\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>..\..\obj\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>freetype2</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <IncludePath>..\..\include;..\..\..\zlib\source;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\..\lib\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>..\..\obj\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>freetype2</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <IncludePath>..\..\include;..\..\..\zlib\source;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DEBUG;_DEBUG;WIN32;_LIB;FT2_BUILD_LIBRARY;FT_DEBUG_LEVEL_ERROR;FT_DEBUG_LEVEL_TRACE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_LIB;FT2_BUILD_LIBRARY;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\autofit\autofit.c" />
+    <ClCompile Include="..\..\source\base\ftbase.c" />
+    <ClCompile Include="..\..\source\base\ftbbox.c" />
+    <ClCompile Include="..\..\source\base\ftbdf.c" />
+    <ClCompile Include="..\..\source\base\ftbitmap.c" />
+    <ClCompile Include="..\..\source\base\ftcid.c" />
+    <ClCompile Include="..\..\source\base\ftdebug.c" />
+    <ClCompile Include="..\..\source\base\ftfstype.c" />
+    <ClCompile Include="..\..\source\base\ftgasp.c" />
+    <ClCompile Include="..\..\source\base\ftglyph.c" />
+    <ClCompile Include="..\..\source\base\ftgxval.c" />
+    <ClCompile Include="..\..\source\base\ftinit.c" />
+    <ClCompile Include="..\..\source\base\ftmm.c" />
+    <ClCompile Include="..\..\source\base\ftotval.c" />
+    <ClCompile Include="..\..\source\base\ftpatent.c" />
+    <ClCompile Include="..\..\source\base\ftpfr.c" />
+    <ClCompile Include="..\..\source\base\ftstroke.c" />
+    <ClCompile Include="..\..\source\base\ftsynth.c" />
+    <ClCompile Include="..\..\source\base\ftsystem.c" />
+    <ClCompile Include="..\..\source\base\fttype1.c" />
+    <ClCompile Include="..\..\source\base\ftwinfnt.c" />
+    <ClCompile Include="..\..\source\bdf\bdf.c" />
+    <ClCompile Include="..\..\source\bzip2\ftbzip2.c" />
+    <ClCompile Include="..\..\source\cache\ftcache.c" />
+    <ClCompile Include="..\..\source\cff\cff.c" />
+    <ClCompile Include="..\..\source\cid\type1cid.c" />
+    <ClCompile Include="..\..\source\gzip\ftgzip.c" />
+    <ClCompile Include="..\..\source\lzw\ftlzw.c" />
+    <ClCompile Include="..\..\source\pcf\pcf.c" />
+    <ClCompile Include="..\..\source\pfr\pfr.c" />
+    <ClCompile Include="..\..\source\psaux\psaux.c" />
+    <ClCompile Include="..\..\source\pshinter\pshinter.c" />
+    <ClCompile Include="..\..\source\psnames\psnames.c" />
+    <ClCompile Include="..\..\source\raster\raster.c" />
+    <ClCompile Include="..\..\source\sfnt\sfnt.c" />
+    <ClCompile Include="..\..\source\smooth\smooth.c" />
+    <ClCompile Include="..\..\source\truetype\truetype.c" />
+    <ClCompile Include="..\..\source\type1\type1.c" />
+    <ClCompile Include="..\..\source\type42\type42.c" />
+    <ClCompile Include="..\..\source\winfonts\winfnt.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,14 @@
+{
+  "artifacts": [
+    {
+      "assetType": "AudioClip",
+      "sourcePath": "Audio/Sounds/LevelPass.wav",
+      "uuid": "ccf0bbe8a3894c02a060ef3dadd7dfa0"
+    }
+  ],
+  "settings": {
+    "fileFormat": "Wav",
+    "streamFromDisk": false
+  },
+  "sourcePath": "Audio/Sounds/LevelPass.wav"
+}

@@ -1,0 +1,62 @@
+#pragma vertex VSMain
+#pragma fragment PSMain
+
+struct appdata
+{
+	float3 pos : POSITION;
+	float3 nor : NORMAL;
+	float2 tex : TEXCOORD0;
+};
+
+struct v2p
+{
+	float4 pos : SV_Position;
+	float3 nor : NORMAL;
+	float2 tex : TEXCOORD0;
+	float3 lightDir : TEXCOORD1;
+};
+
+uniform float4 uCameraPos;
+uniform float4 uLightPos;
+uniform float4 uLightColor;
+uniform float4 uAmbientColor;
+uniform float4x4 uMtxModel;
+uniform float4x4 uMtxMVP;
+uniform float4x4 uMtxNormal;
+uniform sampler2D uDiffuseTex;
+uniform float4 uDiffuseTex_ST;
+uniform float4 uDiffuseColor;
+
+v2p VSMain(appdata input)
+{
+	float4 worldPos = mul(float4(input.pos, 1.0), uMtxModel);
+
+	v2p output;
+	output.pos = mul(float4(input.pos, 1.0), uMtxMVP);
+	output.nor = mul(float4(input.nor, 0.0), uMtxNormal).rgb;
+	output.tex = input.tex * uDiffuseTex_ST.xy + uDiffuseTex_ST.zw;
+	
+	// uLightPos is direction for directional lights
+	output.lightDir = normalize(uLightPos).xyz;
+	
+	return output;
+}
+
+float4 Lighting(float4 color, float3 normal, float3 lightDir)
+{
+	float3 n = normalize(normal);
+	float3 l = normalize(lightDir);
+	float ndotl = dot(n, l);
+	float atten = saturate(ndotl);
+
+	float4 light = uAmbientColor + uLightColor * atten;
+	color.rgb *= light.rgb;
+	
+	return color;
+}
+
+float4 PSMain(v2p input) : COLOR0
+{
+	float4 col = tex2D(uDiffuseTex, input.tex) * uDiffuseColor;
+	return Lighting(col, input.nor, input.lightDir);
+}

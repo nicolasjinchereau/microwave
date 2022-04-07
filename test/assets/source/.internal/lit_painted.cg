@@ -1,0 +1,43 @@
+
+
+#pragma vertex VSMain
+#pragma fragment PSMain
+struct appdata
+{
+	float3 pos : POSITION;
+	float3 nor : NORMAL;
+	float4 col : COLOR0;
+};
+
+struct v2p
+{
+	half4 pos : POSITION;
+	half3 nor : NORMAL;
+	half4 col : COLOR0;
+};
+
+uniform float4x4 uMtxMVP;
+uniform float4x4 uMtxNormal;
+
+v2p VSMain(appdata input)
+{
+	v2p output;
+	output.pos = mul(uMtxMVP, float4(input.pos, 1.0));
+	output.nor = mul(uMtxNormal, float4(input.nor, 1.0)).rgb;
+	output.col = input.col;
+	return output;
+}
+
+half4 Lighting(half4 color, half3 normal)
+{
+	half3 n = normalize(normal);
+	half ndotl = dot(n, half3(0.0, 0.0, 1.0));
+	half shade = ndotl * 0.6 + 0.4;
+	return color * shade;
+}
+
+half4 PSMain(v2p input) : COLOR0
+{
+	return Lighting(input.col, input.nor);
+}
+

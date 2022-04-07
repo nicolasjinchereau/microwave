@@ -1,0 +1,34 @@
+
+
+#pragma vertex VSMain
+#pragma fragment PSMain
+struct appdata
+{
+	float3 pos : POSITION;
+	float2 tex : TEXCOORD0;
+};
+
+struct v2p
+{
+	half4 pos : POSITION;
+	half2 tex : TEXCOORD0;
+};
+
+uniform float4x4 uMtxMVP;
+
+v2p VSMain(appdata input)
+{
+	v2p output;
+	output.pos = mul(uMtxMVP, float4(input.pos, 1.0));
+	output.tex = input.tex;
+	return output;
+}
+
+uniform sampler2D uMainTex;
+uniform float4 uColor;
+
+half4 PSMain(v2p input) : COLOR0
+{
+	return tex2D(uMainTex, input.tex) * uColor;
+}
+

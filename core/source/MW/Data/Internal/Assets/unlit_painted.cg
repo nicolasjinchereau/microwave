@@ -1,0 +1,31 @@
+R"MW_SHADER_SOURCE(
+#pragma vertex VSMain
+#pragma fragment PSMain
+struct appdata
+{
+	float3 pos : POSITION;
+	float4 col : COLOR0;
+};
+
+struct v2p
+{
+	float4 pos : SV_Position;
+	float4 col : COLOR0;
+};
+
+uniform float4x4 uMtxMVP;
+
+v2p VSMain(appdata input)
+{
+	v2p output;
+	output.pos = mul(float4(input.pos, 1.0), uMtxMVP);
+	output.col = input.col;
+	return output;
+}
+
+float4 PSMain(v2p input) : COLOR0
+{
+	return input.col;
+}
+
+)MW_SHADER_SOURCE"

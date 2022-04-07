@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D73DDAD3-C30B-CED9-AC9F-3E00980CAA3E}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>BulletSoftBody</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\..\lib\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>..\..\obj\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>BulletSoftBody</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <IncludePath>..\..\src;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\..\lib\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>..\..\obj\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>BulletSoftBody</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <IncludePath>..\..\src;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4244;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN32;SKIP_SOFT_BODY_MULTI_BODY_DYNAMICS_WORLD;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;NO_OPENGL3;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4244;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN32;SKIP_SOFT_BODY_MULTI_BODY_DYNAMICS_WORLD;USE_GRAPHICAL_BENCHMARK;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;NO_OPENGL3;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\BulletSoftBody\btCGProjection.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btConjugateGradient.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btConjugateResidual.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDefaultSoftBodySolver.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableBackwardEulerObjective.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableBodySolver.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableContactConstraint.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableContactProjection.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableCorotatedForce.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableGravityForce.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableLagrangianForce.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableLinearElasticityForce.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableMassSpringForce.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableMultiBodyConstraintSolver.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableMultiBodyDynamicsWorld.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btDeformableNeoHookeanForce.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btKrylovSolver.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btPreconditioner.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftBody.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftBodyConcaveCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftBodyData.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftBodyHelpers.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftBodyRigidBodyCollisionConfiguration.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftBodySolverVertexBuffer.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftBodySolvers.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftMultiBodyDynamicsWorld.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftRigidCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftRigidDynamicsWorld.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSoftSoftCollisionAlgorithm.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\btSparseSDF.h" />
+    <ClInclude Include="..\..\src\BulletSoftBody\poly34.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\BulletSoftBody\btDefaultSoftBodySolver.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btDeformableBackwardEulerObjective.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btDeformableBodySolver.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btDeformableContactConstraint.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btDeformableContactProjection.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btDeformableMultiBodyConstraintSolver.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btDeformableMultiBodyDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btSoftBody.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btSoftBodyConcaveCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btSoftBodyHelpers.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btSoftBodyRigidBodyCollisionConfiguration.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btSoftMultiBodyDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btSoftRigidCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btSoftRigidDynamicsWorld.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\btSoftSoftCollisionAlgorithm.cpp" />
+    <ClCompile Include="..\..\src\BulletSoftBody\poly34.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

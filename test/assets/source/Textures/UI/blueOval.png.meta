@@ -1,0 +1,15 @@
+{
+  "artifacts": [
+    {
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/blueOval.png",
+      "uuid": "40bad231ec2b42d895df35b01fea6b5d"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Clamp"
+  },
+  "sourcePath": "Textures/UI/blueOval.png"
+}
