@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/UI/BlueBackground.png",
-      "uuid": "6bab530e08c64a3e8f12d13b9b3d9306"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/UI/BlueBackground.png"
+ "sourcePath": "Textures/UI/BlueBackground.png",
+ "artifacts": [
+  {
+   "uuid": "6bab530e08c64a3e8f12d13b9b3d9306",
+   "assetType": "Texture",
+   "sourcePath": "Textures/UI/BlueBackground.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

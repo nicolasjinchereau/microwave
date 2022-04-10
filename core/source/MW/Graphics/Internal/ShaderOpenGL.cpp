@@ -2,13 +2,19 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Internal/DrawBufferOpenGL.h>
-#include <MW/Graphics/Internal/ShaderOpenGL.h>
-#include <MW/Graphics/Internal/TextureOpenGL.h>
-#include <MW/System/Console.h>
-#include <cassert>
-#include <regex>
-#include <algorithm>
+module Microwave.Graphics.Internal.ShaderOpenGL;
+import Microwave.Graphics.Internal.DrawBufferOpenGL;
+import Microwave.Graphics.Internal.TextureOpenGL;
+import Microwave.System.Console;
+import <algorithm>;
+import <cassert>;
+import <memory>;
+import <regex>;
+import <HLSLParser.h>;
+import <GLSLGenerator.h>;
+import <HLSLGenerator.h>;
+import <MSLGenerator.h>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {

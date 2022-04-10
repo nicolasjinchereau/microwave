@@ -2,8 +2,11 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Internal/DrawBufferOpenGL.h>
-#include <MW/System/Console.h>
+module Microwave.Graphics.Internal.DrawBufferOpenGL;
+import Microwave.System.Console;
+import <algorithm>;
+import <stdexcept>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -114,5 +117,5 @@ GraphicsDriverType DrawBufferOpenGL::GetGraphicsDriverType() const {
     return GraphicsDriverType::OpenGL;
 }
 
-}
-}
+} // gfx
+} // mw

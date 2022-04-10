@@ -2,13 +2,10 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
-#include <MW/System/Object.h>
-#include <MW/System/Pointers.h>
-#include <MW/System/App.h>
-#include <MW/System/Executor.h>
-#include <MW/System/SyncExecutor.h>
-#include <vector>
+module Microwave.System.Object;
+import Microwave.System.App;
+import Microwave.System.Executor;
+import Microwave.System.SyncExecutor;
 
 namespace mw {
 inline namespace system {

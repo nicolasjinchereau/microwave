@@ -2,10 +2,22 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Data/Library/ShaderLoader.h>
-#include <MW/Graphics/Image.h>
-#include <MW/System/App.h>
-#include <MW/Utilities/Format.h>
+module Microwave.Data.Library.ShaderLoader;
+import Microwave.Data.Library.AssetManifest;
+import Microwave.Data.Library.AssetSettings;
+import Microwave.IO.File;
+import Microwave.Graphics.Shader;
+import Microwave.Graphics.GraphicsContext;
+import Microwave.System.App;
+import Microwave.System.Executor;
+import Microwave.System.Json;
+import Microwave.System.Object;
+import Microwave.System.Path;
+import Microwave.System.Pointers;
+import Microwave.System.Task;
+import Microwave.Utilities.Format;
+import <stdexcept>;
+import <string>;
 
 namespace mw {
 inline namespace data {

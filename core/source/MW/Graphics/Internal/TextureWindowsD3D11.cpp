@@ -2,15 +2,16 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Image.h>
-#include <MW/Graphics/Internal/TextureWindowsD3D11.h>
-#include <MW/Graphics/Internal/GraphicsContextWindowsD3D11.h>
-#include <MW/System/Console.h>
-#include <unordered_map>
-#include <algorithm>
-#include <cassert>
-#include <regex>
-#include <stdexcept>
+module Microwave.Graphics.Internal.TextureWindowsD3D11;
+import Microwave.Graphics.Image;
+import Microwave.Graphics.Internal.GraphicsContextWindowsD3D11;
+import Microwave.System.Console;
+import <algorithm>;
+import <cassert>;
+import <regex>;
+import <stdexcept>;
+import <unordered_map>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {

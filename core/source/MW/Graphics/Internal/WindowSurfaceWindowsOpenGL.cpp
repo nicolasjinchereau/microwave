@@ -2,8 +2,8 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Internal/WindowSurfaceWindowsOpenGL.h>
-#include <MW/Graphics/Internal/GraphicsContextWindowsOpenGL.h>
+module Microwave.Graphics.Internal.WindowSurfaceWindowsOpenGL;
+import Microwave.Graphics.Internal.GraphicsContextWindowsOpenGL;
 
 namespace mw {
 inline namespace gfx {

@@ -2,8 +2,13 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include "PlayerWheel.h"
-#include "Player.h"
+module Test.PlayerWheel;
+import Microwave;
+import Test.Player;
+
+using namespace mw;
+
+namespace Test {
 
 void PlayerWheel::OnCollisionStart(const Collision& collision)
 {
@@ -16,3 +21,5 @@ void PlayerWheel::OnCollisionUpdate(const Collision& collision)
     if (auto p = player.lock())
         p->UpdateGroundedState(collision);
 }
+
+} // Test

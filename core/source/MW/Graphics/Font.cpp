@@ -2,19 +2,29 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/System/App.h>
-#include <MW/Graphics/Font.h>
-#include <MW/Graphics/LineEnumerator.h>
-#include <MW/Utilities/BinPacking/BinPacking.h>
-#include <utf8.h>
-#include <ft2build.h>
-#include FT_FREETYPE_H
-#include FT_GLYPH_H
-#include FT_OUTLINE_H
-
-#include <stdexcept>
-#include <algorithm>
-#include <cassert>
+module Microwave.Graphics.Font;
+import Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.GraphicsTypes;
+import Microwave.Graphics.Color;
+import Microwave.Graphics.Texture;
+import Microwave.Graphics.Types;
+import Microwave.Graphics.LineEnumerator;
+import Microwave.Math;
+import Microwave.System.App;
+import Microwave.System.Pointers;
+import Microwave.Utilities.BinPacking.BinPacker;
+import <algorithm>;
+import <cassert>;
+import <cstddef>;
+import <cstdlib>;
+import <cstdint>;
+import <span>;
+import <string>;
+import <stdexcept>;
+import <unordered_map>;
+import <utf8.h>;
+import <vector>;
+import <MW/Graphics/Internal/FreeType2.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -155,7 +165,7 @@ Font::Font(
         margin(margin)
 {
     packer.StartDynamicPacking(atlasSize, margin, true);
-    fontFace = std::make_shared<FreeTypeFontFace>(fileData);
+    fontFace = spnew<FreeTypeFontFace>(fileData);
     
     SetPixelHeight(32);
 }

@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/HeavyBarrel.png",
-      "uuid": "f6287dcdf0bf4519aca80ec3b048db55"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/HeavyBarrel.png"
+ "sourcePath": "Textures/HeavyBarrel.png",
+ "artifacts": [
+  {
+   "uuid": "f6287dcdf0bf4519aca80ec3b048db55",
+   "assetType": "Texture",
+   "sourcePath": "Textures/HeavyBarrel.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

@@ -57,6 +57,7 @@ project "hlslparser"
         defines { "NDEBUG" }
         optimize "Speed"
         inlining "Auto"
+        floatingpoint "Fast"
         vectorextensions "SSE2"
 
     filter { "action:xcode*" }

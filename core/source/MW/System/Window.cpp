@@ -2,8 +2,7 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/System/Window.h>
-#include <MW/Graphics/WindowSurface.h>
+module Microwave.System.Window;
 
 namespace mw {
 inline namespace system {

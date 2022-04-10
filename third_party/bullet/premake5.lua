@@ -39,6 +39,7 @@ function configure_project_common()
         defines { "NDEBUG" }
         optimize "Speed"
         inlining "Auto"
+        floatingpoint "Fast"
         vectorextensions "SSE2"
 
     filter { "action:xcode*" }
@@ -65,7 +66,7 @@ workspace "BulletPhysics"
 
 project "BulletCollision"
     kind "StaticLib"
-    language "C"
+    language "C++"
     
     location ("projects/" .. os.target())
     targetname "BulletCollision"
@@ -308,7 +309,7 @@ project "BulletCollision"
 
 project "BulletDynamics"
     kind "StaticLib"
-    language "C"
+    language "C++"
     
     location ("projects/" .. os.target())
     targetname "BulletDynamics"
@@ -423,7 +424,7 @@ project "BulletDynamics"
 
 project "BulletSoftBody"
     kind "StaticLib"
-    language "C"
+    language "C++"
     
     location ("projects/" .. os.target())
     targetname "BulletSoftBody"
@@ -486,7 +487,7 @@ project "BulletSoftBody"
 
 project "LinearMath"
     kind "StaticLib"
-    language "C"
+    language "C++"
     
     location ("projects/" .. os.target())
     targetname "LinearMath"

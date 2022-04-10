@@ -176,7 +176,7 @@
   ],
   "name": "SphereGizmo",
   "normals": [],
-  "objectType": "Mesh",
+  "objectType": "mw::gfx::Mesh",
   "skinType": "None",
   "texcoords": [],
   "uuid": "7fed642ea8f243518caa16bb93a71ca9",

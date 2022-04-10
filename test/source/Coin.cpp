@@ -2,8 +2,13 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include "Coin.h"
-#include "Game.h"
+module Test.Coin;
+import Test.Game;
+import Microwave;
+
+using namespace mw;
+
+namespace Test {
 
 void Coin::Start()
 {
@@ -29,4 +34,6 @@ void Coin::OnCollisionStart(const Collision& collision)
             g->OnCoinCollected(this);
         }
     }
+}
+
 }

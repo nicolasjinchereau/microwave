@@ -2,8 +2,13 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include "LossScreen.h"
-#include "Game.h"
+module Test.LossScreen;
+import Test.Game;
+import Microwave;
+
+using namespace mw;
+
+namespace Test {
 
 void LossScreen::PlayAgain()
 {
@@ -55,3 +60,5 @@ Task<void> LossScreen::InitAsync()
 
     node->SetLayerMask(LayerMask::UI, true);
 }
+
+} // Test

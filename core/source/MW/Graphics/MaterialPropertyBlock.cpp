@@ -2,11 +2,8 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
-#include <MW/Graphics/MaterialPropertyBlock.h>
-#include <MW/System/App.h>
-#include <MW/Graphics/GraphicsContext.h>
-#include <MW/System/Json.h>
+module Microwave.Graphics.MaterialPropertyBlock;
+import Microwave.Graphics.GraphicsContext;
 
 namespace mw {
 inline namespace gfx {
@@ -51,33 +48,33 @@ public:
 };
 
 class MaterialPropertyFloat : public MaterialPropertyT<float>{
-    REGISTER_OBJECT(MaterialPropertyFloat);
+    inline static Type::Pin<MaterialPropertyFloat> pin;
 };
 class MaterialPropertyFloat2 : public MaterialPropertyT<Vec2> {
-    REGISTER_OBJECT(MaterialPropertyFloat2);
+    inline static Type::Pin<MaterialPropertyFloat2> pin;
 };
 class MaterialPropertyFloat3 : public MaterialPropertyT<Vec3> {
-    REGISTER_OBJECT(MaterialPropertyFloat3);
+    inline static Type::Pin<MaterialPropertyFloat3> pin;
 };
 class MaterialPropertyFloat4 : public MaterialPropertyT<Vec4> {
-    REGISTER_OBJECT(MaterialPropertyFloat4);
+    inline static Type::Pin<MaterialPropertyFloat4> pin;
 };
 class MaterialPropertyFloat2x2 : public MaterialPropertyT<Mat2> {
-    REGISTER_OBJECT(MaterialPropertyFloat2x2);
+    inline static Type::Pin<MaterialPropertyFloat2x2> pin;
 };
 class MaterialPropertyFloat3x3 : public MaterialPropertyT<Mat3> {
-    REGISTER_OBJECT(MaterialPropertyFloat3x3);
+    inline static Type::Pin<MaterialPropertyFloat3x3> pin;
 };
 class MaterialPropertyFloat4x4 : public MaterialPropertyT<Mat4> {
-    REGISTER_OBJECT(MaterialPropertyFloat4x4);
+    inline static Type::Pin<MaterialPropertyFloat4x4> pin;
 };
 class MaterialPropertyColor : public MaterialPropertyT<Vec4> {
-    REGISTER_OBJECT(MaterialPropertyColor);
+    inline static Type::Pin<MaterialPropertyColor> pin;
 };
 
 class MaterialPropertyTexture : public MaterialProperty
 {
-    REGISTER_OBJECT(MaterialPropertyTexture);
+    inline static Type::Pin<MaterialPropertyTexture> pin;
 public:
     typedef sptr<Texture> value_type;
     constexpr static ShaderVarType var_type = ShaderVarLangType<sptr<Texture>>::type;
@@ -99,7 +96,6 @@ public:
 
     virtual void FromJson(const json& obj, ObjectLinker* linker) override {
         Object::FromJson(obj, linker);
-        //Json::AssetFromJson(obj, "value", value);
         ObjectLinker::RestoreAsset(linker, This(), value, obj, "value");
     }
 };
@@ -108,7 +104,7 @@ template<class PTy>
 void SetUniformImpl(MaterialPropertyBlock& block, const std::string& name, const typename PTy::value_type& value)
 {
     sptr<PTy> prop;
-    
+
     auto it = block.properties.find(name);
     if (it == block.properties.end() || it->second->GetUniformType() != ShaderVarLangType<typename PTy::value_type>::type)
     {
@@ -171,7 +167,7 @@ sptr<Texture> MaterialPropertyBlock::GetTexture(const std::string& name)
         auto prop = (MaterialPropertyTexture*)it->second.get();
         ret = prop->value;
     }
-    
+
     return ret;
 }
 
@@ -183,7 +179,7 @@ void MaterialPropertyBlock::ToJson(json& obj) const
 
     for (auto& [key, val] : properties)
         val->ToJson(props[key]);
-    
+
     obj["properties"] = std::move(props);
 }
 
@@ -192,8 +188,8 @@ void MaterialPropertyBlock::FromJson(const json& obj, ObjectLinker* linker)
     Object::FromJson(obj, linker);
 
     for (auto& [key, value] : obj["properties"].items())
-        properties[key] = ObjectFactory::FromJson<MaterialProperty>(value, linker);
+        properties[key] = Object::CreateFromJson<MaterialProperty>(value, linker);
 }
 
-}
-}
+} // gfx
+} // mw

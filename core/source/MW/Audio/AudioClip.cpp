@@ -2,13 +2,20 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Audio/AudioClip.h>
-#include <MW/Audio/Mp3Stream.h>
-#include <MW/Audio/OggStream.h>
-#include <MW/Audio/WavStream.h>
-#include <MW/IO/File.h>
-#include <AL/al.h>
-#include <AL/alext.h>
+module Microwave.Audio.AudioClip;
+import Microwave.Audio.AudioStream;
+import Microwave.SceneGraph.Components.AudioSource;
+import Microwave.Audio.Mp3Stream;
+import Microwave.Audio.OggStream;
+import Microwave.Audio.WavStream;
+import Microwave.IO.File;
+import Microwave.System.Path;
+import Microwave.System.Pointers;
+import <stdexcept>;
+import <cstddef>;
+import <cstdint>;
+import <vector>;
+import <MW/Audio/Internal/OpenAL.h>;
 
 namespace mw {
 inline namespace audio {

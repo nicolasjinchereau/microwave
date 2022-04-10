@@ -2,10 +2,14 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Internal/DrawBufferWindowsD3D11.h>
-#include <MW/Graphics/Internal/GraphicsContextWindowsD3D11.h>
-#include <MW/System/Console.h>
-#include <algorithm>
+module Microwave.Graphics.Internal.DrawBufferWindowsD3D11;
+import Microwave.Graphics.Internal.GraphicsContextWindowsD3D11;
+import Microwave.System.Console;
+import Microwave.Utilities.Format;
+import <algorithm>;
+import <cstring>;
+import <unordered_map>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -130,5 +134,5 @@ GraphicsDriverType DrawBufferWindowsD3D11::GetGraphicsDriverType() const {
     return GraphicsDriverType::Direct3D11;
 }
 
-}
-}
+} // gfx
+} // mw

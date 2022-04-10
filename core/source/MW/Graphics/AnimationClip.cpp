@@ -2,8 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/AnimationClip.h>
-#include <MW/Scene/Components/Animator.h>
+module Microwave.Graphics.AnimationClip;
+import Microwave.SceneGraph.Components.Animator;
+import Microwave.SceneGraph.Node;
+import Microwave.System.Json;
+import Microwave.System.Object;
+import Microwave.System.Pointers;
+import <cassert>;
+import <string>;
+import <utility>;
 
 namespace mw {
 inline namespace gfx {

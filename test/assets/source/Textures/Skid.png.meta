@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/Skid.png",
-      "uuid": "d5801162fd7d4d9db611418f025b365c"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/Skid.png"
+ "sourcePath": "Textures/Skid.png",
+ "artifacts": [
+  {
+   "uuid": "d5801162fd7d4d9db611418f025b365c",
+   "assetType": "Texture",
+   "sourcePath": "Textures/Skid.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

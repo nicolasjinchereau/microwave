@@ -2,11 +2,13 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Audio/AudioContext.h>
-#include <MW/Scene/Components/AudioSource.h>
-#include <MW/System/Spinlock.h>
-#include <cassert>
-#include <memory>
+module Microwave.Audio.AudioContext;
+import Microwave.SceneGraph.Components.AudioSource;
+import Microwave.System.Pointers;
+import Microwave.System.Spinlock;
+import <cassert>;
+import <memory>;
+import <mutex>;
 
 namespace mw {
 inline namespace audio {

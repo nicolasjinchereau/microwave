@@ -2,8 +2,7 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/System/Pointers.h>
-#include <MW/System/Dispatcher.h>
+module Microwave.System.Dispatcher;
 
 namespace mw {
 inline namespace system {
@@ -52,7 +51,7 @@ bool Dispatcher::Cancel(const sptr<DispatchAction>& action)
 void Dispatcher::Run()
 {
     run = true;
-    
+
     while (run)
     {
         auto action = WaitForNextAction();
@@ -169,7 +168,7 @@ sptr<DispatchAction> Dispatcher::WaitForNextAction()
         lk, wake,
         [this]{ return !run || (!actions.empty() && DispatchClock::now() > actions.front()->when); }
     );
-    
+
     sptr<DispatchAction> action;
 
     if (run) {

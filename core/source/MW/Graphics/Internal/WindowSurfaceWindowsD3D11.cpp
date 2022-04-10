@@ -2,8 +2,10 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Internal/WindowSurfaceWindowsD3D11.h>
-#include <MW/Graphics/Internal/GraphicsContextWindowsD3D11.h>
+module Microwave.Graphics.Internal.WindowSurfaceWindowsD3D11;
+import Microwave.Graphics.Internal.GraphicsContextWindowsD3D11;
+import <stdexcept>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {

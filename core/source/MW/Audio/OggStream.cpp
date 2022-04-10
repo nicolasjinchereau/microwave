@@ -2,8 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Audio/OggStream.h>
-#include <MW/Audio/OggDecoder.h>
+module Microwave.Audio.OggStream;
+import Microwave.Audio.AudioSample;
+import Microwave.Audio.Internal.OggDecoder;
+import Microwave.IO.Stream;
+import Microwave.System.Pointers;
+import <cstddef>;
+import <cstdint>;
+import <span>;
+import <stdexcept>;
 
 namespace mw {
 inline namespace audio {

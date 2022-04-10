@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/CardboardBox.png",
-      "uuid": "07605f9cd3de4e1f8ceb1851d4a5e25e"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/CardboardBox.png"
+ "sourcePath": "Textures/CardboardBox.png",
+ "artifacts": [
+  {
+   "uuid": "07605f9cd3de4e1f8ceb1851d4a5e25e",
+   "assetType": "Texture",
+   "sourcePath": "Textures/CardboardBox.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/BigDoors.png",
-      "uuid": "b371a58b339a476983b39891889e130e"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/BigDoors.png"
+ "sourcePath": "Textures/BigDoors.png",
+ "artifacts": [
+  {
+   "uuid": "b371a58b339a476983b39891889e130e",
+   "assetType": "Texture",
+   "sourcePath": "Textures/BigDoors.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

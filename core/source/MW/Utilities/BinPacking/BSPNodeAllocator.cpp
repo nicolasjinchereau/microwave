@@ -2,59 +2,68 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Utilities/BinPacking/BSPNodeAllocator.h>
-#include <MW/Utilities/BinPacking/BSPNode.h>
+module Microwave.Utilities.BinPacking.BSPNodeAllocator;
+import <cassert>;
 
 namespace mw {
 inline namespace utilities {
 inline namespace binpacking {
 
-void BSPNodeDeleter::operator()(BSPNode* n)
-{
-    auto alloc = n->allocator.lock();
-    if (alloc) {
-        alloc->ReturnNode(n);
-    }
-    else {
-        BSPNodeAllocator::DeleteNode(n);
-    }
-}
-
 BSPNodeAllocator::BSPNodeAllocator(uint32_t initialCapacity)
 {
-    nodes.reserve(initialCapacity);
+    pool.reserve(initialCapacity);
 
     for (uint32_t i = 0; i < initialCapacity; ++i)
-        nodes.push_back((BSPNode*)::operator new(sizeof(BSPNode)));
+        pool.push_back( AllocateNode() );
 }
 
 BSPNodeAllocator::~BSPNodeAllocator()
 {
-    for (auto& node : nodes)
-        DeleteNode((BSPNode*)node);
+    for (auto& mem : pool)
+        DeallocateNode(mem);
+
+    pool.clear();
+}
+
+BSPNode* BSPNodeAllocator::AllocateNode() {
+    return (BSPNode*)::operator new(sizeof(BSPNode));
+}
+
+void BSPNodeAllocator::DeallocateNode(BSPNode* pNode) {
+    assert(pNode);
+    ::operator delete(pNode);
 }
 
 BSPNodePtr BSPNodeAllocator::GetNode()
 {
-    BSPNode* node = nullptr;
+    BSPNode* mem = nullptr;
 
-    if (!nodes.empty()) {
-        node = nodes.back();
-        nodes.pop_back();
+    if (!pool.empty()) {
+        mem = pool.back();
+        pool.pop_back();
     }
     else {
-        node = (BSPNode*)::operator new(sizeof(BSPNode));
+        mem = AllocateNode();
     }
 
-    return BSPNodePtr(new (node) BSPNode(This<BSPNodeAllocator>()));
+    auto allocator = This<BSPNodeAllocator>();
+    auto pNode = new (mem) BSPNode(allocator);
+
+    return BSPNodePtr(pNode);
 }
 
-void BSPNodeAllocator::ReturnNode(BSPNode* node) {
-    nodes.push_back(node);
-}
+void BSPNodeAllocator::ReturnNode(BSPNode* pNode)
+{
+    assert(pNode);
+    
+    pNode->~BSPNode();
 
-void BSPNodeAllocator::DeleteNode(BSPNode* node) {
-    ::operator delete(node);
+    if (auto allocator = pNode->allocator.lock()) {
+        allocator->pool.push_back(pNode);
+    }
+    else {
+        DeallocateNode(pNode);
+    }
 }
 
 } // binpacking

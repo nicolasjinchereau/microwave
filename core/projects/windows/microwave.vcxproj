@@ -21,13 +21,13 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -44,24 +44,29 @@
     <IntDir>..\..\obj\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>microwave</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>..\..\source;..\..\..\third_party\bullet\src;..\..\..\third_party\dr-mp3\include;..\..\..\third_party\freetype2\include;..\..\..\third_party\GLEW\include;..\..\..\third_party\hlslparser\src;..\..\..\third_party\libjpeg\source;..\..\..\third_party\libpng\source;..\..\..\third_party\libzip\src;..\..\..\third_party\ogg\include;..\..\..\third_party\openal-soft\include;..\..\..\third_party\tinyexr\include;..\..\..\third_party\tinyxml2\src;..\..\..\third_party\utfcpp-3.1;..\..\..\third_party\vorbis\include;..\..\..\third_party\xz-utils\src\liblzma\api;..\..\..\third_party\fbx\include;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>..\..\source;..\..\..\third_party\boost\include;..\..\..\third_party\bullet\src;..\..\..\third_party\dr-mp3\include;..\..\..\third_party\freetype2\include;..\..\..\third_party\GLEW\include;..\..\..\third_party\hlslparser\src;..\..\..\third_party\libjpeg\source;..\..\..\third_party\libpng\source;..\..\..\third_party\libzip\src;..\..\..\third_party\ogg\include;..\..\..\third_party\openal-soft\include;..\..\..\third_party\tinyexr\include;..\..\..\third_party\tinyxml2\src;..\..\..\third_party\utfcpp-3.1;..\..\..\third_party\vorbis\include;..\..\..\third_party\xz-utils\src\liblzma\api;..\..\..\third_party\fbx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\..\lib\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>..\..\obj\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>microwave</TargetName>
     <TargetExt>.lib</TargetExt>
-    <IncludePath>..\..\source;..\..\..\third_party\bullet\src;..\..\..\third_party\dr-mp3\include;..\..\..\third_party\freetype2\include;..\..\..\third_party\GLEW\include;..\..\..\third_party\hlslparser\src;..\..\..\third_party\libjpeg\source;..\..\..\third_party\libpng\source;..\..\..\third_party\libzip\src;..\..\..\third_party\ogg\include;..\..\..\third_party\openal-soft\include;..\..\..\third_party\tinyexr\include;..\..\..\third_party\tinyxml2\src;..\..\..\third_party\utfcpp-3.1;..\..\..\third_party\vorbis\include;..\..\..\third_party\xz-utils\src\liblzma\api;..\..\..\third_party\fbx\include;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>..\..\source;..\..\..\third_party\boost\include;..\..\..\third_party\bullet\src;..\..\..\third_party\dr-mp3\include;..\..\..\third_party\freetype2\include;..\..\..\third_party\GLEW\include;..\..\..\third_party\hlslparser\src;..\..\..\third_party\libjpeg\source;..\..\..\third_party\libpng\source;..\..\..\third_party\libzip\src;..\..\..\third_party\ogg\include;..\..\..\third_party\openal-soft\include;..\..\..\third_party\tinyexr\include;..\..\..\third_party\tinyxml2\src;..\..\..\third_party\utfcpp-3.1;..\..\..\third_party\vorbis\include;..\..\..\third_party\xz-utils\src\liblzma\api;..\..\..\third_party\fbx\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_DEBUG;NOMINMAX;FBXSDK_SHARED;AL_ALEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4005;5106;4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>NOMINMAX;AL_ALEXT_PROTOTYPES;WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
+      <EnableModules>true</EnableModules>
+      <ModuleOutputFile>..\..\ifc\$(PlatformName)\$(Configuration)\</ModuleOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -72,16 +77,23 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>NDEBUG;NOMINMAX;FBXSDK_SHARED;AL_ALEXT_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4005;5106;4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>NOMINMAX;AL_ALEXT_PROTOTYPES;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
+      <FloatingPointModel>Fast</FloatingPointModel>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
+      <EnableModules>true</EnableModules>
+      <ModuleOutputFile>..\..\ifc\$(PlatformName)\$(Configuration)\</ModuleOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -90,256 +102,415 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\source\MW\Audio\AudioClip.h" />
-    <ClInclude Include="..\..\source\MW\Audio\AudioContext.h" />
-    <ClInclude Include="..\..\source\MW\Audio\AudioContextWindows.h" />
-    <ClInclude Include="..\..\source\MW\Audio\AudioSample.h" />
-    <ClInclude Include="..\..\source\MW\Audio\AudioStream.h" />
-    <ClInclude Include="..\..\source\MW\Audio\Mp3Decoder.h" />
-    <ClInclude Include="..\..\source\MW\Audio\Mp3Stream.h" />
-    <ClInclude Include="..\..\source\MW\Audio\OggDecoder.h" />
-    <ClInclude Include="..\..\source\MW\Audio\OggStream.h" />
-    <ClInclude Include="..\..\source\MW\Audio\WavStream.h" />
-    <ClInclude Include="..\..\source\MW\Data\Database\AssetDatabase.h" />
-    <ClInclude Include="..\..\source\MW\Data\Database\AssetImporter.h" />
-    <ClInclude Include="..\..\source\MW\Data\Database\AudioClipImporter.h" />
-    <ClInclude Include="..\..\source\MW\Data\Database\DefaultImporter.h" />
-    <ClInclude Include="..\..\source\MW\Data\Database\ModelImporter.h" />
-    <ClInclude Include="..\..\source\MW\Data\Database\TextureImporter.h" />
-    <ClInclude Include="..\..\source\MW\Data\Internal\FBXModelConverter.h" />
-    <ClInclude Include="..\..\source\MW\Data\Internal\FBXUDPParser.h" />
+    <ClInclude Include="..\..\source\MW\Audio\Internal\OpenAL.h" />
+    <ClInclude Include="..\..\source\MW\Data\Internal\Assets.h" />
+    <ClInclude Include="..\..\source\MW\Data\Internal\FBX_SDK.h" />
     <ClInclude Include="..\..\source\MW\Data\Internal\FbxMemoryStream.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetLibrary.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetLoader.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetManifest.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetSettings.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetType.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\AudioClipLoader.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\BinaryLoader.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\FontLoader.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\ObjectLoader.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\ShaderLoader.h" />
-    <ClInclude Include="..\..\source\MW\Data\Library\TextureLoader.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\AnimationClip.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\AnimationTrack.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Color.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\DrawBuffer.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Font.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\GizmoUtility.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Graphics.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\GraphicsContext.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\GraphicsResource.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\GraphicsTypes.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Image.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\OpenGLAPI.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\LineEnumerator.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Material.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\MaterialPropertyBlock.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Mesh.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Model.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\RenderQueue.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\RenderTarget.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\RenderTexture.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Shader.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Texture.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\Types.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\WindowSurface.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\detail\Color32F.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\detail\Color32F.inl" />
-    <ClInclude Include="..\..\source\MW\Graphics\detail\Color8U.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\detail\Color8U.inl" />
-    <ClInclude Include="..\..\source\MW\Graphics\detail\ColorBGRA.h" />
-    <ClInclude Include="..\..\source\MW\Graphics\detail\ColorBGRA.inl" />
-    <ClInclude Include="..\..\source\MW\IO\File.h" />
-    <ClInclude Include="..\..\source\MW\IO\FileStream.h" />
-    <ClInclude Include="..\..\source\MW\IO\MemoryStream.h" />
-    <ClInclude Include="..\..\source\MW\IO\Stream.h" />
-    <ClInclude Include="..\..\source\MW\Math\Math.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\AABox.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\AABox.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Functions.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Functions.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\IVec2.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\IVec2.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\IVec4.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\IVec4.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\IntRect.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\IntRect.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Json.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat2.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat2.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat3.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat3.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat4.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat4.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Plane.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Plane.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Quat.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Quat.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Ray.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Ray.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Sphere.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Sphere.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Transform.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Transform.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Triangle.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Triangle.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec2.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec2.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec3.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec3.inl" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec4.h" />
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec4.inl" />
-    <ClInclude Include="..\..\source\MW\Scene\Axis.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\Animator.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\AudioSource.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\BoxCollider.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\Button.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\Camera.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\Canvas.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\CapsuleCollider.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\Collider.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\Component.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\D6Joint.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\DirectionalLight.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\ImageView.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\MeshCollider.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\MeshRenderer.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\RigidBody.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\Script.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\SphereCollider.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\TextView.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Components\View.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Coroutine.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Events.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Internal\Bullet.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Internal\CapsuleShape.h" />
-    <ClInclude Include="..\..\source\MW\Scene\LayerMask.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Node.h" />
-    <ClInclude Include="..\..\source\MW\Scene\PhysicsWorld.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Renderable.h" />
-    <ClInclude Include="..\..\source\MW\Scene\Scene.h" />
-    <ClInclude Include="..\..\source\MW\Scene\SceneRenderer.h" />
-    <ClInclude Include="..\..\source\MW\System\App.h" />
-    <ClInclude Include="..\..\source\MW\System\ApplicationDispatcher.h" />
-    <ClInclude Include="..\..\source\MW\System\AsyncExecutor.h" />
-    <ClInclude Include="..\..\source\MW\System\Awaitable.h" />
-    <ClInclude Include="..\..\source\MW\System\Clock.h" />
-    <ClInclude Include="..\..\source\MW\System\Console.h" />
-    <ClInclude Include="..\..\source\MW\System\Dispatcher.h" />
-    <ClInclude Include="..\..\source\MW\System\EventHandlerList.h" />
-    <ClInclude Include="..\..\source\MW\System\Executor.h" />
-    <ClInclude Include="..\..\source\MW\System\IAwaitable.h" />
-    <ClInclude Include="..\..\source\MW\System\IAwaiter.h" />
-    <ClInclude Include="..\..\source\MW\System\Internal\ApplicationDispatcherWindows.h" />
-    <ClInclude Include="..\..\source\MW\System\Internal\WindowWindows.h" />
-    <ClInclude Include="..\..\source\MW\System\Json.h" />
-    <ClInclude Include="..\..\source\MW\System\Object.h" />
-    <ClInclude Include="..\..\source\MW\System\Platforms.h" />
-    <ClInclude Include="..\..\source\MW\System\Pointers.h" />
-    <ClInclude Include="..\..\source\MW\System\Spinlock.h" />
-    <ClInclude Include="..\..\source\MW\System\SyncExecutor.h" />
-    <ClInclude Include="..\..\source\MW\System\Task.h" />
-    <ClInclude Include="..\..\source\MW\System\ThreadPool.h" />
-    <ClInclude Include="..\..\source\MW\System\UUID.h" />
-    <ClInclude Include="..\..\source\MW\System\Window.h" />
-    <ClInclude Include="..\..\source\MW\System\path.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\Base64.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\BSPNode.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\BSPNodeAllocator.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\Bin.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\BinPacking.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\RectMapping.h" />
+    <ClInclude Include="..\..\source\MW\Graphics\Internal\FreeType2.h" />
+    <ClInclude Include="..\..\source\MW\SceneGraph\Internal\Bullet.h" />
+    <ClInclude Include="..\..\source\MW\System\Internal\Platform.h" />
+    <ClInclude Include="..\..\source\MW\System\Internal\PlatformHeaders.h" />
     <ClInclude Include="..\..\source\MW\Utilities\EnumFlags.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\Format.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\Sink.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\MW\Audio\Audio.ixx" />
     <ClCompile Include="..\..\source\MW\Audio\AudioClip.cpp" />
+    <ClCompile Include="..\..\source\MW\Audio\AudioClip.ixx">
+      <ObjectFileName>$(IntDir)\AudioClip1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\AudioContext.cpp" />
-    <ClCompile Include="..\..\source\MW\Audio\AudioContextWindows.cpp" />
+    <ClCompile Include="..\..\source\MW\Audio\AudioContext.ixx">
+      <ObjectFileName>$(IntDir)\AudioContext1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\AudioSample.ixx" />
+    <ClCompile Include="..\..\source\MW\Audio\AudioStream.ixx" />
+    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextWindows.cpp" />
+    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextWindows.ixx">
+      <ObjectFileName>$(IntDir)\AudioContextWindows1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\Internal\Mp3Decoder.ixx" />
+    <ClCompile Include="..\..\source\MW\Audio\Internal\OggDecoder.ixx" />
     <ClCompile Include="..\..\source\MW\Audio\Mp3Stream.cpp" />
+    <ClCompile Include="..\..\source\MW\Audio\Mp3Stream.ixx">
+      <ObjectFileName>$(IntDir)\Mp3Stream1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\OggStream.cpp" />
+    <ClCompile Include="..\..\source\MW\Audio\OggStream.ixx">
+      <ObjectFileName>$(IntDir)\OggStream1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\WavStream.cpp" />
+    <ClCompile Include="..\..\source\MW\Audio\WavStream.ixx">
+      <ObjectFileName>$(IntDir)\WavStream1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Data.ixx" />
     <ClCompile Include="..\..\source\MW\Data\Database\AssetDatabase.cpp" />
+    <ClCompile Include="..\..\source\MW\Data\Database\AssetDatabase.ixx">
+      <ObjectFileName>$(IntDir)\AssetDatabase1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\AssetImporter.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Database\AudioClipImporter.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Database\Database.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Database\DefaultImporter.ixx" />
     <ClCompile Include="..\..\source\MW\Data\Database\ModelImporter.cpp" />
+    <ClCompile Include="..\..\source\MW\Data\Database\ModelImporter.ixx">
+      <ObjectFileName>$(IntDir)\ModelImporter1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\TextureImporter.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Internal\FBXModelConverter.cpp" />
+    <ClCompile Include="..\..\source\MW\Data\Internal\FBXModelConverter.ixx">
+      <ObjectFileName>$(IntDir)\FBXModelConverter1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Internal\FBXUDPParser.ixx" />
     <ClCompile Include="..\..\source\MW\Data\Library\AssetLibrary.cpp" />
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetLibrary.ixx">
+      <ObjectFileName>$(IntDir)\AssetLibrary1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetLoader.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetManifest.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetSettings.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetType.ixx" />
     <ClCompile Include="..\..\source\MW\Data\Library\AudioClipLoader.cpp" />
+    <ClCompile Include="..\..\source\MW\Data\Library\AudioClipLoader.ixx">
+      <ObjectFileName>$(IntDir)\AudioClipLoader1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\BinaryLoader.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Library\FontLoader.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Library\Library.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Library\ObjectLoader.ixx" />
     <ClCompile Include="..\..\source\MW\Data\Library\ShaderLoader.cpp" />
+    <ClCompile Include="..\..\source\MW\Data\Library\ShaderLoader.ixx">
+      <ObjectFileName>$(IntDir)\ShaderLoader1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Data\Library\TextureLoader.cpp" />
+    <ClCompile Include="..\..\source\MW\Data\Library\TextureLoader.ixx">
+      <ObjectFileName>$(IntDir)\TextureLoader1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\AnimationClip.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\AnimationClip.ixx">
+      <ObjectFileName>$(IntDir)\AnimationClip1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\AnimationTrack.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Color.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\DrawBuffer.ixx" />
     <ClCompile Include="..\..\source\MW\Graphics\Font.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Font.ixx">
+      <ObjectFileName>$(IntDir)\Font1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\GizmoUtility.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\GizmoUtility.ixx">
+      <ObjectFileName>$(IntDir)\GizmoUtility1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Graphics.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsContext.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsResource.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsTypes.ixx" />
     <ClCompile Include="..\..\source\MW\Graphics\Image.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Image.ixx">
+      <ObjectFileName>$(IntDir)\Image1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\DrawBufferOpenGL1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.ixx">
+      <ObjectFileName>$(IntDir)\DrawBufferWindowsD3D111.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindows.cpp" />
     <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.ixx">
+      <ObjectFileName>$(IntDir)\GraphicsContextWindowsD3D111.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\GraphicsContextWindowsOpenGL1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\OpenGLAPI.ixx" />
     <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\RenderTextureOpenGL1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.ixx">
+      <ObjectFileName>$(IntDir)\RenderTextureWindowsD3D111.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\ShaderOpenGL1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.ixx">
+      <ObjectFileName>$(IntDir)\ShaderWindowsD3D111.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\TextureOpenGL1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.ixx">
+      <ObjectFileName>$(IntDir)\TextureWindowsD3D111.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.ixx">
+      <ObjectFileName>$(IntDir)\WindowSurfaceWindowsD3D111.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\WindowSurfaceWindowsOpenGL1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\LineEnumerator.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\LineEnumerator.ixx">
+      <ObjectFileName>$(IntDir)\LineEnumerator1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Material.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Material.ixx">
+      <ObjectFileName>$(IntDir)\Material1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\MaterialPropertyBlock.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\MaterialPropertyBlock.ixx">
+      <ObjectFileName>$(IntDir)\MaterialPropertyBlock1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Mesh.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Mesh.ixx">
+      <ObjectFileName>$(IntDir)\Mesh1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Model.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Model.ixx">
+      <ObjectFileName>$(IntDir)\Model1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\RenderQueue.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\RenderTarget.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\RenderTexture.ixx" />
     <ClCompile Include="..\..\source\MW\Graphics\Shader.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Shader.ixx">
+      <ObjectFileName>$(IntDir)\Shader1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Texture.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Types.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\WindowSurface.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\detail\Color32F_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\detail\Color32F_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\detail\Color8U_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\detail\Color8U_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorBGRA_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorBGRA_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorJson.ixx" />
     <ClCompile Include="..\..\source\MW\IO\File.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\Animator.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\AudioSource.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\BoxCollider.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\Button.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\Camera.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\Canvas.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\CapsuleCollider.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\Collider.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\Component.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\D6Joint.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\DirectionalLight.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\ImageView.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\MeshCollider.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\MeshRenderer.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\RigidBody.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\SphereCollider.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\TextView.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Components\View.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Events.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Node.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\PhysicsWorld.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\Scene.cpp" />
-    <ClCompile Include="..\..\source\MW\Scene\SceneRenderer.cpp" />
+    <ClCompile Include="..\..\source\MW\IO\File.ixx">
+      <ObjectFileName>$(IntDir)\File1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\IO\FileStream.ixx" />
+    <ClCompile Include="..\..\source\MW\IO\IO.ixx" />
+    <ClCompile Include="..\..\source\MW\IO\MemoryStream.ixx" />
+    <ClCompile Include="..\..\source\MW\IO\Stream.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Math.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\AABox_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\AABox_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Functions_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Functions_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\IVec2_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\IVec2_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\IVec4_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\IVec4_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\IntRect_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\IntRect_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat2_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat2_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat3_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat3_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat4_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat4_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\MathJson.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Operators.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Plane_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Plane_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Quat_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Quat_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Ray_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Ray_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Sphere_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Sphere_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Transform_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Transform_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Triangle_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Triangle_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec2_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec2_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec3_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec3_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec4_p1.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec4_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Microwave.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Axis.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Animator.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Animator.ixx">
+      <ObjectFileName>$(IntDir)\Animator1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\AudioSource.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\AudioSource.ixx">
+      <ObjectFileName>$(IntDir)\AudioSource1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\BoxCollider.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\BoxCollider.ixx">
+      <ObjectFileName>$(IntDir)\BoxCollider1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Button.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Button.ixx">
+      <ObjectFileName>$(IntDir)\Button1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Camera.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Camera.ixx">
+      <ObjectFileName>$(IntDir)\Camera1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Canvas.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Canvas.ixx">
+      <ObjectFileName>$(IntDir)\Canvas1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\CapsuleCollider.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\CapsuleCollider.ixx">
+      <ObjectFileName>$(IntDir)\CapsuleCollider1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Collider.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Collider.ixx">
+      <ObjectFileName>$(IntDir)\Collider1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Component.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Component.ixx">
+      <ObjectFileName>$(IntDir)\Component1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Components.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\D6Joint.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\D6Joint.ixx">
+      <ObjectFileName>$(IntDir)\D6Joint1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\DirectionalLight.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\DirectionalLight.ixx">
+      <ObjectFileName>$(IntDir)\DirectionalLight1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\ImageView.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\ImageView.ixx">
+      <ObjectFileName>$(IntDir)\ImageView1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\MeshCollider.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\MeshCollider.ixx">
+      <ObjectFileName>$(IntDir)\MeshCollider1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\MeshRenderer.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\MeshRenderer.ixx">
+      <ObjectFileName>$(IntDir)\MeshRenderer1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\RigidBody.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\RigidBody.ixx">
+      <ObjectFileName>$(IntDir)\RigidBody1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Script.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\SphereCollider.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\SphereCollider.ixx">
+      <ObjectFileName>$(IntDir)\SphereCollider1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\TextView.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\TextView.ixx">
+      <ObjectFileName>$(IntDir)\TextView1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\View.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\View.ixx">
+      <ObjectFileName>$(IntDir)\View1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Coroutine.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Events.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Events.ixx">
+      <ObjectFileName>$(IntDir)\Events1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Internal\Bullet.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Internal\CapsuleShape.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\LayerMask.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Node.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Node.ixx">
+      <ObjectFileName>$(IntDir)\Node1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\PhysicsWorld.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\PhysicsWorld.ixx">
+      <ObjectFileName>$(IntDir)\PhysicsWorld1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Renderable.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Scene.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Scene.ixx">
+      <ObjectFileName>$(IntDir)\Scene1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\SceneGraph.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\SceneRenderer.cpp" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\SceneRenderer.ixx">
+      <ObjectFileName>$(IntDir)\SceneRenderer1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\App.cpp" />
-    <ClCompile Include="..\..\source\MW\System\AsyncExecutor.cpp" />
+    <ClCompile Include="..\..\source\MW\System\App.ixx">
+      <ObjectFileName>$(IntDir)\App1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\ApplicationDispatcher.ixx" />
+    <ClCompile Include="..\..\source\MW\System\AsyncExecutor.ixx" />
+    <ClCompile Include="..\..\source\MW\System\Awaitable.ixx" />
+    <ClCompile Include="..\..\source\MW\System\Clock.ixx" />
     <ClCompile Include="..\..\source\MW\System\Console.cpp" />
+    <ClCompile Include="..\..\source\MW\System\Console.ixx">
+      <ObjectFileName>$(IntDir)\Console1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Dispatcher.cpp" />
+    <ClCompile Include="..\..\source\MW\System\Dispatcher.ixx">
+      <ObjectFileName>$(IntDir)\Dispatcher1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\EntryPoint.cpp" />
+    <ClCompile Include="..\..\source\MW\System\EventHandlerList.ixx" />
+    <ClCompile Include="..\..\source\MW\System\Executor.ixx" />
+    <ClCompile Include="..\..\source\MW\System\IAwaitable.ixx" />
+    <ClCompile Include="..\..\source\MW\System\IAwaiter.ixx" />
     <ClCompile Include="..\..\source\MW\System\Internal\ApplicationDispatcherWindows.cpp" />
+    <ClCompile Include="..\..\source\MW\System\Internal\ApplicationDispatcherWindows.ixx">
+      <ObjectFileName>$(IntDir)\ApplicationDispatcherWindows1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Internal\WindowWindows.cpp" />
+    <ClCompile Include="..\..\source\MW\System\Internal\WindowWindows.ixx">
+      <ObjectFileName>$(IntDir)\WindowWindows1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Json.ixx" />
     <ClCompile Include="..\..\source\MW\System\Object.cpp" />
+    <ClCompile Include="..\..\source\MW\System\Object.ixx">
+      <ObjectFileName>$(IntDir)\Object1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Path.ixx" />
+    <ClCompile Include="..\..\source\MW\System\Pointers.ixx" />
+    <ClCompile Include="..\..\source\MW\System\Spinlock.ixx" />
+    <ClCompile Include="..\..\source\MW\System\SyncExecutor.ixx" />
+    <ClCompile Include="..\..\source\MW\System\System.ixx" />
     <ClCompile Include="..\..\source\MW\System\Task.cpp" />
+    <ClCompile Include="..\..\source\MW\System\Task.ixx">
+      <ObjectFileName>$(IntDir)\Task1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\ThreadPool.ixx" />
+    <ClCompile Include="..\..\source\MW\System\UUID.ixx" />
     <ClCompile Include="..\..\source\MW\System\Window.cpp" />
+    <ClCompile Include="..\..\source\MW\System\Window.ixx">
+      <ObjectFileName>$(IntDir)\Window1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\Base64.ixx" />
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNode.cpp" />
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNode.ixx">
+      <ObjectFileName>$(IntDir)\BSPNode1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNodeAllocator.cpp" />
-    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BinPacking.cpp" />
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNodeAllocator.ixx">
+      <ObjectFileName>$(IntDir)\BSPNodeAllocator1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\Bin.ixx" />
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BinPacker.cpp" />
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BinPacker.ixx">
+      <ObjectFileName>$(IntDir)\BinPacker1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BinPacking.ixx" />
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\RectMapping.ixx" />
+    <ClCompile Include="..\..\source\MW\Utilities\Format.ixx" />
+    <ClCompile Include="..\..\source\MW\Utilities\Sink.ixx" />
+    <ClCompile Include="..\..\source\MW\Utilities\Util.ixx" />
+    <ClCompile Include="..\..\source\MW\Utilities\Utilities.ixx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

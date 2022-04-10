@@ -1,11 +1,11 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Font",
-      "sourcePath": "Fonts/consola.ttf",
-      "uuid": "67e9ae41d0cf4a34a0d9267c5ea3ea97"
-    }
-  ],
-  "settings": {},
-  "sourcePath": "Fonts/consola.ttf"
+ "sourcePath": "Fonts/consola.ttf",
+ "artifacts": [
+  {
+   "uuid": "67e9ae41d0cf4a34a0d9267c5ea3ea97",
+   "assetType": "Font",
+   "sourcePath": "Fonts/consola.ttf"
+  }
+ ],
+ "settings": {}
 }

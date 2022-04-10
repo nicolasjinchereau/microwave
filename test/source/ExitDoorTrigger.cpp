@@ -2,11 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
-#include "ExitDoorTrigger.h"
-#include "BigDoors.h"
-#include "Player.h"
-#include "Game.h"
+module Test.ExitDoorTrigger;
+import Test.BigDoors;
+import Test.Player;
+import Test.Game;
+import Microwave;
+
+using namespace mw;
+
+namespace Test {
 
 void ExitDoorTrigger::Start() {
     auto rb = GetNode()->GetComponent<RigidBody>();
@@ -35,3 +39,5 @@ void ExitDoorTrigger::OnCollisionStop(const Collision& collision)
         }
     }
 }
+
+} // Test

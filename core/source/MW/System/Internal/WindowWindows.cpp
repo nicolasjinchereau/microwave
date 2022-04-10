@@ -2,33 +2,23 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/System/Internal/WindowWindows.h>
-#include <Windows.h>
-#include <windowsx.h>
-#include <stdexcept>
-#include <vector>
+module Microwave.System.Internal.WindowWindows;
+import <stdexcept>;
+import <vector>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
-#pragma comment(lib, "advapi32.lib")
-#pragma comment(lib, "comctl32.lib")
-#pragma comment(lib, "gdi32.lib")
-#pragma comment(lib, "shell32.lib")
-#pragma comment(lib, "comdlg32.lib")
-#pragma comment(lib, "ole32.lib")
-#pragma comment(lib, "uuid.lib")
-#pragma comment(lib, "opengl32.lib")
-
-#define VK_OEM_1 0xBA
-#define VK_OEM_PLUS 0xBB
-#define VK_OEM_COMMA 0xBC
-#define VK_OEM_MINUS 0xBD
-#define VK_OEM_PERIOD 0xBE
-#define VK_OEM_2 0xBF
-#define VK_OEM_3 0xC0
-#define VK_OEM_4 0xDB
-#define VK_OEM_5 0xDC
-#define VK_OEM_6 0xDD
-#define VK_OEM_7 0xDE
-#define VK_OEM_8 0xDF
+constexpr int _VK_OEM_1      = 0xBA;
+constexpr int _VK_OEM_PLUS   = 0xBB;
+constexpr int _VK_OEM_COMMA  = 0xBC;
+constexpr int _VK_OEM_MINUS  = 0xBD;
+constexpr int _VK_OEM_PERIOD = 0xBE;
+constexpr int _VK_OEM_2      = 0xBF;
+constexpr int _VK_OEM_3      = 0xC0;
+constexpr int _VK_OEM_4      = 0xDB;
+constexpr int _VK_OEM_5      = 0xDC;
+constexpr int _VK_OEM_6      = 0xDD;
+constexpr int _VK_OEM_7      = 0xDE;
+constexpr int _VK_OEM_8      = 0xDF;
 
 namespace mw {
 inline namespace system {
@@ -409,17 +399,17 @@ Keycode WindowWindows::TranslateKey(int keycode)
     case VK_SHIFT: return Keycode::Shift;
     case VK_RETURN: return Keycode::Enter;
     case VK_ESCAPE: return Keycode::Escape;
-    case VK_OEM_PLUS: return Keycode::Equals;
-    case VK_OEM_MINUS: return Keycode::Minus;
-    case VK_OEM_4: return Keycode::LeftBracket;
-    case VK_OEM_6: return Keycode::RightBracket;
-    case VK_OEM_7: return Keycode::Quote;
-    case VK_OEM_1: return Keycode::Semicolon;
-    case VK_OEM_2: return Keycode::Slash;
-    case VK_OEM_5: return Keycode::Backslash;
-    case VK_OEM_COMMA: return Keycode::Comma;
-    case VK_OEM_PERIOD: return Keycode::Period;
-    case VK_OEM_3: return Keycode::Grave;
+    case _VK_OEM_PLUS: return Keycode::Equals;
+    case _VK_OEM_MINUS: return Keycode::Minus;
+    case _VK_OEM_4: return Keycode::LeftBracket;
+    case _VK_OEM_6: return Keycode::RightBracket;
+    case _VK_OEM_7: return Keycode::Quote;
+    case _VK_OEM_1: return Keycode::Semicolon;
+    case _VK_OEM_2: return Keycode::Slash;
+    case _VK_OEM_5: return Keycode::Backslash;
+    case _VK_OEM_COMMA: return Keycode::Comma;
+    case _VK_OEM_PERIOD: return Keycode::Period;
+    case _VK_OEM_3: return Keycode::Grave;
     case VK_TAB: return Keycode::Tab;
     }
 

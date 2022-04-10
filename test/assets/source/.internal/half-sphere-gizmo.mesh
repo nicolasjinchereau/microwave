@@ -128,7 +128,7 @@
   ],
   "name": "HalfSphereGizmo",
   "normals": [],
-  "objectType": "Mesh",
+  "objectType": "mw::gfx::Mesh",
   "skinType": "None",
   "texcoords": [],
   "uuid": "78902d523f2649168f7bacff8f7c33b9",

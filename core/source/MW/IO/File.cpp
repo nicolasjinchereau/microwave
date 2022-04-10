@@ -2,22 +2,29 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/IO/File.h>
-#include <MW/IO/FileStream.h>
-#include <fstream>
-#include <regex>
+module;
+#include <MW/System/Internal/Platform.h>
+
+module Microwave.IO.File;
+import <cassert>;
+import <chrono>;
+import <fstream>;
+import <functional>;
+import <regex>;
+import <stdexcept>;
+import <utility>;
 
 #if PLATFORM_IOS || PLATFORM_MACOS
 #  import <Foundation/Foundation.h>
 #elif PLATFORM_ANDROID
-#  include <MW/System/IO/AndroidAssetStream.h>
-#  include <android/native_activity.h>
-#  include <android_native_app_glue.h>
+  import Microwave.IO.AndroidAssetStream;
+  import <android/native_activity.h>;
+  import <android_native_app_glue.h>;
 namespace mw {
     extern android_app* androidApp;
 }
 #elif PLATFORM_WINDOWS
-#  include <filesystem>
+  import <filesystem>;
 #endif
 
 namespace mw {
@@ -271,14 +278,5 @@ uint64_t File::GetLastWriteTime(const path& filePath)
     return std::chrono::duration_cast<std::chrono::nanoseconds>(unixTimestamp).count();
 }
 
-uint64_t File::GetTimestamp()
-{
-    timespec ts;
-    if (timespec_get(&ts, TIME_UTC) != TIME_UTC)
-        throw std::runtime_error("Failed to get time");
-
-    return ts.tv_sec * 1000000000LL + ts.tv_nsec;
-}
-
-}
-}
+} // io
+} // mw

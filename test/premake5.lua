@@ -5,7 +5,7 @@ workspace "Test"
     location ("projects/" .. os.target())
 
 project "Test"
-    kind "WindowedApp"
+    kind "ConsoleApp"
     language "C++"
     
     location ("projects/" .. os.target())
@@ -16,24 +16,24 @@ project "Test"
     }
 
     files {
-        "source/Coin.h",
-        "source/CoinCounter.h",
-        "source/ExitDoorTrigger.cpp",
-        "source/ExitDoorTrigger.h",
-        "source/Game.h",
-        "source/LossScreen.cpp",
-        "source/LossScreen.h",
-        "source/Player.h",
-        "source/PlayerWheel.cpp",
-        "source/PlayerWheel.h",
-        "source/SpinningGear.h",
-        "source/WinScreen.cpp",
-        "source/WinScreen.h",
-        "source/BatteryMeter.h",
-        "source/BigDoors.h",
-        "source/CameraController.h",
+        "source/BatteryMeter.ixx",
+        "source/BigDoors.ixx",
+        "source/CameraController.ixx",
         "source/Coin.cpp",
-        "source/TestApplication.cpp"
+        "source/Coin.ixx",
+        "source/CoinCounter.ixx",
+        "source/ExitDoorTrigger.cpp",
+        "source/ExitDoorTrigger.ixx",
+        "source/Game.ixx",
+        "source/LossScreen.cpp",
+        "source/LossScreen.ixx",
+        "source/Player.ixx",
+        "source/PlayerWheel.cpp",
+        "source/PlayerWheel.ixx",
+        "source/SpinningGear.ixx",
+        "source/TestApplication.cpp",
+        "source/WinScreen.cpp",
+        "source/WinScreen.ixx"
     }
 
     xcodebuildresources {
@@ -119,19 +119,20 @@ project "Test"
 
     filter "configurations:Debug"
         defines {
-            "_DEBUG",
+            "NOMINMAX",
             "DEBUG",
-            "NOMINMAX"
+            "_DEBUG"
         }
         symbols "On"
 
     filter "configurations:Release"
         defines {
-            "NDEBUG",
-            "NOMINMAX"
+            "NOMINMAX",
+            "NDEBUG"
         }
         optimize "Speed"
         inlining "Auto"
+        floatingpoint "Fast"
         vectorextensions "SSE2"
 
     filter { "system:ios" }
@@ -218,7 +219,10 @@ project "Test"
             "vorbis.lib",
             "xz-utils.lib",
             "zlib.lib",
+            "d3dcompiler.lib",
             "D3D11.lib",
+            "opengl32.lib",
+            "OneCore.lib",
             "winmm.lib"
         }
         postbuildcommands {
@@ -274,8 +278,14 @@ project "Test"
         }
     
     filter { "action:vs*" }
-        cppdialect "C++20"
+        cppdialect "C++latest"
         cdialect "C11"
+        toolset "v143"
+        scanformoduledependencies "true"
+        enablemodules "true"
+        moduledependencies {
+            "../core/ifc/$(PlatformName)/$(Configuration)"
+        }
         buildoptions {
             "/await"
         }

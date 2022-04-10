@@ -2,18 +2,17 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <Windows.h>
-#include <glew.h>
-#include <gl/GL.h>
-#include <MW/Graphics/GraphicsTypes.h>
-#include <MW/Graphics/Internal/GraphicsContextWindowsD3D11.h>
-#include <MW/Graphics/Internal/WindowSurfaceWindowsD3D11.h>
-#include <MW/Graphics/Internal/RenderTextureWindowsD3D11.h>
-#include <MW/Graphics/Internal/ShaderWindowsD3D11.h>
-#include <MW/Graphics/Internal/DrawBufferWindowsD3D11.h>
-#include <MW/Graphics/Internal/TextureWindowsD3D11.h>
-#include <MW/System/Internal/WindowWindows.h>
-#include <stdexcept>
+module Microwave.Graphics.Internal.GraphicsContextWindowsD3D11;
+import Microwave.Graphics.GraphicsTypes;
+import Microwave.Graphics.Internal.GraphicsContextWindowsD3D11;
+import Microwave.Graphics.Internal.WindowSurfaceWindowsD3D11;
+import Microwave.Graphics.Internal.RenderTextureWindowsD3D11;
+import Microwave.Graphics.Internal.ShaderWindowsD3D11;
+import Microwave.Graphics.Internal.DrawBufferWindowsD3D11;
+import Microwave.Graphics.Internal.TextureWindowsD3D11;
+import Microwave.System.Internal.WindowWindows;
+import <stdexcept>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -499,6 +498,7 @@ void GraphicsContextWindowsD3D11::UpdateDepthStencilState()
 
         switch (_depthTest)
         {
+        default:
         case DepthTest::Always:
             depthEnabled = false;
             depthFunc = D3D11_COMPARISON_ALWAYS;

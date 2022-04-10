@@ -8,10 +8,10 @@
   "destAlphaBlendFactor": "Zero",
   "destColorBlendFactor": "Zero",
   "name": "WireGizmo",
-  "objectType": "Material",
+  "objectType": "mw::gfx::Material",
   "properties": {
     "name": "",
-    "objectType": "MaterialPropertyBlock",
+    "objectType": "mw::gfx::MaterialPropertyBlock",
     "properties": {},
     "uuid": "351b7e833b014d1abb92b99f0bbe1280"
   },

@@ -2,11 +2,11 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
-#include <MW/Graphics/Internal/GraphicsContextWindowsD3D11.h>
-#include <MW/Graphics/Internal/GraphicsContextWindowsOpenGL.h>
-#include <MW/Graphics/Graphics.h>
-#include <MW/System/Pointers.h>
+import Microwave.Graphics.Internal.GraphicsContextWindowsD3D11;
+import Microwave.Graphics.Internal.GraphicsContextWindowsOpenGL;
+import Microwave.Graphics;
+import Microwave.System.Pointers;
+import <stdexcept>;
 
 namespace mw {
 inline namespace gfx {
@@ -27,5 +27,5 @@ sptr<GraphicsContext> GraphicsContext::New(GraphicsDriverType type)
     }
 }
 
-}
-}
+} // gfx
+} // mw

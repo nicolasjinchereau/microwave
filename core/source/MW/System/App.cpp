@@ -2,9 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/System/App.h>
-#include <MW/Graphics/Graphics.h>
-#include <algorithm>
+module;
+#include <MW/System/Internal/Platform.h>
+
+module Microwave.System.App;
+import Microwave.Graphics;
+import Microwave.System.Dispatcher;
+import <algorithm>;
+import <cassert>;
+import <stdexcept>;
 
 namespace mw {
 inline namespace system {
@@ -96,7 +102,8 @@ sptr<AssetLibrary> App::GetAssetLibrary() {
 }
 
 void App::FlushWindowList() {
-    (void)std::remove_if(_allWindows.begin(), _allWindows.end(), [](const wptr<Window>& wp){ return !wp.lock(); });
+    (void)std::remove_if(_allWindows.begin(), _allWindows.end(),
+        [](const wptr<Window>& wp){ return !wp.lock(); });
 }
 
 int App::Run(int argc, char *argv[])

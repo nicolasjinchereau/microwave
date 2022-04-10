@@ -2,17 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Internal/DrawBufferWindowsD3D11.h>
-#include <MW/Graphics/Internal/GraphicsContextWindowsD3D11.h>
-#include <MW/Graphics/Internal/ShaderWindowsD3D11.h>
-#include <MW/Graphics/Internal/TextureWindowsD3D11.h>
-#include <MW/System/Console.h>
-#include <cassert>
-#include <regex>
-#include <algorithm>
-#include <d3dcompiler.h>
-
-#pragma comment(lib,"d3dcompiler.lib")
+module Microwave.Graphics.Internal.ShaderWindowsD3D11;
+import Microwave.Graphics.Internal.DrawBufferWindowsD3D11;
+import Microwave.Graphics.Internal.GraphicsContextWindowsD3D11;
+import Microwave.Graphics.Internal.TextureWindowsD3D11;
+import Microwave.System.Console;
+import <cassert>;
+import <regex>;
+import <algorithm>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
 ComPtr<ID3DBlob> CompileShader(const std::string& source, const std::string& entryPoint, const std::string& profile)
 {

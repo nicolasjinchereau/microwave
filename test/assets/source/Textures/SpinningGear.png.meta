@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/SpinningGear.png",
-      "uuid": "fd0d7f10d3e04308aa955709a396c0fe"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/SpinningGear.png"
+ "sourcePath": "Textures/SpinningGear.png",
+ "artifacts": [
+  {
+   "uuid": "fd0d7f10d3e04308aa955709a396c0fe",
+   "assetType": "Texture",
+   "sourcePath": "Textures/SpinningGear.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

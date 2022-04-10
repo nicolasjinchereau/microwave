@@ -2,11 +2,10 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/System/Json.h>
-#include <MW/Graphics/Mesh.h>
-#include <MW/System/App.h>
-#include <algorithm>
-#include <unordered_map>
+module Microwave.Graphics.Mesh;
+import Microwave.System.App;
+import <algorithm>;
+import <unordered_map>;
 
 namespace mw {
 inline namespace gfx {
@@ -30,7 +29,7 @@ void Mesh::ToJson(json& obj) const
 void Mesh::FromJson(const json& obj, ObjectLinker* linker)
 {
     Object::FromJson(obj, linker);
-    
+
     vertices = obj.value("vertices", vertices);
     normals = obj.value("normals", normals);
     texcoords = obj.value("texcoords", texcoords);
@@ -82,7 +81,7 @@ void Mesh::UpdateBuffers()
 {
     auto graphics = App::Get()->GetGraphics();
     bool dynamicBuffers = skinType != SkinType::None;
-    
+
     if (!vertices.empty())
     {
         auto pVertices = (std::byte*)vertices.data();
@@ -277,5 +276,5 @@ void from_json(const json& obj, Mesh& mesh) {
     mesh.FromJson(obj, nullptr);
 }
 
-}
-}
+} // gfx
+} // mw

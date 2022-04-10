@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/UI/Gear.png",
-      "uuid": "2e647ce7ccc747b09dadde22726944e5"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/UI/Gear.png"
+ "sourcePath": "Textures/UI/Gear.png",
+ "artifacts": [
+  {
+   "uuid": "2e647ce7ccc747b09dadde22726944e5",
+   "assetType": "Texture",
+   "sourcePath": "Textures/UI/Gear.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

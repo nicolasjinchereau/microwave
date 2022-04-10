@@ -2,25 +2,39 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Data/Library/AssetLibrary.h>
-#include <MW/Data/Library/AssetSettings.h>
-#include <MW/Data/Library/AudioClipLoader.h>
-#include <MW/Data/Library/BinaryLoader.h>
-#include <MW/Data/Library/ObjectLoader.h>
-#include <MW/Data/Library/ShaderLoader.h>
-#include <MW/Data/Library/TextureLoader.h>
-#include <MW/Data/Library/FontLoader.h>
-#include <MW/System/Json.h>
-#include <MW/Graphics/GraphicsContext.h>
-#include <MW/Graphics/Image.h>
-#include <MW/Graphics/Material.h>
-#include <MW/Graphics/Model.h>
-#include <MW/Graphics/Shader.h>
-#include <MW/Graphics/Texture.h>
-#include <MW/IO/File.h>
-#include <MW/IO/FileStream.h>
-#include <MW/Scene/Node.h>
-#include <algorithm>
+module Microwave.Data.Library.AssetLibrary;
+import Microwave.Data.Library.AssetSettings;
+import Microwave.Data.Library.AudioClipLoader;
+import Microwave.Data.Library.BinaryLoader;
+import Microwave.Data.Library.ObjectLoader;
+import Microwave.Data.Library.ShaderLoader;
+import Microwave.Data.Library.TextureLoader;
+import Microwave.Data.Library.FontLoader;
+import Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.Image;
+import Microwave.Graphics.Material;
+import Microwave.Graphics.Model;
+import Microwave.Graphics.Shader;
+import Microwave.Graphics.Texture;
+import Microwave.System.Console;
+import Microwave.System.Executor;
+import Microwave.System.Json;
+import Microwave.System.Object;
+import Microwave.System.Path;
+import Microwave.System.Pointers;
+import Microwave.System.SyncExecutor;
+import Microwave.System.Task;
+import Microwave.System.ThreadPool;
+import Microwave.System.UUID;
+import Microwave.IO.File;
+import Microwave.IO.FileStream;
+import Microwave.SceneGraph.Node;
+import <algorithm>;
+import <cassert>;
+import <memory>;
+import <optional>;
+import <string>;
+import <unordered_map>;
 
 namespace mw {
 inline namespace data {
@@ -225,5 +239,5 @@ void AssetLibrary::ReleaseAsset(const UUID& uuid) {
     assets.erase(uuid);
 }
 
-}
-}
+} // data
+} // mw

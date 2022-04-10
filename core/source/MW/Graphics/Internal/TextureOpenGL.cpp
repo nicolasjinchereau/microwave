@@ -2,13 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Internal/TextureOpenGL.h>
-#include <MW/System/Console.h>
-#include <unordered_map>
-#include <algorithm>
-#include <cassert>
-#include <regex>
-#include <stdexcept>
+module Microwave.Graphics.Internal.TextureOpenGL;
+import Microwave.System.Console;
+import <algorithm>;
+import <cassert>;
+import <cstring>;
+import <regex>;
+import <stdexcept>;
+import <unordered_map>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {

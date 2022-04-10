@@ -2,32 +2,19 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Data/Database/AssetDatabase.h>
-#include <MW/Data/Library/AssetLibrary.h>
-#include <MW/Graphics/Graphics.h>
-#include <MW/Graphics/GraphicsContext.h>
-#include <MW/IO/File.h>
-#include <MW/Math/Math.h>
-#include <MW/Scene/Scene.h>
-#include <MW/Scene/SceneRenderer.h>
-#include <MW/System/App.h>
-#include <MW/System/Clock.h>
-#include <MW/System/Console.h>
-#include <MW/System/Platforms.h>
-#include <MW/System/Task.h>
-#include <MW/System/ThreadPool.h>
-#include <iostream>
-#include <chrono>
-#include <memory>
-#include <array>
-#include <fstream>
-#include "Game.h"
+import Microwave;
+import Test.Game;
+import <iostream>;
+import <memory>;
+import <array>;
+import <fstream>;
 
 using namespace mw;
 
-class TestApplication :
-    public App,
-    public IDispatchHandler
+namespace Test {
+
+class TestApplication : public App
+                      , public IDispatchHandler
 {
 public:
     sptr<GraphicsContext> graphics;
@@ -37,6 +24,7 @@ public:
     sptr<AssetLibrary> assetLibrary;
     sptr<Scene> scene;
     sptr<SceneRenderer> sceneRenderer;
+    sptr<Mesh> dummy;
 
     virtual void OnInitialize(AppConfig& config) override
     {
@@ -137,3 +125,5 @@ public:
 };
 
 sptr<TestApplication> app = spnew<TestApplication>();
+
+} // Test

@@ -2,10 +2,25 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
-#include <MW/Graphics/Material.h>
-#include <MW/System/App.h>
-#include <MW/System/Json.h>
+module Microwave.Graphics.Material;
+import Microwave.Graphics.Color;
+import Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.GraphicsTypes;
+import Microwave.Graphics.MaterialPropertyBlock;
+import Microwave.Graphics.RenderQueue;
+import Microwave.Graphics.Shader;
+import Microwave.Graphics.Texture;
+import Microwave.Math;
+import Microwave.System.App;
+import Microwave.System.Json;
+import Microwave.System.Object;
+import Microwave.System.Path;
+import Microwave.System.Pointers;
+import Microwave.System.UUID;
+import <cassert>;
+import <cstdint>;
+import <string>;
+import <unordered_map>;
 
 namespace mw {
 inline namespace gfx {
@@ -72,12 +87,11 @@ void Material::FromJson(const json& obj, ObjectLinker* linker)
     depthTest = obj.value("depthTest", depthTest);
     depthWriteEnabled = obj.value("depthWriteEnabled", depthWriteEnabled);
     renderQueue = obj.value("renderQueue", renderQueue);
-    //Json::AssetFromJson(obj, "shader", shader);
     ObjectLinker::RestoreAsset(linker, This(), shader, obj, "shader");
 
     const json& props = obj["properties"];
     properties->FromJson(props, linker);
 }
 
-}
-}
+} // gfx
+} // mw

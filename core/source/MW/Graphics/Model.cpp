@@ -2,11 +2,27 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/System/Json.h>
-#include <MW/Graphics/Model.h>
-#include <MW/IO/FileStream.h>
-#include <MW/Utilities/Base64.h>
-#include <zip.h>
+module Microwave.Graphics.Model;
+import Microwave.IO.FileStream;
+import Microwave.Graphics.AnimationTrack;
+import Microwave.Graphics.Color;
+import Microwave.Graphics.GraphicsTypes;
+import Microwave.Graphics.RenderQueue;
+import Microwave.Math;
+import Microwave.System.Json;
+import Microwave.System.Path;
+import Microwave.System.Pointers;
+import Microwave.Utilities.Base64;
+import <algorithm>;
+import <cstdint>;
+import <cstddef>;
+import <exception>;
+import <span>;
+import <string>;
+import <stdexcept>;
+import <vector>;
+import <unordered_map>;
+import <zip.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -283,32 +299,35 @@ void from_json(const json& obj, ModelMaterial& mat)
     mat.uNormalTex_ST = obj.value("uNormalTex_ST", mat.uNormalTex_ST);
     mat.uNormalFactor = obj.value("uNormalFactor", mat.uNormalFactor);
 
-    mat.colorBlendOperation = obj["colorBlendOperation"];
-    mat.alphaBlendOperation = obj["alphaBlendOperation"];
-    mat.sourceColorBlendFactor = obj["sourceColorBlendFactor"];
-    mat.sourceAlphaBlendFactor = obj["sourceAlphaBlendFactor"];
-    mat.destColorBlendFactor = obj["destColorBlendFactor"];
-    mat.destAlphaBlendFactor = obj["destAlphaBlendFactor"];
-    mat.cullMode = obj["cullMode"];
-    mat.depthTest = obj["depthTest"];
-    mat.depthWriteEnabled = obj["depthWriteEnabled"];
-    mat.renderQueue = obj["renderQueue"];
+    mat.colorBlendOperation = obj.value("colorBlendOperation", mat.colorBlendOperation);
+    mat.alphaBlendOperation = obj.value("alphaBlendOperation", mat.alphaBlendOperation);
+    mat.sourceColorBlendFactor = obj.value("sourceColorBlendFactor", mat.sourceColorBlendFactor);
+    mat.sourceAlphaBlendFactor = obj.value("sourceAlphaBlendFactor", mat.sourceAlphaBlendFactor);
+    mat.destColorBlendFactor = obj.value("destColorBlendFactor", mat.destColorBlendFactor);
+    mat.destAlphaBlendFactor = obj.value("destAlphaBlendFactor", mat.destAlphaBlendFactor);
+    mat.cullMode = obj.value("cullMode", mat.cullMode);
+    mat.depthTest = obj.value("depthTest", mat.depthTest);
+    mat.depthWriteEnabled = obj.value("depthWriteEnabled", mat.depthWriteEnabled);
+    mat.renderQueue = obj.value("renderQueue", mat.renderQueue);
 }
 
 void to_json(json& obj, const ModelMeshElement& elem)
 {
+    obj["drawMode"] = elem.drawMode;
     obj["indices"] = elem.indices;
     obj["material"] = elem.material;
 }
 
 void from_json(const json& obj, ModelMeshElement& elem)
 {
+    elem.drawMode = obj.value("drawMode", elem.drawMode);
     elem.indices = obj.value("indices", elem.indices);
     elem.material = obj.value("material", elem.material);
 }
 
 void to_json(json& obj, const ModelMesh& mesh)
 {
+    obj["name"] = mesh.name;
     obj["vertices"] = mesh.vertices;
     obj["normals"] = mesh.normals;
     obj["texcoords"] = mesh.texcoords;
@@ -321,6 +340,7 @@ void to_json(json& obj, const ModelMesh& mesh)
 
 void from_json(const json& obj, ModelMesh& mesh)
 {
+    mesh.name = obj.value("name", mesh.name);
     mesh.vertices = obj.value("vertices", mesh.vertices);
     mesh.normals = obj.value("normals", mesh.normals);
     mesh.texcoords = obj.value("texcoords", mesh.texcoords);
@@ -333,24 +353,54 @@ void from_json(const json& obj, ModelMesh& mesh)
 
 void to_json(json& obj, const ModelColliderType& type)
 {
-    static const char* typeNames[]{ "Sphere", "Box", "Capsule", "Convex" };
-    obj = typeNames[(int)type];
+    static std::unordered_map<ModelColliderType, std::string> typeNames {
+        { ModelColliderType::None, "None" },
+        { ModelColliderType::Sphere, "Sphere" },
+        { ModelColliderType::Box, "Box" },
+        { ModelColliderType::Capsule, "Capsule" },
+        { ModelColliderType::Convex, "Convex" }
+    };
+    obj = typeNames[type];
 }
 
 void from_json(const json& obj, ModelColliderType& type)
 {
-    static std::unordered_map<std::string, ModelColliderType> modes {
+    static std::unordered_map<std::string, ModelColliderType> types {
+        { "None", ModelColliderType::None },
         { "Sphere", ModelColliderType::Sphere },
         { "Box", ModelColliderType::Box },
         { "Capsule", ModelColliderType::Capsule },
         { "Convex", ModelColliderType::Convex }
     };
-    type = modes[obj.get<std::string>("Invalid")];
+    type = types[obj.get<std::string>("None")];
+}
+
+void to_json(json& obj, const ModelRigidBodyType& type)
+{
+    static std::unordered_map<ModelRigidBodyType, std::string> typeNames {
+        { ModelRigidBodyType::None, "None" },
+        { ModelRigidBodyType::Dynamic, "Dynamic" },
+        { ModelRigidBodyType::Kinematic, "Kinematic" },
+        { ModelRigidBodyType::Static, "Static" }
+    };
+    obj = typeNames[type];
+}
+
+void from_json(const json& obj, ModelRigidBodyType& type)
+{
+    static std::unordered_map<std::string, ModelRigidBodyType> types {
+        { "None", ModelRigidBodyType::None },
+        { "Dynamic", ModelRigidBodyType::Dynamic },
+        { "Kinematic", ModelRigidBodyType::Kinematic },
+        { "Static", ModelRigidBodyType::Static }
+    };
+    type = types[obj.get<std::string>("None")];
 }
 
 void to_json(json& obj, const ModelCollider& collider)
 {
     obj["type"] = collider.type;
+    obj["bodyType"] = collider.bodyType;
     obj["name"] = collider.name;
     obj["pivotID"] = collider.pivotID;
     obj["radius"] = collider.radius;
@@ -364,6 +414,7 @@ void to_json(json& obj, const ModelCollider& collider)
 void from_json(const json& obj, ModelCollider& collider)
 {
     collider.type = obj.value("type", collider.type);
+    collider.bodyType = obj.value("bodyType", collider.bodyType);
     collider.name = obj.value("name", collider.name);
     collider.pivotID = obj.value("pivotID", collider.pivotID);
     collider.radius = obj.value("radius", collider.radius);
@@ -452,18 +503,21 @@ void to_json(json& obj, const ModelAnimationClip& clip)
 
 void from_json(const json& obj, ModelAnimationClip& clip)
 {
-    clip.name = obj["name"];
-    clip.wrapMode = obj["wrapMode"];
+    clip.name = obj.value("name", clip.name);
+    clip.wrapMode = obj.value("wrapMode", clip.wrapMode);
 
-    const json& trackObjs = obj["tracks"];
-    for (auto& [key, trackObj] : trackObjs.items())
+    if (auto it = obj.find("tracks"); it != obj.end())
     {
-        auto track = spnew<AnimationTrack>();
-        from_json(trackObj, *track);
-        clip.tracks[key] = track;
+        const json& trackObjs = obj["tracks"];
+
+        for (auto& [key, trackObj] : trackObjs.items())
+        {
+            auto track = spnew<AnimationTrack>();
+            from_json(trackObj, *track);
+            clip.tracks[key] = track;
+        }
     }
 }
-
 
 namespace {
 
@@ -519,12 +573,15 @@ void from_json(const json& obj, Model& model)
     model.nodes.resize(nodeCount);
     StoreModelNodes(model.rootNode, model.nodes);
 
-    const json& clipsObj = obj["clips"];
-    for (auto& clipObj : clipsObj)
+    if (auto it = obj.find("clips"); it != obj.end())
     {
-        auto clip = spnew<ModelAnimationClip>();
-        from_json(clipObj, *clip);
-        model.clips.push_back(std::move(clip));
+        const json& clipsObj = obj["clips"];
+        for (auto& clipObj : clipsObj)
+        {
+            auto clip = spnew<ModelAnimationClip>();
+            from_json(clipObj, *clip);
+            model.clips.push_back(std::move(clip));
+        }
     }
 }
 

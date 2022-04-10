@@ -2,15 +2,17 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Font.h>
-#include <MW/Graphics/LineEnumerator.h>
-#include <utf8.h>
+module Microwave.Graphics.LineEnumerator;
+import Microwave.Graphics.Font;
+import Microwave.System.Pointers;
+import <string>;
+import <utf8.h>;
 
 namespace mw {
 inline namespace gfx {
 
 LineEnumerator::LineEnumerator(
-    const std::shared_ptr<const Font>& font,
+    const sptr<const Font>& font,
     const std::string& input,
     int maxLineWidth)
 {

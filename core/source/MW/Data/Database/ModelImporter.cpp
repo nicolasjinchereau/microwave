@@ -2,26 +2,26 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
-#include <MW/Data/Database/AssetDatabase.h>
-#include <MW/Data/Database/ModelImporter.h>
-#include <MW/Data/Library/AssetLibrary.h>
-#include <MW/Data/Internal/FBXModelConverter.h>
-#include <MW/Scene/Components/Animator.h>
-#include <MW/Scene/Components/MeshRenderer.h>
-#include <MW/Scene/Components/SphereCollider.h>
-#include <MW/Scene/Components/BoxCollider.h>
-#include <MW/Scene/Components/CapsuleCollider.h>
-#include <MW/Scene/Components/MeshCollider.h>
-#include <MW/Scene/Components/RigidBody.h>
-#include <MW/Utilities/Util.h>
+module Microwave.Data.Database.ModelImporter;
+import Microwave.Data.Library.AssetLibrary;
+import Microwave.Data.Internal.FBXModelConverter;
+import Microwave.Graphics.AnimationClip;
+import Microwave.Graphics.Mesh;
+import Microwave.SceneGraph.Components.Animator;
+import Microwave.SceneGraph.Components.BoxCollider;
+import Microwave.SceneGraph.Components.CapsuleCollider;
+import Microwave.SceneGraph.Components.MeshCollider;
+import Microwave.SceneGraph.Components.MeshRenderer;
+import Microwave.SceneGraph.Components.RigidBody;
+import Microwave.SceneGraph.Components.SphereCollider;
+import Microwave.System.Console;
+import <cassert>;
 
 namespace mw {
 inline namespace data {
 
 struct ModelImporter::ParserState
 {
-    ModelSettings* settings;
     sptr<Node> rootNode;
     std::unordered_map<std::string, sptr<Mesh>> meshes;
     std::unordered_map<std::string, MaterialInfo> materials;
@@ -47,7 +47,6 @@ void ModelImporter::ImportFile(
     sptr<Model> model = FBXModelConverter::Convert(stream, settings);
 
     ParserState state;
-    state.settings = &settings;
     ParseModel(model, state);
     
     // save all generated asset artifacts
@@ -175,7 +174,7 @@ bool ModelImporter::Resolve(
                     {
                         auto artifactPath = dataDir / art.uuid.ToString();
                         auto txt = File::ReadAllText(artifactPath);
-                        mat = ObjectFactory::FromJson<Material>(json::parse(txt), nullptr);
+                        mat = Object::CreateFromJson<Material>(json::parse(txt), nullptr);
                     }
 
                     sptr<Texture> tex = assetLib->GetAsset<Texture>(*uuid);
@@ -196,7 +195,7 @@ bool ModelImporter::Resolve(
                     {
                         auto artifactPath = dataDir / art.uuid.ToString();
                         auto txt = File::ReadAllText(artifactPath);
-                        mat = ObjectFactory::FromJson<Material>(json::parse(txt), nullptr);
+                        mat = Object::CreateFromJson<Material>(json::parse(txt), nullptr);
                     }
 
                     mat->shader = assetLib->GetAsset<Shader>(*uuid);

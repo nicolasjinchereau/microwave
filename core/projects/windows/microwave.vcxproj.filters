@@ -4,6 +4,9 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio\Internal">
+      <UniqueIdentifier>{A3B8EEDB-8F86-E2E1-781A-53086487BE46}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Data">
       <UniqueIdentifier>{3F05847C-2B3C-850D-D428-6B10C03E010F}</UniqueIdentifier>
     </Filter>
@@ -34,14 +37,14 @@
     <Filter Include="Math\detail">
       <UniqueIdentifier>{91F10866-FDA6-815B-869B-7B32F24F785F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{B3F7140E-1F0C-3DBF-E88D-E01E546139F0}</UniqueIdentifier>
+    <Filter Include="SceneGraph">
+      <UniqueIdentifier>{05BA97CB-F171-D918-5A79-B27446507409}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\Components">
-      <UniqueIdentifier>{E8C60300-D4BF-2252-FDF1-07D7E949025E}</UniqueIdentifier>
+    <Filter Include="SceneGraph\Components">
+      <UniqueIdentifier>{FA31FD22-669E-B81D-2F92-507B9BBDDA85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\Internal">
-      <UniqueIdentifier>{3F571D15-2B25-111B-14B9-81410026ED7F}</UniqueIdentifier>
+    <Filter Include="SceneGraph\Internal">
+      <UniqueIdentifier>{D1D53C72-3D37-1A80-C6A4-60323205513F}</UniqueIdentifier>
     </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{6AD049D2-5672-74A8-3F2D-88FC2B6EFBF8}</UniqueIdentifier>
@@ -57,588 +60,228 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\source\MW\Audio\AudioClip.h">
-      <Filter>Audio</Filter>
+    <ClInclude Include="..\..\source\MW\Audio\Internal\OpenAL.h">
+      <Filter>Audio\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\MW\Audio\AudioContext.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Audio\AudioContextWindows.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Audio\AudioSample.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Audio\AudioStream.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Audio\Mp3Decoder.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Audio\Mp3Stream.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Audio\OggDecoder.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Audio\OggStream.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Audio\WavStream.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Database\AssetDatabase.h">
-      <Filter>Data\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Database\AssetImporter.h">
-      <Filter>Data\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Database\AudioClipImporter.h">
-      <Filter>Data\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Database\DefaultImporter.h">
-      <Filter>Data\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Database\ModelImporter.h">
-      <Filter>Data\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Database\TextureImporter.h">
-      <Filter>Data\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Internal\FBXModelConverter.h">
+    <ClInclude Include="..\..\source\MW\Data\Internal\Assets.h">
       <Filter>Data\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Internal\FBXUDPParser.h">
+    <ClInclude Include="..\..\source\MW\Data\Internal\FBX_SDK.h">
       <Filter>Data\Internal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\MW\Data\Internal\FbxMemoryStream.h">
       <Filter>Data\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetLibrary.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetLoader.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetManifest.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetSettings.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\AssetType.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\AudioClipLoader.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\BinaryLoader.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\FontLoader.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\ObjectLoader.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\ShaderLoader.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Library\TextureLoader.h">
-      <Filter>Data\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\AnimationClip.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\AnimationTrack.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Color.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\DrawBuffer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Font.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\GizmoUtility.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Graphics.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\GraphicsContext.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\GraphicsResource.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\GraphicsTypes.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Image.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.h">
+    <ClInclude Include="..\..\source\MW\Graphics\Internal\FreeType2.h">
       <Filter>Graphics\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\OpenGLAPI.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.h">
-      <Filter>Graphics\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\LineEnumerator.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Material.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\MaterialPropertyBlock.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Mesh.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Model.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\RenderQueue.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\RenderTarget.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\RenderTexture.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Shader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Texture.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\Types.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\WindowSurface.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\detail\Color32F.h">
-      <Filter>Graphics\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\detail\Color32F.inl">
-      <Filter>Graphics\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\detail\Color8U.h">
-      <Filter>Graphics\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\detail\Color8U.inl">
-      <Filter>Graphics\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\detail\ColorBGRA.h">
-      <Filter>Graphics\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Graphics\detail\ColorBGRA.inl">
-      <Filter>Graphics\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\IO\File.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\IO\FileStream.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\IO\MemoryStream.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\IO\Stream.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\Math.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\AABox.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\AABox.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Functions.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Functions.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\IVec2.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\IVec2.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\IVec4.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\IVec4.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\IntRect.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\IntRect.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Json.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat2.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat2.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat3.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat3.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat4.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Mat4.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Plane.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Plane.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Quat.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Quat.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Ray.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Ray.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Sphere.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Sphere.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Transform.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Transform.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Triangle.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Triangle.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec2.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec2.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec3.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec3.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec4.h">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Math\detail\Vec4.inl">
-      <Filter>Math\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Axis.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\Animator.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\AudioSource.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\BoxCollider.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\Button.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\Camera.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\Canvas.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\CapsuleCollider.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\Collider.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\Component.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\D6Joint.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\DirectionalLight.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\ImageView.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\MeshCollider.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\MeshRenderer.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\RigidBody.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\Script.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\SphereCollider.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\TextView.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Components\View.h">
-      <Filter>Scene\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Coroutine.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Events.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Internal\Bullet.h">
-      <Filter>Scene\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Internal\CapsuleShape.h">
-      <Filter>Scene\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\LayerMask.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Node.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\PhysicsWorld.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Renderable.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\Scene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Scene\SceneRenderer.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\App.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\ApplicationDispatcher.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\AsyncExecutor.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Awaitable.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Clock.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Console.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Dispatcher.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\EventHandlerList.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Executor.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\IAwaitable.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\IAwaiter.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Internal\ApplicationDispatcherWindows.h">
-      <Filter>System\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Internal\WindowWindows.h">
-      <Filter>System\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Json.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Object.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Platforms.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Pointers.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Spinlock.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\SyncExecutor.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Task.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\ThreadPool.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\UUID.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Window.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\path.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\Base64.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\BSPNode.h">
-      <Filter>Utilities\BinPacking</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\BSPNodeAllocator.h">
-      <Filter>Utilities\BinPacking</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\Bin.h">
-      <Filter>Utilities\BinPacking</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\BinPacking.h">
-      <Filter>Utilities\BinPacking</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\BinPacking\RectMapping.h">
-      <Filter>Utilities\BinPacking</Filter>
+    <ClInclude Include="..\..\source\MW\SceneGraph\Internal\Bullet.h">
+      <Filter>SceneGraph\Internal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\MW\Utilities\EnumFlags.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\Format.h">
-      <Filter>Utilities</Filter>
+    <ClInclude Include="..\..\source\MW\System\Internal\PlatformHeaders.h">
+      <Filter>System\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\Sink.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\Util.h">
-      <Filter>Utilities</Filter>
+    <ClInclude Include="..\..\source\MW\System\Internal\Platform.h">
+      <Filter>System\Internal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\MW\Audio\Audio.ixx">
+      <Filter>Audio</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\AudioClip.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\AudioClip.ixx">
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\AudioContext.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Audio\AudioContextWindows.cpp">
+    <ClCompile Include="..\..\source\MW\Audio\AudioContext.ixx">
       <Filter>Audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\AudioSample.ixx">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\AudioStream.ixx">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextWindows.cpp">
+      <Filter>Audio\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextWindows.ixx">
+      <Filter>Audio\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\Internal\Mp3Decoder.ixx">
+      <Filter>Audio\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\Internal\OggDecoder.ixx">
+      <Filter>Audio\Internal</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\Mp3Stream.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\Mp3Stream.ixx">
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\OggStream.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\OggStream.ixx">
+      <Filter>Audio</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\WavStream.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Audio\WavStream.ixx">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Data.ixx">
+      <Filter>Data</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Data\Database\AssetDatabase.cpp">
+      <Filter>Data\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\AssetDatabase.ixx">
+      <Filter>Data\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\AssetImporter.ixx">
+      <Filter>Data\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\AudioClipImporter.ixx">
+      <Filter>Data\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\Database.ixx">
+      <Filter>Data\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\DefaultImporter.ixx">
       <Filter>Data\Database</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Data\Database\ModelImporter.cpp">
       <Filter>Data\Database</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\ModelImporter.ixx">
+      <Filter>Data\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\TextureImporter.ixx">
+      <Filter>Data\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Internal\FBXModelConverter.cpp">
+      <Filter>Data\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Internal\FBXModelConverter.ixx">
+      <Filter>Data\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Internal\FBXUDPParser.ixx">
+      <Filter>Data\Internal</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Data\Library\AssetLibrary.cpp">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetLibrary.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetLoader.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetManifest.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetSettings.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\AssetType.ixx">
       <Filter>Data\Library</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Data\Library\AudioClipLoader.cpp">
       <Filter>Data\Library</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\AudioClipLoader.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\BinaryLoader.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\FontLoader.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\Library.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\ObjectLoader.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Data\Library\ShaderLoader.cpp">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\ShaderLoader.ixx">
       <Filter>Data\Library</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Data\Library\TextureLoader.cpp">
       <Filter>Data\Library</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Library\TextureLoader.ixx">
+      <Filter>Data\Library</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\AnimationClip.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\AnimationClip.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\AnimationTrack.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Color.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\DrawBuffer.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Font.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Font.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\GizmoUtility.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\GizmoUtility.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Graphics.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsContext.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsResource.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsTypes.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Image.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Image.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.cpp">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindows.cpp">
@@ -647,161 +290,576 @@
     <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.cpp">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\OpenGLAPI.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.cpp">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.cpp">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.cpp">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.cpp">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\LineEnumerator.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\LineEnumerator.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Material.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Material.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\MaterialPropertyBlock.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\MaterialPropertyBlock.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Mesh.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Mesh.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Model.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Model.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\RenderQueue.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\RenderTarget.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\RenderTexture.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Shader.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Shader.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Texture.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Types.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\WindowSurface.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\detail\Color32F_p1.ixx">
+      <Filter>Graphics\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\detail\Color32F_p2.ixx">
+      <Filter>Graphics\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\detail\Color8U_p1.ixx">
+      <Filter>Graphics\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\detail\Color8U_p2.ixx">
+      <Filter>Graphics\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorBGRA_p1.ixx">
+      <Filter>Graphics\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorBGRA_p2.ixx">
+      <Filter>Graphics\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorJson.ixx">
+      <Filter>Graphics\detail</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\IO\File.cpp">
       <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\Animator.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\IO\File.ixx">
+      <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\AudioSource.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\IO\FileStream.ixx">
+      <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\BoxCollider.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\IO\IO.ixx">
+      <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\Button.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\IO\MemoryStream.ixx">
+      <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\Camera.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\IO\Stream.ixx">
+      <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\Canvas.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Math.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\CapsuleCollider.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\AABox_p1.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\Collider.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\AABox_p2.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\Component.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\Functions_p1.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\D6Joint.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\Functions_p2.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\DirectionalLight.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\IVec2_p1.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\ImageView.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\IVec2_p2.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\MeshCollider.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\IVec4_p1.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\MeshRenderer.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\IVec4_p2.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\RigidBody.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\IntRect_p1.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\SphereCollider.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\IntRect_p2.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\TextView.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat2_p1.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Components\View.cpp">
-      <Filter>Scene\Components</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat2_p2.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Events.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat3_p1.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Node.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat3_p2.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\PhysicsWorld.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat4_p1.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\Scene.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\Mat4_p2.ixx">
+      <Filter>Math\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Scene\SceneRenderer.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="..\..\source\MW\Math\detail\MathJson.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Operators.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Plane_p1.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Plane_p2.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Quat_p1.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Quat_p2.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Ray_p1.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Ray_p2.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Sphere_p1.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Sphere_p2.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Transform_p1.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Transform_p2.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Triangle_p1.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Triangle_p2.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec2_p1.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec2_p2.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec3_p1.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec3_p2.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec4_p1.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\detail\Vec4_p2.ixx">
+      <Filter>Math\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Microwave.ixx" />
+    <ClCompile Include="..\..\source\MW\SceneGraph\Axis.ixx">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Animator.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Animator.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\AudioSource.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\AudioSource.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\BoxCollider.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\BoxCollider.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Button.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Button.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Camera.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Camera.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Canvas.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Canvas.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\CapsuleCollider.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\CapsuleCollider.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Collider.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Collider.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Component.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Component.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Components.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\D6Joint.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\D6Joint.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\DirectionalLight.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\DirectionalLight.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\ImageView.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\ImageView.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\MeshCollider.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\MeshCollider.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\MeshRenderer.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\MeshRenderer.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\RigidBody.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\RigidBody.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\Script.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\SphereCollider.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\SphereCollider.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\TextView.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\TextView.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\View.cpp">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Components\View.ixx">
+      <Filter>SceneGraph\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Coroutine.ixx">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Events.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Events.ixx">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Internal\Bullet.ixx">
+      <Filter>SceneGraph\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Internal\CapsuleShape.ixx">
+      <Filter>SceneGraph\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\LayerMask.ixx">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Node.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Node.ixx">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\PhysicsWorld.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\PhysicsWorld.ixx">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Renderable.ixx">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Scene.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\Scene.ixx">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\SceneGraph.ixx">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\SceneRenderer.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\SceneGraph\SceneRenderer.ixx">
+      <Filter>SceneGraph</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\System\App.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\System\AsyncExecutor.cpp">
+    <ClCompile Include="..\..\source\MW\System\App.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\ApplicationDispatcher.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\AsyncExecutor.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Awaitable.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Clock.ixx">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Console.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Console.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Dispatcher.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Dispatcher.ixx">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\System\EntryPoint.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\EventHandlerList.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Executor.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\IAwaitable.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\IAwaiter.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Internal\ApplicationDispatcherWindows.cpp">
+      <Filter>System\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Internal\ApplicationDispatcherWindows.ixx">
       <Filter>System\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Internal\WindowWindows.cpp">
       <Filter>System\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Internal\WindowWindows.ixx">
+      <Filter>System\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Json.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Object.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Object.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Path.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Pointers.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Spinlock.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\SyncExecutor.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\System.ixx">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Task.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Task.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\ThreadPool.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\UUID.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Window.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Window.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\Base64.ixx">
+      <Filter>Utilities</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNode.cpp">
+      <Filter>Utilities\BinPacking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNode.ixx">
       <Filter>Utilities\BinPacking</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNodeAllocator.cpp">
       <Filter>Utilities\BinPacking</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BinPacking.cpp">
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNodeAllocator.ixx">
       <Filter>Utilities\BinPacking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\Bin.ixx">
+      <Filter>Utilities\BinPacking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BinPacker.cpp">
+      <Filter>Utilities\BinPacking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BinPacker.ixx">
+      <Filter>Utilities\BinPacking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BinPacking.ixx">
+      <Filter>Utilities\BinPacking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\BinPacking\RectMapping.ixx">
+      <Filter>Utilities\BinPacking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\Format.ixx">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\Sink.ixx">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\Util.ixx">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\Utilities.ixx">
+      <Filter>Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

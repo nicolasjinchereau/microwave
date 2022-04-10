@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/Barrier.png",
-      "uuid": "bc798ab890b84fcab3241fc775e8fbf9"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/Barrier.png"
+ "sourcePath": "Textures/Barrier.png",
+ "artifacts": [
+  {
+   "uuid": "bc798ab890b84fcab3241fc775e8fbf9",
+   "assetType": "Texture",
+   "sourcePath": "Textures/Barrier.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

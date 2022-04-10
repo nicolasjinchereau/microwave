@@ -2,10 +2,11 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/System/Internal/ApplicationDispatcherWindows.h>
+module Microwave.System.Internal.ApplicationDispatcherWindows;
+import <MW/System/Internal/PlatformHeaders.h>;
 
-#define WM_DISPATCHER_QUIT         WM_APP+1
-#define WM_DISPATCHER_WAKE         WM_APP+100
+constexpr int WM_DISPATCHER_QUIT = WM_APP + 1;
+constexpr int WM_DISPATCHER_WAKE = WM_APP + 100;
 
 namespace mw {
 inline namespace system {

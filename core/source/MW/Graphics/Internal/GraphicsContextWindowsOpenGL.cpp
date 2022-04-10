@@ -2,18 +2,18 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <Windows.h>
-#include <glew.h>
-#include <gl/GL.h>
-#include <MW/Graphics/GraphicsTypes.h>
-#include <MW/Graphics/Internal/GraphicsContextWindowsOpenGL.h>
-#include <MW/Graphics/Internal/WindowSurfaceWindowsOpenGL.h>
-#include <MW/Graphics/Internal/RenderTextureOpenGL.h>
-#include <MW/Graphics/Internal/ShaderOpenGL.h>
-#include <MW/Graphics/Internal/DrawBufferOpenGL.h>
-#include <MW/Graphics/Internal/TextureOpenGL.h>
-#include <MW/System/Internal/WindowWindows.h>
-#include <stdexcept>
+module Microwave.Graphics.Internal.GraphicsContextWindowsOpenGL;
+import Microwave.Graphics.Internal.GraphicsContextWindowsOpenGL;
+import Microwave.Graphics.Internal.WindowSurfaceWindowsOpenGL;
+import Microwave.Graphics.Internal.RenderTextureOpenGL;
+import Microwave.Graphics.Internal.ShaderOpenGL;
+import Microwave.Graphics.Internal.DrawBufferOpenGL;
+import Microwave.Graphics.Internal.TextureOpenGL;
+import Microwave.System.Console;
+import Microwave.System.Internal.WindowWindows;
+import <stdexcept>;
+import <unordered_map>;
+import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {

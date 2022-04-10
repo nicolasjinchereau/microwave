@@ -56,7 +56,7 @@
   ],
   "name": "BoxGizmo",
   "normals": [],
-  "objectType": "Mesh",
+  "objectType": "mw::gfx::Mesh",
   "skinType": "None",
   "texcoords": [],
   "uuid": "eb4e43677c8e4f4f8e98de6d53baf224",

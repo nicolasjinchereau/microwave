@@ -2,9 +2,12 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/GizmoUtility.h>
-#include <MW/Graphics/RenderQueue.h>
-#include <MW/System/App.h>
+module Microwave.Graphics.GizmoUtility;
+import Microwave.Graphics.Mesh;
+import Microwave.Math;
+import Microwave.System.App;
+import Microwave.System.Pointers;
+import <vector>;
 
 namespace mw {
 inline namespace gfx {

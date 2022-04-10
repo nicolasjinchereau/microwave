@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/UI/BatteryMeterBar.png",
-      "uuid": "efc33b1cafd247878f206bb2d638aee6"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/UI/BatteryMeterBar.png"
+ "sourcePath": "Textures/UI/BatteryMeterBar.png",
+ "artifacts": [
+  {
+   "uuid": "efc33b1cafd247878f206bb2d638aee6",
+   "assetType": "Texture",
+   "sourcePath": "Textures/UI/BatteryMeterBar.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

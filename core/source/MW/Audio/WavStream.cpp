@@ -2,8 +2,19 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Audio/WavStream.h>
-#include <cassert>
+module Microwave.Audio.WavStream;
+import Microwave.Audio.AudioSample;
+import Microwave.Audio.AudioStream;
+import Microwave.IO.Stream;
+import Microwave.System.Pointers;
+import <array>;
+import <cassert>;
+import <cstddef>;
+import <cstdint>;
+import <span>;
+import <stdexcept>;
+import <vector>;
+import <string.h>;
 
 namespace mw {
 inline namespace audio {

@@ -1,14 +1,14 @@
 {
-  "artifacts": [
-    {
-      "assetType": "AudioClip",
-      "sourcePath": "Audio/Sounds/Jump.wav",
-      "uuid": "be59b6300d814d41b44ff2c6b0a17a86"
-    }
-  ],
-  "settings": {
-    "fileFormat": "Wav",
-    "streamFromDisk": false
-  },
-  "sourcePath": "Audio/Sounds/Jump.wav"
+ "sourcePath": "Audio/Sounds/Jump.wav",
+ "artifacts": [
+  {
+   "uuid": "be59b6300d814d41b44ff2c6b0a17a86",
+   "assetType": "AudioClip",
+   "sourcePath": "Audio/Sounds/Jump.wav"
+  }
+ ],
+ "settings": {
+  "streamFromDisk": false,
+  "fileFormat": "Wav"
+ }
 }

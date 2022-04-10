@@ -2,17 +2,17 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Shader.h>
-#include <MW/System/Console.h>
-#include <HLSLParser.h>
-#include <GLSLGenerator.h>
-#include <HLSLGenerator.h>
-#include <MSLGenerator.h>
-#include <cassert>
-#include <regex>
-#include <algorithm>
-#include <unordered_map>
-#include <MW/Utilities/Format.h>
+module Microwave.Graphics.Shader;
+import Microwave.System.Console;
+import Microwave.Utilities.Format;
+import <cassert>;
+import <regex>;
+import <algorithm>;
+import <unordered_map>;
+import <HLSLParser.h>;
+import <GLSLGenerator.h>;
+import <HLSLGenerator.h>;
+import <MSLGenerator.h>;
 
 using namespace M4;
 
@@ -134,7 +134,7 @@ Shader::Shader(const std::string& source, ShaderLanguage driverLanguage)
 ShaderInfo Shader::ParseShaderSource(const std::string& source, ShaderLanguage translate)
 {
     ShaderInfo result;
-    
+
     result.language = translate;
 
     Allocator allocator;
@@ -163,7 +163,7 @@ ShaderInfo Shader::ParseShaderSource(const std::string& source, ShaderLanguage t
 
     // get attribute information
     HLSLFunction* vsEntryFunc = tree.FindFunction(result.vertShaderEntryPoint.c_str());
-    
+
     result.attribStride = 0;
 
     for(auto arg = vsEntryFunc->argument; arg; arg = arg->nextArgument)
@@ -217,7 +217,7 @@ ShaderInfo Shader::ParseShaderSource(const std::string& source, ShaderLanguage t
 
         result.uniforms.push_back(std::move(uni));
     }
-    
+
     std::unordered_map<ShaderLanguage, GLSLGenerator::Version> glslVersions {
         { ShaderLanguage::GLSL_100, GLSLGenerator::Version::Version_100_ES },
         { ShaderLanguage::GLSL_150, GLSLGenerator::Version::Version_150 },
@@ -227,7 +227,7 @@ ShaderInfo Shader::ParseShaderSource(const std::string& source, ShaderLanguage t
     if (glslVersions.count(translate) != 0)
     {
         GLSLGenerator::Version version = glslVersions[translate];
-        
+
         GLSLGenerator vsGenerator;
         if (!vsGenerator.Generate(&tree, GLSLGenerator::Target_VertexShader, version, result.vertShaderEntryPoint.c_str()))
             throw std::runtime_error("failed to generate vertex shader");
@@ -270,7 +270,7 @@ int Shader::GetAttributeID(const std::string& name)
 int Shader::GetAttributeID(InputSemantic semantic, int index)
 {
     auto& semName = inputSemanticNames[semantic];
-    
+
     for(size_t i = 0; i != info.attributes.size(); ++i)
     {
         auto& sem = info.attributes[i].semantic;
@@ -340,5 +340,5 @@ ShaderVarType Shader::GetUniformType(int id) {
     return info.uniforms[id].type;
 }
 
-}
-}
+} // gfx
+} // mw

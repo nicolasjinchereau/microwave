@@ -2,14 +2,22 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Audio/Mp3Stream.h>
-#include <MW/Audio/Mp3Decoder.h>
+module Microwave.Audio.Mp3Stream;
+import Microwave.Audio.Internal.Mp3Decoder;
+import Microwave.Audio.AudioSample;
+import Microwave.IO.Stream;
+import Microwave.System.Pointers;
+import <cstddef>;
+import <cstdint>;
+import <stdexcept>;
+import <span>;
+import <algorithm>;
 
 namespace mw {
 inline namespace audio {
 
 Mp3Stream::Mp3Stream(const sptr<Stream>& stream)
-    : stream(stream), decoder(new Mp3Decoder(stream.get()))
+    : stream(stream), decoder(upnew<Mp3Decoder>(stream.get()))
 {
     sampleType = SampleType::Int16;
     samplesPerSec = decoder->sampleRate();

@@ -2,12 +2,21 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Image.h>
-#include <MW/IO/File.h>
-#include <MW/Utilities/Util.h>
-#include <png.h>
-#include <jpeglib.h>
-#include <tinyexr.h>
+module Microwave.Graphics.Image;
+import Microwave.Graphics.GraphicsTypes; 
+import Microwave.IO.File;
+import Microwave.IO.FileStream;
+import Microwave.Math;
+import Microwave.System.Pointers;
+import Microwave.Utilities.Util;
+import <png.h>;
+import <jpeglib.h>;
+import <tinyexr.h>;
+import <cstddef>;
+import <cstdint>;
+import <span>;
+import <utility>;
+import <stdexcept>;
 
 namespace mw {
 inline namespace gfx {
@@ -236,7 +245,7 @@ void Image::LoadTGA(std::span<std::byte> fileData)
     }
 
     int totalPixels = hdr.imageWidth * hdr.imageHeight;
-    std::unique_ptr<std::byte[]> tmpData = std::make_unique<std::byte[]>(totalPixels * bytesPerPixel);
+    uptr<std::byte[]> tmpData = upnew<std::byte[]>(totalPixels * bytesPerPixel);
 
     if(type == TargaType::TrueColor)
     {
@@ -367,6 +376,8 @@ void Image::LoadPNG(std::span<std::byte> fileData)
         throw std::runtime_error("failed to initialize libpng.");
     }
 
+    png_set_option(pPngStruct, PNG_SKIP_sRGB_CHECK_PROFILE, PNG_OPTION_ON);
+
     png_info* pPngInfo = png_create_info_struct(pPngStruct);
     if (!pPngInfo) {
         png_destroy_read_struct(&pPngStruct, NULL, NULL);
@@ -381,7 +392,8 @@ void Image::LoadPNG(std::span<std::byte> fileData)
         throw std::runtime_error("error: invalid png file.");
     }
 
-    std::unique_ptr<std::byte[]> tmpData;
+    uptr<std::byte*[]> rowPtrs;
+    uptr<std::byte[]> tmpData;
     IVec2 tmpSize;
 
     if (setjmp(png_jmpbuf(pPngStruct)) == 0)
@@ -432,10 +444,10 @@ void Image::LoadPNG(std::span<std::byte> fileData)
         png_read_update_info(pPngStruct, pPngInfo);
 
         // allocate storage for pixels
-        tmpData = std::make_unique<std::byte[]>(tmpSize.x * tmpSize.y * 4);
+        tmpData = upnew<std::byte[]>(tmpSize.x * tmpSize.y * 4);
 
         // make pointers to pixel rows
-        std::unique_ptr<std::byte*[]> rowPtrs = std::make_unique<std::byte*[]>(tmpSize.y);
+        rowPtrs = upnew<std::byte*[]>(tmpSize.y);
 
         for (int y = 0; y < tmpSize.y; ++y)
             rowPtrs[y] = (std::byte*)(tmpData.get() + y * tmpSize.x * 4);
@@ -1080,7 +1092,7 @@ Image Image::Clone(PixelDataFormat targetFormat)
     auto convertFunc = GetConvertFunc(format, targetFormat);
     convertFunc(srcBegin, srcEnd, dstBegin);
 
-    return std::move(ret);
+    return ret;
 }
 
 ImageFileFormat Image::GetFormatForFile(const path& filename)

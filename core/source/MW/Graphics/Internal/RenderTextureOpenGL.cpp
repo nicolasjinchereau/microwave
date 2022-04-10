@@ -2,8 +2,8 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Internal/RenderTextureOpenGL.h>
-#include <MW/Graphics/GraphicsContext.h>
+module Microwave.Graphics.Internal.RenderTextureOpenGL;
+import Microwave.Graphics.GraphicsContext;
 
 namespace mw {
 inline namespace gfx {

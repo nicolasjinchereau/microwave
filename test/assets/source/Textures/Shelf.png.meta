@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/Shelf.png",
-      "uuid": "827e1b7ef2aa49e689e11d0d788f5194"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/Shelf.png"
+ "sourcePath": "Textures/Shelf.png",
+ "artifacts": [
+  {
+   "uuid": "827e1b7ef2aa49e689e11d0d788f5194",
+   "assetType": "Texture",
+   "sourcePath": "Textures/Shelf.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

@@ -2,8 +2,13 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include "WinScreen.h"
-#include "Game.h"
+module Test.WinScreen;
+import Test.Game;
+import Microwave;
+
+using namespace mw;
+
+namespace Test {
 
 void WinScreen::SetCoinCount(int count)
 {
@@ -40,7 +45,6 @@ void WinScreen::PlayAgain()
     }
 }
 
-//void WinScreen::Start()
 Task<void> WinScreen::InitAsync()
 {
     auto assetLibrary = App::Get()->GetAssetLibrary();
@@ -111,3 +115,5 @@ Task<void> WinScreen::InitAsync()
 
     node->SetLayerMask(LayerMask::UI, true);
 }
+
+} // Test

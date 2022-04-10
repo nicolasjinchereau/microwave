@@ -2,14 +2,19 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Utilities/BinPacking/BSPNode.h>
-#include <MW/Utilities/BinPacking/BSPNodeAllocator.h>
+module Microwave.Utilities.BinPacking.BSPNode;
+import Microwave.Utilities.BinPacking.BSPNodeAllocator;
+import <cassert>;
 
 namespace mw {
 inline namespace utilities {
 inline namespace binpacking {
 
-BSPNode::BSPNode(const std::weak_ptr<BSPNodeAllocator>& allocator)
+void BSPNodeDeleter::operator()(BSPNode* n) {
+    BSPNodeAllocator::ReturnNode(n);
+}
+
+BSPNode::BSPNode(const wptr<BSPNodeAllocator>& allocator)
     : allocator(allocator) {}
 
 void BSPNode::Reset(const IntRect& rc)

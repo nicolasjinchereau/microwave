@@ -1,15 +1,15 @@
 {
-  "artifacts": [
-    {
-      "assetType": "Texture",
-      "sourcePath": "Textures/BigBarrierGlass.png",
-      "uuid": "b0b3ac0540a54162bc35e4187b1750dc"
-    }
-  ],
-  "settings": {
-    "fileFormat": "PNG",
-    "filterMode": "Bilinear",
-    "wrapMode": "Repeat"
-  },
-  "sourcePath": "Textures/BigBarrierGlass.png"
+ "sourcePath": "Textures/BigBarrierGlass.png",
+ "artifacts": [
+  {
+   "uuid": "b0b3ac0540a54162bc35e4187b1750dc",
+   "assetType": "Texture",
+   "sourcePath": "Textures/BigBarrierGlass.png"
+  }
+ ],
+ "settings": {
+  "fileFormat": "PNG",
+  "filterMode": "Bilinear",
+  "wrapMode": "Repeat"
+ }
 }

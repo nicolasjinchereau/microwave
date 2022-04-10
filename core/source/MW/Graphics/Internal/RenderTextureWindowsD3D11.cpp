@@ -2,8 +2,8 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/Graphics/Internal/RenderTextureWindowsD3D11.h>
-#include <MW/Graphics/Internal/GraphicsContextWindowsD3D11.h>
+module Microwave.Graphics.Internal.RenderTextureWindowsD3D11;
+import Microwave.Graphics.Internal.GraphicsContextWindowsD3D11;
 
 namespace mw {
 inline namespace gfx {

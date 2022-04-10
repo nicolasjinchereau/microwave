@@ -136,7 +136,7 @@
   ],
   "name": "CylinderGizmo",
   "normals": [],
-  "objectType": "Mesh",
+  "objectType": "mw::gfx::Mesh",
   "skinType": "None",
   "texcoords": [],
   "uuid": "e2f35c4b172a4356bdd9567875d9956d",
