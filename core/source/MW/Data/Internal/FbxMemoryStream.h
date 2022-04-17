@@ -52,15 +52,16 @@ public:
         return true;
     }
 
-    virtual int Write(const void* pData, int pSize) {
+    virtual size_t Write(const void* pData, FbxUInt64 pSize) {
         assert(0); // read only
         return 0;
     }
 
-    virtual int Read(void* pData, int pSize) const
+    virtual size_t Read(void* pData, FbxUInt64 pSize) const
     {
         std::byte* pBuffer = (std::byte*)pData;
-        return stream->Read(std::span<std::byte>(pBuffer, pSize));
+        auto buffer = std::span<std::byte>(pBuffer, (size_t)pSize);
+        return (size_t)stream->Read(buffer);
     }
 
     virtual int GetReaderID() const {
@@ -89,12 +90,12 @@ public:
         }
     }
 
-    virtual long GetPosition() const {
-        return (long)stream->GetPosition();
+    virtual FbxInt64 GetPosition() const {
+        return (FbxInt64)stream->GetPosition();
     }
 
-    virtual void SetPosition(long pPosition) {
-        stream->SetPosition(pPosition);
+    virtual void SetPosition(FbxInt64 pPosition) {
+        stream->SetPosition((size_t)pPosition);
     }
 
     virtual int GetError() const {

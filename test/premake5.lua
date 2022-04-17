@@ -57,7 +57,7 @@ project "Test"
             "../core/lib/$(PlatformName)/$(Configuration)",
             "../third_party/bullet/lib/$(PlatformName)/$(Configuration)",
             "../third_party/dr-mp3/lib/$(PlatformName)/$(Configuration)",
-            "../third_party/fbx/lib/vs2019/Win32/Release",
+            "../third_party/fbx/lib/vs2019/$(PlatformName)/$(Configuration)",
             "../third_party/freetype2/lib/$(PlatformName)/$(Configuration)",
             "../third_party/GLEW/lib/$(PlatformName)/$(Configuration)",
             "../third_party/hlslparser/lib/$(PlatformName)/$(Configuration)",
@@ -222,7 +222,7 @@ project "Test"
             "winmm.lib"
         }
         postbuildcommands {
-            "xcopy /y /d  \"$(ProjectDir)..\\..\\..\\third_party\\fbx\\lib\\vs2019\\$(PlatformName)\\Release\\libfbxsdk.dll\" \"$(TargetDir)\""
+            "xcopy /y /d  \"$(ProjectDir)..\\..\\..\\third_party\\fbx\\lib\\vs2019\\$(PlatformName)\\$(Configuration)\\libfbxsdk.dll\" \"$(TargetDir)\""
         }
 
     filter { "system:android" }
