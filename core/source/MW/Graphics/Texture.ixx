@@ -4,79 +4,87 @@
 
 export module Microwave.Graphics.Texture;
 import Microwave.Graphics.GraphicsTypes;
-import Microwave.Graphics.GraphicsResource;
+import Microwave.Graphics.Image;
+import Microwave.Graphics.Internal.HWTexture;
 import Microwave.Math;
 import Microwave.System.Json;
+import Microwave.System.Object;
+import Microwave.System.Path;
 import Microwave.System.Pointers;
+import Microwave.System.Task;
+import <cassert>;
 import <cstddef>;
 import <cstdint>;
 import <span>;
 import <string>;
+import <vector>;
 
 export namespace mw {
 inline namespace gfx {
 
-enum class WrapMode : int
+enum class LoadState
 {
-    Clamp,
-    Repeat,
+    Unloaded,
+    Loading,
+    Loaded
 };
 
-enum class FilterMode : int
+class Texture : public Object
 {
-    Point,
-    Bilinear,
-    Trilinear,
-};
+    inline static Type::Pin<Texture> pin;
 
-class Texture : public GraphicsResource
-{
+    path filePath;
+    ImageFileFormat fileFormat{};
+    PixelDataFormat format{};
+    IVec2 size = IVec2::Zero();
+    bool dynamic{};
+
+    TextureWrapMode wrapMode = TextureWrapMode::Clamp;
+    TextureFilterMode filterMode = TextureFilterMode::Bilinear;
+    float anisoLevel = 1;
+
+    sptr<HWTexture> tex;
+    LoadState loadState = LoadState::Unloaded;
+
 public:
-    virtual uintptr_t GetHandle() = 0;
-    virtual PixelDataFormat GetFormat() const = 0;
-    virtual IVec2 GetSize() const = 0;
 
-    virtual bool IsDynamic() const = 0;
+    Texture(
+        const path& filePath,
+        ImageFileFormat fileFormat,
+        bool dynamic,
+        bool deferLoading = false
+    );
 
-    virtual void SetPixels(const std::span<std::byte>& data) = 0;
-    virtual void SetPixels(const std::span<std::byte>& data, const IntRect& rect) = 0;
+    Texture(
+        const std::span<std::byte>& data,
+        PixelDataFormat format,
+        const IVec2& size,
+        bool dynamic
+    );
 
-    virtual void SetWrapMode(WrapMode mode) = 0;
-    virtual WrapMode GetWrapMode() const = 0;
+    sptr<HWTexture> GetHWTexture();
+    PixelDataFormat GetFormat() const;
+    IVec2 GetSize() const;
+    bool IsDynamic() const;
 
-    virtual void SetFilterMode(FilterMode mode) = 0;
-    virtual FilterMode GetFilterMode() const = 0;
+    void SetPixels(const std::span<std::byte>& data);
+    void SetPixels(const std::span<std::byte>& data, const IntRect& rect);
 
-    virtual void SetAnisoLevel(float level) = 0;
-    virtual float GetAnisoLevel() const = 0;
+    void SetWrapMode(TextureWrapMode mode);
+    TextureWrapMode GetWrapMode();
+
+    void SetFilterMode(TextureFilterMode mode);
+    TextureFilterMode GetFilterMode() const;
+
+    void SetAnisoLevel(float aniso);
+    float GetAnisoLevel() const;
+
+    void LoadFile();
+    Task<void> LoadFileAsync();
+    void UnloadFile();
+
+    LoadState GetLoadState() const;
 };
-
-void to_json(json& obj, const WrapMode& wrapMode) {
-    static const char* modeNames[]{ "Clamp", "Repeat", };
-    obj = modeNames[(int)wrapMode];
-}
-
-void from_json(const json& obj, WrapMode& wrapMode) {
-    static std::unordered_map<std::string, WrapMode> modes{
-        { "Clamp", WrapMode::Clamp },
-        { "Repeat", WrapMode::Repeat }
-    };
-    wrapMode = modes[obj.get<std::string>("Repeat")];
-}
-
-void to_json(json& obj, const FilterMode& filterMode) {
-    static const char* modeNames[]{ "Point", "Bilinear", "Trilinear" };
-    obj = modeNames[(int)filterMode];
-}
-
-void from_json(const json& obj, FilterMode& filterMode) {
-    static std::unordered_map<std::string, FilterMode> modes{
-        { "Point", FilterMode::Point },
-        { "Bilinear", FilterMode::Bilinear },
-        { "Trilinear", FilterMode::Trilinear }
-    };
-    filterMode = modes[obj.get<std::string>("Bilinear")];
-}
 
 } // gfx
 } // mw

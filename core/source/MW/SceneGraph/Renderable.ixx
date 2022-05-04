@@ -4,10 +4,11 @@
 
 export module Microwave.SceneGraph.Renderable;
 import Microwave.Graphics.Color;
-import Microwave.Graphics.DrawBuffer;
+import Microwave.Graphics.Buffer;
 import Microwave.Graphics.RenderQueue;
 import Microwave.Graphics.Material;
 import Microwave.Graphics.MaterialPropertyBlock;
+import Microwave.Graphics.Shader;
 import Microwave.Math;
 import Microwave.SceneGraph.LayerMask;
 import Microwave.System.Pointers;
@@ -31,11 +32,8 @@ public:
     Mat4 mtxModel;
     AABox bounds;
     MaterialPropertyBlock extra;
-    sptr<DrawBuffer> vertexBuffer;
-    sptr<DrawBuffer> normalBuffer;
-    sptr<DrawBuffer> texcoordBuffer;
-    sptr<DrawBuffer> colorBuffer;
-    sptr<DrawBuffer> indexBuffer;
+    VertexMapping vertexMapping;
+    sptr<Buffer> indexBuffer;
     size_t drawStart = {};
     size_t drawCount = {};
     DrawMode drawMode = DrawMode::Triangles;

@@ -67,7 +67,7 @@ void PhysicsWorld::AddRigidBody(const sptr<RigidBody>& body)
     {
         bodies.push_back(body);
         world->addRigidBody(body->body.get());
-        body->world = This<PhysicsWorld>();
+        body->world = SharedFrom(this);
     }
 }
 
@@ -180,7 +180,7 @@ void PhysicsWorld::PerformCollisionCallbacks(btPersistentManifold* manifold, Col
     }
 
     Collision collision = {
-        body1->This<RigidBody>(),
+        body1->SharedFrom(body1),
         std::span<ContactPoint>(contactPoints.data(), contacts)
     };
 
@@ -211,8 +211,8 @@ void PhysicsWorld::PerformCollisionCallbacks(btPersistentManifold* manifold, Col
         }
     }
 
-    collision.body = body0->This<RigidBody>();
-
+    collision.body = body0->SharedFrom(body0);
+    
     for (auto& contact : collision.contacts)
         contact.normal = -contact.normal;
 

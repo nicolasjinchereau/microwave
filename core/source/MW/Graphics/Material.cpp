@@ -11,7 +11,6 @@ import Microwave.Graphics.RenderQueue;
 import Microwave.Graphics.Shader;
 import Microwave.Graphics.Texture;
 import Microwave.Math;
-import Microwave.System.App;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Path;
@@ -29,10 +28,7 @@ void Material::SetActive(const MaterialPropertyBlock* extra)
 {
     assert(shader);
 
-    auto app = App::Get();
-    assert(app);
-
-    auto graphics = app->GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
     assert(graphics);
 
     shader->Bind();
@@ -87,7 +83,7 @@ void Material::FromJson(const json& obj, ObjectLinker* linker)
     depthTest = obj.value("depthTest", depthTest);
     depthWriteEnabled = obj.value("depthWriteEnabled", depthWriteEnabled);
     renderQueue = obj.value("renderQueue", renderQueue);
-    ObjectLinker::RestoreAsset(linker, This(), shader, obj, "shader");
+    ObjectLinker::RestoreAsset(linker, SharedFrom(this), shader, obj, "shader");
 
     const json& props = obj["properties"];
     properties->FromJson(props, linker);

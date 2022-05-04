@@ -8,6 +8,7 @@ import Microwave.System.Json;
 import Microwave.System.Pointers;
 import Microwave.System.Task;
 import Microwave.System.UUID;
+import Microwave.System.Spinlock;
 import <boost/type_index.hpp>;
 import <cassert>;
 import <memory>;
@@ -20,6 +21,9 @@ import <vector>;
 import <functional>;
 import <optional>;
 import <typeindex>;
+import <mutex>;
+import <unordered_set>;
+import <set>;
 
 export namespace mw {
 inline namespace system {
@@ -130,9 +134,6 @@ public:
     };
 };
 
-
-
-
 struct ILink
 {
     virtual ~ILink() = default;
@@ -232,8 +233,49 @@ protected:
     UUID uuid = UUID::New();
     std::string name;
 public:
-    Object(){}
-    virtual ~Object(){}
+    struct Registry
+    {
+        Spinlock lock;
+        std::unordered_set<Object*> objects;
+
+        void Add(Object* obj) {
+            std::lock_guard<Spinlock> lk(lock);
+            objects.insert(obj);
+        }
+
+        void Remove(Object* obj) {
+            std::lock_guard<Spinlock> lk(lock);
+            objects.erase(obj);
+        }
+
+        void DumpLiveObjects()
+        {
+            std::set<std::string_view> typeNames;
+
+            {
+                std::lock_guard<Spinlock> lk(lock);
+
+                for(auto& p : objects)
+                    typeNames.insert(typeid(*p).name());
+            }
+
+            for(auto name : typeNames)
+                Console::WriteLine("%", name);
+        }
+    };
+
+    static Registry& GetRegistry() {
+        static Registry registry;
+        return registry;
+    }
+
+    Object() {
+        //GetRegistry().Add(this);
+    }
+
+    virtual ~Object() {
+        //GetRegistry().Remove(this);
+    }
 
     Object(const Object&) = delete;
     Object& operator=(const Object&) = delete;
@@ -269,17 +311,19 @@ public:
     {
         uuid = obj["uuid"];
         name = obj["name"];
-        ObjectLinker::AddObject(linker, This());
+        ObjectLinker::AddObject(linker, SharedFrom(this));
     }
 
-    template<class T = Object>
-    sptr<T> This() {
-        return std::dynamic_pointer_cast<T>(shared_from_this());
+    template<class T> requires std::is_base_of_v<Object, T>
+    sptr<T> SharedFrom(T* thisPtr) {
+        assert(static_cast<Object*>(thisPtr) == this);
+        return sptr<T>(shared_from_this(), thisPtr);
     }
 
-    template<class T = Object>
-    sptr<const T> This() const {
-        return std::dynamic_pointer_cast<const T>(shared_from_this());
+    template<class T> requires std::is_base_of_v<Object, T>
+    sptr<const T> SharedFrom(const T* thisPtr) const {
+        assert(static_cast<const Object*>(thisPtr) == this);
+        return sptr<const T>(shared_from_this(), thisPtr);
     }
 
     //static void SaveToJson(const sptr<Object>& target, json& obj)
@@ -309,7 +353,7 @@ public:
 
     template<class T>
     static sptr<T> CreateFromJson(const json& obj, ObjectLinker* linker) {
-        return std::dynamic_pointer_cast<T>(CreateFromJson(obj, linker));
+        return spcast<T>(CreateFromJson(obj, linker));
     }
 };
 
@@ -386,7 +430,7 @@ struct ObjectLink : ILink
         auto it = linker->GetObjects().find(targetObjectID);
         if (it != linker->GetObjects().end())
         {
-            assignee = std::dynamic_pointer_cast<T>(it->second);
+            assignee = spcast<T>(it->second);
         }
 
         co_return;
@@ -426,7 +470,7 @@ struct AssetLink : ILink
     {
         assert(hostObject);
         auto asset = co_await detail::GetAssetAsync(targetAssetID, executor);
-        assignee = std::dynamic_pointer_cast<T>(asset);
+        assignee = spcast<T>(asset);
         co_return;
     }
 };

@@ -90,6 +90,26 @@ enum class PixelDataFormat
     RGBAFloat
 };
 
+enum class TextureWrapMode
+{
+    Clamp,
+    Repeat,
+};
+
+enum class TextureFilterMode
+{
+    Point,
+    Bilinear,
+    Trilinear,
+};
+
+enum class RenderTextureFormat : int
+{
+    Alpha8,
+    RGB24,
+    RGBA32,
+};
+
 size_t GetBytesPerPixel(PixelDataFormat format)
 {
     switch(format)
@@ -307,7 +327,6 @@ void to_json(json& obj, const PixelDataFormat& type)
         { PixelDataFormat::RGBA32, "RGBA32" },
         { PixelDataFormat::RGBAFloat, "RGBAFloat" }
     };
-
     obj = names[type];
 }
 
@@ -323,6 +342,44 @@ void from_json(const json& obj, PixelDataFormat& type)
 
     auto val = obj.get<std::string>();
     type = types[val];
+}
+
+void to_json(json& obj, const TextureWrapMode& wrapMode)
+{
+    static std::unordered_map<TextureWrapMode, std::string> names {
+        { TextureWrapMode::Clamp, "Clamp" },
+        { TextureWrapMode::Repeat, "Repeat" }
+    };
+    obj = names[wrapMode];
+}
+
+void from_json(const json& obj, TextureWrapMode& wrapMode)
+{
+    static std::unordered_map<std::string, TextureWrapMode> modes{
+        { "Clamp", TextureWrapMode::Clamp },
+        { "Repeat", TextureWrapMode::Repeat }
+    };
+    wrapMode = modes[obj.get<std::string>("Repeat")];
+}
+
+void to_json(json& obj, const TextureFilterMode& filterMode)
+{
+    static std::unordered_map<TextureFilterMode, std::string> names {
+        { TextureFilterMode::Point, "Point" },
+        { TextureFilterMode::Bilinear, "Bilinear" },
+        { TextureFilterMode::Trilinear, "Trilinear" }
+    };
+    obj = names[filterMode];
+}
+
+void from_json(const json& obj, TextureFilterMode& filterMode)
+{
+    static std::unordered_map<std::string, TextureFilterMode> modes{
+        { "Point", TextureFilterMode::Point },
+        { "Bilinear", TextureFilterMode::Bilinear },
+        { "Trilinear", TextureFilterMode::Trilinear }
+    };
+    filterMode = modes[obj.get<std::string>("Bilinear")];
 }
 
 } // gfx

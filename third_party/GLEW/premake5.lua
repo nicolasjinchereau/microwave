@@ -7,13 +7,14 @@ workspace "glew"
 project "glew"
     kind "StaticLib"
     language "C"
-    
+    --architecture "x86_64"
+
     location ("projects/" .. os.target())
     targetname "glew"
 
     files {
-        "include/glew.h",
-        "include/wglew.h",
+        "include/gl/glew.h",
+        "include/gl/wglew.h",
         "src/glew.c"
     }
 
@@ -42,24 +43,18 @@ project "glew"
 
     filter "configurations:Debug"
         defines {
-            "DEBUG",
-            "_DEBUG",
-            "WIN32",
-            "WIN32_LEAN_AND_MEAN",
-            "VC_EXTRALEAN",
-            "GLEW_STATIC",
             "_LIB",
+            "WIN32",
+            "_DEBUG",
+            "DEBUG",
         }
         symbols "On"
 
     filter "configurations:Release"
         defines {
-            "NDEBUG",
-            "WIN32",
-            "WIN32_LEAN_AND_MEAN",
-            "VC_EXTRALEAN",
-            "GLEW_STATIC",
             "_LIB",
+            "WIN32",
+            "NDEBUG",
         }
         optimize "Speed"
         inlining "Auto"

@@ -27,24 +27,15 @@ Task<sptr<Object>> TextureLoader::LoadAsync(
 {
     sptr<Texture> obj;
 
-    auto graphics = App::Get()->GetGraphics();
-    if (graphics)
-    {
-        TextureSettings texSettings = artifact.settings;
-        
-        sptr<Image> img = co_await executor->Invoke(
-            [fp = filePath, fmt = texSettings.fileFormat] {
-                return spnew<Image>(fp, fmt);
-            });
-
-        obj = graphics->CreateTexture(img->GetSize(), img->GetFormat(), false, img->GetData());
-        obj->SetWrapMode(texSettings.wrapMode);
-        obj->SetFilterMode(texSettings.filterMode);
-        obj->SetUUID(artifact.uuid);
-    }
+    TextureSettings texSettings = artifact.settings;
+    obj = spnew<Texture>(filePath, texSettings.fileFormat, false, true);
+    obj->SetWrapMode(texSettings.wrapMode);
+    obj->SetFilterMode(texSettings.filterMode);
+    obj->SetUUID(artifact.uuid);
+    obj->LoadFileAsync();
 
     co_return obj;
 }
 
-}
-}
+} // data
+} // mw

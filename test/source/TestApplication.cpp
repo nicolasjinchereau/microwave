@@ -8,6 +8,7 @@ import <iostream>;
 import <memory>;
 import <array>;
 import <fstream>;
+import <set>;
 
 using namespace mw;
 
@@ -19,12 +20,9 @@ class TestApplication : public App
 public:
     sptr<GraphicsContext> graphics;
     sptr<AudioContext> audio;
-    sptr<Window> mainWindow;
-    sptr<WindowSurface> surface;
     sptr<AssetLibrary> assetLibrary;
     sptr<Scene> scene;
     sptr<SceneRenderer> sceneRenderer;
-    sptr<Mesh> dummy;
 
     virtual void OnInitialize(AppConfig& config) override
     {
@@ -37,23 +35,15 @@ public:
     {
         try
         {
-            // set up graphics
-            mainWindow = GetMainWindow();
-            auto windowSize = mainWindow->GetSize();
-            IntRect rc(0, 0, windowSize.x, windowSize.y);
-
             audio = AudioContext::New();
             AudioContext::SetCurrent(audio);
 
-            //graphics = GraphicsContext::New(GraphicsDriverType::Direct3D11);
-            graphics = GraphicsContext::New(GraphicsDriverType::OpenGL);
-            graphics->CreateWindowSurface(mainWindow);
-            graphics->SetSwapInterval(1);
-            graphics->SetRenderTarget(mainWindow->GetSurface());
-            graphics->SetViewport(rc);
-            graphics->SetBlendingEnabled(true);
-            SetGraphics(graphics);
+            //graphics = spnew<GraphicsContext>(GraphicsDriverType::Direct3D11);
+            graphics = spnew<GraphicsContext>(GraphicsDriverType::OpenGL);
+            GraphicsContext::SetCurrent(graphics);
 
+            graphics->SetRenderTarget(GetMainWindow());
+            
             // set up asset library
             auto rootDir = io::File::GetDefaultDataPath();
             assetLibrary = spnew<AssetLibrary>(rootDir);
@@ -70,7 +60,7 @@ public:
 
             sceneRenderer = spnew<SceneRenderer>();
 
-            Dispatcher::GetCurrent()->AddHandler(This<IDispatchHandler>());
+            Dispatcher::GetCurrent()->AddHandler(SharedFrom(this));
             Dispatcher::GetCurrent()->SetContinuousDispatchRate(1000);
         }
         catch (std::exception& ex)
@@ -96,6 +86,12 @@ public:
     
     virtual void OnQuit() override {
         scene.reset();
+        assetLibrary.reset();
+        SetAssetLibrary(nullptr);
+        GraphicsContext::SetCurrent(nullptr);
+        AudioContext::SetCurrent(nullptr);
+        audio.reset();
+        graphics.reset();
     }
 
     // WindowEventHandler overrides

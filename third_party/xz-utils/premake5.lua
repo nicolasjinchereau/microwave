@@ -7,7 +7,8 @@ workspace "xz-utils"
 project "xz-utils"
     kind "StaticLib"
     language "C"
-    
+    --architecture "x86_64"
+
     location ("projects/" .. os.target())
     targetname "xz-utils"
 

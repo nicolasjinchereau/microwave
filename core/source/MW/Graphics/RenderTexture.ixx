@@ -8,18 +8,18 @@ import Microwave.Graphics.RenderTarget;
 export namespace mw {
 inline namespace gfx {
 
-enum class RenderTextureFormat : int
-{
-    Alpha8,
-    RGB24,
-    RGBA32,
-};
+class HWRenderTarget;
+class HWRenderTexture;
 
 class RenderTexture : public RenderTarget
 {
+    sptr<HWRenderTexture> renderTexture;
 public:
-    virtual ~RenderTexture(){};
+    RenderTexture(const IVec2& size);
 
+    virtual ~RenderTexture(){};
+    virtual IVec2 GetSize() const override;
+    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
 };
 
 } // gfx

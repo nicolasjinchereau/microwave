@@ -1,11 +1,11 @@
 {
- "sourcePath": "Shaders/cook-torrance.cg",
- "artifacts": [
-  {
-   "uuid": "e05ad190fa4f4a2da00dfebd352b7808",
-   "assetType": "Shader",
-   "sourcePath": "Shaders/cook-torrance.cg"
-  }
- ],
- "settings": {}
+  "sourcePath": "Shaders/cook-torrance.cg",
+  "artifacts": [
+    {
+      "uuid": "e05ad190fa4f4a2da00dfebd352b7808",
+      "assetType": "Shader",
+      "sourcePath": "Shaders/cook-torrance.cg"
+    }
+  ],
+  "settings": {}
 }

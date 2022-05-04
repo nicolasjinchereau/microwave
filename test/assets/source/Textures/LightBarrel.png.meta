@@ -1,15 +1,15 @@
 {
- "sourcePath": "Textures/LightBarrel.png",
- "artifacts": [
-  {
-   "uuid": "d4e2baa787d74fe387c62031f38abacd",
-   "assetType": "Texture",
-   "sourcePath": "Textures/LightBarrel.png"
+  "sourcePath": "Textures/LightBarrel.png",
+  "artifacts": [
+    {
+      "uuid": "d4e2baa787d74fe387c62031f38abacd",
+      "assetType": "Texture",
+      "sourcePath": "Textures/LightBarrel.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
   }
- ],
- "settings": {
-  "fileFormat": "PNG",
-  "filterMode": "Bilinear",
-  "wrapMode": "Repeat"
- }
 }

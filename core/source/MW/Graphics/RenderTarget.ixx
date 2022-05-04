@@ -3,22 +3,21 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Graphics.RenderTarget;
-import Microwave.Graphics.GraphicsResource;
-import Microwave.System.Pointers;
 import Microwave.Math;
+import Microwave.System.Object;
 
 export namespace mw {
 inline namespace gfx {
 
-class GraphicsContext;
+class HWRenderTarget;
 
-class RenderTarget : public GraphicsResource
+class RenderTarget : public Object
 {
 public:
     virtual ~RenderTarget(){}
-    virtual void Bind(const sptr<GraphicsContext>& graphics) = 0;
-    virtual IVec2 GetSize() = 0;
+    virtual IVec2 GetSize() const = 0;
+    virtual sptr<HWRenderTarget> GetHWRenderTarget() = 0;
 };
 
-}
-}
+} // gfx
+} // mw

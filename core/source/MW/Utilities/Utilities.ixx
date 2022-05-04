@@ -4,7 +4,7 @@
 
 export module Microwave.Utilities;
 export import Microwave.Utilities.Base64;
+export import Microwave.Utilities.BinPacking;
 export import Microwave.Utilities.Format;
 export import Microwave.Utilities.Sink;
 export import Microwave.Utilities.Util;
-export import Microwave.Utilities.BinPacking;

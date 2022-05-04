@@ -1,11 +1,11 @@
 {
- "sourcePath": ".internal/wire-gizmo.mat",
- "artifacts": [
-  {
-   "uuid": "eaf3de94b91141828e73159eb14fe63f",
-   "assetType": "Material",
-   "sourcePath": ".internal/wire-gizmo.mat"
-  }
- ],
- "settings": {}
+  "sourcePath": ".internal/wire-gizmo.mat",
+  "artifacts": [
+    {
+      "uuid": "eaf3de94b91141828e73159eb14fe63f",
+      "assetType": "Material",
+      "sourcePath": ".internal/wire-gizmo.mat"
+    }
+  ],
+  "settings": {}
 }

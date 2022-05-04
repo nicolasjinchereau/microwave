@@ -42,7 +42,7 @@ void Animator::FromJson(const json& obj, ObjectLinker* linker)
     for (auto& [name, stateObj] : animStateObjs.GetObject())
     {
         auto state = spnew<AnimationState>();
-        ObjectLinker::RestoreAsset(linker, This(), state->clip, stateObj, "clip");
+        ObjectLinker::RestoreAsset(linker, SharedFrom(this), state->clip, stateObj, "clip");
         state->speed = stateObj["speed"];
         animationStates[name] = std::move(state);
     }

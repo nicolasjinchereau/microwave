@@ -1,15 +1,15 @@
 {
- "sourcePath": "Textures/Floor.png",
- "artifacts": [
-  {
-   "uuid": "fdc48bb8898e496abf32281bb6fcdf77",
-   "assetType": "Texture",
-   "sourcePath": "Textures/Floor.png"
+  "sourcePath": "Textures/Floor.png",
+  "artifacts": [
+    {
+      "uuid": "fdc48bb8898e496abf32281bb6fcdf77",
+      "assetType": "Texture",
+      "sourcePath": "Textures/Floor.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
   }
- ],
- "settings": {
-  "fileFormat": "PNG",
-  "filterMode": "Bilinear",
-  "wrapMode": "Repeat"
- }
 }

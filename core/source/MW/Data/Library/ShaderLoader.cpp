@@ -8,7 +8,7 @@ import Microwave.Data.Library.AssetSettings;
 import Microwave.IO.File;
 import Microwave.Graphics.Shader;
 import Microwave.Graphics.GraphicsContext;
-import Microwave.System.App;
+import Microwave.Graphics.ShaderInfo;
 import Microwave.System.Executor;
 import Microwave.System.Json;
 import Microwave.System.Object;
@@ -30,15 +30,19 @@ Task<sptr<Object>> ShaderLoader::LoadAsync(
 {
     sptr<Shader> obj;
 
-    auto graphics = App::Get()->GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
     if (graphics)
     {
-        std::string source = co_await executor->Invoke([fp = filePath]{
-            return File::ReadAllText(fp);
-        });
+        try
+        {
+            sptr<ShaderInfo> info = co_await executor->Invoke(
+                [fp = filePath, ctx = graphics->context]
+            {
+                std::string source = File::ReadAllText(fp);
+                return spnew<ShaderInfo>(source, ctx->GetShaderLanguage());
+            });
 
-        try {
-            obj = graphics->CreateShader(source);
+            obj = spnew<Shader>(info);
             obj->SetUUID(artifact.uuid);
         }
         catch (std::runtime_error& err) {

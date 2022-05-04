@@ -1,14 +1,14 @@
 {
- "sourcePath": "Audio/Music/Gameplay.mp3",
- "artifacts": [
-  {
-   "uuid": "f62cb6031bc4493bbb3782510bfff3fc",
-   "assetType": "AudioClip",
-   "sourcePath": "Audio/Music/Gameplay.mp3"
+  "sourcePath": "Audio/Music/Gameplay.mp3",
+  "artifacts": [
+    {
+      "uuid": "f62cb6031bc4493bbb3782510bfff3fc",
+      "assetType": "AudioClip",
+      "sourcePath": "Audio/Music/Gameplay.mp3"
+    }
+  ],
+  "settings": {
+    "fileFormat": "Mp3",
+    "streamFromDisk": true
   }
- ],
- "settings": {
-  "streamFromDisk": true,
-  "fileFormat": "Mp3"
- }
 }

@@ -7,7 +7,8 @@ workspace "freetype2"
 project "freetype2"
     kind "StaticLib"
     language "C"
-    
+    --architecture "x86_64"
+
     location ("projects/" .. os.target())
     targetname "freetype2"
 

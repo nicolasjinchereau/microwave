@@ -2,19 +2,23 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
+module;
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#include <string>
-#include <MW/System/Window.h>
-#include <MW/System/Pointers.h>
-#include <MW/Math/Math.h>
+
+export module Microwave.System.Internal.WindowIOS;
+import Microwave.System.Dispatcher;
+import Microwave.System.Pointers;
+import Microwave.System.Window;
+import Microwave.Math;
+import <string>;
 
 @class ViewController;
 @class MainWindow;
 @class MainView;
 
-namespace mw {
+export namespace mw {
+inline namespace mw {
 
 class WindowIOS : public Window
 {
@@ -28,7 +32,7 @@ public:
     std::string title;
     bool visible = false;
     bool resizeable = false;
-    sptr<gfx::WindowSurface> surface;
+    sptr<HWSurface> surface;
 
     WindowIOS();
     ~WindowIOS();
@@ -48,15 +52,16 @@ public:
     virtual void Close()  override;
     virtual uintptr_t GetHandle() const override;
 
+    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
+
     MainWindow* CreateNativeWindow();
     MainView* CreateNativeView();
-    
-    static Keycode TranslateKey(int keycode);
 
-    virtual sptr<gfx::WindowSurface> GetSurface() override;
+    static Keycode TranslateKey(int keycode);
 };
 
-}
+} // system
+} // mw
 
 @interface MainWindow : UIWindow
 {

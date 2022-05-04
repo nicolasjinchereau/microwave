@@ -1,11 +1,11 @@
 {
- "sourcePath": ".internal/unlit_textured.cg",
- "artifacts": [
-  {
-   "uuid": "ba4fbd77580f45cbbcf53f6a4a37a2e6",
-   "assetType": "Shader",
-   "sourcePath": ".internal/unlit_textured.cg"
-  }
- ],
- "settings": {}
+  "sourcePath": ".internal/unlit_textured.cg",
+  "artifacts": [
+    {
+      "uuid": "ba4fbd77580f45cbbcf53f6a4a37a2e6",
+      "assetType": "Shader",
+      "sourcePath": ".internal/unlit_textured.cg"
+    }
+  ],
+  "settings": {}
 }

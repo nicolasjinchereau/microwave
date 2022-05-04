@@ -7,7 +7,8 @@ workspace "Test"
 project "Test"
     kind "ConsoleApp"
     language "C++"
-    
+    --architecture "x86_64"
+
     location ("projects/" .. os.target())
     targetname "Test"
 
@@ -284,7 +285,7 @@ project "Test"
         scanformoduledependencies "true"
         enablemodules "true"
         moduledependencies {
-            "../core/ifc/$(PlatformName)/$(Configuration)"
+            "../core/bmi/$(PlatformName)/$(Configuration)"
         }
         buildoptions {
             "/await"
@@ -294,3 +295,4 @@ project "Test"
             uuid "F21BE648-5E86-9ABF-A7C4-4B65136E7814"
             kind "StaticLib"
             language "C++"
+            --architecture "x86_64"

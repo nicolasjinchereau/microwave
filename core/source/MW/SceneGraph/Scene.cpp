@@ -31,7 +31,7 @@ sptr<Node> Scene::GetRootNode()
 {
     if (!_rootNode) {
         _rootNode = spnew<Node>();
-        _rootNode->SetScene(This<Scene>());
+        _rootNode->SetScene(SharedFrom(this));
     }
 
     return _rootNode;
@@ -174,7 +174,7 @@ sptr<T> GetEventHandler(const sptr<Component>& comp, uint32_t eventBit)
     sptr<T> p;
 
     if (comp->HasEventBit(eventBit))
-        p = std::dynamic_pointer_cast<T>(comp);
+        p = spcast<T>(comp);
 
     return p;
 }

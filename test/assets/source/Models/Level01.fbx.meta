@@ -1,548 +1,548 @@
 {
- "sourcePath": "Models/Level01.fbx",
- "artifacts": [
-  {
-   "uuid": "236edf498a494aa9a67d74f40e2268aa",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/IBeam.mesh"
-  },
-  {
-   "uuid": "e5b80518de4141c2ad0585ef7c573050",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/HeavyBarrel.mat"
-  },
-  {
-   "uuid": "08fba6e6c607455f886de0f7150ee97a",
-   "assetType": "Node",
-   "sourcePath": "Models/Level01.fbx"
-  },
-  {
-   "uuid": "7310c9181c1c4ca38e7942f152d6b3d8",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/InnerDoorRight.mesh"
-  },
-  {
-   "uuid": "c6ba09901949406cb88a088671d5cc9e",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/FloorTile.mesh"
-  },
-  {
-   "uuid": "eb246bf9b8054d16a9ff99796cb8e652",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/HeavyBarrel.mesh"
-  },
-  {
-   "uuid": "193a260046bc4cf59b7f365a80f61d30",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/Wall001.mesh"
-  },
-  {
-   "uuid": "5880814227194f04a888efd478e59ee3",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/Wall.mat"
-  },
-  {
-   "uuid": "43273c54b53f4c70b31c2a9c20b61fa1",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/FloorTileHatched.mesh"
-  },
-  {
-   "uuid": "f68a2577b2024059b1bbbc710b87fbaf",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/SpinningGear.mat"
-  },
-  {
-   "uuid": "1ea1eaefecee4030b24894d3070492b5",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/Shelf006.mesh"
-  },
-  {
-   "uuid": "4870494eb5a345609a27e778a7d20f51",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/HeavyCrate.mesh"
-  },
-  {
-   "uuid": "a418bae28f2f4e39bec44b9c5d97a33b",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/BigDoors.mat"
-  },
-  {
-   "uuid": "2c948664653c4839ba989b8951b4a7be",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/CardboardBox.mat"
-  },
-  {
-   "uuid": "360e6fb165dd46388f409b0b42cf089d",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/WallLight000.mesh"
-  },
-  {
-   "uuid": "adca60c011d64b74a0c67b17ceaebffe",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/EndWall01.mesh"
-  },
-  {
-   "uuid": "9e9a9333b8bd4f91b1c9f4399454ec7a",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/LightBarrel001.mesh"
-  },
-  {
-   "uuid": "9d9b586967f348489ff8c3e46208ab3d",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/Skid.mesh"
-  },
-  {
-   "uuid": "f0b554ac638847f4b922923c13abc4f0",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/BigBarrierPost.mesh"
-  },
-  {
-   "uuid": "9957ea0ba09a45688da27064fcf7c55f",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/OuterDoorRight.mesh"
-  },
-  {
-   "uuid": "d7e5d9e1ae204190853b36f9ffaa6ae7",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/Shelf.mat"
-  },
-  {
-   "uuid": "4623199134ac4736822fc0d62e92c142",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/InnerDoorLeft.mesh"
-  },
-  {
-   "uuid": "6ab0b3bf74a54233826817eefefc18ab",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/ControlPanel.mat"
-  },
-  {
-   "uuid": "263714a7a58b423cbeca030f5dc6cfbe",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/OuterDoorLeft.mesh"
-  },
-  {
-   "uuid": "2249d529d6e84c0f847d20658c988312",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/CardboardBox.mesh"
-  },
-  {
-   "uuid": "6fe86ba2b0af4cf09cc8fe5bd024717b",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/BigDoors.mesh"
-  },
-  {
-   "uuid": "5b460750bcbf4b35940744d3a797b05a",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/EndWall002.mesh"
-  },
-  {
-   "uuid": "5112b6653f8f4f43a74224ba8320b68a",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/SpinningGearCW.mesh"
-  },
-  {
-   "uuid": "7b74e93863e447d2a9061048f9e6ff70",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/GearShaft.mesh"
-  },
-  {
-   "uuid": "78f5eaffcb6b4a488522a0a151dec38d",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/Forklift.mesh"
-  },
-  {
-   "uuid": "423051ecd4644faca3ae0f66d8b54bc4",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/Barrier.mesh"
-  },
-  {
-   "uuid": "a58ac8b54f3c49fbae520266d7aace7c",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/BigBarrier.mesh"
-  },
-  {
-   "uuid": "4a6ff7e2d2e24136bb1fd2f0c8cc59ca",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/Box205.mesh"
-  },
-  {
-   "uuid": "c7b139574acd4a47905aaf1537b0185e",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/HugeCrate.mesh"
-  },
-  {
-   "uuid": "39074cc17ff54664b92e7200d51dd9f6",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/SpeedBump.mesh"
-  },
-  {
-   "uuid": "52d90153b64f4a75b6ad4db9b50a0216",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/Coin023.mesh"
-  },
-  {
-   "uuid": "2bea8b745180432e904bece1a8eb9ed7",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Level01.fbx/BigBarrier002.mesh"
-  },
-  {
-   "uuid": "edac680151654f5baafd87b1e3eebd8c",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/HeavyCrate.mat"
-  },
-  {
-   "uuid": "2b01c459a6e0483bb4e6fcf061d5db1b",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/Floor.mat"
-  },
-  {
-   "uuid": "1949030252be418a926f1263bf8421e8",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/Forklift.mat"
-  },
-  {
-   "uuid": "1ee3dd35eb954bd1a9d886a7716fd189",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/Barrier.mat"
-  },
-  {
-   "uuid": "73c0dc6399bc4aa6aae458fbe9713ae6",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/FloorHatched.mat"
-  },
-  {
-   "uuid": "9bfb2ce8c4194f3395299e9cebd57962",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/IBeam.mat"
-  },
-  {
-   "uuid": "39e2d4f5b6544fa9b98c85a28dfa3f39",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/WallWithHole.mat"
-  },
-  {
-   "uuid": "7fef5572c88d44c49524b5a45b24697b",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/WallLight.mat"
-  },
-  {
-   "uuid": "65158f18967545bc964ca1214be6655d",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/BigBarrier.mat"
-  },
-  {
-   "uuid": "4749e37196ba4924b3d798502732e37b",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/HugeCrate.mat"
-  },
-  {
-   "uuid": "5e354f91f4ff463f8a99688e5e5dcc76",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/BigBarrierGlass.mat"
-  },
-  {
-   "uuid": "1555be0a8bc84694a91400f1dfb941d0",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/Skid.mat"
-  },
-  {
-   "uuid": "a43aaa4f947f4af89dd8b04e2e7baac2",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/SpeedBump.mat"
-  },
-  {
-   "uuid": "4a5f91ac399b47159854e920c7e3e2f8",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/Coin.mat"
-  },
-  {
-   "uuid": "4e361f14e8eb48a3b4fa75f4042e7d3a",
-   "assetType": "Material",
-   "sourcePath": "Models/Level01.fbx/LightBarrel.mat"
-  },
-  {
-   "uuid": "9d186fa46629491f837432bec892dc63",
-   "assetType": "AnimationClip",
-   "sourcePath": "Models/Level01.fbx/Default.clip"
-  }
- ],
- "settings": {
-  "materialSettings": {
-   "5880814227194f04a888efd478e59ee3": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+  "sourcePath": "Models/Level01.fbx",
+  "artifacts": [
+    {
+      "uuid": "236edf498a494aa9a67d74f40e2268aa",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/IBeam.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "Wall.png",
-      "uuid": "8c77a87bda924e94941816454a19cbef"
-     }
-    }
-   },
-   "1ee3dd35eb954bd1a9d886a7716fd189": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "e5b80518de4141c2ad0585ef7c573050",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/HeavyBarrel.mat"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "Barrier.png",
-      "uuid": "bc798ab890b84fcab3241fc775e8fbf9"
-     }
-    }
-   },
-   "1949030252be418a926f1263bf8421e8": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "08fba6e6c607455f886de0f7150ee97a",
+      "assetType": "Node",
+      "sourcePath": "Models/Level01.fbx"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "Forklift.png",
-      "uuid": "fbec71e0fdf94c36ba70bbe030825c26"
-     }
-    }
-   },
-   "edac680151654f5baafd87b1e3eebd8c": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "7310c9181c1c4ca38e7942f152d6b3d8",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/InnerDoorRight.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "HeavyCrate.png",
-      "uuid": "5ce18c2671514323977c2ac60e05896e"
-     }
-    }
-   },
-   "2b01c459a6e0483bb4e6fcf061d5db1b": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "c6ba09901949406cb88a088671d5cc9e",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/FloorTile.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "Floor.png",
-      "uuid": "fdc48bb8898e496abf32281bb6fcdf77"
-     }
-    }
-   },
-   "73c0dc6399bc4aa6aae458fbe9713ae6": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "eb246bf9b8054d16a9ff99796cb8e652",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/HeavyBarrel.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "FloorHatched.png",
-      "uuid": "5823327e0d3641ba9e72f2879012fc16"
-     }
-    }
-   },
-   "d7e5d9e1ae204190853b36f9ffaa6ae7": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "193a260046bc4cf59b7f365a80f61d30",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/Wall001.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "Shelf.png",
-      "uuid": "827e1b7ef2aa49e689e11d0d788f5194"
-     }
-    }
-   },
-   "a43aaa4f947f4af89dd8b04e2e7baac2": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "5880814227194f04a888efd478e59ee3",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/Wall.mat"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "SpeedBump.png",
-      "uuid": "ac5dbfdaaab94c2c82e015906dec4b7d"
-     }
-    }
-   },
-   "4e361f14e8eb48a3b4fa75f4042e7d3a": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "43273c54b53f4c70b31c2a9c20b61fa1",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/FloorTileHatched.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "LightBarrel.png",
-      "uuid": "d4e2baa787d74fe387c62031f38abacd"
-     }
-    }
-   },
-   "9bfb2ce8c4194f3395299e9cebd57962": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "f68a2577b2024059b1bbbc710b87fbaf",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/SpinningGear.mat"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "IBeam.png",
-      "uuid": "47f42cb233d74e66bdfc539f80ff6336"
-     }
-    }
-   },
-   "39e2d4f5b6544fa9b98c85a28dfa3f39": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "1ea1eaefecee4030b24894d3070492b5",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/Shelf006.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "Wall.png",
-      "uuid": "8c77a87bda924e94941816454a19cbef"
-     }
-    }
-   },
-   "7fef5572c88d44c49524b5a45b24697b": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "4870494eb5a345609a27e778a7d20f51",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/HeavyCrate.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "WallLight.png",
-      "uuid": "28088b64ba94414b83090ac654a96ae3"
-     }
-    }
-   },
-   "2c948664653c4839ba989b8951b4a7be": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "a418bae28f2f4e39bec44b9c5d97a33b",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/BigDoors.mat"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "CardboardBox.png",
-      "uuid": "07605f9cd3de4e1f8ceb1851d4a5e25e"
-     }
-    }
-   },
-   "a418bae28f2f4e39bec44b9c5d97a33b": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "2c948664653c4839ba989b8951b4a7be",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/CardboardBox.mat"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "BigDoors.png",
-      "uuid": "b371a58b339a476983b39891889e130e"
-     }
-    }
-   },
-   "f68a2577b2024059b1bbbc710b87fbaf": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "360e6fb165dd46388f409b0b42cf089d",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/WallLight000.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "SpinningGear.png",
-      "uuid": "fd0d7f10d3e04308aa955709a396c0fe"
-     }
-    }
-   },
-   "65158f18967545bc964ca1214be6655d": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "adca60c011d64b74a0c67b17ceaebffe",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/EndWall01.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "BigBarrier.png",
-      "uuid": "5dbf67e1551d468ebaca4d021c494a76"
-     }
-    }
-   },
-   "6ab0b3bf74a54233826817eefefc18ab": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "9e9a9333b8bd4f91b1c9f4399454ec7a",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/LightBarrel001.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "ControlPanel.png",
-      "uuid": "5505e04780864bb7bc8a2f55d04bb2f0"
-     }
-    }
-   },
-   "4749e37196ba4924b3d798502732e37b": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "9d9b586967f348489ff8c3e46208ab3d",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/Skid.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "HugeCrate.png",
-      "uuid": "5ed954991b794447b8c5ef1845968149"
-     }
-    }
-   },
-   "1555be0a8bc84694a91400f1dfb941d0": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "f0b554ac638847f4b922923c13abc4f0",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/BigBarrierPost.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "Skid.png",
-      "uuid": "d5801162fd7d4d9db611418f025b365c"
-     }
-    }
-   },
-   "e5b80518de4141c2ad0585ef7c573050": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "9957ea0ba09a45688da27064fcf7c55f",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/OuterDoorRight.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "HeavyBarrel.png",
-      "uuid": "f6287dcdf0bf4519aca80ec3b048db55"
-     }
-    }
-   },
-   "4a5f91ac399b47159854e920c7e3e2f8": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "d7e5d9e1ae204190853b36f9ffaa6ae7",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/Shelf.mat"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "white.png",
-      "uuid": "217bdb51a93b4a95a0f2ea8339ce7336"
-     }
-    }
-   },
-   "5e354f91f4ff463f8a99688e5e5dcc76": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+    {
+      "uuid": "4623199134ac4736822fc0d62e92c142",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/InnerDoorLeft.mesh"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "BigBarrierGlass.png",
-      "uuid": "b0b3ac0540a54162bc35e4187b1750dc"
-     }
+    {
+      "uuid": "6ab0b3bf74a54233826817eefefc18ab",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/ControlPanel.mat"
+    },
+    {
+      "uuid": "263714a7a58b423cbeca030f5dc6cfbe",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/OuterDoorLeft.mesh"
+    },
+    {
+      "uuid": "2249d529d6e84c0f847d20658c988312",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/CardboardBox.mesh"
+    },
+    {
+      "uuid": "6fe86ba2b0af4cf09cc8fe5bd024717b",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/BigDoors.mesh"
+    },
+    {
+      "uuid": "5b460750bcbf4b35940744d3a797b05a",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/EndWall002.mesh"
+    },
+    {
+      "uuid": "5112b6653f8f4f43a74224ba8320b68a",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/SpinningGearCW.mesh"
+    },
+    {
+      "uuid": "7b74e93863e447d2a9061048f9e6ff70",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/GearShaft.mesh"
+    },
+    {
+      "uuid": "78f5eaffcb6b4a488522a0a151dec38d",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/Forklift.mesh"
+    },
+    {
+      "uuid": "423051ecd4644faca3ae0f66d8b54bc4",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/Barrier.mesh"
+    },
+    {
+      "uuid": "a58ac8b54f3c49fbae520266d7aace7c",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/BigBarrier.mesh"
+    },
+    {
+      "uuid": "4a6ff7e2d2e24136bb1fd2f0c8cc59ca",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/Box205.mesh"
+    },
+    {
+      "uuid": "c7b139574acd4a47905aaf1537b0185e",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/HugeCrate.mesh"
+    },
+    {
+      "uuid": "39074cc17ff54664b92e7200d51dd9f6",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/SpeedBump.mesh"
+    },
+    {
+      "uuid": "52d90153b64f4a75b6ad4db9b50a0216",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/Coin023.mesh"
+    },
+    {
+      "uuid": "2bea8b745180432e904bece1a8eb9ed7",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Level01.fbx/BigBarrier002.mesh"
+    },
+    {
+      "uuid": "edac680151654f5baafd87b1e3eebd8c",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/HeavyCrate.mat"
+    },
+    {
+      "uuid": "2b01c459a6e0483bb4e6fcf061d5db1b",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/Floor.mat"
+    },
+    {
+      "uuid": "1949030252be418a926f1263bf8421e8",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/Forklift.mat"
+    },
+    {
+      "uuid": "1ee3dd35eb954bd1a9d886a7716fd189",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/Barrier.mat"
+    },
+    {
+      "uuid": "73c0dc6399bc4aa6aae458fbe9713ae6",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/FloorHatched.mat"
+    },
+    {
+      "uuid": "9bfb2ce8c4194f3395299e9cebd57962",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/IBeam.mat"
+    },
+    {
+      "uuid": "39e2d4f5b6544fa9b98c85a28dfa3f39",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/WallWithHole.mat"
+    },
+    {
+      "uuid": "7fef5572c88d44c49524b5a45b24697b",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/WallLight.mat"
+    },
+    {
+      "uuid": "65158f18967545bc964ca1214be6655d",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/BigBarrier.mat"
+    },
+    {
+      "uuid": "4749e37196ba4924b3d798502732e37b",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/HugeCrate.mat"
+    },
+    {
+      "uuid": "5e354f91f4ff463f8a99688e5e5dcc76",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/BigBarrierGlass.mat"
+    },
+    {
+      "uuid": "1555be0a8bc84694a91400f1dfb941d0",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/Skid.mat"
+    },
+    {
+      "uuid": "a43aaa4f947f4af89dd8b04e2e7baac2",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/SpeedBump.mat"
+    },
+    {
+      "uuid": "4a5f91ac399b47159854e920c7e3e2f8",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/Coin.mat"
+    },
+    {
+      "uuid": "4e361f14e8eb48a3b4fa75f4042e7d3a",
+      "assetType": "Material",
+      "sourcePath": "Models/Level01.fbx/LightBarrel.mat"
+    },
+    {
+      "uuid": "9d186fa46629491f837432bec892dc63",
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/Level01.fbx/Default.clip"
     }
-   }
-  },
-  "clipSpecs": [
-   {
-    "name": "Default",
-    "start": 0,
-    "stop": 1,
-    "wrapMode": "Once"
-   }
   ],
-  "keepRootTransform": false,
-  "scaleFactor": 1.0
- }
+  "settings": {
+    "clipSpecs": [
+      {
+        "name": "Default",
+        "start": 0,
+        "stop": 1,
+        "wrapMode": "Once"
+      }
+    ],
+    "materialSettings": {
+      "5880814227194f04a888efd478e59ee3": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "Wall.png",
+            "uuid": "8c77a87bda924e94941816454a19cbef"
+          }
+        }
+      },
+      "1ee3dd35eb954bd1a9d886a7716fd189": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "Barrier.png",
+            "uuid": "bc798ab890b84fcab3241fc775e8fbf9"
+          }
+        }
+      },
+      "1949030252be418a926f1263bf8421e8": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "Forklift.png",
+            "uuid": "fbec71e0fdf94c36ba70bbe030825c26"
+          }
+        }
+      },
+      "edac680151654f5baafd87b1e3eebd8c": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "HeavyCrate.png",
+            "uuid": "5ce18c2671514323977c2ac60e05896e"
+          }
+        }
+      },
+      "2b01c459a6e0483bb4e6fcf061d5db1b": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "Floor.png",
+            "uuid": "fdc48bb8898e496abf32281bb6fcdf77"
+          }
+        }
+      },
+      "73c0dc6399bc4aa6aae458fbe9713ae6": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "FloorHatched.png",
+            "uuid": "5823327e0d3641ba9e72f2879012fc16"
+          }
+        }
+      },
+      "d7e5d9e1ae204190853b36f9ffaa6ae7": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "Shelf.png",
+            "uuid": "827e1b7ef2aa49e689e11d0d788f5194"
+          }
+        }
+      },
+      "a43aaa4f947f4af89dd8b04e2e7baac2": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "SpeedBump.png",
+            "uuid": "ac5dbfdaaab94c2c82e015906dec4b7d"
+          }
+        }
+      },
+      "4e361f14e8eb48a3b4fa75f4042e7d3a": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "LightBarrel.png",
+            "uuid": "d4e2baa787d74fe387c62031f38abacd"
+          }
+        }
+      },
+      "9bfb2ce8c4194f3395299e9cebd57962": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "IBeam.png",
+            "uuid": "47f42cb233d74e66bdfc539f80ff6336"
+          }
+        }
+      },
+      "39e2d4f5b6544fa9b98c85a28dfa3f39": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "Wall.png",
+            "uuid": "8c77a87bda924e94941816454a19cbef"
+          }
+        }
+      },
+      "7fef5572c88d44c49524b5a45b24697b": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "WallLight.png",
+            "uuid": "28088b64ba94414b83090ac654a96ae3"
+          }
+        }
+      },
+      "2c948664653c4839ba989b8951b4a7be": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "CardboardBox.png",
+            "uuid": "07605f9cd3de4e1f8ceb1851d4a5e25e"
+          }
+        }
+      },
+      "a418bae28f2f4e39bec44b9c5d97a33b": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "BigDoors.png",
+            "uuid": "b371a58b339a476983b39891889e130e"
+          }
+        }
+      },
+      "f68a2577b2024059b1bbbc710b87fbaf": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "SpinningGear.png",
+            "uuid": "fd0d7f10d3e04308aa955709a396c0fe"
+          }
+        }
+      },
+      "65158f18967545bc964ca1214be6655d": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "BigBarrier.png",
+            "uuid": "5dbf67e1551d468ebaca4d021c494a76"
+          }
+        }
+      },
+      "6ab0b3bf74a54233826817eefefc18ab": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "ControlPanel.png",
+            "uuid": "5505e04780864bb7bc8a2f55d04bb2f0"
+          }
+        }
+      },
+      "4749e37196ba4924b3d798502732e37b": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "HugeCrate.png",
+            "uuid": "5ed954991b794447b8c5ef1845968149"
+          }
+        }
+      },
+      "1555be0a8bc84694a91400f1dfb941d0": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "Skid.png",
+            "uuid": "d5801162fd7d4d9db611418f025b365c"
+          }
+        }
+      },
+      "e5b80518de4141c2ad0585ef7c573050": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "HeavyBarrel.png",
+            "uuid": "f6287dcdf0bf4519aca80ec3b048db55"
+          }
+        }
+      },
+      "4a5f91ac399b47159854e920c7e3e2f8": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "white.png",
+            "uuid": "217bdb51a93b4a95a0f2ea8339ce7336"
+          }
+        }
+      },
+      "5e354f91f4ff463f8a99688e5e5dcc76": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "BigBarrierGlass.png",
+            "uuid": "b0b3ac0540a54162bc35e4187b1750dc"
+          }
+        }
+      }
+    },
+    "keepRootTransform": false,
+    "scaleFactor": 1.0
+  }
 }

@@ -4,7 +4,7 @@
 
 export module Microwave.SceneGraph.Components.ImageView;
 import Microwave.Graphics.Color;
-import Microwave.Graphics.DrawBuffer;
+import Microwave.Graphics.Buffer;
 import Microwave.Graphics.Material;
 import Microwave.Graphics.Texture;
 import Microwave.Graphics.Types;
@@ -25,8 +25,8 @@ class ImageView : public View, public IRenderEvents
 {
     inline static Type::Pin<ImageView> pin;
 protected:
-    sptr<DrawBuffer> vertexBuffer;
-    sptr<DrawBuffer> indexBuffer;
+    sptr<Buffer> vertexBuffer;
+    sptr<Buffer> indexBuffer;
     sptr<Material> mat;
     size_t indexCount = 0;
     bool meshDirty = true;

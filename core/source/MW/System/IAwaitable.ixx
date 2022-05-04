@@ -15,7 +15,7 @@ class IAwaitable
 public:
     virtual ~IAwaitable() = default;
     virtual bool IsAwaitableReady() = 0;
-    virtual void OnAwaiterSuspended(const sptr<IAwaiter>& caller) = 0;
+    virtual void OnAwaiterSuspended(const sptr<IAwaiter>& awaiter) = 0;
     virtual T OnAwaiterResumed() = 0;
     virtual T WaitForResult() = 0;
 };

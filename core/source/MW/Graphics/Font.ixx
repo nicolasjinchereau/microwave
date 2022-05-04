@@ -71,11 +71,8 @@ class Font : public Object
     class Atlas
     {
     public:
-        std::vector<uint32_t> data;
         sptr<Texture> texture;
-        FontMode fontMode;
-
-        Atlas(sptr<Texture>& texture, FontMode fontMode);
+        Atlas(const IVec2& size, FontMode fontMode);
     };
 
 public:

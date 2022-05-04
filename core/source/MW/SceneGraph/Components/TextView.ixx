@@ -4,7 +4,7 @@
 
 export module Microwave.SceneGraph.Components.TextView;
 import Microwave.Graphics.Color;
-import Microwave.Graphics.DrawBuffer;
+import Microwave.Graphics.Buffer;
 import Microwave.Graphics.Font;
 import Microwave.Graphics.Material;
 import Microwave.Graphics.Texture;
@@ -28,8 +28,7 @@ class TextView : public View, public IRenderEvents
     inline static Type::Pin<TextView> pin;
 protected:
     std::vector<IVec2> vertexRanges;
-    sptr<DrawBuffer> vertexBuffer;
-    sptr<DrawBuffer> indexBuffer;
+    sptr<Buffer> vertexBuffer;
     sptr<Material> mat;
     bool textDirty = true;
 

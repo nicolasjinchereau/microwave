@@ -1,14 +1,14 @@
 {
- "sourcePath": "Audio/Sounds/Coin.wav",
- "artifacts": [
-  {
-   "uuid": "5631e0df775c443ca1ea5d4c2bcda3b8",
-   "assetType": "AudioClip",
-   "sourcePath": "Audio/Sounds/Coin.wav"
+  "sourcePath": "Audio/Sounds/Coin.wav",
+  "artifacts": [
+    {
+      "uuid": "5631e0df775c443ca1ea5d4c2bcda3b8",
+      "assetType": "AudioClip",
+      "sourcePath": "Audio/Sounds/Coin.wav"
+    }
+  ],
+  "settings": {
+    "fileFormat": "Wav",
+    "streamFromDisk": false
   }
- ],
- "settings": {
-  "streamFromDisk": false,
-  "fileFormat": "Wav"
- }
 }

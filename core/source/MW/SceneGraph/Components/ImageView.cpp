@@ -3,7 +3,9 @@
 *--------------------------------------------------------------*/
 
 module Microwave.SceneGraph.Components.ImageView;
+import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.RenderQueue;
+import Microwave.Graphics.Shader;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Components.Canvas;
 import Microwave.System.App;
@@ -27,15 +29,14 @@ void ImageView::FromJson(const json& obj, ObjectLinker* linker)
 
     border = obj.value("border", border);
     color = obj.value("color", color);
-    ObjectLinker::RestoreAsset(linker, This(), tex, obj, "tex");
+    ObjectLinker::RestoreAsset(linker, SharedFrom(this), tex, obj, "tex");
 
     meshDirty = true;
 }
 
 void ImageView::Construct()
 {
-    auto app = App::Get();
-    auto assetLib = app->GetAssetLibrary();
+    auto assetLib = App::Get()->GetAssetLibrary();
     mat = spnew<Material>();
     mat->shader = assetLib->GetAsset<Shader>(".internal/ui-default.cg");
     mat->depthTest = DepthTest::Always;
@@ -44,18 +45,24 @@ void ImageView::Construct()
     mat->SetBlendFactors(BlendFactor::SrcAlpha, BlendFactor::OneMinusSrcAlpha);
 }
 
-void ImageView::SetBorder(const Box& box) {
-    border = box;
-    meshDirty = true;
+void ImageView::SetBorder(const Box& box)
+{
+    if (border != box) {
+        border = box;
+        meshDirty = true;
+    }
 }
 
 Box ImageView::GetBorder() const {
     return border;
 }
 
-void ImageView::SetColor(const Color& color) {
-    this->color = color;
-    meshDirty = true;
+void ImageView::SetColor(const Color& c)
+{
+    if (color != c) {
+        color = c;
+        meshDirty = true;
+    }
 }
 
 Color ImageView::GetColor() const {
@@ -76,7 +83,7 @@ void ImageView::UpdateMesh()
 
     if (meshDirty)
     {
-        auto graphics = App::Get()->GetGraphics();
+        auto graphics = GraphicsContext::GetCurrent();
 
         auto sz = GetSize();
         float hw = sz.x * 0.5f;
@@ -140,33 +147,34 @@ void ImageView::UpdateMesh()
                 10, 11, 15, 10, 15, 14
             };
 
-            size_t vertSize = vertices.size() * sizeof(UIVertex);
-            std::byte* vertData = (std::byte*)vertices.data();
-
-            if (vertexBuffer && vertexBuffer->GetCapacity() == vertSize)
-            {
-                vertexBuffer->UpdateSubData(0, std::span<std::byte>(vertData, vertSize));
-            }
-            else
-            {
-                vertexBuffer = graphics->CreateBuffer(
-                    vertSize, DrawBufferType::Vertex, true,
-                    std::span<std::byte>(vertData, vertSize));
-            }
-
             indexCount = indices.size();
-            size_t indexSize = indices.size() * sizeof(int);
-            std::byte* indexData = (std::byte*)indices.data();
+            auto vertData = std::as_writable_bytes(std::span(vertices));
+            auto indexData = std::as_writable_bytes(std::span(indices));
 
-            if (indexBuffer && indexBuffer->GetCapacity() == indexSize)
+            if (vertexBuffer && vertexBuffer->GetSize() == vertData.size())
             {
-                indexBuffer->UpdateSubData(0, std::span<std::byte>(indexData, indexSize));
+                vertexBuffer->UpdateSubData(0, vertData);
             }
             else
             {
-                indexBuffer = graphics->CreateBuffer(
-                    indexSize, DrawBufferType::Index, true,
-                    std::span<std::byte>(indexData, indexSize));
+                vertexBuffer = spnew<Buffer>(
+                    BufferType::Vertex,
+                    BufferUsage::Dynamic,
+                    BufferCPUAccess::WriteOnly,
+                    vertData);
+            }
+
+            if (indexBuffer && indexBuffer->GetSize() == indexData.size())
+            {
+                indexBuffer->UpdateSubData(0, indexData);
+            }
+            else
+            {
+                indexBuffer = spnew<Buffer>(
+                    BufferType::Index,
+                    BufferUsage::Dynamic,
+                    BufferCPUAccess::WriteOnly,
+                    indexData);
             }
         }
         else
@@ -193,33 +201,34 @@ void ImageView::UpdateMesh()
                 0, 3, 2
             };
 
-            size_t vertSize = vertices.size() * sizeof(UIVertex);
-            std::byte* vertData = (std::byte*)vertices.data();
-
-            if (vertexBuffer && vertexBuffer->GetCapacity() == vertSize)
-            {
-                vertexBuffer->UpdateSubData(0, std::span<std::byte>(vertData, vertSize));
-            }
-            else
-            {
-                vertexBuffer = graphics->CreateBuffer(
-                    vertSize, DrawBufferType::Vertex, true,
-                    std::span<std::byte>(vertData, vertSize));
-            }
-
             indexCount = indices.size();
-            size_t indexSize = indexCount * sizeof(int);
-            std::byte* indexData = (std::byte*)indices.data();
+            auto vertData = std::as_writable_bytes(std::span(vertices));
+            auto indexData = std::as_writable_bytes(std::span(indices));
 
-            if (indexBuffer && indexBuffer->GetCapacity() == indexSize)
+            if (vertexBuffer && vertexBuffer->GetSize() == vertData.size())
             {
-                indexBuffer->UpdateSubData(0, std::span<std::byte>(indexData, indexSize));
+                vertexBuffer->UpdateSubData(0, vertData);
             }
             else
             {
-                indexBuffer = graphics->CreateBuffer(
-                    indexSize, DrawBufferType::Index, true,
-                    std::span<std::byte>(indexData, indexSize));
+                vertexBuffer = spnew<Buffer>(
+                    BufferType::Vertex,
+                    BufferUsage::Dynamic,
+                    BufferCPUAccess::WriteOnly,
+                    vertData);
+            }
+
+            if (indexBuffer && indexBuffer->GetSize() == indexData.size())
+            {
+                indexBuffer->UpdateSubData(0, indexData);
+            }
+            else
+            {
+                indexBuffer = spnew<Buffer>(
+                    BufferType::Index,
+                    BufferUsage::Dynamic,
+                    BufferCPUAccess::WriteOnly,
+                    indexData);
             }
         }
 
@@ -252,13 +261,18 @@ void ImageView::GetRenderables(Sink<sptr<Renderable>> sink)
     if (!renderable)
         renderable = spnew<Renderable>();
 
+    renderable->vertexMapping = {
+        { Semantic::POSITION, 0, vertexBuffer, 0, sizeof(UIVertex) },
+        { Semantic::TEXCOORD, 0, vertexBuffer, 12, sizeof(UIVertex) },
+        { Semantic::COLOR, 0, vertexBuffer, 20, sizeof(UIVertex) }
+    };
+
     renderable->queueOverride = RenderQueue::Overlay + renderDepth;
     renderable->layerMask = node->GetLayerMask();
     renderable->material = mat;
     renderable->mtxModel = mtxModel;
     renderable->bounds = bounds;
     renderable->extra.SetUniform("uDiffuseTex", tex);
-    renderable->vertexBuffer = vertexBuffer;
     renderable->indexBuffer = indexBuffer;
     renderable->drawStart = 0;
     renderable->drawCount = indexCount;

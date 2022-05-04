@@ -82,28 +82,275 @@ inline void HandleEGLErrors(const char* funcName, bool throwOnFailure = false)
 
 #define __mwHandleEGLErrors(func) HandleEGLErrors(#func, true)
 #endif
-constexpr GLenum TEXTURE_2D = GL_TEXTURE_2D;
-constexpr GLenum UNPACK_SKIP_ROWS = GL_UNPACK_SKIP_ROWS;
-constexpr GLenum UNPACK_SKIP_PIXELS = GL_UNPACK_SKIP_PIXELS;
-constexpr GLenum UNPACK_ROW_LENGTH = GL_UNPACK_ROW_LENGTH;
-constexpr GLenum TEXTURE_WRAP_S = GL_TEXTURE_WRAP_S;
-constexpr GLenum TEXTURE_WRAP_T = GL_TEXTURE_WRAP_T;
-constexpr GLenum TEXTURE_MIN_FILTER = GL_TEXTURE_MIN_FILTER;
-constexpr GLenum TEXTURE_MAG_FILTER = GL_TEXTURE_MAG_FILTER;
-constexpr GLenum TEXTURE_MAX_ANISOTROPY = GL_TEXTURE_MAX_ANISOTROPY_EXT;
-constexpr GLenum MAX_TEXTURE_MAX_ANISOTROPY = GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT;
-constexpr GLenum CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE;
-constexpr GLenum REPEAT = GL_REPEAT;
-constexpr GLenum ALPHA = GL_ALPHA;
-constexpr GLenum RGB = GL_RGB;
-constexpr GLenum RGBA = GL_RGBA;
-constexpr GLenum UNSIGNED_BYTE = GL_UNSIGNED_BYTE;
-constexpr GLenum FLOAT = GL_FLOAT;
-constexpr GLenum NEAREST = GL_NEAREST;
-constexpr GLenum LINEAR = GL_LINEAR;
-constexpr GLenum NEAREST_MIPMAP_NEAREST = GL_NEAREST_MIPMAP_NEAREST;
-constexpr GLenum LINEAR_MIPMAP_NEAREST = GL_LINEAR_MIPMAP_NEAREST;
-constexpr GLenum LINEAR_MIPMAP_LINEAR = GL_LINEAR_MIPMAP_LINEAR;
+
+typedef GLchar Char;
+typedef GLenum Enum;
+typedef GLbitfield Bitfield;
+typedef GLuint Uint;
+typedef GLint Int;
+typedef GLsizei Sizei;
+typedef GLboolean Boolean;
+typedef GLbyte Byte;
+typedef GLshort Short;
+typedef GLubyte Ubyte;
+typedef GLushort Ushort;
+typedef GLulong Ulong;
+typedef GLfloat Float;
+typedef GLclampf Clampf;
+typedef GLdouble Double;
+typedef GLclampd Clampd;
+typedef GLvoid Void;
+
+constexpr Enum TEXTURE_2D = GL_TEXTURE_2D;
+constexpr Enum UNPACK_SKIP_ROWS = GL_UNPACK_SKIP_ROWS;
+constexpr Enum UNPACK_SKIP_PIXELS = GL_UNPACK_SKIP_PIXELS;
+constexpr Enum UNPACK_ROW_LENGTH = GL_UNPACK_ROW_LENGTH;
+constexpr Enum TEXTURE_WRAP_S = GL_TEXTURE_WRAP_S;
+constexpr Enum TEXTURE_WRAP_T = GL_TEXTURE_WRAP_T;
+constexpr Enum TEXTURE_MIN_FILTER = GL_TEXTURE_MIN_FILTER;
+constexpr Enum TEXTURE_MAG_FILTER = GL_TEXTURE_MAG_FILTER;
+constexpr Enum TEXTURE_MAX_ANISOTROPY = GL_TEXTURE_MAX_ANISOTROPY_EXT;
+constexpr Enum MAX_TEXTURE_MAX_ANISOTROPY = GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT;
+constexpr Enum CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE;
+constexpr Enum REPEAT = GL_REPEAT;
+constexpr Enum ALPHA = GL_ALPHA;
+constexpr Enum RGB = GL_RGB;
+constexpr Enum RGBA = GL_RGBA;
+constexpr Enum NEAREST = GL_NEAREST;
+constexpr Enum LINEAR = GL_LINEAR;
+constexpr Enum NEAREST_MIPMAP_NEAREST = GL_NEAREST_MIPMAP_NEAREST;
+constexpr Enum LINEAR_MIPMAP_NEAREST = GL_LINEAR_MIPMAP_NEAREST;
+constexpr Enum LINEAR_MIPMAP_LINEAR = GL_LINEAR_MIPMAP_LINEAR;
+
+// frame buffer
+constexpr Enum FRAMEBUFFER = GL_FRAMEBUFFER;
+constexpr Enum RENDERBUFFER = GL_RENDERBUFFER;
+constexpr Enum FRAMEBUFFER_BINDING = GL_FRAMEBUFFER_BINDING;
+constexpr Enum COLOR_ATTACHMENT0 = GL_COLOR_ATTACHMENT0;
+constexpr Enum DEPTH_ATTACHMENT = GL_DEPTH_ATTACHMENT;
+constexpr Enum DEPTH_COMPONENT24 = GL_DEPTH_COMPONENT24;
+constexpr Enum FRAMEBUFFER_COMPLETE = GL_FRAMEBUFFER_COMPLETE;
+constexpr Enum FRAMEBUFFER_INCOMPLETE_ATTACHMENT = GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT;
+constexpr Enum FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT = GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT;
+constexpr Enum FRAMEBUFFER_UNSUPPORTED = GL_FRAMEBUFFER_UNSUPPORTED;
+
+// texture units
+constexpr Enum TEXTURE0 = GL_TEXTURE0;
+constexpr Enum TEXTURE1 = GL_TEXTURE1;
+constexpr Enum TEXTURE2 = GL_TEXTURE2;
+constexpr Enum TEXTURE3 = GL_TEXTURE3;
+constexpr Enum TEXTURE4 = GL_TEXTURE4;
+constexpr Enum TEXTURE5 = GL_TEXTURE5;
+constexpr Enum TEXTURE6 = GL_TEXTURE6;
+constexpr Enum TEXTURE7 = GL_TEXTURE7;
+constexpr Enum TEXTURE8 = GL_TEXTURE8;
+constexpr Enum TEXTURE9 = GL_TEXTURE9;
+constexpr Enum TEXTURE10 = GL_TEXTURE10;
+constexpr Enum TEXTURE11 = GL_TEXTURE11;
+constexpr Enum TEXTURE12 = GL_TEXTURE12;
+constexpr Enum TEXTURE13 = GL_TEXTURE13;
+constexpr Enum TEXTURE14 = GL_TEXTURE14;
+constexpr Enum TEXTURE15 = GL_TEXTURE15;
+constexpr Enum TEXTURE16 = GL_TEXTURE16;
+constexpr Enum TEXTURE17 = GL_TEXTURE17;
+constexpr Enum TEXTURE18 = GL_TEXTURE18;
+constexpr Enum TEXTURE19 = GL_TEXTURE19;
+constexpr Enum TEXTURE20 = GL_TEXTURE20;
+constexpr Enum TEXTURE21 = GL_TEXTURE21;
+constexpr Enum TEXTURE22 = GL_TEXTURE22;
+constexpr Enum TEXTURE23 = GL_TEXTURE23;
+constexpr Enum TEXTURE24 = GL_TEXTURE24;
+constexpr Enum TEXTURE25 = GL_TEXTURE25;
+constexpr Enum TEXTURE26 = GL_TEXTURE26;
+constexpr Enum TEXTURE27 = GL_TEXTURE27;
+constexpr Enum TEXTURE28 = GL_TEXTURE28;
+constexpr Enum TEXTURE29 = GL_TEXTURE29;
+constexpr Enum TEXTURE30 = GL_TEXTURE30;
+constexpr Enum TEXTURE31 = GL_TEXTURE31;
+
+// sized internal formats
+constexpr Enum R8 = GL_R8; // GL_RED
+constexpr Enum R8_SNORM = GL_R8_SNORM; // GL_RED
+constexpr Enum R16 = GL_R16; // GL_RED
+constexpr Enum R16_SNORM = GL_R16_SNORM; // GL_RED
+constexpr Enum RG8 = GL_RG8; // GL_RG
+constexpr Enum RG8_SNORM = GL_RG8_SNORM; // GL_RG
+constexpr Enum RG16 = GL_RG16; // GL_RG
+constexpr Enum RG16_SNORM = GL_RG16_SNORM; // GL_RG
+constexpr Enum R3_G3_B2 = GL_R3_G3_B2; // GL_RGB
+constexpr Enum RGB4 = GL_RGB4; // GL_RGB
+constexpr Enum RGB5 = GL_RGB5; // GL_RGB
+constexpr Enum RGB8 = GL_RGB8; // GL_RGB
+constexpr Enum RGB8_SNORM = GL_RGB8_SNORM; // GL_RGB
+constexpr Enum RGB10 = GL_RGB10; // GL_RGB
+constexpr Enum RGB12 = GL_RGB12; // GL_RGB
+constexpr Enum RGB16_SNORM = GL_RGB16_SNORM; // GL_RGB
+constexpr Enum RGBA2 = GL_RGBA2; // GL_RGB
+constexpr Enum RGBA4 = GL_RGBA4; // GL_RGB
+constexpr Enum RGB5_A1 = GL_RGB5_A1; // GL_RGBA
+constexpr Enum RGBA8 = GL_RGBA8; // GL_RGBA
+constexpr Enum RGBA8_SNORM = GL_RGBA8_SNORM; // GL_RGBA
+constexpr Enum RGB10_A2 = GL_RGB10_A2; // GL_RGBA
+constexpr Enum RGB10_A2UI = GL_RGB10_A2UI; // GL_RGBA
+constexpr Enum RGBA12 = GL_RGBA12; // GL_RGBA
+constexpr Enum RGBA16 = GL_RGBA16; // GL_RGBA
+constexpr Enum SRGB8 = GL_SRGB8; // GL_RGB
+constexpr Enum SRGB8_ALPHA8 = GL_SRGB8_ALPHA8; // GL_RGBA
+constexpr Enum R16F = GL_R16F; // GL_RED
+constexpr Enum RG16F = GL_RG16F; // GL_RG
+constexpr Enum RGB16F = GL_RGB16F; // GL_RGB
+constexpr Enum RGBA16F = GL_RGBA16F; // GL_RGBA
+constexpr Enum R32F = GL_R32F; // GL_RED
+constexpr Enum RG32F = GL_RG32F; // GL_RG
+constexpr Enum RGB32F = GL_RGB32F; // GL_RGB
+constexpr Enum RGBA32F = GL_RGBA32F; // GL_RGBA
+constexpr Enum R11F_G11F_B10F = GL_R11F_G11F_B10F; // GL_RGB
+constexpr Enum RGB9_E5 = GL_RGB9_E5; // GL_RGB
+constexpr Enum R8I = GL_R8I; // GL_RED
+constexpr Enum R8UI = GL_R8UI; // GL_RED
+constexpr Enum R16I = GL_R16I; // GL_RED
+constexpr Enum R16UI = GL_R16UI; // GL_RED
+constexpr Enum R32I = GL_R32I; // GL_RED
+constexpr Enum R32UI = GL_R32UI; // GL_RED
+constexpr Enum RG8I = GL_RG8I; // GL_RG
+constexpr Enum RG8UI = GL_RG8UI; // GL_RG
+constexpr Enum RG16I = GL_RG16I; // GL_RG
+constexpr Enum RG16UI = GL_RG16UI; // GL_RG
+constexpr Enum RG32I = GL_RG32I; // GL_RG
+constexpr Enum RG32UI = GL_RG32UI; // GL_RG
+constexpr Enum RGB8I = GL_RGB8I; // GL_RGB
+constexpr Enum RGB8UI = GL_RGB8UI; // GL_RGB
+constexpr Enum RGB16I = GL_RGB16I; // GL_RGB
+constexpr Enum RGB16UI = GL_RGB16UI; // GL_RGB
+constexpr Enum RGB32I = GL_RGB32I; // GL_RGB
+constexpr Enum RGB32UI = GL_RGB32UI; // GL_RGB
+constexpr Enum RGBA8I = GL_RGBA8I; // GL_RGBA
+constexpr Enum RGBA8UI = GL_RGBA8UI; // GL_RGBA
+constexpr Enum RGBA16I = GL_RGBA16I; // GL_RGBA
+constexpr Enum RGBA16UI = GL_RGBA16UI; // GL_RGBA
+constexpr Enum RGBA32I = GL_RGBA32I; // GL_RGBA
+constexpr Enum RGBA32UI = GL_RGBA32UI; // GL_RGBA
+
+// blend factors
+constexpr Enum ZERO = GL_ZERO;
+constexpr Enum ONE = GL_ONE;
+constexpr Enum SRC_COLOR = GL_SRC_COLOR;
+constexpr Enum ONE_MINUS_SRC_COLOR = GL_ONE_MINUS_SRC_COLOR;
+constexpr Enum DST_COLOR = GL_DST_COLOR;
+constexpr Enum ONE_MINUS_DST_COLOR = GL_ONE_MINUS_DST_COLOR;
+constexpr Enum SRC_ALPHA = GL_SRC_ALPHA;
+constexpr Enum ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA;
+constexpr Enum DST_ALPHA = GL_DST_ALPHA;
+constexpr Enum ONE_MINUS_DST_ALPHA = GL_ONE_MINUS_DST_ALPHA;
+constexpr Enum SRC_ALPHA_SATURATE = GL_SRC_ALPHA_SATURATE;
+constexpr Enum CONSTANT_COLOR = GL_CONSTANT_COLOR;
+constexpr Enum ONE_MINUS_CONSTANT_COLOR = GL_ONE_MINUS_CONSTANT_COLOR;
+constexpr Enum SRC1_COLOR = GL_SRC1_COLOR;
+constexpr Enum ONE_MINUS_SRC1_COLOR = GL_ONE_MINUS_SRC1_COLOR;
+constexpr Enum SRC1_ALPHA = GL_SRC1_ALPHA;
+constexpr Enum ONE_MINUS_SRC1_ALPHA = GL_ONE_MINUS_SRC1_ALPHA;
+
+// blend operations
+constexpr Enum FUNC_ADD = GL_FUNC_ADD;
+constexpr Enum FUNC_SUBTRACT = GL_FUNC_SUBTRACT;
+constexpr Enum FUNC_REVERSE_SUBTRACT = GL_FUNC_REVERSE_SUBTRACT;
+constexpr Enum MIN = GL_MIN;
+constexpr Enum MAX = GL_MAX;
+
+// draw modes
+constexpr Enum POINTS = GL_POINTS;
+constexpr Enum LINES = GL_LINES;
+constexpr Enum LINE_STRIP = GL_LINE_STRIP;
+constexpr Enum TRIANGLES = GL_TRIANGLES;
+constexpr Enum TRIANGLE_STRIP = GL_TRIANGLE_STRIP;
+
+// component types
+constexpr Enum UNSIGNED_BYTE = GL_UNSIGNED_BYTE;
+constexpr Enum UNSIGNED_INT = GL_UNSIGNED_INT;
+constexpr Enum FLOAT = GL_FLOAT;
+
+// bool
+constexpr Boolean FALSE = GL_FALSE;
+constexpr Boolean TRUE = GL_TRUE;
+
+// misc
+constexpr Enum CW = GL_CW;
+constexpr Enum DITHER = GL_DITHER;
+constexpr Enum CULL_FACE = GL_CULL_FACE;
+constexpr Enum FRONT = GL_FRONT;
+constexpr Enum BACK = GL_BACK;
+constexpr Enum SCISSOR_TEST = GL_SCISSOR_TEST;
+constexpr Enum BLEND = GL_BLEND;
+constexpr Enum DEPTH_BUFFER_BIT = GL_DEPTH_BUFFER_BIT;
+constexpr Enum COLOR_BUFFER_BIT = GL_COLOR_BUFFER_BIT;
+
+// shaders
+constexpr Enum VERTEX_SHADER = GL_VERTEX_SHADER;
+constexpr Enum FRAGMENT_SHADER = GL_FRAGMENT_SHADER;
+constexpr Enum COMPILE_STATUS = GL_COMPILE_STATUS;
+constexpr Enum LINK_STATUS = GL_LINK_STATUS;
+constexpr Enum INFO_LOG_LENGTH = GL_INFO_LOG_LENGTH;
+
+// depth testing
+constexpr Enum DEPTH_TEST = GL_DEPTH_TEST;
+constexpr Enum ALWAYS = GL_ALWAYS;
+constexpr Enum NEVER = GL_NEVER;
+constexpr Enum LESS = GL_LESS;
+constexpr Enum EQUAL = GL_EQUAL;
+constexpr Enum LEQUAL = GL_LEQUAL;
+constexpr Enum GREATER = GL_GREATER;
+constexpr Enum NOTEQUAL = GL_NOTEQUAL;
+constexpr Enum GEQUAL = GL_GEQUAL;
+
+// debug callback
+constexpr Enum DEBUG_SEVERITY_HIGH = GL_DEBUG_SEVERITY_HIGH;
+constexpr Enum DEBUG_SEVERITY_MEDIUM = GL_DEBUG_SEVERITY_MEDIUM;
+constexpr Enum DEBUG_SEVERITY_LOW = GL_DEBUG_SEVERITY_LOW;
+constexpr Enum DEBUG_SEVERITY_NOTIFICATION = GL_DEBUG_SEVERITY_NOTIFICATION;
+constexpr Enum DEBUG_OUTPUT = GL_DEBUG_OUTPUT;
+
+
+constexpr Enum ARRAY_BUFFER = GL_ARRAY_BUFFER;
+constexpr Enum ATOMIC_COUNTER_BUFFER = GL_ATOMIC_COUNTER_BUFFER;
+constexpr Enum COPY_READ_BUFFER = GL_COPY_READ_BUFFER;
+constexpr Enum COPY_WRITE_BUFFER = GL_COPY_WRITE_BUFFER;
+constexpr Enum DISPATCH_INDIRECT_BUFFER = GL_DISPATCH_INDIRECT_BUFFER;
+constexpr Enum DRAW_INDIRECT_BUFFER = GL_DRAW_INDIRECT_BUFFER;
+constexpr Enum ELEMENT_ARRAY_BUFFER = GL_ELEMENT_ARRAY_BUFFER;
+constexpr Enum PIXEL_PACK_BUFFER = GL_PIXEL_PACK_BUFFER;
+constexpr Enum PIXEL_UNPACK_BUFFER = GL_PIXEL_UNPACK_BUFFER;
+constexpr Enum QUERY_BUFFER = GL_QUERY_BUFFER;
+constexpr Enum SHADER_STORAGE_BUFFER = GL_SHADER_STORAGE_BUFFER;
+constexpr Enum TEXTURE_BUFFER = GL_TEXTURE_BUFFER;
+constexpr Enum TRANSFORM_FEEDBACK_BUFFER = GL_TRANSFORM_FEEDBACK_BUFFER;
+constexpr Enum UNIFORM_BUFFER = GL_UNIFORM_BUFFER;
+
+constexpr Enum READ_ONLY = GL_READ_ONLY;
+constexpr Enum WRITE_ONLY = GL_WRITE_ONLY;
+constexpr Enum READ_WRITE = GL_READ_WRITE;
+constexpr Enum BUFFER_ACCESS = GL_BUFFER_ACCESS;
+constexpr Enum BUFFER_MAPPED = GL_BUFFER_MAPPED;
+constexpr Enum BUFFER_MAP_POINTER = GL_BUFFER_MAP_POINTER;
+constexpr Enum STREAM_DRAW = GL_STREAM_DRAW;
+constexpr Enum STREAM_READ = GL_STREAM_READ;
+constexpr Enum STREAM_COPY = GL_STREAM_COPY;
+constexpr Enum STATIC_DRAW = GL_STATIC_DRAW;
+constexpr Enum STATIC_READ = GL_STATIC_READ;
+constexpr Enum STATIC_COPY = GL_STATIC_COPY;
+constexpr Enum DYNAMIC_DRAW = GL_DYNAMIC_DRAW;
+constexpr Enum DYNAMIC_READ = GL_DYNAMIC_READ;
+constexpr Enum DYNAMIC_COPY = GL_DYNAMIC_COPY;
+
+constexpr Bitfield MAP_READ_BIT = GL_MAP_READ_BIT;
+constexpr Bitfield MAP_WRITE_BIT = GL_MAP_WRITE_BIT;
+constexpr Bitfield MAP_PERSISTENT_BIT = GL_MAP_PERSISTENT_BIT;
+constexpr Bitfield MAP_COHERENT_BIT = GL_MAP_COHERENT_BIT;
+constexpr Bitfield DYNAMIC_STORAGE_BIT = GL_DYNAMIC_STORAGE_BIT;
+constexpr Bitfield CLIENT_STORAGE_BIT = GL_CLIENT_STORAGE_BIT;
+constexpr Bitfield MAP_INVALIDATE_RANGE_BIT = GL_MAP_INVALIDATE_RANGE_BIT;
+constexpr Bitfield MAP_INVALIDATE_BUFFER_BIT = GL_MAP_INVALIDATE_BUFFER_BIT;
+constexpr Bitfield MAP_FLUSH_EXPLICIT_BIT = GL_MAP_FLUSH_EXPLICIT_BIT;
+constexpr Bitfield MAP_UNSYNCHRONIZED_BIT = GL_MAP_UNSYNCHRONIZED_BIT;
 
 inline void ActiveTexture(GLenum texture) {
     glActiveTexture(texture);
@@ -173,6 +420,25 @@ inline void BufferData(GLenum target, GLsizeiptr size, const GLvoid* data, GLenu
 inline void BufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid* data) {
     glBufferSubData(target, offset, size, data);
     __mwHandleOpenGLErrors(BufferSubData);
+}
+
+inline void* MapBuffer(GLenum target, GLenum access) {
+    void* pData = glMapBuffer(target, access);
+    __mwHandleOpenGLErrors(MapBuffer);
+    return pData;
+}
+
+inline void* MapBufferRange(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access)
+{
+    void* pData = glMapBufferRange(target, offset, length, access);
+    __mwHandleOpenGLErrors(MapBufferRange);
+    return pData;
+}
+
+inline GLboolean UnmapBuffer(GLenum target) {
+    GLboolean unmapped = glUnmapBuffer(target);
+    __mwHandleOpenGLErrors(UnmapBuffer);
+    return unmapped;
 }
 
 inline GLenum CheckFramebufferStatus(GLenum target) {
@@ -298,11 +564,6 @@ inline void DetachShader(GLuint program, GLuint shader) {
     __mwHandleOpenGLErrors(DetachShader);
 }
 
-inline void Disable(GLenum cap) {
-    glDisable(cap);
-    __mwHandleOpenGLErrors(Disable);
-}
-
 inline void DisableVertexAttribArray(GLuint index) {
     glDisableVertexAttribArray(index);
     __mwHandleOpenGLErrors(DisableVertexAttribArray);
@@ -318,9 +579,20 @@ inline void DrawElements(GLenum mode, GLsizei count, GLenum type, const GLvoid* 
     __mwHandleOpenGLErrors(DrawElements);
 }
 
+inline void SetEnabled(GLenum cap, bool enable) {
+    if(enable) glEnable(cap);
+    else glDisable(cap);
+    __mwHandleOpenGLErrors(SetEnabled);
+}
+
 inline void Enable(GLenum cap) {
     glEnable(cap);
     __mwHandleOpenGLErrors(Enable);
+}
+
+inline void Disable(GLenum cap) {
+    glDisable(cap);
+    __mwHandleOpenGLErrors(Disable);
 }
 
 inline void DebugMessageCallback(GLDEBUGPROC callback, void* userParam) {
@@ -831,6 +1103,37 @@ inline void VertexAttribPointer(GLuint indx, GLint size, GLenum type, GLboolean 
 inline void Viewport(GLint x, GLint y, GLsizei width, GLsizei height) {
     glViewport(x, y, width, height);
     __mwHandleOpenGLErrors(Viewport);
+}
+
+// *** OpenGL 4.5 ***
+inline void CreateTextures(GLenum target, GLsizei n, GLuint* textures) {
+    glCreateTextures(target, n, textures);
+    __mwHandleOpenGLErrors(CreateTextures);
+}
+
+inline void TextureStorage2D(GLuint texture, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height) {
+    glTextureStorage2D(texture, levels, internalformat, width, height);
+    __mwHandleOpenGLErrors(TextureStorage2D);
+}
+
+inline void TextureSubImage2D(GLuint texture, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels) {
+    glTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, type, pixels);
+    __mwHandleOpenGLErrors(TextureSubImage2D);
+}
+
+inline void GenerateTextureMipmap(GLuint texture) {
+    glGenerateTextureMipmap(texture);
+    __mwHandleOpenGLErrors(GenerateTextureMipmap);
+}
+
+inline void TextureParameteri(GLuint texture, GLenum pname, GLint param) {
+    glTextureParameteri(texture, pname, param);
+    __mwHandleOpenGLErrors(TextureParameteri);
+}
+
+inline void TextureParameterf(GLuint texture, GLenum pname, GLfloat param) {
+    glTextureParameterf(texture, pname, param);
+    __mwHandleOpenGLErrors(TextureParameterf);
 }
 
 } // gl

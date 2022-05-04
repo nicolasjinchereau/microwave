@@ -1,15 +1,15 @@
 {
- "sourcePath": "Textures/UI/SquareButtonBlue.png",
- "artifacts": [
-  {
-   "uuid": "273a1fe18fc54003a3a5a74b883051b3",
-   "assetType": "Texture",
-   "sourcePath": "Textures/UI/SquareButtonBlue.png"
+  "sourcePath": "Textures/UI/SquareButtonBlue.png",
+  "artifacts": [
+    {
+      "uuid": "273a1fe18fc54003a3a5a74b883051b3",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/SquareButtonBlue.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
   }
- ],
- "settings": {
-  "fileFormat": "PNG",
-  "filterMode": "Bilinear",
-  "wrapMode": "Repeat"
- }
 }

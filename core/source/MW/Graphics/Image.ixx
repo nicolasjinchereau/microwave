@@ -20,12 +20,18 @@ import <vector>;
 export namespace mw {
 inline namespace gfx {
 
-enum class ImageFileFormat : int
+enum class ImageFileFormat
 {
     TGA,
     PNG,
     JPG,
     EXR
+};
+
+struct ImageInfo
+{
+    PixelDataFormat format = PixelDataFormat::Unspecified;
+    IVec2 size;
 };
 
 class Image
@@ -48,6 +54,13 @@ public:
     ~Image();
 
     Image& operator=(Image&&) = default;
+
+    static ImageInfo GetInfo(const path& p);
+    static ImageInfo GetInfo(const path& p, ImageFileFormat fileFormat);
+    static ImageInfo GetInfoTGA(const path& p);
+    static ImageInfo GetInfoPNG(const path& p);
+    static ImageInfo GetInfoJPG(const path& p);
+    static ImageInfo GetInfoEXR(const path& p);
 
     void Load(PixelDataFormat pixelFormat, const IVec2& size);
     void Load(PixelDataFormat pixelFormat, const IVec2& size, std::span<std::byte> pixelData);

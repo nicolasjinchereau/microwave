@@ -63,10 +63,11 @@
       <Optimization>Disabled</Optimization>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
-      <ModuleOutputFile>..\..\ifc\$(PlatformName)\$(Configuration)\</ModuleOutputFile>
+      <ModuleOutputFile>..\..\bmi\$(PlatformName)\$(Configuration)\</ModuleOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -93,7 +94,7 @@
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
-      <ModuleOutputFile>..\..\ifc\$(PlatformName)\$(Configuration)\</ModuleOutputFile>
+      <ModuleOutputFile>..\..\bmi\$(PlatformName)\$(Configuration)\</ModuleOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,7 +111,6 @@
     <ClInclude Include="..\..\source\MW\SceneGraph\Internal\Bullet.h" />
     <ClInclude Include="..\..\source\MW\System\Internal\Platform.h" />
     <ClInclude Include="..\..\source\MW\System\Internal\PlatformHeaders.h" />
-    <ClInclude Include="..\..\source\MW\Utilities\EnumFlags.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\MW\Audio\Audio.ixx" />
@@ -124,9 +124,9 @@
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\AudioSample.ixx" />
     <ClCompile Include="..\..\source\MW\Audio\AudioStream.ixx" />
-    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextWindows.cpp" />
-    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextWindows.ixx">
-      <ObjectFileName>$(IntDir)\AudioContextWindows1.obj</ObjectFileName>
+    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextOpenAL.cpp" />
+    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextOpenAL.ixx">
+      <ObjectFileName>$(IntDir)\AudioContextOpenAL1.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\Internal\Mp3Decoder.ixx" />
     <ClCompile Include="..\..\source\MW\Audio\Internal\OggDecoder.ixx" />
@@ -151,6 +151,7 @@
     <ClCompile Include="..\..\source\MW\Data\Database\AudioClipImporter.ixx" />
     <ClCompile Include="..\..\source\MW\Data\Database\Database.ixx" />
     <ClCompile Include="..\..\source\MW\Data\Database\DefaultImporter.ixx" />
+    <ClCompile Include="..\..\source\MW\Data\Database\Metadata.ixx" />
     <ClCompile Include="..\..\source\MW\Data\Database\ModelImporter.cpp" />
     <ClCompile Include="..\..\source\MW\Data\Database\ModelImporter.ixx">
       <ObjectFileName>$(IntDir)\ModelImporter1.obj</ObjectFileName>
@@ -190,8 +191,13 @@
       <ObjectFileName>$(IntDir)\AnimationClip1.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\AnimationTrack.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Buffer.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Buffer.ixx">
+      <ObjectFileName>$(IntDir)\Buffer1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Color.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\DrawBuffer.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Color32.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\ColorBGRA.ixx" />
     <ClCompile Include="..\..\source\MW\Graphics\Font.cpp" />
     <ClCompile Include="..\..\source\MW\Graphics\Font.ixx">
       <ObjectFileName>$(IntDir)\Font1.obj</ObjectFileName>
@@ -201,63 +207,73 @@
       <ObjectFileName>$(IntDir)\GizmoUtility1.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Graphics.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\GraphicsContext.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\GraphicsResource.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsContext.ixx">
+      <ObjectFileName>$(IntDir)\GraphicsContext1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\GraphicsTypes.ixx" />
     <ClCompile Include="..\..\source\MW\Graphics\Image.cpp" />
     <ClCompile Include="..\..\source\MW\Graphics\Image.ixx">
       <ObjectFileName>$(IntDir)\Image1.obj</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.ixx">
-      <ObjectFileName>$(IntDir)\DrawBufferOpenGL1.obj</ObjectFileName>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBuffer.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBufferD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBufferD3D11.ixx">
+      <ObjectFileName>$(IntDir)\HWBufferD3D111.obj</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.ixx">
-      <ObjectFileName>$(IntDir)\DrawBufferWindowsD3D111.obj</ObjectFileName>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBufferOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBufferOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\HWBufferOpenGL1.obj</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindows.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.ixx">
-      <ObjectFileName>$(IntDir)\GraphicsContextWindowsD3D111.obj</ObjectFileName>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContext.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContextD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContextD3D11.ixx">
+      <ObjectFileName>$(IntDir)\HWContextD3D111.obj</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.ixx">
-      <ObjectFileName>$(IntDir)\GraphicsContextWindowsOpenGL1.obj</ObjectFileName>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContextOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContextOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\HWContextOpenGL1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWDriverContext.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWDriverContextWGL.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTarget.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTexture.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTextureD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTextureD3D11.ixx">
+      <ObjectFileName>$(IntDir)\HWRenderTextureD3D111.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTextureOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTextureOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\HWRenderTextureOpenGL1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShader.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShaderD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShaderD3D11.ixx">
+      <ObjectFileName>$(IntDir)\HWShaderD3D111.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShaderOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShaderOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\HWShaderOpenGL1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurface.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurfaceD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurfaceD3D11.ixx">
+      <ObjectFileName>$(IntDir)\HWSurfaceD3D111.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurfaceWGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurfaceWGL.ixx">
+      <ObjectFileName>$(IntDir)\HWSurfaceWGL1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTexture.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTextureD3D11.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTextureD3D11.ixx">
+      <ObjectFileName>$(IntDir)\HWTextureD3D111.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTextureOpenGL.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTextureOpenGL.ixx">
+      <ObjectFileName>$(IntDir)\HWTextureOpenGL1.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\OpenGLAPI.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.ixx">
-      <ObjectFileName>$(IntDir)\RenderTextureOpenGL1.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.ixx">
-      <ObjectFileName>$(IntDir)\RenderTextureWindowsD3D111.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.ixx">
-      <ObjectFileName>$(IntDir)\ShaderOpenGL1.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.ixx">
-      <ObjectFileName>$(IntDir)\ShaderWindowsD3D111.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.ixx">
-      <ObjectFileName>$(IntDir)\TextureOpenGL1.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.ixx">
-      <ObjectFileName>$(IntDir)\TextureWindowsD3D111.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.ixx">
-      <ObjectFileName>$(IntDir)\WindowSurfaceWindowsD3D111.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.cpp" />
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.ixx">
-      <ObjectFileName>$(IntDir)\WindowSurfaceWindowsOpenGL1.obj</ObjectFileName>
-    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\LineEnumerator.cpp" />
     <ClCompile Include="..\..\source\MW\Graphics\LineEnumerator.ixx">
       <ObjectFileName>$(IntDir)\LineEnumerator1.obj</ObjectFileName>
@@ -280,21 +296,23 @@
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\RenderQueue.ixx" />
     <ClCompile Include="..\..\source\MW\Graphics\RenderTarget.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\RenderTexture.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\RenderTexture.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\RenderTexture.ixx">
+      <ObjectFileName>$(IntDir)\RenderTexture1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Shader.cpp" />
     <ClCompile Include="..\..\source\MW\Graphics\Shader.ixx">
       <ObjectFileName>$(IntDir)\Shader1.obj</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Texture.ixx" />
+    <ClCompile Include="..\..\source\MW\Graphics\ShaderInfo.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\ShaderInfo.ixx">
+      <ObjectFileName>$(IntDir)\ShaderInfo1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Texture.cpp" />
+    <ClCompile Include="..\..\source\MW\Graphics\Texture.ixx">
+      <ObjectFileName>$(IntDir)\Texture1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Types.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\WindowSurface.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\detail\Color32F_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\detail\Color32F_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\detail\Color8U_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\detail\Color8U_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorBGRA_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorBGRA_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorJson.ixx" />
     <ClCompile Include="..\..\source\MW\IO\File.cpp" />
     <ClCompile Include="..\..\source\MW\IO\File.ixx">
       <ObjectFileName>$(IntDir)\File1.obj</ObjectFileName>
@@ -303,43 +321,27 @@
     <ClCompile Include="..\..\source\MW\IO\IO.ixx" />
     <ClCompile Include="..\..\source\MW\IO\MemoryStream.ixx" />
     <ClCompile Include="..\..\source\MW\IO\Stream.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\AABox.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Constants.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Functions.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\IVec2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\IVec4.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\IntRect.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Mat2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Mat3.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Mat4.ixx" />
     <ClCompile Include="..\..\source\MW\Math\Math.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\AABox_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\AABox_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Functions_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Functions_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\IVec2_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\IVec2_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\IVec4_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\IVec4_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\IntRect_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\IntRect_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat2_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat2_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat3_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat3_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat4_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat4_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\MathJson.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Operators.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Plane_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Plane_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Quat_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Quat_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Ray_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Ray_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Sphere_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Sphere_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Transform_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Transform_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Triangle_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Triangle_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec2_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec2_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec3_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec3_p2.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec4_p1.ixx" />
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec4_p2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\MathJson.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Operators.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Plane.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Quat.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Ray.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Sphere.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Transform.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Triangle.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Vec2.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Vec3.ixx" />
+    <ClCompile Include="..\..\source\MW\Math\Vec4.ixx" />
     <ClCompile Include="..\..\source\MW\Microwave.ixx" />
     <ClCompile Include="..\..\source\MW\SceneGraph\Axis.ixx" />
     <ClCompile Include="..\..\source\MW\SceneGraph\Components\Animator.cpp" />
@@ -478,6 +480,7 @@
     </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Path.ixx" />
     <ClCompile Include="..\..\source\MW\System\Pointers.ixx" />
+    <ClCompile Include="..\..\source\MW\System\PostExecutor.ixx" />
     <ClCompile Include="..\..\source\MW\System\Spinlock.ixx" />
     <ClCompile Include="..\..\source\MW\System\SyncExecutor.ixx" />
     <ClCompile Include="..\..\source\MW\System\System.ixx" />
@@ -507,6 +510,7 @@
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BinPacking.ixx" />
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\RectMapping.ixx" />
+    <ClCompile Include="..\..\source\MW\Utilities\EnumFlags.ixx" />
     <ClCompile Include="..\..\source\MW\Utilities\Format.ixx" />
     <ClCompile Include="..\..\source\MW\Utilities\Sink.ixx" />
     <ClCompile Include="..\..\source\MW\Utilities\Util.ixx" />

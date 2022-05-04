@@ -35,6 +35,10 @@ bool EventTarget::IsNodeBranchActive() const
     return n ? n->IsBranchActive() : false;
 }
 
+void EventTarget::SetNode(const wptr<Node>& node) {
+    this->node = node;
+}
+
 sptr<const Node> EventTarget::GetNode() const {
     return node.lock();
 }

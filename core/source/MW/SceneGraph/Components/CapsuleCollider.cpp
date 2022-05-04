@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.SceneGraph.Components.CapsuleCollider;
+import Microwave.Graphics.Shader;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Scene;
 import Microwave.SceneGraph.Components.Camera;
@@ -166,13 +167,24 @@ void CapsuleCollider::GetRenderables(Sink<sptr<Renderable>> sink)
             renderables[i] = spnew<Renderable>();
     }
 
+    renderables[0]->vertexMapping = {
+        { Semantic::POSITION, 0, gizmoCapMesh->vertexBuffer, 0, sizeof(Vec3) }
+    };
+
+    renderables[1]->vertexMapping = {
+        { Semantic::POSITION, 0, gizmoBodyMesh->vertexBuffer, 0, sizeof(Vec3) }
+    };
+
+    renderables[2]->vertexMapping = {
+        { Semantic::POSITION, 0, gizmoCapMesh->vertexBuffer, 0, sizeof(Vec3) }
+    };
+
     // top
     renderables[0]->layerMask = node->GetLayerMask();
     renderables[0]->material = gizmoMat;
     renderables[0]->mtxModel = mtxModelTop;
     renderables[0]->bounds = boundsTop;
     renderables[0]->extra.SetUniform("uColor", Color::Green());
-    renderables[0]->vertexBuffer = gizmoCapMesh->vertexBuffer;
     renderables[0]->indexBuffer = gizmoCapMesh->elements[0].indexBuffer;
     renderables[0]->drawStart = 0;
     renderables[0]->drawCount = gizmoCapMesh->elements[0].indices.size();
@@ -185,7 +197,6 @@ void CapsuleCollider::GetRenderables(Sink<sptr<Renderable>> sink)
     renderables[1]->mtxModel = mtxModelMid;
     renderables[1]->bounds = boundsBody;
     renderables[1]->extra.SetUniform("uColor", Color::Green());
-    renderables[1]->vertexBuffer = gizmoBodyMesh->vertexBuffer;
     renderables[1]->indexBuffer = gizmoBodyMesh->elements[0].indexBuffer;
     renderables[1]->drawStart = 0;
     renderables[1]->drawCount = gizmoBodyMesh->elements[0].indices.size();
@@ -198,7 +209,6 @@ void CapsuleCollider::GetRenderables(Sink<sptr<Renderable>> sink)
     renderables[2]->mtxModel = mtxModelBot;
     renderables[2]->bounds = boundsBot;
     renderables[2]->extra.SetUniform("uColor", Color::Green());
-    renderables[2]->vertexBuffer = gizmoCapMesh->vertexBuffer;
     renderables[2]->indexBuffer = gizmoCapMesh->elements[0].indexBuffer;
     renderables[2]->drawStart = 0;
     renderables[2]->drawCount = gizmoCapMesh->elements[0].indices.size();

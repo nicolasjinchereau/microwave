@@ -56,13 +56,11 @@ void Node::FromJson(const json& obj, ObjectLinker* linker)
     _active = obj.value("active", _active);
     _layerMask = obj.value("layerMask", _layerMask);
 
-    auto sthis = This<Node>();
-
     const json& childrenObj = obj["children"];
     for (auto& childObj : childrenObj)
     {
         auto child = Object::CreateFromJson<Node>(childObj, linker);
-        child->_parent = sthis;
+        child->_parent = SharedFrom(this);
         _children.push_back(std::move(child));
     }
 
@@ -70,7 +68,7 @@ void Node::FromJson(const json& obj, ObjectLinker* linker)
     for (auto& compObj : componentsObj)
     {
         auto comp = Object::CreateFromJson<Component>(compObj, linker);
-        comp->node = sthis;
+        comp->SetNode(SharedFrom(this));
         _components.push_back(std::move(comp));
     }
 
@@ -418,7 +416,7 @@ Mat4 Node::GetWorldToLocalMatrix() const
 
 void Node::SignalStructureChanged()
 {
-    auto node = This<Node>();
+    auto node = SharedFrom(this);
     while (node)
     {
         for (auto& comp : node->_components)
@@ -438,13 +436,13 @@ sptr<Node> Node::AddChild(sptr<Node>&& child) {
 }
 
 void Node::AddChild(const sptr<Node>& child) {
-    child->SetParent(This<Node>());
+    child->SetParent(SharedFrom(this));
 }
 
 void Node::RemoveChild(const sptr<Node>& child)
 {
     auto childsParent = child->GetParent();
-    if (childsParent == This<Node>())
+    if (childsParent == SharedFrom(this))
         childsParent->SetParent(nullptr);
 }
 
@@ -486,7 +484,7 @@ void Node::SetParent(const wptr<Node>& parent, bool preserveWorldTransform)
         auto it = std::find(
             oldParent->_children.begin(),
             oldParent->_children.end(),
-            This<Node>());
+            SharedFrom(this));
 
         oldParent->_children.erase(it);
         oldParent->SignalStructureChanged();
@@ -510,7 +508,7 @@ void Node::SetParent(const wptr<Node>& parent, bool preserveWorldTransform)
             _localScale = _localScale.Multiply(invParentScale);
         }
 
-        newParent->_children.push_back(This<Node>());
+        newParent->_children.push_back(SharedFrom(this));
 
         if (auto scene = newParent->GetScene())
             AttachToScene(scene);
@@ -604,7 +602,7 @@ sptr<Node> Node::GetChild(const UUID& uuid) const
         }
     };
     
-    sptr<Node> node = const_cast<Node*>(this)->This<Node>();
+    sptr<Node> node = const_cast<Node*>(this)->SharedFrom(const_cast<Node*>(this));
     return R::GetChild(node, uuid);
 }
 
@@ -614,15 +612,15 @@ const std::vector<sptr<Node>>& Node::GetChildren() const {
 
 sptr<Component> Node::AddComponent(const sptr<Component>& comp)
 {
-    auto oldOwner = comp->node.lock();
-    auto newOwner = This<Node>();
+    auto oldOwner = comp->GetNode();
+    auto newOwner = SharedFrom(this);
 
     if (oldOwner != newOwner)
     {
         if (oldOwner)
             oldOwner->RemoveComponent(comp);
 
-        comp->node = newOwner;
+        comp->SetNode(newOwner);
         _components.push_back(comp);
 
         if (auto scene = _scene.lock()) {
@@ -638,8 +636,8 @@ sptr<Component> Node::AddComponent(const sptr<Component>& comp)
 
 void Node::RemoveComponent(const sptr<Component>& comp)
 {
-    auto sthis = This<Node>();
-    auto owner = comp->node.lock();
+    auto sthis = SharedFrom(this);
+    auto owner = comp->GetNode();
 
     if (owner == sthis)
     {
@@ -649,7 +647,7 @@ void Node::RemoveComponent(const sptr<Component>& comp)
         }
         
         Erase(_components, comp);
-        comp->node.reset();
+        comp->SetNode(wptr<Node>());
 
         SignalStructureChanged();
     }
@@ -659,7 +657,7 @@ const std::vector<sptr<Component>>& Node::GetComponents() const {
     return _components;
 }
 
-namespace {
+namespace detail {
     void getFullPathHelper(
         const sptr<const Node>& node,
         std::string& fullPath,
@@ -689,13 +687,13 @@ namespace {
 path Node::GetFullPath() const
 {
     std::string fullPath;
-    getFullPathHelper(This<const Node>(), fullPath);
+    detail::getFullPathHelper(SharedFrom((const Node*)this), fullPath);
     return path(std::move(fullPath));
 }
 
 sptr<Node> Node::GetChild(const path& fullPath)
 {
-    sptr<Node> node = This<Node>();
+    sptr<Node> node = SharedFrom(this);
     auto it = fullPath.begin();
 
     while (node && it != fullPath.end())

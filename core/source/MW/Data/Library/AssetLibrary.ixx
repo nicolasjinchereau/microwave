@@ -91,37 +91,39 @@ public:
 
     template<class T>
     Task<sptr<T>> FindAssetAsync(const std::string& sourceFilename);
+
+    void GetAllTextures(std::vector<sptr<Texture>>& textures);
 };
 
 template<class T>
 sptr<T> AssetLibrary::GetAsset(const UUID& uuid) {
-    return std::dynamic_pointer_cast<T>(GetAsset(uuid));
+    return spcast<T>(GetAsset(uuid));
 }
 
 template<class T>
 sptr<T> AssetLibrary::GetAsset(const path& sourcePath) {
-    return std::dynamic_pointer_cast<T>(GetAsset(sourcePath));
+    return spcast<T>(GetAsset(sourcePath));
 }
 
 template<class T>
 sptr<T> AssetLibrary::FindAsset(const std::string& sourceFilename) {
-    return std::dynamic_pointer_cast<T>(FindAsset(sourceFilename));
+    return spcast<T>(FindAsset(sourceFilename));
 }
 
 template<class T>
 Task<sptr<T>> AssetLibrary::GetAssetAsync(const UUID& uuid) {
-    co_return std::dynamic_pointer_cast<T>(co_await GetAssetAsync(uuid));
+    co_return spcast<T>(co_await GetAssetAsync(uuid));
 }
 
 template<class T>
 Task<sptr<T>> AssetLibrary::GetAssetAsync(const path& sourcePath) {
-    co_return std::dynamic_pointer_cast<T>(co_await GetAssetAsync(sourcePath));
+    co_return spcast<T>(co_await GetAssetAsync(sourcePath));
 }
 
 template<class T>
 Task<sptr<T>> AssetLibrary::FindAssetAsync(const std::string& sourceFilename) {
-    co_return std::dynamic_pointer_cast<T>(co_await FindAssetAsync(sourceFilename));
+    co_return spcast<T>(co_await FindAssetAsync(sourceFilename));
 }
 
-}
-}
+} // data
+} // mw

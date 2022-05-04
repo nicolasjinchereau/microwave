@@ -1,15 +1,15 @@
 {
- "sourcePath": "Textures/UI/Coin.png",
- "artifacts": [
-  {
-   "uuid": "bef585b9e69e426b8ceebd2f465c0a61",
-   "assetType": "Texture",
-   "sourcePath": "Textures/UI/Coin.png"
+  "sourcePath": "Textures/UI/Coin.png",
+  "artifacts": [
+    {
+      "uuid": "bef585b9e69e426b8ceebd2f465c0a61",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/Coin.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Clamp"
   }
- ],
- "settings": {
-  "fileFormat": "PNG",
-  "filterMode": "Bilinear",
-  "wrapMode": "Clamp"
- }
 }

@@ -3,6 +3,8 @@
 *--------------------------------------------------------------*/
 
 module Microwave.System.Internal.WindowWindows;
+import Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.Internal.HWRenderTarget;
 import <stdexcept>;
 import <vector>;
 import <MW/System/Internal/PlatformHeaders.h>;
@@ -147,7 +149,7 @@ HWND WindowWindows::CreateNativeWindow(const std::string title, const IVec2& pos
     outerRect.right = pos.x + size.x;
     outerRect.bottom = pos.y + size.y;
 
-    AdjustWindowRect(&outerRect, windowStyle, FALSE);
+    AdjustWindowRect(&outerRect, windowStyle, false);
 
     int outerX = outerRect.left;
     int outerY = outerRect.top;
@@ -416,7 +418,17 @@ Keycode WindowWindows::TranslateKey(int keycode)
     return (Keycode)((int)Keycode::Unknown + keycode);
 }
 
-sptr<WindowSurface> WindowWindows::GetSurface() {
+sptr<HWRenderTarget> WindowWindows::GetHWRenderTarget()
+{
+    if (!surface)
+    {
+        auto graphics = GraphicsContext::GetCurrent();
+        if (!graphics)
+            throw std::runtime_error("no active graphics context");
+
+        surface = graphics->context->CreateSurface(SharedFrom(this));
+    }
+
     return surface;
 }
 

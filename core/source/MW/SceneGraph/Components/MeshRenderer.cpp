@@ -3,7 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.SceneGraph.Components.MeshRenderer;
-import Microwave.SceneGraph.Node;
+import Microwave.Graphics.Shader;
 import <cassert>;
 
 namespace mw {
@@ -127,7 +127,7 @@ void MeshRenderer::FromJson(const json& obj, ObjectLinker* linker)
 {
     Component::FromJson(obj, linker);
 
-    ObjectLinker::RestoreAsset(linker, This(), mesh, obj, "mesh");
+    ObjectLinker::RestoreAsset(linker, SharedFrom(this), mesh, obj, "mesh");
 
     auto& matIDs = obj["materials"];
     
@@ -137,10 +137,10 @@ void MeshRenderer::FromJson(const json& obj, ObjectLinker* linker)
     for(size_t i = 0; i != materials.size(); ++i)
     {
         UUID uuid = matIDs[i];
-        ObjectLinker::RestoreAsset(linker, This(), materials[i], uuid);
+        ObjectLinker::RestoreAsset(linker, SharedFrom(this), materials[i], uuid);
     }
 
-    ObjectLinker::RestoreLink(linker, This(), rootBone, obj, "rootBone");
+    ObjectLinker::RestoreLink(linker, SharedFrom(this), rootBone, obj, "rootBone");
 }
 
 void MeshRenderer::GetRenderables(Sink<sptr<Renderable>> sink)
@@ -171,14 +171,17 @@ void MeshRenderer::GetRenderables(Sink<sptr<Renderable>> sink)
         
         sptr<Renderable> renderable = renderables[i];
 
+        renderable->vertexMapping = {
+            { Semantic::POSITION, 0, mesh->vertexBuffer, 0, sizeof(Vec3) },
+            { Semantic::NORMAL, 0, mesh->normalBuffer, 0, sizeof(Vec3) },
+            { Semantic::TEXCOORD, 0, mesh->texcoordBuffer, 0, sizeof(Vec2) }
+        };
+
         renderable->layerMask = node->GetLayerMask();
         renderable->material = mat;
         renderable->mtxModel = mtxModel;
         renderable->bounds = bounds;
         renderable->extra.SetUniform("uMtxNormal", mtxNormal);
-        renderable->vertexBuffer = mesh->vertexBuffer;
-        renderable->normalBuffer = mesh->normalBuffer;
-        renderable->texcoordBuffer = mesh->texcoordBuffer;
         renderable->indexBuffer = elem.indexBuffer;
         renderable->drawStart = 0;
         renderable->drawCount = elem.indices.size();

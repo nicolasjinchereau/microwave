@@ -2,14 +2,17 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
+module;
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#include <functional>
-#include <cstdint>
-#include <MW/System/ApplicationDispatcher.h>
 
-namespace mw {
+export module Microwave.System.Internal.ApplicationDispatcherIOS;
+import Microwave.System.ApplicationDispatcher;
+import <functional>;
+import <cstdint>;
+
+export namespace mw {
+inline namespace system {
 
 class ApplicationDispatcherIOS : public ApplicationDispatcher
 {
@@ -25,7 +28,7 @@ public:
     ApplicationDispatcherIOS();
     ~ApplicationDispatcherIOS();
 
-    virtual void Run(int argc, char *argv[]) override;
+    virtual void Run(int argc, char* argv[]) override;
     virtual void Quit() override;
     virtual void SetContinuousDispatchRate(uint32_t rate) override;
     virtual sptr<DispatchAction> InvokeAsync(
@@ -34,10 +37,11 @@ public:
 
     void SetReady();
 private:
-    
+
     void ProcessActions();
     sptr<DispatchAction> GetNextAction();
     void UpdateActionTimer();
 };
 
-}
+} // system
+} // mw

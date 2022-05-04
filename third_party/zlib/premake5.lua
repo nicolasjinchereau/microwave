@@ -2,12 +2,14 @@ require "android-lib"
 
 workspace "zlib"
     configurations { "Debug", "Release" }
+    --architecture "x86_64"
     location ("projects/" .. os.target())
 
 project "zlib"
     kind "StaticLib"
     language "C"
-    
+    --architecture "x86_64"
+
     location ("projects/" .. os.target())
     targetname "zlib"
 

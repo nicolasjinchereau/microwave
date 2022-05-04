@@ -1,15 +1,15 @@
 {
- "sourcePath": "Textures/UI/blueOval.png",
- "artifacts": [
-  {
-   "uuid": "40bad231ec2b42d895df35b01fea6b5d",
-   "assetType": "Texture",
-   "sourcePath": "Textures/UI/blueOval.png"
+  "sourcePath": "Textures/UI/blueOval.png",
+  "artifacts": [
+    {
+      "uuid": "40bad231ec2b42d895df35b01fea6b5d",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/blueOval.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Clamp"
   }
- ],
- "settings": {
-  "fileFormat": "PNG",
-  "filterMode": "Bilinear",
-  "wrapMode": "Clamp"
- }
 }

@@ -19,7 +19,6 @@ class Scene;
 class Component : public virtual EventTarget, public Object
 {
     inline static Type::Pin<Component> pin;
-    friend class Node;
 public:
 
     Component(){}

@@ -4,9 +4,9 @@
 
 module;
 #include <MW/System/Internal/Platform.h>
-#include <MW/Utilities/EnumFlags.h>
 
 export module Microwave.IO.FileStream;
+export import Microwave.Utilities.EnumFlags;
 import Microwave.IO.Stream;
 import Microwave.System.Path;
 import Microwave.System.ThreadPool;
@@ -47,7 +47,6 @@ enum class OpenMode
     Truncate = std::ios_base::trunc,
     Binary = std::ios_base::binary,
 };
-ENUM_FLAGS(OpenMode)
 
 class FileStream : public Stream
 {

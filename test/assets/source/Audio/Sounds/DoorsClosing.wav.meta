@@ -1,14 +1,14 @@
 {
- "sourcePath": "Audio/Sounds/DoorsClosing.wav",
- "artifacts": [
-  {
-   "uuid": "1657b60395784042a486f51379bf6350",
-   "assetType": "AudioClip",
-   "sourcePath": "Audio/Sounds/DoorsClosing.wav"
+  "sourcePath": "Audio/Sounds/DoorsClosing.wav",
+  "artifacts": [
+    {
+      "uuid": "1657b60395784042a486f51379bf6350",
+      "assetType": "AudioClip",
+      "sourcePath": "Audio/Sounds/DoorsClosing.wav"
+    }
+  ],
+  "settings": {
+    "fileFormat": "Wav",
+    "streamFromDisk": false
   }
- ],
- "settings": {
-  "streamFromDisk": false,
-  "fileFormat": "Wav"
- }
 }

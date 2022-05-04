@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.System.Window;
+import Microwave.Graphics.Internal.HWSurface;
 
 namespace mw {
 inline namespace system {
@@ -48,9 +49,7 @@ void Window::OnMove(IVec2 pos) {
 }
 
 void Window::OnResize(IVec2 size) {
-    if(auto surface = GetSurface())
-        surface->UpdateSize();
-
+    if(surface) surface->UpdateSize();
     eventHandlers.RaiseEvent(&IWindowEventHandler::OnResize, this, size);
 }
 

@@ -2,10 +2,8 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-module;
-#include <MW/Utilities/EnumFlags.h>
-
 export module Microwave.SceneGraph.LayerMask;
+export import Microwave.Utilities.EnumFlags;
 import Microwave.System.Json;
 import <cstdint>;
 
@@ -49,7 +47,6 @@ enum class LayerMask : uint32_t
     User30  = 1u << 30,
     User31  = 1u << 31
 };
-ENUM_FLAGS(LayerMask);
 
 void to_json(json& obj, const LayerMask& mask) {
     obj = (uint32_t)mask;

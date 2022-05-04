@@ -2,16 +2,19 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
-#include <string>
-#include <MW/System/Window.h>
-#include <MW/System/Pointers.h>
-#include <MW/Math/Math.h>
-#include <android_native_app_glue.h>
-#include <android/native_window.h>
-#include <android/native_activity.h>
+export module Microwave.System.Internal.WindowAndroid;
+import Microwave.Graphics.Internal.HWSurface;
+import Microwave.System.Dispatcher;
+import Microwave.System.Pointers;
+import Microwave.System.Window;
+import Microwave.Math;
+import <android_native_app_glue.h>;
+import <android/native_window.h>;
+import <android/native_activity.h>;
+import <string>;
 
-namespace mw {
+export namespace mw {
+inline namespace system {
 
 class WindowAndroid : public Window
 {
@@ -28,7 +31,7 @@ public:
     std::string title;
     bool visible = false;
     bool resizeable = false;
-    sptr<gfx::WindowSurface> surface;
+    sptr<HWSurface> surface;
 
     WindowAndroid();
     ~WindowAndroid();
@@ -48,11 +51,11 @@ public:
     virtual void Close()  override;
     virtual uintptr_t GetHandle() const override;
 
+    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
+
     static Keycode TranslateKey(int keycode);
-
-    virtual sptr<gfx::WindowSurface> GetSurface() override;
-
     void SetSizeInternal(const IVec2& size);
 };
 
-}
+} // system
+} // mw

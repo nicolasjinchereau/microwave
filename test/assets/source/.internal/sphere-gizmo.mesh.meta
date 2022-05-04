@@ -1,11 +1,11 @@
 {
- "sourcePath": ".internal/sphere-gizmo.mesh",
- "artifacts": [
-  {
-   "uuid": "867b9869296d422aa55c62eda652cca9",
-   "assetType": "Mesh",
-   "sourcePath": ".internal/sphere-gizmo.mesh"
-  }
- ],
- "settings": {}
+  "sourcePath": ".internal/sphere-gizmo.mesh",
+  "artifacts": [
+    {
+      "uuid": "867b9869296d422aa55c62eda652cca9",
+      "assetType": "Mesh",
+      "sourcePath": ".internal/sphere-gizmo.mesh"
+    }
+  ],
+  "settings": {}
 }

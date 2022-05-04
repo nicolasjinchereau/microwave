@@ -1,15 +1,15 @@
 {
- "sourcePath": "Textures/FloorHatched.png",
- "artifacts": [
-  {
-   "uuid": "5823327e0d3641ba9e72f2879012fc16",
-   "assetType": "Texture",
-   "sourcePath": "Textures/FloorHatched.png"
+  "sourcePath": "Textures/FloorHatched.png",
+  "artifacts": [
+    {
+      "uuid": "5823327e0d3641ba9e72f2879012fc16",
+      "assetType": "Texture",
+      "sourcePath": "Textures/FloorHatched.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
   }
- ],
- "settings": {
-  "fileFormat": "PNG",
-  "filterMode": "Bilinear",
-  "wrapMode": "Repeat"
- }
 }

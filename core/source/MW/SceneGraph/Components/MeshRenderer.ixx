@@ -8,6 +8,7 @@ import Microwave.Graphics.Mesh;
 import Microwave.Math;
 import Microwave.SceneGraph.Components.Component;
 import Microwave.SceneGraph.Events;
+import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Renderable;
 import Microwave.System.Json;
 import Microwave.System.Object;

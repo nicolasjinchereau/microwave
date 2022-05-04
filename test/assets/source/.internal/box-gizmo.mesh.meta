@@ -1,11 +1,11 @@
 {
- "sourcePath": ".internal/box-gizmo.mesh",
- "artifacts": [
-  {
-   "uuid": "ce94e7dfddca453dbae72c887cbb1317",
-   "assetType": "Mesh",
-   "sourcePath": ".internal/box-gizmo.mesh"
-  }
- ],
- "settings": {}
+  "sourcePath": ".internal/box-gizmo.mesh",
+  "artifacts": [
+    {
+      "uuid": "ce94e7dfddca453dbae72c887cbb1317",
+      "assetType": "Mesh",
+      "sourcePath": ".internal/box-gizmo.mesh"
+    }
+  ],
+  "settings": {}
 }

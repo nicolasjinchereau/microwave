@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.SceneGraph.Components.Collider;
+import Microwave.SceneGraph.Node;
 
 namespace mw {
 inline namespace scene {
@@ -16,7 +17,7 @@ void Collider::ToJson(json& obj) const
 void Collider::FromJson(const json& obj, ObjectLinker* linker)
 {
     Component::FromJson(obj, linker);
-    ObjectLinker::RestoreLink(linker, This(), pivot, obj, "pivot");
+    ObjectLinker::RestoreLink(linker, SharedFrom(this), pivot, obj, "pivot");
 }
 
 void Collider::SetPivot(const sptr<Node>& pv) {

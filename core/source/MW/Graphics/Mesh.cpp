@@ -3,7 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.Graphics.Mesh;
-import Microwave.System.App;
+import Microwave.Graphics.GraphicsContext;
 import <algorithm>;
 import <unordered_map>;
 
@@ -79,20 +79,26 @@ void Mesh::RecalcBounds()
 
 void Mesh::UpdateBuffers()
 {
-    auto graphics = App::Get()->GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
     bool dynamicBuffers = skinType != SkinType::None;
+
+    BufferUsage usage{};
+    BufferCPUAccess cpuAccess{};
+
+    if(skinType != SkinType::None) {
+        usage = BufferUsage::Dynamic;
+        cpuAccess = BufferCPUAccess::WriteOnly;
+    }
+    else {
+        usage = BufferUsage::Static;
+        cpuAccess = BufferCPUAccess::None;
+    }
 
     if (!vertices.empty())
     {
-        auto pVertices = (std::byte*)vertices.data();
-        auto szVertices = vertices.size() * sizeof(Vec3);
-
-        vertexBuffer = graphics->CreateBuffer(
-            szVertices,
-            DrawBufferType::Vertex,
-            dynamicBuffers,
-            std::span<std::byte>(pVertices, szVertices)
-        );
+        vertexBuffer = spnew<Buffer>(
+            BufferType::Vertex, usage, cpuAccess,
+            std::as_writable_bytes(std::span(vertices)));
     }
     else
     {
@@ -101,14 +107,9 @@ void Mesh::UpdateBuffers()
 
     if (!normals.empty())
     {
-        auto pNormals = (std::byte*)normals.data();
-        auto szNormals = normals.size() * sizeof(Vec3);
-        normalBuffer = graphics->CreateBuffer(
-            szNormals,
-            DrawBufferType::Vertex,
-            dynamicBuffers,
-            std::span<std::byte>(pNormals, szNormals)
-        );
+        normalBuffer = spnew<Buffer>(
+            BufferType::Vertex, usage, cpuAccess,
+            std::as_writable_bytes(std::span(normals)));
     }
     else
     {
@@ -117,14 +118,9 @@ void Mesh::UpdateBuffers()
 
     if (!texcoords.empty())
     {
-        auto pUVs = (std::byte*)texcoords.data();
-        auto szUVs = texcoords.size() * sizeof(Vec2);
-        texcoordBuffer = graphics->CreateBuffer(
-            szUVs,
-            DrawBufferType::Vertex,
-            false,
-            std::span<std::byte>(pUVs, szUVs)
-        );
+        texcoordBuffer = spnew<Buffer>(
+            BufferType::Vertex, BufferUsage::Static, BufferCPUAccess::None,
+            std::as_writable_bytes(std::span(texcoords)));
     }
     else
     {
@@ -133,14 +129,9 @@ void Mesh::UpdateBuffers()
 
     if (!boneIndices.empty())
     {
-        auto pBoneIndices = (std::byte*)boneIndices.data();
-        auto szBoneIndices = boneIndices.size() * sizeof(IVec4);
-        boneIndexBuffer = graphics->CreateBuffer(
-            szBoneIndices,
-            DrawBufferType::Vertex,
-            false,
-            std::span<std::byte>(pBoneIndices, szBoneIndices)
-        );
+        boneIndexBuffer = spnew<Buffer>(
+            BufferType::Vertex, BufferUsage::Static, BufferCPUAccess::None,
+            std::as_writable_bytes(std::span(boneIndices)));
     }
     else
     {
@@ -149,14 +140,9 @@ void Mesh::UpdateBuffers()
 
     if (!boneWeights.empty())
     {
-        auto pBoneWeights = (std::byte*)boneWeights.data();
-        auto szBoneWeights = boneWeights.size() * sizeof(Vec4);
-        boneWeightBuffer = graphics->CreateBuffer(
-            szBoneWeights,
-            DrawBufferType::Vertex,
-            false,
-            std::span<std::byte>(pBoneWeights, szBoneWeights)
-        );
+        boneWeightBuffer = spnew<Buffer>(
+            BufferType::Vertex, BufferUsage::Static, BufferCPUAccess::None,
+            std::as_writable_bytes(std::span(boneWeights)));
     }
     else
     {
@@ -167,15 +153,9 @@ void Mesh::UpdateBuffers()
     {
         if (!elem.indices.empty())
         {
-            auto pIndices = (std::byte*)elem.indices.data();
-            auto szIndices = elem.indices.size() * sizeof(int);
-
-            elem.indexBuffer = graphics->CreateBuffer(
-                szIndices,
-                DrawBufferType::Index,
-                false,
-                std::span<std::byte>(pIndices, szIndices)
-            );
+            elem.indexBuffer = spnew<Buffer>(
+                BufferType::Index, BufferUsage::Static, BufferCPUAccess::None,
+                std::as_writable_bytes(std::span(elem.indices)));
         }
         else
         {

@@ -6,7 +6,6 @@ module Microwave.SceneGraph.Components.Canvas;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.RenderTarget;
 import Microwave.SceneGraph.Node;
-import Microwave.System.App;
 import Microwave.System.Object;
 import <cassert>;
 import <string>;
@@ -33,7 +32,7 @@ void Canvas::FromJson(const json& obj, ObjectLinker* linker)
     referenceSize = obj.value("referenceSize", referenceSize);
     fitMode = obj.value("fitMode", fitMode);
 
-    ObjectLinker::RestoreLink(linker, This(), camera, obj, "camera");
+    ObjectLinker::RestoreLink(linker, SharedFrom(this), camera, obj, "camera");
 
     structureDirty = true;
 }
@@ -88,10 +87,10 @@ void Canvas::UpdateStructure()
             {
                 for (auto& c : node->GetComponents())
                 {
-                    if (depth != 0 && std::dynamic_pointer_cast<Canvas>(c))
+                    if (depth != 0 && spcast<Canvas>(c))
                         return;
 
-                    if (auto v = std::dynamic_pointer_cast<View>(c)) {
+                    if (auto v = spcast<View>(c)) {
                         v->SetRenderDepth(depth);
                     }
                 }
@@ -153,7 +152,7 @@ Vec2 Canvas::WorldToCanvasPos(const Vec3& pos, const sptr<Camera>& camera) const
 {
     assert(camera);
 
-    auto graphics = App::Get()->GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
     assert(graphics);
 
     auto screenPos = camera->WorldToScreen(pos);
@@ -217,7 +216,7 @@ void Canvas::SendPointerUp(Window* window, IVec2 pos, int id)
 
 void Canvas::FitCanvasToTarget()
 {
-    auto graphics = App::Get()->GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
 
     if (auto target = graphics->GetRenderTarget())
     {

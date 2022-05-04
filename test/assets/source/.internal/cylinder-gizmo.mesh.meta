@@ -1,11 +1,11 @@
 {
- "sourcePath": ".internal/cylinder-gizmo.mesh",
- "artifacts": [
-  {
-   "uuid": "2032e4ea4e114bcba24ac9b1298aa8d7",
-   "assetType": "Mesh",
-   "sourcePath": ".internal/cylinder-gizmo.mesh"
-  }
- ],
- "settings": {}
+  "sourcePath": ".internal/cylinder-gizmo.mesh",
+  "artifacts": [
+    {
+      "uuid": "2032e4ea4e114bcba24ac9b1298aa8d7",
+      "assetType": "Mesh",
+      "sourcePath": ".internal/cylinder-gizmo.mesh"
+    }
+  ],
+  "settings": {}
 }

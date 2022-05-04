@@ -6,6 +6,7 @@ export module Microwave.Graphics.MaterialPropertyBlock;
 import Microwave.Graphics.Color;
 import Microwave.Graphics.Shader;
 import Microwave.Graphics.Texture;
+import Microwave.Graphics.ShaderInfo;
 import Microwave.Math;
 import Microwave.System.Object;
 import Microwave.System.Path;

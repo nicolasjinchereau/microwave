@@ -1,14 +1,14 @@
 {
- "sourcePath": "Audio/Sounds/LevelPass.wav",
- "artifacts": [
-  {
-   "uuid": "ccf0bbe8a3894c02a060ef3dadd7dfa0",
-   "assetType": "AudioClip",
-   "sourcePath": "Audio/Sounds/LevelPass.wav"
+  "sourcePath": "Audio/Sounds/LevelPass.wav",
+  "artifacts": [
+    {
+      "uuid": "ccf0bbe8a3894c02a060ef3dadd7dfa0",
+      "assetType": "AudioClip",
+      "sourcePath": "Audio/Sounds/LevelPass.wav"
+    }
+  ],
+  "settings": {
+    "fileFormat": "Wav",
+    "streamFromDisk": false
   }
- ],
- "settings": {
-  "streamFromDisk": false,
-  "fileFormat": "Wav"
- }
 }

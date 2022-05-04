@@ -35,7 +35,6 @@ class App : public Object, public IWindowEventHandler
 protected:
     sptr<Window> _mainWindow;
     std::vector<wptr<Window>> _allWindows;
-    sptr<GraphicsContext> _graphics;
     sptr<AssetLibrary> _assetLibrary;
 
     void SetMainWindow(sptr<Window> mainWindow);
@@ -53,9 +52,6 @@ public:
     const std::vector<wptr<Window>>& GetWindows();
     void GetWindows(std::vector<sptr<Window>>& windows);
     sptr<Window> GetMainWindow();
-
-    void SetGraphics(const sptr<GraphicsContext>& graphics);
-    sptr<GraphicsContext> GetGraphics();
 
     void SetAssetLibrary(const sptr<AssetLibrary>& assetLibrary);
     sptr<AssetLibrary> GetAssetLibrary();

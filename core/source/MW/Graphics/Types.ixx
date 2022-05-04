@@ -31,6 +31,18 @@ struct Box
 
     Box(float left, float top, float right, float bottom)
         : left(left), top(top), right(right), bottom(bottom) {}
+
+    bool operator==(const Box& other) const {
+        return
+            left == other.left &&
+            top == other.top &&
+            right == other.right &&
+            bottom == other.bottom;
+    }
+
+    bool operator!=(const Box& other) const {
+        return !(*this == other);
+    }
 };
 
 constexpr int AlignBitsLeft = 0b00000001;

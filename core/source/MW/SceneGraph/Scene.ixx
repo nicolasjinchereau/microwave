@@ -88,5 +88,5 @@ private:
     void UnregisterComponent(const sptr<Component>& comp);
 };
 
-}
-}
+} // scene
+} // mw

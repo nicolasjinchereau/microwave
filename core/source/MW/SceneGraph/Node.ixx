@@ -4,6 +4,7 @@
 
 export module Microwave.SceneGraph.Node;
 import Microwave.Math;
+import Microwave.SceneGraph.Components.Component;
 import Microwave.SceneGraph.LayerMask;
 import Microwave.System.Json;
 import Microwave.System.Object;
@@ -22,7 +23,7 @@ export namespace mw {
 inline namespace scene {
 
 class Scene;
-class Component;
+//class Component;
 
 class Node : public Object
 {
@@ -265,7 +266,7 @@ sptr<T> Node::GetComponent()
 
     for (auto& c : _components)
     {
-        if (ret = std::dynamic_pointer_cast<T>(c))
+        if (ret = spcast<T>(c))
             break;
     }
 
@@ -285,7 +286,7 @@ void Node::GetComponents(std::vector<sptr<T>>& out)
 {
     for (auto& c : _components)
     {
-        if (sptr<T> t = std::dynamic_pointer_cast<T>(c)) {
+        if (sptr<T> t = spcast<T>(c)) {
             out.push_back(std::move(t));
         }
     }
@@ -300,7 +301,7 @@ sptr<T> Node::FindComponentDownward()
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = std::dynamic_pointer_cast<T>(c))
+                if (sptr<T> t = spcast<T>(c))
                     return std::move(t);
             }
 
@@ -314,7 +315,7 @@ sptr<T> Node::FindComponentDownward()
         }
     };
 
-    return R::FindComponent(This<Node>());
+    return R::FindComponent(SharedFrom(this));
 }
 
 template<class T>
@@ -335,7 +336,7 @@ void Node::FindComponentsDownward(std::vector<sptr<T>>& out)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = std::dynamic_pointer_cast<T>(c))
+                if (sptr<T> t = spcast<T>(c))
                     out.push_back(std::move(t));
             }
 
@@ -344,7 +345,7 @@ void Node::FindComponentsDownward(std::vector<sptr<T>>& out)
         }
     };
 
-    R::FindComponents(This<Node>(), out);
+    R::FindComponents(SharedFrom(this), out);
 }
 
 template<class T, class F>
@@ -357,7 +358,7 @@ void Node::FindComponentsDownward(F&& fun)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = std::dynamic_pointer_cast<T>(c))
+                if (sptr<T> t = spcast<T>(c))
                     fun(t);
             }
 
@@ -366,7 +367,7 @@ void Node::FindComponentsDownward(F&& fun)
         }
     };
 
-    R::FindComponents(This<Node>(), fun);
+    R::FindComponents(SharedFrom(this), fun);
 }
 
 template<class T>
@@ -378,7 +379,7 @@ sptr<T> Node::FindComponentUpward()
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = std::dynamic_pointer_cast<T>(c))
+                if (sptr<T> t = spcast<T>(c))
                     return std::move(t);
             }
 
@@ -392,7 +393,7 @@ sptr<T> Node::FindComponentUpward()
         }
     };
 
-    return R::FindComponent(This<Node>());
+    return R::FindComponent(SharedFrom(this));
 }
 
 template<class T>
@@ -412,7 +413,7 @@ void Node::FindComponentsUpward(std::vector<sptr<T>>& out)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = std::dynamic_pointer_cast<T>(c))
+                if (sptr<T> t = spcast<T>(c))
                     out.push_back(std::move(t));
             }
 
@@ -421,7 +422,7 @@ void Node::FindComponentsUpward(std::vector<sptr<T>>& out)
         }
     };
 
-    R::FindComponents(This<Node>(), out);
+    R::FindComponents(SharedFrom(this), out);
 }
 
 template<class T, class F>
@@ -433,7 +434,7 @@ void Node::FindComponentsUpward(F&& fun)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = std::dynamic_pointer_cast<T>(c))
+                if (sptr<T> t = spcast<T>(c))
                     fun(t);
             }
 
@@ -442,7 +443,7 @@ void Node::FindComponentsUpward(F&& fun)
         }
     };
 
-    R::FindComponents(This<Node>(), fun);
+    R::FindComponents(SharedFrom(this), fun);
 }
 
 } // scene

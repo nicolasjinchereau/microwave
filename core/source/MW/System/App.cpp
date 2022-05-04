@@ -22,7 +22,7 @@ sptr<App> App::Get()
     if(!_instance)
         throw std::runtime_error("a subclass of App must be instantiated before calling App::Get");
     
-    return _instance->This<App>();
+    return _instance->SharedFrom(_instance);
 }
 App::App()
 {
@@ -39,9 +39,9 @@ App::~App()
 
 void App::SetMainWindow(sptr<Window> mainWindow)
 {
-    if (_mainWindow) _mainWindow->RemoveEventHandler(This<IWindowEventHandler>());
+    if (_mainWindow) _mainWindow->RemoveEventHandler(SharedFrom(this));
     _mainWindow = mainWindow;
-    if (_mainWindow) _mainWindow->AddEventHandler(This<IWindowEventHandler>());
+    if (_mainWindow) _mainWindow->AddEventHandler(SharedFrom(this));
 }
 
 sptr<ApplicationDispatcher> App::GetDispatcher()
@@ -83,14 +83,6 @@ void App::GetWindows(std::vector<sptr<Window>>& windows)
         auto sp = wp.lock();
         if (sp) windows.push_back(sp);
     }
-}
-
-void App::SetGraphics(const sptr<GraphicsContext>& graphics) {
-    _graphics = graphics;
-}
-
-sptr<GraphicsContext> App::GetGraphics() {
-    return _graphics;
 }
 
 void App::SetAssetLibrary(const sptr<AssetLibrary>& assetLibrary) {

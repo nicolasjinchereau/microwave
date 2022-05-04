@@ -31,7 +31,7 @@ public:
 
     virtual sptr<DispatchAction> InvokeAsync(
         std::function<void()> function,
-        DispatchTime when = DispatchTime()
+        std::chrono::steady_clock::time_point when = std::chrono::steady_clock::time_point{ std::chrono::steady_clock::duration::zero() }
     ) override;
 
     virtual void Run(int argc, char* argv[]) override;

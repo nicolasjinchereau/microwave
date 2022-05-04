@@ -11,6 +11,7 @@ import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import <climits>;
+import <array>;
 import <MW/SceneGraph/Internal/Bullet.h>;
 
 //export {
@@ -57,25 +58,16 @@ class D6Joint :
     Vec3 linkOffset; // in space of this node
     Vec3 linkPivotOffset; // in space of the link-body's node
 
-    JointMotion linearJointMotion[3] {
-        JointMotion::Locked,
-        JointMotion::Locked,
-        JointMotion::Locked
-    };
-
-    JointMotion angularJointMotion[3] {
-        JointMotion::Locked,
-        JointMotion::Locked,
-        JointMotion::Locked
-    };
+    std::array<JointMotion, 3> linearJointMotion { JointMotion::Locked, JointMotion::Locked, JointMotion::Locked };
+    std::array<JointMotion, 3> angularJointMotion { JointMotion::Locked, JointMotion::Locked, JointMotion::Locked };
 
     Vec3 linearLowerLimit;
     Vec3 linearUpperLimit;
     Vec3 angularLowerLimit;
     Vec3 angularUpperLimit;
 
-    bool linearMotorEnabled[3] { false, false, false };
-    bool angularMotorEnabled[3] { false, false, false };
+    std::array<bool, 3> linearMotorEnabled { false, false, false };
+    std::array<bool, 3> angularMotorEnabled { false, false, false };
 
     Vec3 linearMotorTargetVelocity;
     Vec3 angularMotorTargetVelocity;

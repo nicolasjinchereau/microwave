@@ -7,7 +7,8 @@ workspace "tinyxml2"
 project "tinyxml2"
     kind "StaticLib"
     language "C"
-    
+    --architecture "x86_64"
+
     location ("projects/" .. os.target())
     targetname "tinyxml2"
 

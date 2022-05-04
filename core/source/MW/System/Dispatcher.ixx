@@ -20,22 +20,17 @@ import <vector>;
 export namespace mw {
 inline namespace system {
 
-using DispatchClock = std::chrono::steady_clock;
-using DispatchTime = std::chrono::steady_clock::time_point;
-
 struct DispatchAction
 {
-    typedef std::chrono::microseconds Duration;
-
     std::function<void()> function;
-    DispatchTime when = DispatchTime();
+    std::chrono::steady_clock::time_point when{};
 
-    DispatchAction() {}
+    DispatchAction(){}
 
     template<class Func>
     DispatchAction(
         Func&& function,
-        DispatchTime when = DispatchTime()
+        std::chrono::steady_clock::time_point when = {}
     ) : function(std::forward<Func>(function)), when(when) {}
 };
 
@@ -69,7 +64,7 @@ public:
 
     virtual sptr<DispatchAction> InvokeAsync(
         std::function<void()> function,
-        DispatchTime when = DispatchTime()
+        std::chrono::steady_clock::time_point when = std::chrono::steady_clock::time_point{ std::chrono::steady_clock::duration::zero() }
     );
 
     virtual bool Cancel(const sptr<DispatchAction>& action);

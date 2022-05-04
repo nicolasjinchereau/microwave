@@ -7,14 +7,20 @@
 #include <MW/System/Internal/Platform.h>
 
 #if PLATFORM_WINDOWS
+#  ifndef NOMINMAX
+#    define NOMINMAX
+#  endif
 #  include <Windows.h>
 #  include <windowsx.h>
 #  include <wrl/client.h>
 #  include <d3d11_1.h>
 #  include <d3dcompiler.h>
 #  include <DirectXMath.h>
-#  include <glew.h>
+#  include <gl/glew.h>
 #  include <gl/GL.h>
+#  undef FALSE
+#  undef TRUE
+#  undef FLOAT
 #elif PLATFORM_MACOS
 #  import <OpenGL/OpenGL.h>
 #  import <OpenGL/gl3.h>

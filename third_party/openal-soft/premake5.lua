@@ -7,7 +7,8 @@ workspace "openal-soft"
 project "openal-soft"
     kind "StaticLib"
     language "C"
-    
+    --architecture "x86_64"
+
     location ("projects/" .. os.target())
     targetname "openal-soft"
 

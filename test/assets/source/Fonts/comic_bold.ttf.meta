@@ -1,11 +1,11 @@
 {
- "sourcePath": "Fonts/comic_bold.ttf",
- "artifacts": [
-  {
-   "uuid": "aa75454cbd5a41649bbd32075f7a6110",
-   "assetType": "Font",
-   "sourcePath": "Fonts/comic_bold.ttf"
-  }
- ],
- "settings": {}
+  "sourcePath": "Fonts/comic_bold.ttf",
+  "artifacts": [
+    {
+      "uuid": "aa75454cbd5a41649bbd32075f7a6110",
+      "assetType": "Font",
+      "sourcePath": "Fonts/comic_bold.ttf"
+    }
+  ],
+  "settings": {}
 }

@@ -5,7 +5,7 @@
 module Microwave.Graphics.Font;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.GraphicsTypes;
-import Microwave.Graphics.Color;
+import Microwave.Graphics.Color32;
 import Microwave.Graphics.Texture;
 import Microwave.Graphics.Types;
 import Microwave.Graphics.LineEnumerator;
@@ -133,22 +133,21 @@ int GetRenderFlags(FontMode mode) {
     return flags;
 }
 
-Font::Atlas::Atlas(sptr<Texture>& texture, FontMode fontMode)
-    : texture(texture), fontMode(fontMode)
+Font::Atlas::Atlas(const IVec2& size, FontMode fontMode)
 {
-    auto size = texture->GetSize();
-    assert(texture->GetFormat() == PixelDataFormat::RGBA32);
-
     Color32 fillColor;
 
     if (fontMode == FontMode::Normal)
         fillColor = Color32(255, 255, 255, 0);
     else if (fontMode == FontMode::LCD)
         fillColor = Color32(0, 0, 0, 255);
-
-    data.resize(size.x * size.y, fillColor.ToUIntRGBA());
-    auto fill = std::span<std::byte>((std::byte*)data.data(), data.size() * 4);
-    texture->SetPixels(fill);
+    
+    std::vector<Color32> data;
+    data.resize(size.x * size.y, fillColor);
+    
+    auto pixels = std::span<Color32>(data);
+    texture = spnew<Texture>(
+        std::as_writable_bytes(pixels), PixelDataFormat::RGBA32, size, true);
 }
 
 Font::Font(
@@ -300,16 +299,10 @@ void Font::AddCharacter(char32_t code)
     int bmpHeight = face->glyph->bitmap.rows;
     int bmpWidth = (fontMode == FontMode::LCD) ? face->glyph->bitmap.width / 3 : face->glyph->bitmap.width;
 
-    sptr<GraphicsContext> graphics = App::Get()->GetGraphics();
-    assert(graphics);
-
     // create another atlas if needed
     while ((int)atlases.size() < glyph.slot + 1)
     {
-        auto texture = graphics->CreateTexture(
-            atlasSize, PixelDataFormat::RGBA32, true, std::span<std::byte>());
-
-        atlases.push_back(Atlas(texture, fontMode));
+        atlases.push_back(Atlas(atlasSize, fontMode));
     }
 
     // blit the character to the atlas
@@ -489,7 +482,7 @@ void Font::GetTextGeometry(
     int totalWidth = 0;
     int totalHeight = 0;
 
-    LineEnumerator lines(This<Font>(), text, wrapText ? bounds.x : 0);
+    LineEnumerator lines(SharedFrom(this), text, wrapText ? bounds.x : 0);
     while (lines.MoveNext())
     {
         LineInfo li = GetLineInfo(alignment, bounds.x, lines.GetCurrentLine(), lines.DidOverflow());

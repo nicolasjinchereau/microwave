@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.System.Dispatcher;
+import <chrono>;
 
 namespace mw {
 inline namespace system {
@@ -24,7 +25,7 @@ void Dispatcher::Wake()
 
 sptr<DispatchAction> Dispatcher::InvokeAsync(
     std::function<void()> function,
-    DispatchTime when
+    std::chrono::steady_clock::time_point when
 )
 {
     std::unique_lock<std::mutex> lk(mut);
@@ -82,7 +83,7 @@ void Dispatcher::SetContinuousDispatchRate(uint32_t rate)
         {
             if (continuousDispatchAction) {
                 continuousDispatchAction->function = nullptr;
-                continuousDispatchAction->when = DispatchTime();
+                continuousDispatchAction->when = std::chrono::steady_clock::time_point{ std::chrono::steady_clock::duration::zero() };
             }
 
             continuousDispatchAction = spnew<DispatchAction>(
@@ -104,7 +105,7 @@ void Dispatcher::SetContinuousDispatchRate(uint32_t rate)
         {
             if (continuousDispatchAction) {
                 continuousDispatchAction->function = nullptr;
-                continuousDispatchAction->when = DispatchTime();
+                continuousDispatchAction->when = std::chrono::steady_clock::time_point{ std::chrono::steady_clock::duration::zero() };
                 continuousDispatchAction = nullptr;
             }
         }
@@ -160,13 +161,13 @@ sptr<DispatchAction> Dispatcher::WaitForNextAction()
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    auto wake = DispatchTime::max();
-    if (!actions.empty() && actions.front()->when > DispatchTime(std::chrono::microseconds(0)))
+    auto wake = std::chrono::steady_clock::time_point::max();
+    if (!actions.empty() && actions.front()->when > std::chrono::steady_clock::time_point(std::chrono::microseconds(0)))
         wake = actions.front()->when;
 
     cv.wait_until(
         lk, wake,
-        [this]{ return !run || (!actions.empty() && DispatchClock::now() > actions.front()->when); }
+        [this]{ return !run || (!actions.empty() && std::chrono::steady_clock::now() > actions.front()->when); }
     );
 
     sptr<DispatchAction> action;

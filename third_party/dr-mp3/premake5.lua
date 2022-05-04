@@ -7,7 +7,8 @@ workspace "dr-mp3"
 project "dr-mp3"
     kind "StaticLib"
     language "C"
-    
+    --architecture "x86_64"
+
     location ("projects/" .. os.target())
     targetname "dr-mp3"
 

@@ -4,9 +4,9 @@
 
 export module Microwave.System.Task;
 import Microwave.System.Awaitable;
-import Microwave.System.Dispatcher;
 import Microwave.System.IAwaitable;
 import Microwave.System.IAwaiter;
+import Microwave.System.Dispatcher;
 import <algorithm>;
 import <cassert>;
 import <chrono>;
@@ -19,8 +19,6 @@ import <utility>;
 
 export namespace mw {
 inline namespace system {
-
-using milliseconds = std::chrono::milliseconds;
 
 template<class T>
 class Task
@@ -44,7 +42,7 @@ public:
     }
 
     sptr<IAwaiter> GetAwaiter() {
-        return std::dynamic_pointer_cast<IAwaiter>(awaitable);
+        return spcast<IAwaiter>(awaitable);
     }
 
     operator bool() const { return awaitable != nullptr; }
@@ -72,14 +70,14 @@ public:
         return awaitable->WaitForResult();
     }
     
-    static Task<void> Delay(milliseconds length);
+    static Task<void> Delay(std::chrono::milliseconds length);
     static Task<T> GetCompleted();
 
     struct promise_type;
 };
 
 namespace detail {
-Task<void> GetDelayTask(milliseconds length);
+Task<void> GetDelayTask(std::chrono::milliseconds length);
 
 template<class T>
 class CompletedAwaitable : public IAwaitable<T>
@@ -94,7 +92,7 @@ public:
 }
 
 template<class T>
-inline Task<void> Task<T>::Delay(milliseconds length) {
+inline Task<void> Task<T>::Delay(std::chrono::milliseconds length) {
     return detail::GetDelayTask(length);
 }
 

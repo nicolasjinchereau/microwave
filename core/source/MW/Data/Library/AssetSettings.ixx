@@ -9,6 +9,7 @@ import Microwave.Graphics.Font;
 import Microwave.Graphics.Image;
 import Microwave.Graphics.Material;
 import Microwave.Graphics.Texture;
+import Microwave.Graphics.GraphicsTypes;
 import Microwave.Math;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
@@ -26,8 +27,8 @@ inline namespace data {
 struct TextureSettings
 {
     ImageFileFormat fileFormat = ImageFileFormat::PNG;
-    WrapMode wrapMode = WrapMode::Repeat;
-    FilterMode filterMode = FilterMode::Bilinear;
+    TextureWrapMode wrapMode = TextureWrapMode::Repeat;
+    TextureFilterMode filterMode = TextureFilterMode::Bilinear;
 };
 
 struct AudioClipSettings

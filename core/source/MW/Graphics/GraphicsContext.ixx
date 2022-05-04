@@ -3,119 +3,128 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.Buffer;
 import Microwave.Graphics.GraphicsTypes;
-import Microwave.Graphics.GraphicsResource;
+import Microwave.Graphics.RenderTarget;
+import Microwave.Graphics.RenderTexture;
+import Microwave.Graphics.Shader;
+import Microwave.Graphics.Texture;
 import Microwave.Graphics.Color;
-import Microwave.System.Pointers;
+import Microwave.Graphics.Internal.HWBuffer;
+import Microwave.Graphics.Internal.HWContext;
+import Microwave.Graphics.Internal.HWRenderTexture;
+import Microwave.Graphics.Internal.HWTexture;
 import Microwave.Math;
+import Microwave.System.Object;
+import Microwave.System.Pointers;
 import <cstddef>;
 import <cstdlib>;
 import <span>;
 import <vector>;
 
 export namespace mw {
-
-inline namespace system {
-class App;
-class Window;
-class Dispatcher;
-}
-
 inline namespace gfx {
-class RenderTarget;
-class RenderTexture;
-class WindowSurface;
-class Shader;
-class DrawBuffer;
-class Texture;
-enum class DrawBufferType : int;
 
-class GraphicsContext : public GraphicsResource
+class GraphicsContext : public Object
 {
-    friend class mw::system::App;
+    thread_local static sptr<GraphicsContext> currentContext;
 public:
-    static sptr<GraphicsContext> New(GraphicsDriverType type);
-    virtual ~GraphicsContext(){}
+    sptr<HWContext> context;
+    sptr<RenderTarget> renderTarget;
+    IntRect viewportRect = IntRect();
+    IntRect scissorRect = IntRect();
+    Color clearColor = Color::White();
+    bool scissorTestEnabled = false;
+    bool blendingEnabled = true;
+    bool depthWriteEnabled = true;
+    DepthTest depthTest = DepthTest::LessOrEqual;
+    CullMode cullMode = CullMode::Back;
+    BlendFactor srcColorFactor = BlendFactor::One;
+    BlendFactor dstColorFactor = BlendFactor::Zero;
+    BlendFactor srcAlphaFactor = BlendFactor::One;
+    BlendFactor dstAlphaFactor = BlendFactor::Zero;
+    BlendOperation colorBlendOperation = BlendOperation::Add;
+    BlendOperation alphaBlendOperation = BlendOperation::Add;
+    Color blendColor = Color::White();
+    bool colorMask[4] = { true, true, true, true };
+    int swapInterval = 1;
 
-    virtual sptr<Dispatcher> GetDispatcher() = 0;
+    static void SetCurrent(const sptr<GraphicsContext>& current);
+    static sptr<GraphicsContext> GetCurrent();
 
-    virtual Vec2 GetDepthRangeNDC() = 0;
+    GraphicsContext(GraphicsDriverType type = GraphicsDriverType::Default);
+    ~GraphicsContext();
 
-    virtual void MakeCurrent() = 0;
+    Vec2 GetDepthRangeNDC() const;
+
+    IntRect GetViewport() const;
+    void SetViewport(const IntRect& rect);
+
+    bool IsBlendingEnabled() const;
+    void SetBlendingEnabled(bool enabled);
+
+    bool IsScissorTestEnabled() const;
+    void SetScissorTestEnabled(bool enabled);
+
+    IntRect GetScissorRect() const;
+    void SetScissorRect(const IntRect& rect);
+
+    Color GetClearColor() const;
+    void SetClearColor(const Color& color);
+
+    void SetColorMask(bool red, bool green, bool blue, bool alpha);
     
-    virtual IntRect GetViewport() const = 0;
-    virtual void SetViewport(const IntRect& rect) = 0;
-
-    virtual bool IsBlendingEnabled() const = 0;
-    virtual void SetBlendingEnabled(bool enabled) = 0;
-
-    virtual bool IsScissorTestEnabled() const = 0;
-    virtual void SetScissorTestEnabled(bool enabled) = 0;
-
-    virtual IntRect GetScissorRect() const = 0;
-    virtual void SetScissorRect(const IntRect& rect) = 0;
-
-    virtual Color GetClearColor() const = 0;
-    virtual void SetClearColor(const Color& color) = 0;
-
-    virtual void SetColorMask(bool red, bool green, bool blue, bool alpha) = 0;
-    
-    virtual void SetBlendFactors(BlendFactor source, BlendFactor dest) = 0;
-    virtual void SetBlendFactors(
+    void SetBlendFactors(BlendFactor source, BlendFactor dest);
+    void SetBlendFactors(
         BlendFactor sourceColor, BlendFactor destColor,
-        BlendFactor sourceAlpha, BlendFactor destAlpha) = 0;
+        BlendFactor sourceAlpha, BlendFactor destAlpha);
 
-    virtual BlendFactor GetSourceColorBlendFactor() const = 0;
-    virtual BlendFactor GetDestColorBlendFactor() const = 0;
-    virtual BlendFactor GetSourceAlphaBlendFactor() const = 0;
-    virtual BlendFactor GetDestAlphaBlendFactor() const = 0;
+    BlendFactor GetSourceColorBlendFactor() const;
+    BlendFactor GetDestColorBlendFactor() const;
+    BlendFactor GetSourceAlphaBlendFactor() const;
+    BlendFactor GetDestAlphaBlendFactor() const;
     
-    virtual void SetBlendOperations(BlendOperation blendOp) = 0;
-    virtual void SetBlendOperations(BlendOperation colorBlendOp, BlendOperation alphaBlendOp) = 0;
+    void SetBlendOperations(BlendOperation blendOp);
+    void SetBlendOperations(BlendOperation colorBlendOp, BlendOperation alphaBlendOp);
 
-    virtual BlendOperation GetColorBlendOperation() const = 0;
-    virtual BlendOperation GetAlphaBlendOperation() const = 0;
+    BlendOperation GetColorBlendOperation() const;
+    BlendOperation GetAlphaBlendOperation() const;
 
-    virtual Color GetBlendColor() const = 0;
-    virtual void SetBlendColor(Color color) = 0;
+    Color GetBlendColor() const;
+    void SetBlendColor(Color color);
 
-    virtual CullMode GetCullMode() const = 0;
-    virtual void SetCullMode(CullMode mode) = 0;
+    CullMode GetCullMode() const;
+    void SetCullMode(CullMode mode);
 
-    virtual DepthTest GetDepthTest() const = 0;
-    virtual void SetDepthTest(DepthTest test) = 0;
+    DepthTest GetDepthTest() const;
+    void SetDepthTest(DepthTest test);
 
-    virtual bool IsDepthWriteEnabled() const = 0;
-    virtual void SetDepthWriteEnabled(bool enabled) = 0;
+    bool IsDepthWriteEnabled() const;
+    void SetDepthWriteEnabled(bool enabled);
 
-    virtual int GetSwapInterval() const = 0;
-    virtual void SetSwapInterval(int interval) = 0;
+    int GetSwapInterval() const;
+    void SetSwapInterval(int interval);
 
-    virtual sptr<RenderTarget> GetRenderTarget() const = 0;
-    virtual void SetRenderTarget(const sptr<RenderTarget>& target) = 0;
-    virtual void SetRenderTarget(const sptr<WindowSurface>& target) = 0;
-    virtual void SetRenderTarget(const sptr<RenderTexture>& target) = 0;
-    virtual void RebindRenderTarget() = 0;
+    sptr<RenderTarget> GetRenderTarget() const;
+    void SetRenderTarget(const sptr<RenderTarget>& target);
+    void RebindRenderTarget();
 
-    virtual void Clear(bool depth, bool color) = 0;
-    virtual void Flush() = 0;
-    virtual void Flip() = 0;
+    void Clear(bool depth, bool color);
+    void Flush();
+    void Flip();
 
-    virtual void DrawArray(int start, int count, DrawMode mode) = 0;
-    virtual void DrawIndexed(int start, int count, DrawMode mode) = 0;
+    void DrawArray(int start, int count, DrawMode mode);
+    void DrawIndexed(int start, int count, DrawMode mode);
 
-    virtual sptr<RenderTexture> CreateRenderTexture(const Vec2& size) = 0;
-    virtual void CreateWindowSurface(const sptr<Window>& window) = 0;
-    virtual sptr<Shader> CreateShader(const std::string& source) = 0;
+    Mat4 GetOrthoMatrix(
+        float left, float right,
+        float bottom, float top,
+        float zNear, float zFar);
 
-    // empty span ok for `data` for dynamic buffers
-    virtual sptr<DrawBuffer> CreateBuffer(uint32_t capacity, DrawBufferType type, bool dynamic, const std::span<std::byte>& data) = 0;
-
-    virtual sptr<Texture> CreateTexture(const IVec2& size, PixelDataFormat format, bool dynamic, const std::span<std::byte>& data) = 0;
-
-    virtual Mat4 GetOrthoMatrix(float left, float right, float bottom, float top, float zNear, float zFar) = 0;
-    virtual Mat4 GetPerspectiveMatrix(float fovY, float aspect, float zNear, float zFar) = 0;
+    Mat4 GetPerspectiveMatrix(
+        float fovY, float aspect,
+        float zNear, float zFar);
 };
 
-}
-}
+} // gfx
+} // mw

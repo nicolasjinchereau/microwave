@@ -239,5 +239,17 @@ void AssetLibrary::ReleaseAsset(const UUID& uuid) {
     assets.erase(uuid);
 }
 
+void AssetLibrary::GetAllTextures(std::vector<sptr<Texture>>& textures)
+{
+    textures.clear();
+
+    for (auto& [uuid, obj] : assets)
+    {
+        auto tex = spcast<Texture>(obj);
+        if(tex)
+            textures.push_back(std::move(tex));
+    }
+}
+
 } // data
 } // mw

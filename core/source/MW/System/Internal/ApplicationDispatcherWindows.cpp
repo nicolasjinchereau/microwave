@@ -4,6 +4,7 @@
 
 module Microwave.System.Internal.ApplicationDispatcherWindows;
 import <MW/System/Internal/PlatformHeaders.h>;
+import <chrono>;
 
 constexpr int WM_DISPATCHER_QUIT = WM_APP + 1;
 constexpr int WM_DISPATCHER_WAKE = WM_APP + 100;
@@ -36,7 +37,7 @@ ApplicationDispatcherWindows::~ApplicationDispatcherWindows()
 }
 
 sptr<DispatchAction> ApplicationDispatcherWindows::InvokeAsync(
-    std::function<void()> function, DispatchTime when
+    std::function<void()> function, std::chrono::steady_clock::time_point when
 )
 {
     std::unique_lock<std::mutex> lk(mut);
@@ -87,7 +88,7 @@ void ApplicationDispatcherWindows::Run(int argc, char* argv[])
 
                 if (timeout > 0)
                 {
-                    auto ret = MsgWaitForMultipleObjects(0, NULL, FALSE, (DWORD)timeout, QS_ALLINPUT);
+                    auto ret = MsgWaitForMultipleObjects(0, NULL, false, (DWORD)timeout, QS_ALLINPUT);
                     auto inputAvailable = (ret != WAIT_TIMEOUT);
 
                     if (inputAvailable)
@@ -203,7 +204,7 @@ sptr<DispatchAction> ApplicationDispatcherWindows::GetNextAction()
 
     sptr<DispatchAction> action;
 
-    if (run && !actions.empty() && DispatchClock::now() >= actions.front()->when) {
+    if (run && !actions.empty() && std::chrono::steady_clock::now() >= actions.front()->when) {
         action = std::move(actions.front());
         actions.pop_front();
     }
@@ -222,7 +223,7 @@ void ApplicationDispatcherWindows::UpdateActionTimer()
 
     if (!actions.empty())
     {
-        auto now = DispatchClock::now();
+        auto now = std::chrono::steady_clock::now();
         auto when = actions.front()->when;
 
         // queue timer for next action if needed

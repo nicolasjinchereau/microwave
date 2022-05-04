@@ -11,7 +11,7 @@ import Microwave.Data.Database.TextureImporter;
 import Microwave.Data.Library.AssetLibrary;
 import Microwave.System.Console;
 import Microwave.System.Json;
-import Microwave.Graphics.Color;
+import Microwave.Graphics.Color32;
 import Microwave.Graphics.Image;
 import Microwave.IO.File;
 import Microwave.IO.MemoryStream;
@@ -106,8 +106,8 @@ void AssetDatabase::ExtractInternalAssets()
 
         if (!path::exists(fullTexPath))
         {
-            auto pixel = ColorBGRA(255, 255, 255, 255);
-            auto data = std::span<std::byte>((std::byte*)&pixel, sizeof(ColorBGRA));
+            auto pixel = Color32(255, 255, 255, 255);
+            auto data = std::span<std::byte>((std::byte*)&pixel, sizeof(Color32));
             auto img = spnew<Image>(PixelDataFormat::RGBA32, IVec2(1, 1), data);
 
             std::vector<std::byte> fileData;

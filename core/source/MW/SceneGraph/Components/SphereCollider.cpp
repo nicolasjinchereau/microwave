@@ -86,12 +86,15 @@ void SphereCollider::GetRenderables(Sink<sptr<Renderable>> sink)
     if (!renderable)
         renderable = spnew<Renderable>();
 
+    renderable->vertexMapping = {
+        { Semantic::POSITION, 0, gizmoMesh->vertexBuffer, 0, sizeof(Vec3) }
+    };
+
     renderable->layerMask = node->GetLayerMask();
     renderable->material = gizmoMat;
     renderable->mtxModel = mtxModel;
     renderable->bounds = bounds;
     renderable->extra.SetUniform("uColor", Color::Green());
-    renderable->vertexBuffer = gizmoMesh->vertexBuffer;
     renderable->indexBuffer = gizmoMesh->elements[0].indexBuffer;
     renderable->drawStart = 0;
     renderable->drawCount = gizmoMesh->elements[0].indices.size();

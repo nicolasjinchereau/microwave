@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.System.Clock;
+
 import <chrono>;
 
 export namespace mw {
@@ -30,18 +31,18 @@ public:
 
     void Tick() {
         auto now = clock_type::now();
-        deltaTime = (now - lastTickTime);
+        deltaTime = now - lastTickTime;
         lastTickTime = now;
     }
 
     float GetMaxDeltaTime() const {
         using std::chrono::duration_cast;
-        return duration_cast<float_duration>(maxDeltaTime).count();
+        return std::chrono::duration_cast<float_duration>(maxDeltaTime).count();
     }
 
     void SetMaxDeltaTime(float deltaTime) {
         using std::chrono::duration_cast;
-        maxDeltaTime = duration_cast<clock_type::duration>(float_duration(deltaTime));
+        maxDeltaTime = std::chrono::duration_cast<clock_type::duration>(float_duration(deltaTime));
     }
 
     float GetTime() const {

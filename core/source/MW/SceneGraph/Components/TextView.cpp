@@ -4,8 +4,9 @@
 
 module Microwave.SceneGraph.Components.TextView;
 import Microwave.Graphics.GraphicsContext;
-import Microwave.Graphics.Types;
 import Microwave.Graphics.RenderQueue;
+import Microwave.Graphics.Shader;
+import Microwave.Graphics.Types;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Components.Canvas;
 import Microwave.System.App;
@@ -30,7 +31,7 @@ void TextView::FromJson(const json& obj, ObjectLinker* linker)
 {
     View::FromJson(obj, linker);
 
-    ObjectLinker::RestoreAsset(linker, This(), font, obj, "font");
+    ObjectLinker::RestoreAsset(linker, SharedFrom(this), font, obj, "font");
 
     fontSize = obj.value("fontSize", fontSize);
     wrapping = obj.value("wrapping", wrapping);
@@ -43,16 +44,11 @@ void TextView::FromJson(const json& obj, ObjectLinker* linker)
 
 void TextView::Construct()
 {
-    auto app = App::Get();
-    auto graphics = app->GetGraphics();
+    vertexBuffer = spnew<Buffer>(
+        BufferType::Vertex, BufferUsage::Dynamic,
+        BufferCPUAccess::WriteOnly, sizeof(UIVertex) * 4);
 
-    vertexBuffer = graphics->CreateBuffer(
-        sizeof(UIVertex) * 4, DrawBufferType::Vertex, true, {});
-    
-    indexBuffer = graphics->CreateBuffer(
-        sizeof(int) * 6, DrawBufferType::Index, true, {});
-
-    auto assetLib = app->GetAssetLibrary();
+    auto assetLib = App::Get()->GetAssetLibrary();
     mat = spnew<Material>();
     mat->shader = assetLib->GetAsset<Shader>(".internal/ui-default.cg");
     mat->depthTest = DepthTest::Always;
@@ -142,16 +138,10 @@ void TextView::UpdateText()
             verts,
             vertexRanges);
 
-        size_t bufferSize = verts.size() * sizeof(UIVertex);
-
-        auto app = App::Get();
-        auto graphics = app->GetGraphics();
-
-        vertexBuffer = graphics->CreateBuffer(
-            bufferSize,
-            DrawBufferType::Vertex,
-            true,
-            std::span<std::byte>((std::byte*)verts.data(), bufferSize));
+        vertexBuffer = spnew<Buffer>(
+            BufferType::Vertex, BufferUsage::Dynamic,
+            BufferCPUAccess::WriteOnly,
+            std::as_writable_bytes(std::span(verts)));
 
         textDirty = false;
     }
@@ -194,13 +184,18 @@ void TextView::GetRenderables(Sink<sptr<Renderable>> sink)
 
         sptr<Renderable> renderable = renderables[i];
 
+        renderable->vertexMapping = {
+            { Semantic::POSITION, 0, vertexBuffer, 0, sizeof(UIVertex) },
+            { Semantic::TEXCOORD, 0, vertexBuffer, 12, sizeof(UIVertex) },
+            { Semantic::COLOR, 0, vertexBuffer, 20, sizeof(UIVertex) }
+        };
+
         renderable->queueOverride = RenderQueue::Overlay + renderDepth;
         renderable->layerMask = node->GetLayerMask();
         renderable->material = mat;
         renderable->mtxModel = mtxModel;
         renderable->bounds = bounds;
         renderable->extra.SetUniform("uDiffuseTex", font->atlases[i].texture);
-        renderable->vertexBuffer = vertexBuffer;
         renderable->indexBuffer = nullptr;
         renderable->drawStart = rng.x;
         renderable->drawCount = rng.y;

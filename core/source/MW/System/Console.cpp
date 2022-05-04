@@ -10,7 +10,7 @@ module Microwave.System.Console;
 #if PLATFORM_ANDROID
   import <android/log.h>;
 #else
-  import <iostream>;
+  import <cstdio>;
 #endif
 
 namespace mw {
@@ -21,7 +21,7 @@ void Console::WriteToConsole(const char* text)
 #if PLATFORM_ANDROID
     __android_log_write(ANDROID_LOG_INFO, "Microwave", text);
 #else
-    std::cout << text << std::endl;
+    printf("%s\n", text);
 #endif
 }
 

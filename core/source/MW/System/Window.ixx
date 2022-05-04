@@ -3,16 +3,22 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.System.Window;
-import Microwave.System.Pointers;
+import Microwave.Graphics.RenderTarget;
+import Microwave.Math;
 import Microwave.System.Dispatcher;
 import Microwave.System.EventHandlerList;
-import Microwave.Graphics.WindowSurface;
-import Microwave.Math;
+import Microwave.System.Object;
+import Microwave.System.Pointers;
 import <cstdint>;
 import <string>;
 import <vector>;
 
 export namespace mw {
+
+inline namespace gfx {
+class HWSurface;
+}
+
 inline namespace system {
 
 class Window;
@@ -80,7 +86,7 @@ public:
     virtual void OnPointerUp(Window* window, IVec2 pos, int id) {}
 };
 
-class Window : public sp_from_this<Window>
+class Window : public RenderTarget
 {
 protected:
     static sptr<Window> New(const std::string title, const IVec2& pos, const IVec2& size);
@@ -88,7 +94,9 @@ protected:
 
     EventHandlerList<IWindowEventHandler> eventHandlers;
 
+    mutable sptr<HWSurface> surface;
 public:
+
     virtual ~Window(){};
     
     virtual void SetTitle(const std::string& title) = 0;
@@ -96,7 +104,7 @@ public:
     virtual void SetPos(const IVec2& pos) = 0;
     virtual IVec2 GetPos() const = 0;
     virtual void SetSize(const IVec2& size) = 0;
-    virtual IVec2 GetSize() const = 0;
+    //virtual IVec2 GetSize() const = 0;
     virtual bool IsVisible() const = 0;
     virtual void SetResizeable(bool resizeable) = 0;
     virtual bool IsResizeable() const = 0;
@@ -105,7 +113,6 @@ public:
     virtual void Hide() = 0;
     virtual void Close() = 0;
     virtual uintptr_t GetHandle() const = 0;
-    virtual sptr<WindowSurface> GetSurface() = 0;
 
     virtual void AddEventHandler(const sptr<IWindowEventHandler>& handler);
     virtual void RemoveEventHandler(const sptr<IWindowEventHandler>& handler);

@@ -2,16 +2,17 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
-#include <functional>
-#include <cstdint>
-#include <android_native_app_glue.h>
-#include <android/native_window.h>
-#include <android/native_activity.h>
-#include <android/looper.h>
-#include <MW/System/ApplicationDispatcher.h>
+export module Microwave.System.Internal.ApplicationDispatcherAndroid;
+import Microwave.System.ApplicationDispatcher;
+import <android_native_app_glue.h>;
+import <android/native_window.h>;
+import <android/native_activity.h>;
+import <android/looper.h>;
+import <functional>;
+import <cstdint>;
 
-namespace mw {
+export namespace mw {
+inline namespace system {
 
 class ApplicationDispatcherAndroid : public ApplicationDispatcher
 {
@@ -22,7 +23,7 @@ public:
     ApplicationDispatcherAndroid();
     ~ApplicationDispatcherAndroid();
 
-    virtual void Run(int argc, char *argv[]) override;
+    virtual void Run(int argc, char* argv[]) override;
     virtual void Quit() override;
     virtual sptr<DispatchAction> InvokeAsync(
         std::function<void()> function,
@@ -33,7 +34,7 @@ private:
     void ProcessActions();
     sptr<DispatchAction> GetNextAction();
 
-    static void OnCommand(android_app *pApp, int32_t cmd);
+    static void OnCommand(android_app* pApp, int32_t cmd);
     static int32_t OnInput(struct android_app* app, AInputEvent* event);
 
     void OnWindowCreated();
@@ -50,4 +51,5 @@ private:
     bool processEvents = false;
 };
 
-}
+} // system
+} // mw

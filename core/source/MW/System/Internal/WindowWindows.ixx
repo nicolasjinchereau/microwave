@@ -11,6 +11,11 @@ import <string>;
 import <MW/System/Internal/PlatformHeaders.h>;
 
 export namespace mw {
+
+inline namespace gfx {
+class HWRenderTarget;
+}
+
 inline namespace system {
 
 class WindowWindows : public Window
@@ -25,7 +30,6 @@ public:
     std::string title;
     bool visible = false;
     bool resizeable = false;
-    sptr<WindowSurface> surface;
 
     WindowWindows();
     WindowWindows(const std::string title, const IVec2& pos, const IVec2& size);
@@ -55,7 +59,7 @@ public:
     static int GetWindowHeight(HWND hWnd);
     static std::string GetWindowTitle(HWND hWnd);
 
-    virtual sptr<WindowSurface> GetSurface() override;
+    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
 };
 
 } // system

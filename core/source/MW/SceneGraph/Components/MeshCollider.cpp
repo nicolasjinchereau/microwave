@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.SceneGraph.Components.MeshCollider;
+import Microwave.Graphics.Shader;
 import Microwave.SceneGraph.Components.Camera;
 import Microwave.SceneGraph.Components.MeshRenderer;
 import Microwave.SceneGraph.Components.RigidBody;
@@ -63,12 +64,15 @@ void MeshCollider::GetRenderables(Sink<sptr<Renderable>> sink)
     if (!renderable)
         renderable = spnew<Renderable>();
 
+    renderable->vertexMapping = {
+        { Semantic::POSITION, 0, mesh->vertexBuffer, 0, sizeof(Vec3) }
+    };
+
     renderable->layerMask = node->GetLayerMask();
     renderable->material = gizmoMat;
     renderable->mtxModel = mtxModel;
     renderable->bounds = bounds;
     renderable->extra.SetUniform("uColor", Color::Green());
-    renderable->vertexBuffer = mesh->vertexBuffer;
     renderable->indexBuffer = mesh->elements[0].indexBuffer;
     renderable->drawStart = 0;
     renderable->drawCount = mesh->elements[0].indices.size();

@@ -1,6 +1,8 @@
 require "android-lib"
 
 function configure_project_common()
+    --architecture "x86_64"
+
     androidabis {
 		"armeabi-v7a", "arm64-v8a"
     }

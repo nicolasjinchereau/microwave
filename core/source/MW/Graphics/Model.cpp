@@ -55,7 +55,7 @@ Vec3 ModelNode::scale() const
     return localScale;
 }
 
-namespace {
+namespace detail {
     void getFullPathHelper(
         const ModelNode* node,
         std::string& fullPath,
@@ -110,14 +110,14 @@ namespace {
 path ModelNode::GetFullPath() const
 {
     std::string fullPath;
-    getFullPathHelper(this, fullPath);
+    detail::getFullPathHelper(this, fullPath);
     return path(std::move(fullPath));
 }
 
 path ModelNode::GetRelativePath(ModelNode* toParent) const
 {
     std::string relativePath;
-    getRelativePathHelper(this, toParent, relativePath);
+    detail::getRelativePathHelper(this, toParent, relativePath);
     return path(std::move(relativePath));
 }
 
@@ -519,7 +519,7 @@ void from_json(const json& obj, ModelAnimationClip& clip)
     }
 }
 
-namespace {
+namespace detail {
 
 size_t CountModelNodes(const sptr<ModelNode>& node)
 {
@@ -569,9 +569,9 @@ void from_json(const json& obj, Model& model)
         from_json(*it, *model.rootNode);
     }
 
-    size_t nodeCount = CountModelNodes(model.rootNode);
+    size_t nodeCount = detail::CountModelNodes(model.rootNode);
     model.nodes.resize(nodeCount);
-    StoreModelNodes(model.rootNode, model.nodes);
+    detail::StoreModelNodes(model.rootNode, model.nodes);
 
     if (auto it = obj.find("clips"); it != obj.end())
     {
@@ -585,5 +585,5 @@ void from_json(const json& obj, Model& model)
     }
 }
 
-}
-}
+} // gfx
+} // mw

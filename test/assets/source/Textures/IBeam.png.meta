@@ -1,15 +1,15 @@
 {
- "sourcePath": "Textures/IBeam.png",
- "artifacts": [
-  {
-   "uuid": "47f42cb233d74e66bdfc539f80ff6336",
-   "assetType": "Texture",
-   "sourcePath": "Textures/IBeam.png"
+  "sourcePath": "Textures/IBeam.png",
+  "artifacts": [
+    {
+      "uuid": "47f42cb233d74e66bdfc539f80ff6336",
+      "assetType": "Texture",
+      "sourcePath": "Textures/IBeam.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
   }
- ],
- "settings": {
-  "fileFormat": "PNG",
-  "filterMode": "Bilinear",
-  "wrapMode": "Repeat"
- }
 }

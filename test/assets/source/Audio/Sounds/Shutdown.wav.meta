@@ -1,14 +1,14 @@
 {
- "sourcePath": "Audio/Sounds/Shutdown.wav",
- "artifacts": [
-  {
-   "uuid": "e3d91552929a44788e0ee44a97a7d308",
-   "assetType": "AudioClip",
-   "sourcePath": "Audio/Sounds/Shutdown.wav"
+  "sourcePath": "Audio/Sounds/Shutdown.wav",
+  "artifacts": [
+    {
+      "uuid": "e3d91552929a44788e0ee44a97a7d308",
+      "assetType": "AudioClip",
+      "sourcePath": "Audio/Sounds/Shutdown.wav"
+    }
+  ],
+  "settings": {
+    "fileFormat": "Wav",
+    "streamFromDisk": false
   }
- ],
- "settings": {
-  "streamFromDisk": false,
-  "fileFormat": "Wav"
- }
 }

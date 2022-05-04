@@ -46,8 +46,7 @@ BSPNodePtr BSPNodeAllocator::GetNode()
         mem = AllocateNode();
     }
 
-    auto allocator = This<BSPNodeAllocator>();
-    auto pNode = new (mem) BSPNode(allocator);
+    auto pNode = new (mem) BSPNode(SharedFrom(this));
 
     return BSPNodePtr(pNode);
 }

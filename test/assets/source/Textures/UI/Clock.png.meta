@@ -1,15 +1,15 @@
 {
- "sourcePath": "Textures/UI/Clock.png",
- "artifacts": [
-  {
-   "uuid": "2bf1fc9ad53f4b308496d9e876c2f98f",
-   "assetType": "Texture",
-   "sourcePath": "Textures/UI/Clock.png"
+  "sourcePath": "Textures/UI/Clock.png",
+  "artifacts": [
+    {
+      "uuid": "2bf1fc9ad53f4b308496d9e876c2f98f",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/Clock.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "filterMode": "Bilinear",
+    "wrapMode": "Repeat"
   }
- ],
- "settings": {
-  "fileFormat": "PNG",
-  "filterMode": "Bilinear",
-  "wrapMode": "Repeat"
- }
 }

@@ -31,5 +31,21 @@ sptr<T> spnew(Args&&... args) {
     return std::make_shared<T>(std::forward<Args>(args)...);
 }
 
+template<class T1, class T2>
+sptr<T1> spcast(const sptr<T2>& other) noexcept
+{
+    const auto p = dynamic_cast<typename sptr<T1>::element_type*>(other.get());
+    if (p) return sptr<T1>(other, p);
+    return {};
+}
+
+template<class T1, class T2>
+sptr<T1> spcast(sptr<T2>&& other) noexcept
+{
+    const auto p = dynamic_cast<typename sptr<T1>::element_type*>(other.get());
+    if (p) return sptr<T1>(std::move(other), p);
+    return {};
+}
+
 } // system
 } // mw

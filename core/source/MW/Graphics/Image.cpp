@@ -7,6 +7,7 @@ import Microwave.Graphics.GraphicsTypes;
 import Microwave.IO.File;
 import Microwave.IO.FileStream;
 import Microwave.Math;
+import Microwave.System.Console;
 import Microwave.System.Pointers;
 import Microwave.Utilities.Util;
 import <png.h>;
@@ -102,7 +103,229 @@ Image::Image(ImageFileFormat fileFormat, std::span<std::byte> fileData) {
 
 Image::~Image()
 {
+}
 
+ImageInfo Image::GetInfo(const path& p, ImageFileFormat fileFormat)
+{
+    if (fileFormat == ImageFileFormat::TGA) {
+        return GetInfoTGA(p);
+    }
+    else if (fileFormat == ImageFileFormat::PNG) {
+        return GetInfoPNG(p);
+    }
+    else if (fileFormat == ImageFileFormat::JPG) {
+        return GetInfoJPG(p);
+    }
+    else if (fileFormat == ImageFileFormat::EXR) {
+        return GetInfoEXR(p);
+    }
+    else {
+        throw std::runtime_error("unsupported file type");
+    }
+}
+
+ImageInfo Image::GetInfo(const path& p)
+{
+    auto ext = GetExtension(p);
+
+    if (ext == ".tga") {
+        return GetInfoTGA(p);
+    }
+    else if (ext == ".png"){
+        return GetInfoPNG(p);
+    }
+    else if (ext == ".jpg"){
+        return GetInfoJPG(p);
+    }
+    else if (ext == ".exr"){
+        return GetInfoEXR(p);
+    }
+    else {
+        throw std::runtime_error("unsupported file type");
+    }
+}
+
+ImageInfo Image::GetInfoTGA(const path& p)
+{
+    ImageInfo info;
+
+    auto stream = File::Open(p, OpenMode::In | OpenMode::Binary);
+    if (!stream)
+        throw std::runtime_error("could not open file");
+
+    uint8_t headerBytes[18];
+
+    auto buff = std::span<std::byte>(
+        (std::byte*)headerBytes,
+        (std::byte*)headerBytes + 18);
+
+    int bytesRead = stream->Read(buff);
+    if (bytesRead != 18)
+        throw std::runtime_error("failed to read from file");
+
+    TargaHeader header = TargaHeader::Unpack(headerBytes);
+    
+    int channels = (header.imageBitDepth / 8);
+    info.format = channels == 3 ? PixelDataFormat::RGB24 : PixelDataFormat::RGBA32;
+    info.size = IVec2(header.imageWidth, header.imageHeight);
+
+    return info;
+}
+
+ImageInfo Image::GetInfoPNG(const path& p)
+{
+    ImageInfo info;
+
+    auto stream = File::Open(p, OpenMode::In | OpenMode::Binary);
+    if (!stream)
+        throw std::runtime_error("could not open file");
+
+    std::array<uint8_t, 8> validSig { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
+    std::array<uint8_t, 8> sig;
+    
+    if (stream->Read(std::as_writable_bytes(std::span(sig))) != sig.size())
+        throw std::runtime_error("png file read failed");
+
+    if(sig != validSig)
+        throw std::runtime_error("invalid png file");
+    
+    std::array<uint8_t, 4> validHdr { 'I', 'H', 'D', 'R' };
+    std::array<uint8_t, 4> hdr;
+
+    stream->Ignore(4);
+    if (stream->Read(std::as_writable_bytes(std::span(hdr))) != hdr.size())
+        throw std::runtime_error("png file read failed");
+
+    if(hdr != validHdr)
+        throw std::runtime_error("invalid png header");
+
+    std::array<uint8_t, 8> sz;
+    if (stream->Read(std::as_writable_bytes(std::span(sz))) != sz.size())
+        throw std::runtime_error("png file read failed");
+
+    info.size.x = (sz[0] << 24) + (sz[1] << 16) + (sz[2] << 8) + (sz[3] << 0);
+    info.size.y = (sz[4] << 24) + (sz[5] << 16) + (sz[6] << 8) + (sz[7] << 0);
+    info.format = PixelDataFormat::RGBA32;
+    
+    return info;
+}
+
+ImageInfo Image::GetInfoJPG(const path& p)
+{
+    std::optional<ImageInfo> info;
+
+    auto stream = File::Open(p, OpenMode::In | OpenMode::Binary);
+    if (!stream)
+        throw std::runtime_error("could not open file");
+
+    while(true)
+    {
+        uint8_t m1 = stream->ReadValue<uint8_t>();
+        uint8_t m2 = stream->ReadValue<uint8_t>();
+
+        uint16_t marker = (m1 << 8) | m2;
+
+        if(marker == 0xFFD8) { // SOI (Start of Image)
+            // no payload
+            continue;
+        }
+
+        if(marker == 0xFFDD) { // DRI (Data Restart Interval)
+            stream->Ignore(2); // 2 byte payload
+            continue;
+        }
+
+        if(marker >= 0xFFD0 && marker <= 0xFFD7) { // RST[n] (Restart)
+            // no payload
+            continue;
+        }
+
+        size_t pos = stream->GetPosition();
+
+        uint8_t s1 = stream->ReadValue<uint8_t>();
+        uint8_t s2 = stream->ReadValue<uint8_t>();
+        auto size = (s1 << 8) | s2;
+
+        // SOF0 or SOF1 (Start of Frame for Baseline or Progressive DCT segment)
+        if(marker == 0xFFC0 || marker == 0xFFC2)
+        {
+            uint8_t bitsPerChan = stream->ReadValue<uint8_t>();
+
+            uint8_t h1 = stream->ReadValue<uint8_t>();
+            uint8_t h2 = stream->ReadValue<uint8_t>();
+            uint16_t height = (h1 << 8) | h2;
+
+            uint8_t w1 = stream->ReadValue<uint8_t>();
+            uint8_t w2 = stream->ReadValue<uint8_t>();
+            uint16_t width = (w1 << 8) | w2;
+
+            uint8_t channels = stream->ReadValue<uint8_t>();
+
+            info = {
+                PixelDataFormat::RGB24,
+                IVec2{ (int)width, (int)height }
+            };
+
+            break;
+        }
+
+        stream->SetPosition(pos + size);
+
+        if(marker == 0xFFDA) // SOS (Start of Scan)
+        {
+            break;
+
+            //uint8_t t1 = stream->ReadValue<uint8_t>();
+
+            //while(true)
+            //{
+            //    uint8_t t2 = stream->ReadValue<uint8_t>();
+
+            //    if(t1 == 0xFF && t2 == 0xD9) // EOI (End of Image)
+            //        break;
+            //     
+            //    t1 = t2;
+            //}
+        }
+    }
+
+    if (!info)
+        throw std::runtime_error("image info not found");
+
+    return *info;
+}
+
+ImageInfo Image::GetInfoEXR(const path& p)
+{
+    ImageInfo info;
+
+    EXRVersion version;
+    
+    int ret = ParseEXRVersionFromFile(&version, p.c_str());
+    if(ret != 0) {
+        throw std::runtime_error("failed to read exr version");
+    }
+
+    EXRHeader header;
+    InitEXRHeader(&header);
+    const char *err = nullptr;
+
+    ret = ParseEXRHeaderFromFile(&header, &version, p.c_str(), &err);
+    if (ret != 0)
+    {
+        FreeEXRHeader(&header);
+        std::string msg = err ? err : "failed to read exr header";
+        FreeEXRErrorMessage(err);
+        throw std::runtime_error(msg);
+    }
+
+    info.format = PixelDataFormat::RGBAFloat;
+    info.size.x = header.data_window[2] - header.data_window[0] + 1;
+    info.size.y = header.data_window[3] - header.data_window[1] + 1;
+
+    FreeEXRHeader(&header);
+
+    return info;
 }
 
 void Image::Load(PixelDataFormat pixelFormat, const IVec2& size)
@@ -1047,23 +1270,46 @@ void Image::Blit(
     if (!dst)
         throw std::runtime_error("'dst' cannot be null");
 
+    IntRect clampedSrcRect;
+    clampedSrcRect.x = Clamp(srcRect.x, 0, srcSize.x);
+    clampedSrcRect.y = Clamp(srcRect.y, 0, srcSize.y);
+    clampedSrcRect.w = Clamp(srcRect.x + srcRect.w, clampedSrcRect.x, srcSize.x) - clampedSrcRect.x;
+    clampedSrcRect.h = Clamp(srcRect.y + srcRect.h, clampedSrcRect.y, srcSize.y) - clampedSrcRect.y;
+
+    IntRect clampedDstRect;
+    clampedDstRect.x = Clamp(dstPos.x, 0, dstSize.x);
+    clampedDstRect.y = Clamp(dstPos.y, 0, dstSize.y);
+    clampedDstRect.w = Clamp(dstPos.x + srcRect.w, clampedDstRect.x, dstSize.x) - clampedDstRect.x;
+    clampedDstRect.h = Clamp(dstPos.y + srcRect.h, clampedDstRect.y, dstSize.y) - clampedDstRect.y;
+
+    int copyWidth = std::min(clampedSrcRect.w, clampedDstRect.w);
+    int copyHeight = std::min(clampedSrcRect.h, clampedDstRect.h);
+
+    if (copyWidth == 0 || copyHeight == 0)
+        return;
+    
+    clampedSrcRect.w = copyWidth;
+    clampedDstRect.w = copyWidth;
+    clampedSrcRect.h = copyHeight;
+    clampedDstRect.h = copyHeight;
+
     int srcChannels = GetBytesPerPixel(srcFormat);
     int dstChannels = GetBytesPerPixel(dstFormat);
     auto convertFunc = GetConvertFunc(srcFormat, dstFormat);
 
-    for (int y = 0; y != srcRect.h; ++y)
+    for (int y = 0; y != copyHeight; ++y)
     {
-        auto srcX = srcRect.x;
-        auto srcY = srcRect.y + y;
-        auto dstX = dstPos.x;
-        auto dstY = dstPos.y + y;
+        auto srcX = clampedSrcRect.x;
+        auto srcY = clampedSrcRect.y + y;
+        auto dstX = clampedDstRect.x;
+        auto dstY = clampedDstRect.y + y;
 
         if (flipVertically) {
             dstY = dstPos.y + (srcRect.h - 1 - y);
         }
 
         std::byte* srcBegin = &src[(srcY * srcSize.x + srcX) * srcChannels];
-        std::byte* srcEnd = srcBegin + srcRect.w * srcChannels;
+        std::byte* srcEnd = srcBegin + copyWidth * srcChannels;
         std::byte* dstBegin = &dst[(dstY * dstSize.x + dstX) * dstChannels];
         convertFunc(srcBegin, srcEnd, dstBegin);
     }

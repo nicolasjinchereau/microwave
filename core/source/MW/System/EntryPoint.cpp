@@ -40,12 +40,4 @@ extern "C" void android_main(struct android_app* app) {
     mw::androidApp = nullptr;
 }
 
-#elif PLATFORM_WINDOWS_PHONE
-
-[Platform::MTAThread]
-int main(Platform::xarray<Platform::String^>^ args)
-{
-    return -1;
-}
-
 #endif

@@ -2,32 +2,33 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <stdexcept>
-#include <functional>
-#include <algorithm>
-#include <unistd.h>
-#include <android/sensor.h>
-#include <android/log.h>
-#include <android/asset_manager.h>
-#include <android/keycodes.h>
-#include <android_native_app_glue.h>
-#include <MW/System/Internal/ApplicationDispatcherAndroid.h>
-#include <MW/System/Internal/WindowAndroid.h>
-#include <MW/System/Application.h>
-#include <MW/Graphics/GraphicsContext.h>
-#include <MW/Graphics/Internal/WindowSurfaceAndroidOpenGL.h>
+module Microwave.System.Internal.ApplicationDispatcherAndroid;
+import Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.Internal.HWSurfaceeEGL;
+import Microwave.System.Internal.WindowAndroid;
+import Microwave.System.Application;
+import <android/sensor.h>;
+import <android/log.h>;
+import <android/asset_manager.h>;
+import <android/keycodes.h>;
+import <android_native_app_glue.h>;
+import <unistd.h>;
+import <stdexcept>;
+import <functional>;
+import <algorithm>;
 
-namespace {
+namespace detail {
     thread_local mw::sptr<mw::ApplicationDispatcherAndroid> _mainThreadDispatcher;
 }
 
 namespace mw {
+inline namespace system {
 
 extern android_app* androidApp;
 
 sptr<ApplicationDispatcher> ApplicationDispatcher::New() {
-    _mainThreadDispatcher = spnew<ApplicationDispatcherAndroid>();
-    return _mainThreadDispatcher;
+    detail::_mainThreadDispatcher = spnew<ApplicationDispatcherAndroid>();
+    return detail::_mainThreadDispatcher;
 }
 
 ApplicationDispatcherAndroid::ApplicationDispatcherAndroid()
@@ -54,7 +55,7 @@ sptr<DispatchAction> ApplicationDispatcherAndroid::InvokeAsync(
 
 void ApplicationDispatcherAndroid::Wake()
 {
-    if(run && processEvents) {
+    if (run && processEvents) {
         ALooper_wake(looper);
     }
 }
@@ -72,7 +73,7 @@ long long ApplicationDispatcherAndroid::GetDispatchTimeout()
     {
         auto now = DispatchClock::now();
 
-        if(!actions.empty())
+        if (!actions.empty())
         {
             auto when = actions.front()->when;
             auto to = std::chrono::duration_cast<std::chrono::milliseconds>(when - now).count();
@@ -80,7 +81,7 @@ long long ApplicationDispatcherAndroid::GetDispatchTimeout()
             timeout = to;
         }
 
-        if(continuousDispatchRate > 0)
+        if (continuousDispatchRate > 0)
         {
             auto when = continuousDispatchWakeTime;
             auto to = std::chrono::duration_cast<std::chrono::milliseconds>(when - now).count();
@@ -92,66 +93,66 @@ long long ApplicationDispatcherAndroid::GetDispatchTimeout()
     return timeout;
 }
 
-void ApplicationDispatcherAndroid::OnCommand(android_app *pApp, int32_t cmd)
+void ApplicationDispatcherAndroid::OnCommand(android_app* pApp, int32_t cmd)
 {
     auto dispatcher = (ApplicationDispatcherAndroid*)pApp->userData;
 
     switch (cmd)
     {
-        case APP_CMD_INIT_WINDOW:
-            Console::WriteLine("APP_CMD_INIT_WINDOW");
-            dispatcher->OnWindowCreated();
-            break;
+    case APP_CMD_INIT_WINDOW:
+        Console::WriteLine("APP_CMD_INIT_WINDOW");
+        dispatcher->OnWindowCreated();
+        break;
 
-        case APP_CMD_START:
-            Console::WriteLine("APP_CMD_START");
-            dispatcher->OnWindowShow();
-            break;
+    case APP_CMD_START:
+        Console::WriteLine("APP_CMD_START");
+        dispatcher->OnWindowShow();
+        break;
 
-        case APP_CMD_RESUME:
-            Console::WriteLine("APP_CMD_RESUME");
-            dispatcher->OnWindowGotFocus();
-            break;
+    case APP_CMD_RESUME:
+        Console::WriteLine("APP_CMD_RESUME");
+        dispatcher->OnWindowGotFocus();
+        break;
 
-        case APP_CMD_PAUSE:
-            Console::WriteLine("APP_CMD_PAUSE");
-            dispatcher->OnWindowLostFocus();
-            break;
+    case APP_CMD_PAUSE:
+        Console::WriteLine("APP_CMD_PAUSE");
+        dispatcher->OnWindowLostFocus();
+        break;
 
-        case APP_CMD_STOP:
-            Console::WriteLine("APP_CMD_STOP");
-            dispatcher->OnWindowHide();
-            break;
+    case APP_CMD_STOP:
+        Console::WriteLine("APP_CMD_STOP");
+        dispatcher->OnWindowHide();
+        break;
 
-        case APP_CMD_TERM_WINDOW:
-            Console::WriteLine("APP_CMD_TERM_WINDOW");
-            dispatcher->OnWindowDestroyed();
-            break;
+    case APP_CMD_TERM_WINDOW:
+        Console::WriteLine("APP_CMD_TERM_WINDOW");
+        dispatcher->OnWindowDestroyed();
+        break;
 
-        case APP_CMD_WINDOW_RESIZED:
-            Console::WriteLine("APP_CMD_WINDOW_RESIZED");
-            dispatcher->OnWindowResized();
-            break;
+    case APP_CMD_WINDOW_RESIZED:
+        Console::WriteLine("APP_CMD_WINDOW_RESIZED");
+        dispatcher->OnWindowResized();
+        break;
 
-        case APP_CMD_CONFIG_CHANGED:
-            Console::WriteLine("APP_CMD_CONFIG_CHANGED");
-            dispatcher->OnConfigurationChanged();
-            break;
+    case APP_CMD_CONFIG_CHANGED:
+        Console::WriteLine("APP_CMD_CONFIG_CHANGED");
+        dispatcher->OnConfigurationChanged();
+        break;
     }
 }
 
 void ApplicationDispatcherAndroid::OnWindowCreated()
 {
-    InvokeAsync([](){
+    InvokeAsync([]() {
         auto app = Application::GetInstance();
 
         // reallocate graphics resources for existing surfaces
         std::vector<sptr<Window>> windows;
         app->GetWindows(windows);
 
-        for(auto& win : windows)
+        for (auto& win : windows)
         {
-            if(auto surface = win->GetSurface())
+            if (auto surface = win->GetSurface())
                 surface->AllocateGraphicsResource();
         }
 
@@ -159,7 +160,7 @@ void ApplicationDispatcherAndroid::OnWindowCreated()
         std::vector<sptr<gfx::GraphicsContext>> graphicsContexts;
         app->GetGraphicsContexts(graphicsContexts);
 
-        for(auto& gfx : graphicsContexts)
+        for (auto& gfx : graphicsContexts)
         {
             gfx->RebindRenderTarget();
         }
@@ -170,9 +171,9 @@ void ApplicationDispatcherAndroid::OnWindowCreated()
         Console::WriteLine("WINDOW CREATED: (% x %)", width, height);
 
         auto mainWindow = std::dynamic_pointer_cast<WindowAndroid>(app->GetMainWindow());
-        if(mainWindow)
+        if (mainWindow)
             mainWindow->OnCreate();
-    });
+        });
 
     processEvents = true;
     Wake();
@@ -181,28 +182,28 @@ void ApplicationDispatcherAndroid::OnWindowCreated()
 void ApplicationDispatcherAndroid::OnWindowShow()
 {
     auto mainWindow = Application::GetInstance()->GetMainWindow();
-    if(mainWindow)
+    if (mainWindow)
         mainWindow->OnShow();
 }
 
 void ApplicationDispatcherAndroid::OnWindowGotFocus()
 {
     auto mainWindow = Application::GetInstance()->GetMainWindow();
-    if(mainWindow)
+    if (mainWindow)
         mainWindow->OnGotFocus();
 }
 
 void ApplicationDispatcherAndroid::OnWindowLostFocus()
 {
     auto mainWindow = Application::GetInstance()->GetMainWindow();
-    if(mainWindow)
+    if (mainWindow)
         mainWindow->OnLostFocus();
 }
 
 void ApplicationDispatcherAndroid::OnWindowHide()
 {
     auto mainWindow = Application::GetInstance()->GetMainWindow();
-    if(mainWindow)
+    if (mainWindow)
         mainWindow->OnHide();
 }
 
@@ -213,14 +214,14 @@ void ApplicationDispatcherAndroid::OnWindowDestroyed()
     std::vector<sptr<Window>> windows;
     app->GetWindows(windows);
 
-    for(auto& win : windows)
+    for (auto& win : windows)
     {
-        if(auto surface = win->GetSurface())
+        if (auto surface = win->GetSurface())
             surface->ReleaseGraphicsResource();
     }
 
     auto mainWindow = app->GetMainWindow();
-    if(mainWindow)
+    if (mainWindow)
         mainWindow->OnDestroy();
 
     processEvents = false;
@@ -229,7 +230,7 @@ void ApplicationDispatcherAndroid::OnWindowDestroyed()
 void ApplicationDispatcherAndroid::OnWindowResized()
 {
     auto mainWindow = std::dynamic_pointer_cast<WindowAndroid>(Application::GetInstance()->GetMainWindow());
-    if(mainWindow && androidApp->window)
+    if (mainWindow && androidApp->window)
     {
         int oldWidth = mainWindow->GetSize().x;
         int oldHeight = mainWindow->GetSize().y;
@@ -249,7 +250,7 @@ void ApplicationDispatcherAndroid::OnConfigurationChanged()
     OnWindowResized();
 }
 
-void ApplicationDispatcherAndroid::Run(int argc, char *argv[])
+void ApplicationDispatcherAndroid::Run(int argc, char* argv[])
 {
     assert(androidApp);
 
@@ -261,7 +262,7 @@ void ApplicationDispatcherAndroid::Run(int argc, char *argv[])
     looper = ALooper_forThread();
     run = true;
 
-    while(run)
+    while (run)
     {
         auto timeout = GetDispatchTimeout();
 
@@ -270,7 +271,7 @@ void ApplicationDispatcherAndroid::Run(int argc, char *argv[])
 
         int id = ALooper_pollOnce(timeout, nullptr, &events, (void**)&source);
 
-        if(id >= 0)
+        if (id >= 0)
         {
             if (source)
                 source->process(androidApp, source);
@@ -280,12 +281,12 @@ void ApplicationDispatcherAndroid::Run(int argc, char *argv[])
             }
         }
 
-        if(processEvents)
+        if (processEvents)
         {
             ProcessActions();
 
             auto now = DispatchClock::now();
-            if(continuousDispatchRate > 0 && now >= continuousDispatchWakeTime)
+            if (continuousDispatchRate > 0 && now >= continuousDispatchWakeTime)
             {
                 continuousDispatchWakeTime = now + continuousDispatchInterval;
                 InvokeDelegates();
@@ -322,4 +323,5 @@ sptr<DispatchAction> ApplicationDispatcherAndroid::GetNextAction()
     return action;
 }
 
-}
+} // system
+} // mw

@@ -25,17 +25,11 @@
     <Filter Include="Graphics\Internal">
       <UniqueIdentifier>{0232A30C-6E48-A1A2-B7BF-2CC42315722A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\detail">
-      <UniqueIdentifier>{183655D8-84C1-C29C-8DD2-4591F9DC1E9D}</UniqueIdentifier>
-    </Filter>
     <Filter Include="IO">
       <UniqueIdentifier>{FD735900-E9FF-870B-52AE-880B3E59880B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{AFF4887C-9B2B-8A0D-4418-7010302E060F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\detail">
-      <UniqueIdentifier>{91F10866-FDA6-815B-869B-7B32F24F785F}</UniqueIdentifier>
     </Filter>
     <Filter Include="SceneGraph">
       <UniqueIdentifier>{05BA97CB-F171-D918-5A79-B27446507409}</UniqueIdentifier>
@@ -78,13 +72,10 @@
     <ClInclude Include="..\..\source\MW\SceneGraph\Internal\Bullet.h">
       <Filter>SceneGraph\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\MW\Utilities\EnumFlags.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Internal\PlatformHeaders.h">
+    <ClInclude Include="..\..\source\MW\System\Internal\Platform.h">
       <Filter>System\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\MW\System\Internal\Platform.h">
+    <ClInclude Include="..\..\source\MW\System\Internal\PlatformHeaders.h">
       <Filter>System\Internal</Filter>
     </ClInclude>
   </ItemGroup>
@@ -110,10 +101,10 @@
     <ClCompile Include="..\..\source\MW\Audio\AudioStream.ixx">
       <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextWindows.cpp">
+    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextOpenAL.cpp">
       <Filter>Audio\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextWindows.ixx">
+    <ClCompile Include="..\..\source\MW\Audio\Internal\AudioContextOpenAL.ixx">
       <Filter>Audio\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Audio\Internal\Mp3Decoder.ixx">
@@ -159,6 +150,9 @@
       <Filter>Data\Database</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Data\Database\DefaultImporter.ixx">
+      <Filter>Data\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Data\Database\Metadata.ixx">
       <Filter>Data\Database</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Data\Database\ModelImporter.cpp">
@@ -236,10 +230,19 @@
     <ClCompile Include="..\..\source\MW\Graphics\AnimationTrack.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Buffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Buffer.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Color.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\DrawBuffer.ixx">
+    <ClCompile Include="..\..\source\MW\Graphics\Color32.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\ColorBGRA.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Font.cpp">
@@ -257,10 +260,10 @@
     <ClCompile Include="..\..\source\MW\Graphics\Graphics.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\GraphicsContext.ixx">
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsContext.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\GraphicsResource.ixx">
+    <ClCompile Include="..\..\source\MW\Graphics\GraphicsContext.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\GraphicsTypes.ixx">
@@ -272,82 +275,106 @@
     <ClCompile Include="..\..\source\MW\Graphics\Image.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.cpp">
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBuffer.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferOpenGL.ixx">
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBufferD3D11.cpp">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.cpp">
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBufferD3D11.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\DrawBufferWindowsD3D11.ixx">
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBufferOpenGL.cpp">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindows.cpp">
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWBufferOpenGL.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.cpp">
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContext.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsD3D11.ixx">
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContextD3D11.cpp">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.cpp">
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContextD3D11.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\GraphicsContextWindowsOpenGL.ixx">
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContextOpenGL.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWContextOpenGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWDriverContext.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWDriverContextWGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTarget.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTexture.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTextureD3D11.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTextureD3D11.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTextureOpenGL.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWRenderTextureOpenGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShader.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShaderD3D11.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShaderD3D11.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShaderOpenGL.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWShaderOpenGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurface.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurfaceD3D11.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurfaceD3D11.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurfaceWGL.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWSurfaceWGL.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTexture.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTextureD3D11.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTextureD3D11.ixx">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTextureOpenGL.cpp">
+      <Filter>Graphics\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Internal\HWTextureOpenGL.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Internal\OpenGLAPI.ixx">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.cpp">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureOpenGL.ixx">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.cpp">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\RenderTextureWindowsD3D11.ixx">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.cpp">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderOpenGL.ixx">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.cpp">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\ShaderWindowsD3D11.ixx">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.cpp">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureOpenGL.ixx">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.cpp">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\TextureWindowsD3D11.ixx">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.cpp">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsD3D11.ixx">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.cpp">
-      <Filter>Graphics\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\Internal\WindowSurfaceWindowsOpenGL.ixx">
       <Filter>Graphics\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\LineEnumerator.cpp">
@@ -386,6 +413,9 @@
     <ClCompile Include="..\..\source\MW\Graphics\RenderTarget.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\RenderTexture.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\RenderTexture.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
@@ -395,35 +425,20 @@
     <ClCompile Include="..\..\source\MW\Graphics\Shader.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\ShaderInfo.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\ShaderInfo.ixx">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Graphics\Texture.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Texture.ixx">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Graphics\Types.ixx">
       <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\WindowSurface.ixx">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\detail\Color32F_p1.ixx">
-      <Filter>Graphics\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\detail\Color32F_p2.ixx">
-      <Filter>Graphics\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\detail\Color8U_p1.ixx">
-      <Filter>Graphics\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\detail\Color8U_p2.ixx">
-      <Filter>Graphics\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorBGRA_p1.ixx">
-      <Filter>Graphics\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorBGRA_p2.ixx">
-      <Filter>Graphics\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Graphics\detail\ColorJson.ixx">
-      <Filter>Graphics\detail</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\IO\File.cpp">
       <Filter>IO</Filter>
@@ -443,116 +458,68 @@
     <ClCompile Include="..\..\source\MW\IO\Stream.ixx">
       <Filter>IO</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\AABox.ixx">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\Constants.ixx">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\Functions.ixx">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\IVec2.ixx">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\IVec4.ixx">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\IntRect.ixx">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\Mat2.ixx">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\Mat3.ixx">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Math\Mat4.ixx">
+      <Filter>Math</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Math\Math.ixx">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\AABox_p1.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\MathJson.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\AABox_p2.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Operators.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Functions_p1.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Plane.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Functions_p2.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Quat.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\IVec2_p1.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Ray.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\IVec2_p2.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Sphere.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\IVec4_p1.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Transform.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\IVec4_p2.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Triangle.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\IntRect_p1.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Vec2.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\IntRect_p2.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Vec3.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat2_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat2_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat3_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat3_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat4_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Mat4_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\MathJson.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Operators.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Plane_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Plane_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Quat_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Quat_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Ray_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Ray_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Sphere_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Sphere_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Transform_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Transform_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Triangle_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Triangle_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec2_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec2_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec3_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec3_p2.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec4_p1.ixx">
-      <Filter>Math\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Math\detail\Vec4_p2.ixx">
-      <Filter>Math\detail</Filter>
+    <ClCompile Include="..\..\source\MW\Math\Vec4.ixx">
+      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Microwave.ixx" />
     <ClCompile Include="..\..\source\MW\SceneGraph\Axis.ixx">
@@ -792,6 +759,9 @@
     <ClCompile Include="..\..\source\MW\System\Pointers.ixx">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\PostExecutor.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Spinlock.ixx">
       <Filter>System</Filter>
     </ClCompile>
@@ -848,6 +818,9 @@
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\RectMapping.ixx">
       <Filter>Utilities\BinPacking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Utilities\EnumFlags.ixx">
+      <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\Format.ixx">
       <Filter>Utilities</Filter>

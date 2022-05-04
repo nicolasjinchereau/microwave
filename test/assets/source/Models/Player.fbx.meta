@@ -1,146 +1,146 @@
 {
- "sourcePath": "Models/Player.fbx",
- "artifacts": [
-  {
-   "uuid": "b95bbbcaae72429b866f4613d3d4ce8b",
-   "assetType": "Node",
-   "sourcePath": "Models/Player.fbx"
-  },
-  {
-   "uuid": "8f9c668d68d143218f35c2b60e77098a",
-   "assetType": "AnimationClip",
-   "sourcePath": "Models/Player.fbx/Idle.clip"
-  },
-  {
-   "uuid": "a2d5feea06cb4abdb77668fc2b15b9f9",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Player.fbx/shoulder1.mesh"
-  },
-  {
-   "uuid": "fbaee34fb04f4b9ea2233b770dab8ada",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Player.fbx/arm1.mesh"
-  },
-  {
-   "uuid": "9643273aa517432bb770f832baf7bc02",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Player.fbx/WheelAxle.mesh"
-  },
-  {
-   "uuid": "9777ebe001eb4b2e97086e0597830719",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Player.fbx/spokes.mesh"
-  },
-  {
-   "uuid": "147ca90193744a7087705bed1b0d3a85",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Player.fbx/wheel.mesh"
-  },
-  {
-   "uuid": "48b4745981ee4265b8cda2165f3143c0",
-   "assetType": "AnimationClip",
-   "sourcePath": "Models/Player.fbx/Backlash.clip"
-  },
-  {
-   "uuid": "4fb6fbb291a048ec93c2cc85e326ea2c",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Player.fbx/shoulder2.mesh"
-  },
-  {
-   "uuid": "2f26dbbeeb9f4905b09cf00ee830f055",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Player.fbx/arm2.mesh"
-  },
-  {
-   "uuid": "fb05ee8e286549a5bbc93537cb30fa06",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Player.fbx/body.mesh"
-  },
-  {
-   "uuid": "12bf8aa8ea4941fe8f7e3476324c52cc",
-   "assetType": "Mesh",
-   "sourcePath": "Models/Player.fbx/Head.mesh"
-  },
-  {
-   "uuid": "4190cb2b9400413abbf49b86740ded30",
-   "assetType": "Material",
-   "sourcePath": "Models/Player.fbx/Player.mat"
-  },
-  {
-   "uuid": "5896a65445f24936857b69d97ecadd58",
-   "assetType": "AnimationClip",
-   "sourcePath": "Models/Player.fbx/Moving.clip"
-  },
-  {
-   "uuid": "07f525c1f0d04151baea7ba08e679351",
-   "assetType": "AnimationClip",
-   "sourcePath": "Models/Player.fbx/Jump.clip"
-  },
-  {
-   "uuid": "6aa0321d5a4c4f569206eb5dde26d457",
-   "assetType": "AnimationClip",
-   "sourcePath": "Models/Player.fbx/Charging.clip"
-  },
-  {
-   "uuid": "99236f21e188430882340576ff6be8ec",
-   "assetType": "AnimationClip",
-   "sourcePath": "Models/Player.fbx/Shutdown.clip"
-  }
- ],
- "settings": {
-  "materialSettings": {
-   "4190cb2b9400413abbf49b86740ded30": {
-    "shaderBinding": {
-     "filename": "default.cg",
-     "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+  "sourcePath": "Models/Player.fbx",
+  "artifacts": [
+    {
+      "uuid": "b95bbbcaae72429b866f4613d3d4ce8b",
+      "assetType": "Node",
+      "sourcePath": "Models/Player.fbx"
     },
-    "textureBindings": {
-     "uDiffuseTex": {
-      "filename": "Player.png",
-      "uuid": "ee0c65c6070f4744adba9c5c8429b264"
-     }
+    {
+      "uuid": "8f9c668d68d143218f35c2b60e77098a",
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/Player.fbx/Idle.clip"
+    },
+    {
+      "uuid": "a2d5feea06cb4abdb77668fc2b15b9f9",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/shoulder1.mesh"
+    },
+    {
+      "uuid": "fbaee34fb04f4b9ea2233b770dab8ada",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/arm1.mesh"
+    },
+    {
+      "uuid": "9643273aa517432bb770f832baf7bc02",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/WheelAxle.mesh"
+    },
+    {
+      "uuid": "9777ebe001eb4b2e97086e0597830719",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/spokes.mesh"
+    },
+    {
+      "uuid": "147ca90193744a7087705bed1b0d3a85",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/wheel.mesh"
+    },
+    {
+      "uuid": "48b4745981ee4265b8cda2165f3143c0",
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/Player.fbx/Backlash.clip"
+    },
+    {
+      "uuid": "4fb6fbb291a048ec93c2cc85e326ea2c",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/shoulder2.mesh"
+    },
+    {
+      "uuid": "2f26dbbeeb9f4905b09cf00ee830f055",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/arm2.mesh"
+    },
+    {
+      "uuid": "fb05ee8e286549a5bbc93537cb30fa06",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/body.mesh"
+    },
+    {
+      "uuid": "12bf8aa8ea4941fe8f7e3476324c52cc",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/Head.mesh"
+    },
+    {
+      "uuid": "4190cb2b9400413abbf49b86740ded30",
+      "assetType": "Material",
+      "sourcePath": "Models/Player.fbx/Player.mat"
+    },
+    {
+      "uuid": "5896a65445f24936857b69d97ecadd58",
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/Player.fbx/Moving.clip"
+    },
+    {
+      "uuid": "07f525c1f0d04151baea7ba08e679351",
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/Player.fbx/Jump.clip"
+    },
+    {
+      "uuid": "6aa0321d5a4c4f569206eb5dde26d457",
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/Player.fbx/Charging.clip"
+    },
+    {
+      "uuid": "99236f21e188430882340576ff6be8ec",
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/Player.fbx/Shutdown.clip"
     }
-   }
-  },
-  "clipSpecs": [
-   {
-    "name": "Idle",
-    "start": 0,
-    "stop": 60,
-    "wrapMode": "Loop"
-   },
-   {
-    "name": "Backlash",
-    "start": 65,
-    "stop": 84,
-    "wrapMode": "Sustain"
-   },
-   {
-    "name": "Moving",
-    "start": 84,
-    "stop": 100,
-    "wrapMode": "Loop"
-   },
-   {
-    "name": "Jump",
-    "start": 105,
-    "stop": 136,
-    "wrapMode": "Sustain"
-   },
-   {
-    "name": "Charging",
-    "start": 141,
-    "stop": 149,
-    "wrapMode": "Loop"
-   },
-   {
-    "name": "Shutdown",
-    "start": 154,
-    "stop": 178,
-    "wrapMode": "Sustain"
-   }
   ],
-  "keepRootTransform": false,
-  "scaleFactor": 1.0
- }
+  "settings": {
+    "clipSpecs": [
+      {
+        "name": "Idle",
+        "start": 0,
+        "stop": 60,
+        "wrapMode": "Loop"
+      },
+      {
+        "name": "Backlash",
+        "start": 65,
+        "stop": 84,
+        "wrapMode": "Sustain"
+      },
+      {
+        "name": "Moving",
+        "start": 84,
+        "stop": 100,
+        "wrapMode": "Loop"
+      },
+      {
+        "name": "Jump",
+        "start": 105,
+        "stop": 136,
+        "wrapMode": "Sustain"
+      },
+      {
+        "name": "Charging",
+        "start": 141,
+        "stop": 149,
+        "wrapMode": "Loop"
+      },
+      {
+        "name": "Shutdown",
+        "start": 154,
+        "stop": 178,
+        "wrapMode": "Sustain"
+      }
+    ],
+    "materialSettings": {
+      "4190cb2b9400413abbf49b86740ded30": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "6cdf8a9931ee4ba49ef2c08a64c81f11"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "Player.png",
+            "uuid": "ee0c65c6070f4744adba9c5c8429b264"
+          }
+        }
+      }
+    },
+    "keepRootTransform": false,
+    "scaleFactor": 1.0
+  }
 }

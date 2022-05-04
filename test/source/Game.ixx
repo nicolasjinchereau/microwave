@@ -14,6 +14,7 @@ import Test.ExitDoorTrigger;
 import Test.CoinCounter;
 import Test.WinScreen;
 import Test.LossScreen;
+import <chrono>;
 import <vector>;
 
 using namespace mw;
@@ -55,10 +56,8 @@ public:
 
     Task<void> LoadAllAsync()
     {
-        using namespace std::literals::chrono_literals;
-
         co_await InitUI();
-        co_await Task<void>::Delay(20ms); // let UI update
+        co_await Task<void>::Delay(std::chrono::milliseconds(20)); // let UI update
         GetNode()->GetScene()->SetUpdateEnabled(false);
         
         co_await InitLevel();
@@ -69,7 +68,7 @@ public:
         loadingText->GetNode()->SetActive(false);
         gamePanel->GetNode()->SetActive(true);
         GetNode()->GetScene()->SetUpdateEnabled(true);
-        co_await Task<void>::Delay(20ms); // let UI update
+        co_await Task<void>::Delay(std::chrono::milliseconds(20)); // let UI update
 
         camera->GetNode()->SetActive(true);
         uiCamera->GetNode()->SetActive(true);
@@ -125,12 +124,12 @@ public:
         auto exitDoorTriggerNode = level->GetChild("ExitDoorTrigger");
         auto exitDoorTrigger = exitDoorTriggerNode->AddComponent<ExitDoorTrigger>();
         exitDoorTrigger->exitDoor = exitDoor;
-        exitDoorTrigger->game = This<Game>();
+        exitDoorTrigger->game = SharedFrom(this);
 
         coins = level->FindChildren("Coin", true);
         for (auto& coin : coins) {
             auto c = coin->AddComponent<Coin>();
-            c->game = This<Game>();
+            c->game = SharedFrom(this);
         }
 
         auto gears = level->FindChildren("SpinningGear", true);
@@ -191,12 +190,12 @@ public:
         co_await batteryMeter->InitAsync();
 
         winScreen = gamePanel->GetNode()->AddChild()->AddComponent<WinScreen>();
-        winScreen->game = This<Game>();
+        winScreen->game = SharedFrom(this);
         co_await winScreen->InitAsync();
         winScreen->GetNode()->SetActive(false);
         
         lossScreen = gamePanel->GetNode()->AddChild()->AddComponent<LossScreen>();
-        lossScreen->game = This<Game>();
+        lossScreen->game = SharedFrom(this);
         co_await lossScreen->InitAsync();
         lossScreen->GetNode()->SetActive(false);
 
@@ -246,6 +245,8 @@ public:
         }
     }
 
+    std::vector<sptr<Texture>> allTextures;
+
     virtual void OnKeyDown(Keycode key) override
     {
         if (!playing)
@@ -262,6 +263,28 @@ public:
         else if (key == Keycode::K)
         {
             player->batteryLevel = 0;
+        }
+        else if (key == Keycode::T)
+        {
+            auto assetLibrary = App::Get()->GetAssetLibrary();
+            assetLibrary->GetAllTextures(allTextures);
+
+            for(auto& tex : allTextures) {
+                tex->LoadFileAsync();
+            }
+
+            allTextures.clear();
+        }
+        else if (key == Keycode::U)
+        {
+            auto assetLibrary = App::Get()->GetAssetLibrary();
+            assetLibrary->GetAllTextures(allTextures);
+
+            for(auto& tex : allTextures) {
+                tex->UnloadFile();
+            }
+
+            allTextures.clear();
         }
     }
 

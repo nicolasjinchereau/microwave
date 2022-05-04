@@ -1,11 +1,11 @@
 {
- "sourcePath": "Shaders/painted-texture.cg",
- "artifacts": [
-  {
-   "uuid": "4e0432d7c0e34c46adeb23322cbac5b9",
-   "assetType": "Shader",
-   "sourcePath": "Shaders/painted-texture.cg"
-  }
- ],
- "settings": {}
+  "sourcePath": "Shaders/painted-texture.cg",
+  "artifacts": [
+    {
+      "uuid": "4e0432d7c0e34c46adeb23322cbac5b9",
+      "assetType": "Shader",
+      "sourcePath": "Shaders/painted-texture.cg"
+    }
+  ],
+  "settings": {}
 }

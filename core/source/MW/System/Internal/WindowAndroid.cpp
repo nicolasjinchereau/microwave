@@ -2,16 +2,16 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#include <MW/System/WindowAndroid.h>
-#include <MW/System/Application.h>
-#include <MW/Graphics/Internal/WindowSurfaceAndroidOpenGL.h>
-#include <MW/Math/Common.h>
-#include <android/native_window.h>
-#include <stdexcept>
-#include <vector>
-#include <unistd.h>
+module Microwave.System.Internal.WindowAndroid;
+import Microwave.System.Application;
+import Microwave.Graphics.Internal.HWSurfaceEGL;
+import <android/native_window.h>;
+import <stdexcept>;
+import <vector>;
+import <unistd.h>;
 
 namespace mw {
+inline namespace system {
 
 extern android_app* androidApp;
 
@@ -251,8 +251,9 @@ Keycode WindowAndroid::TranslateKey(int keycode)
     return (Keycode)((int)Keycode::Unknown + keycode);
 }
 
-sptr<gfx::WindowSurface> WindowAndroid::GetSurface() {
+sptr<HWRenderTarget> WindowAndroid::GetHWRenderTarget() {
     return surface;
 }
 
-}
+} // system
+} // mw

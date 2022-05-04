@@ -4,6 +4,7 @@
 
 module Microwave.Graphics.MaterialPropertyBlock;
 import Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.Texture;
 
 namespace mw {
 inline namespace gfx {
@@ -96,7 +97,7 @@ public:
 
     virtual void FromJson(const json& obj, ObjectLinker* linker) override {
         Object::FromJson(obj, linker);
-        ObjectLinker::RestoreAsset(linker, This(), value, obj, "value");
+        ObjectLinker::RestoreAsset(linker, SharedFrom(this), value, obj, "value");
     }
 };
 
@@ -114,7 +115,7 @@ void SetUniformImpl(MaterialPropertyBlock& block, const std::string& name, const
     }
     else
     {
-        prop = std::dynamic_pointer_cast<PTy>(it->second);
+        prop = spcast<PTy>(it->second);
     }
 
     assert(prop);

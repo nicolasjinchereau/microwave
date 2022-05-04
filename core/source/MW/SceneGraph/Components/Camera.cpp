@@ -7,7 +7,6 @@ import Microwave.Graphics.RenderTarget;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.SceneGraph.LayerMask;
 import Microwave.SceneGraph.Node;
-import Microwave.System.App;
 import <array>;
 import <cstddef>;
 import <cstdint>;
@@ -191,23 +190,9 @@ Ray Camera::ScreenPointToRay(const Vec3& point) const {
     return ScreenPointToRay(point.x, point.y);
 }
 
-sptr<GraphicsContext> GetGraphics()
-{
-    sptr<GraphicsContext> graphics;
-
-    auto app = App::Get();
-    if (app)
-        graphics = app->GetGraphics();
-
-    if (!graphics)
-        throw std::runtime_error("App::GetGraphics returned null.");
-
-    return graphics;
-}
-
 Ray Camera::ScreenPointToRay(float x, float y) const
 {
-    auto graphics = GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
 
     Ray ray;
 
@@ -277,7 +262,7 @@ Ray Camera::ScreenPointToRay(float x, float y) const
 
 Vec3 Camera::WorldToScreen(const Vec3& position) const
 {
-    auto graphics = GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
 
     UpdateView();
     Vec4 ndc = Vec4(position, 1.0f) * _mtxVP;
@@ -295,7 +280,7 @@ Vec3 Camera::WorldToScreen(const Vec3& position) const
 
 Vec3 Camera::ScreenToWorld(const Vec3& point) const
 {
-    auto graphics = GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
 
     UpdateView();
     Vec3 camPos = GetNode()->GetPosition();
@@ -339,7 +324,7 @@ void Camera::SetDirty() const {
 
 void Camera::UpdateView() const
 {
-    auto graphics = GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
     auto viewport = graphics->GetViewport();
 
     if (_vp != viewport) {

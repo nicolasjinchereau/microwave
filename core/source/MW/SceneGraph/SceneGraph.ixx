@@ -3,8 +3,8 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.SceneGraph;
-export import Microwave.SceneGraph.Components;
 export import Microwave.SceneGraph.Axis;
+export import Microwave.SceneGraph.Components;
 export import Microwave.SceneGraph.Coroutine;
 export import Microwave.SceneGraph.Events;
 export import Microwave.SceneGraph.LayerMask;

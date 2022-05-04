@@ -2,19 +2,23 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
-#pragma once
+module;
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 #import <AppKit/AppKit.h>
 #import <Carbon/Carbon.h>
-#include <MW/System/Window.h>
-#include <MW/System/Pointers.h>
-#include <MW/Math/All.h>
-#include <string>
+
+export module Microwave.System.Internal.WindowMacOS;
+import Microwave.Math;
+import Microwave.System.Dispatcher;
+import Microwave.System.Pointers;
+import Microwave.System.Window;
+import <string>;
 
 @class MainWindow;
 
-namespace mw {
+export namespace mw {
+inline namespace system {
 
 class WindowMacOS : public Window
 {
@@ -28,7 +32,7 @@ public:
     std::string title;
     bool visible = false;
     bool resizeable = false;
-    sptr<gfx::WindowSurface> surface;
+    sptr<HWSurface> surface;
 
     WindowMacOS();
     WindowMacOS(const std::string title, const IVec2& pos, const IVec2& size);
@@ -49,14 +53,15 @@ public:
     virtual void Close()  override;
     virtual uintptr_t GetHandle() const override;
 
+    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
+
     MainWindow* CreateNativeWindow(const std::string title, const IVec2& pos, const IVec2& size, bool resizeable);
     
     static Keycode TranslateKey(int keycode);
-
-    virtual sptr<gfx::WindowSurface> GetSurface() override;
 };
 
-}
+} // system
+} // mw
 
 @interface MainWindow : NSWindow<NSWindowDelegate>
 {

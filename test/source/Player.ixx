@@ -106,7 +106,7 @@ public:
         wheelJoint->SetAngularTargetVelocity({ AngularVelocityFactor, 0, 0 });
 
         auto wheelScript = wheel->AddComponent<PlayerWheel>();
-        wheelScript->player = This<Player>();
+        wheelScript->player = SharedFrom(this);
 
         anim = GetNode()->FindComponentDownward<Animator>();
 

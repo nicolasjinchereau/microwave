@@ -18,6 +18,7 @@ export import Microwave.System.Json;
 export import Microwave.System.Object;
 export import Microwave.System.Path;
 export import Microwave.System.Pointers;
+export import Microwave.System.PostExecutor;
 export import Microwave.System.Spinlock;
 export import Microwave.System.SyncExecutor;
 export import Microwave.System.Task;

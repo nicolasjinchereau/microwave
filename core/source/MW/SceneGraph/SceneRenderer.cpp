@@ -11,7 +11,6 @@ import Microwave.SceneGraph.Components.DirectionalLight;
 import Microwave.SceneGraph.LayerMask;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Scene;
-import Microwave.System.App;
 import <algorithm>;
 import <cassert>;
 import <cstdint>;
@@ -28,7 +27,7 @@ SceneRenderer::SceneRenderer()
 
 void SceneRenderer::Render(const sptr<Scene>& scene)
 {
-    auto graphics = App::Get()->GetGraphics();
+    auto graphics = GraphicsContext::GetCurrent();
 
     graphics->SetClearColor(Color::Clear());
     graphics->Clear(true, true);
@@ -122,36 +121,8 @@ void SceneRenderer::Render(const sptr<Scene>& scene)
             rend->material->shader->SetUniform("uLightPos", lightPos);
             rend->material->shader->SetUniform("uLightColor", lightColor);
 
-            assert(rend->vertexBuffer);
-
-            if (rend->normalBuffer || rend->texcoordBuffer || rend->colorBuffer)
-            {
-                rend->material->shader->SetVertexBuffer(
-                    InputSemantic::POSITION, 0, rend->vertexBuffer);
-
-                if (rend->normalBuffer)
-                {
-                    rend->material->shader->SetVertexBuffer(
-                        InputSemantic::NORMAL, 0, rend->normalBuffer);
-                }
-
-                if (rend->texcoordBuffer)
-                {
-                    rend->material->shader->SetVertexBuffer(
-                        InputSemantic::TEXCOORD, 0, rend->texcoordBuffer);
-                }
-
-                if (rend->colorBuffer)
-                {
-                    rend->material->shader->SetVertexBuffer(
-                        InputSemantic::COLOR, 0, rend->colorBuffer);
-                }
-            }
-            else
-            {
-                rend->material->shader->SetVertexBuffer(rend->vertexBuffer);
-            }
-
+            rend->material->shader->SetVertexBuffer(rend->vertexMapping);
+            
             if (rend->indexBuffer)
             {
                 rend->material->shader->SetIndexBuffer(rend->indexBuffer);

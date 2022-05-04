@@ -49,6 +49,9 @@ public:
 
     bool HasEventBit(uint32_t bit) const;
 
+    // do not call this if you are not a Node.
+    void SetNode(const wptr<Node>& node);
+
     sptr<const Node> GetNode() const;
     sptr<Node> GetNode();
 

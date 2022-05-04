@@ -4,7 +4,7 @@
 
 export module Microwave.Graphics.Mesh;
 import Microwave.Graphics.Color;
-import Microwave.Graphics.DrawBuffer;
+import Microwave.Graphics.Buffer;
 import Microwave.Graphics.Material;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Math;
@@ -50,7 +50,7 @@ struct MeshElement
 {
     DrawMode drawMode = DrawMode::Triangles;
     std::vector<int> indices;
-    sptr<DrawBuffer> indexBuffer;
+    sptr<Buffer> indexBuffer;
 };
 
 class Mesh : public Object
@@ -68,11 +68,11 @@ public:
     std::vector<IVec4> boneIndices; // 4 indices per vertex
     std::vector<Vec4> boneWeights; // 4 weights per vertex
 
-    sptr<DrawBuffer> vertexBuffer;
-    sptr<DrawBuffer> normalBuffer;
-    sptr<DrawBuffer> texcoordBuffer;
-    sptr<DrawBuffer> boneIndexBuffer;
-    sptr<DrawBuffer> boneWeightBuffer;
+    sptr<Buffer> vertexBuffer;
+    sptr<Buffer> normalBuffer;
+    sptr<Buffer> texcoordBuffer;
+    sptr<Buffer> boneIndexBuffer;
+    sptr<Buffer> boneWeightBuffer;
 
     Sphere bsphere;
     AABox bbox;

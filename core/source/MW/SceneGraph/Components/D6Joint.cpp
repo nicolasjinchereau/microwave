@@ -73,7 +73,7 @@ void D6Joint::FromJson(const json& obj, ObjectLinker* linker)
 {
     Component::FromJson(obj, linker);
 
-    ObjectLinker::RestoreLink(linker, This(), linkBody, obj, "linkBody");
+    ObjectLinker::RestoreLink(linker, SharedFrom(this), linkBody, obj, "linkBody");
 
     linkOffset = obj.value("linkOffset", linkOffset);
     linkPivotOffset = obj.value("linkPivotOffset", linkPivotOffset);

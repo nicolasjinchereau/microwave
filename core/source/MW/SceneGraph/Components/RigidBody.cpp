@@ -128,10 +128,10 @@ void RigidBody::RebuildCollisionShape()
         {
             for (auto& c : node->GetComponents())
             {
-                if (!isRoot && std::dynamic_pointer_cast<RigidBody>(c))
+                if (!isRoot && spcast<RigidBody>(c))
                     return;
 
-                if (auto t = std::dynamic_pointer_cast<Collider>(c))
+                if (auto t = spcast<Collider>(c))
                     out.push_back(std::move(t));
             }
 
@@ -197,7 +197,7 @@ void RigidBody::UpdateStructure()
         if (auto scene = GetNode()->GetScene())
         {
             if(auto w = world.lock()) {
-                w->RemoveRigidBody(This<RigidBody>());
+                w->RemoveRigidBody(SharedFrom(this));
                 world.reset();
             }
 
@@ -270,7 +270,7 @@ void RigidBody::UpdateStructure()
             body->setDamping(linearDamping, angularDamping);
 
             if (IsActiveAndEnabled()) {
-                scene->GetPhysics()->AddRigidBody(This<RigidBody>());
+                scene->GetPhysics()->AddRigidBody(SharedFrom(this));
                 world = scene->GetPhysics();
             }
             
@@ -349,7 +349,7 @@ void RigidBody::OnAttachedToScene() {
 void RigidBody::OnDetachFromScene()
 {
     if(auto w = world.lock()) {
-        w->RemoveRigidBody(This<RigidBody>());
+        w->RemoveRigidBody(SharedFrom(this));
         world.reset();
     }
 
@@ -366,7 +366,7 @@ void RigidBody::OnDetachFromScene()
 //{
 //    //if (auto w = world.lock())
 //    //{
-//    //    w->RemoveRigidBody(This<RigidBody>());
+//    //    w->RemoveRigidBody(SharedFrom(this));
 //    //    world.reset();
 //    //}
 //}

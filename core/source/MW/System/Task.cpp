@@ -10,7 +10,7 @@ namespace mw {
 inline namespace system {
 namespace detail {
 
-Task<void> GetDelayTask(milliseconds length)
+Task<void> GetDelayTask(std::chrono::milliseconds length)
 {
     return ThreadPool::InvokeAsync([len = length]{
         std::this_thread::sleep_for(len);
