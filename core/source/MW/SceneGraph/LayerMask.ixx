@@ -47,6 +47,7 @@ enum class LayerMask : uint32_t
     User30  = 1u << 30,
     User31  = 1u << 31
 };
+constexpr void EnableEnumFlags(LayerMask);
 
 void to_json(json& obj, const LayerMask& mask) {
     obj = (uint32_t)mask;

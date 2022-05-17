@@ -47,6 +47,7 @@ enum class OpenMode
     Truncate = std::ios_base::trunc,
     Binary = std::ios_base::binary,
 };
+constexpr void EnableEnumFlags(OpenMode);
 
 class FileStream : public Stream
 {
