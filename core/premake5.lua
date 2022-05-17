@@ -187,7 +187,6 @@ project "microwave"
         "source/MW/SceneGraph/Internal/CapsuleShape.ixx",
         "source/MW/SceneGraph/Axis.ixx",
         "source/MW/SceneGraph/Coroutine.ixx",
-        "source/MW/SceneGraph/Events.cpp",
         "source/MW/SceneGraph/Events.ixx",
         "source/MW/SceneGraph/LayerMask.ixx",
         "source/MW/SceneGraph/Node.cpp",

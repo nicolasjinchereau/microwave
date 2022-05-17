@@ -17,11 +17,13 @@ import Microwave.Utilities.Sink;
 export namespace mw {
 inline namespace scene {
 
+class PhysicsWorld;
+
 class SphereCollider : public Collider, public IRenderEvents
 {
     inline static Type::Pin<SphereCollider> pin;
 
-    friend class PhysicsWorld;
+    friend PhysicsWorld;
 
     float radius = 0.5f;
 

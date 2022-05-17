@@ -19,6 +19,7 @@ export namespace mw {
 inline namespace scene {
 
 class CapsuleShape;
+class PhysicsWorld;
 
 class CapsuleCollider : public Collider, public IRenderEvents
 {
@@ -36,7 +37,7 @@ class CapsuleCollider : public Collider, public IRenderEvents
     sptr<Material> gizmoMat;
     std::vector<sptr<Renderable>> renderables;
 
-    friend class PhysicsWorld;
+    friend PhysicsWorld;
 public:
 
     CapsuleCollider(){}

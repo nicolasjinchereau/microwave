@@ -15,7 +15,7 @@ class App;
 class ApplicationDispatcher : public Dispatcher
 {
     static sptr<ApplicationDispatcher> New();
-    friend class App;
+    friend App;
 
 public:
     virtual void Run() final override { throw std::runtime_error("Use `Run(int, char*[])` instead of Dispatcher::Run."); }

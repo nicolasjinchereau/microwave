@@ -5,6 +5,7 @@
 module Microwave.SceneGraph.PhysicsWorld;
 import Microwave.SceneGraph.Components.RigidBody;
 import Microwave.SceneGraph.Events;
+import Microwave.SceneGraph.Node;
 import Microwave.System.App;
 import Microwave.Utilities.Util;
 import <array>;
@@ -186,28 +187,25 @@ void PhysicsWorld::PerformCollisionCallbacks(btPersistentManifold* manifold, Col
 
     for (auto& c : body0->GetNode()->GetComponents())
     {
-        if (c->HasEventBit(EventBit::Collision))
+        if (auto h = dynamic_cast<ICollisionEvents*>(c.get()))
         {
-            if (auto h = dynamic_cast<ICollisionEvents*>(c.get()))
+            switch (state)
             {
-                switch (state)
-                {
-                case CollisionState::Start:
-                    h->OnCollisionStart(collision);
-                    break;
+            case CollisionState::Start:
+                h->OnCollisionStart(collision);
+                break;
 
-                case CollisionState::Update:
-                    h->OnCollisionUpdate(collision);
-                    break;
+            case CollisionState::Update:
+                h->OnCollisionUpdate(collision);
+                break;
 
-                case CollisionState::Stop:
-                    h->OnCollisionStop(collision);
-                    break;
-                }
-
-                if (state == CollisionState::Cancel)
-                    return;
+            case CollisionState::Stop:
+                h->OnCollisionStop(collision);
+                break;
             }
+
+            if (state == CollisionState::Cancel)
+                return;
         }
     }
 
@@ -218,28 +216,25 @@ void PhysicsWorld::PerformCollisionCallbacks(btPersistentManifold* manifold, Col
 
     for (auto& c : body1->GetNode()->GetComponents())
     {
-        if (c->HasEventBit(EventBit::Collision))
+        if (auto h = dynamic_cast<ICollisionEvents*>(c.get()))
         {
-            if (auto h = dynamic_cast<ICollisionEvents*>(c.get()))
+            switch (state)
             {
-                switch (state)
-                {
-                case CollisionState::Start:
-                    h->OnCollisionStart(collision);
-                    break;
+            case CollisionState::Start:
+                h->OnCollisionStart(collision);
+                break;
 
-                case CollisionState::Update:
-                    h->OnCollisionUpdate(collision);
-                    break;
+            case CollisionState::Update:
+                h->OnCollisionUpdate(collision);
+                break;
 
-                case CollisionState::Stop:
-                    h->OnCollisionStop(collision);
-                    break;
-                }
-
-                if (state == CollisionState::Cancel)
-                    return;
+            case CollisionState::Stop:
+                h->OnCollisionStop(collision);
+                break;
             }
+
+            if (state == CollisionState::Cancel)
+                return;
         }
     }
 }

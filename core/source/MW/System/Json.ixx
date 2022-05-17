@@ -524,7 +524,7 @@ public:
     using FloatType = double;
     using BooleanType = bool;
 
-    friend class JsonParser;
+    friend JsonParser;
 
 private:
     typedef std::variant<NullType, ObjectType, ArrayType, StringType, IntegerType, FloatType, BooleanType> DataStorageType;

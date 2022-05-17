@@ -20,7 +20,7 @@ class PhysicsWorld;
 class BoxCollider : public Collider, public IRenderEvents
 {
     inline static Type::Pin<BoxCollider> pin;
-    friend class PhysicsWorld;
+    friend PhysicsWorld;
 
     Vec3 extents = Vec3(0.5f, 0.5f, 0.5f);
 

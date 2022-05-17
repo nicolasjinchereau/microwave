@@ -13,20 +13,15 @@ export namespace mw {
 inline namespace utilities {
 inline namespace binpacking {
 
-class BSPNodeAllocator : public Object
+class BSPNodeAllocator : public IBSPNodePool
 {
     std::vector<BSPNode*> pool;
-
-    static BSPNode* AllocateNode();
-    static void DeallocateNode(BSPNode* pNode);
-
-    friend struct BSPNodeDeleter;
 public:
     BSPNodeAllocator(uint32_t initialCapacity = 0);
     ~BSPNodeAllocator();
 
-    BSPNodePtr GetNode();
-    static void ReturnNode(BSPNode* pNode);
+    virtual BSPNodePtr GetNode() override;
+    virtual void ReturnNode(BSPNode* pNode) override;
 };
 
 } // binpacking

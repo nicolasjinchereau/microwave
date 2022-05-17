@@ -51,9 +51,7 @@ class Camera : public Component
 {
     inline static Type::Pin<Camera> pin;
 public:
-    Camera() {
-        SetEventBit(EventBit::Camera);
-    }
+    Camera() {}
 
     void SetMode(CameraViewMode mode);
     CameraViewMode GetMode() const;

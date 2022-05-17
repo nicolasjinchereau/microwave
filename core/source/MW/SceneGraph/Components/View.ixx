@@ -25,7 +25,7 @@ protected:
     Box offsetBox{ 0, 0, 0, 0 };
     int renderDepth = 0;
 
-    friend class Canvas;
+    friend Canvas;
 public:
     virtual void ToJson(json& obj) const override;
     virtual void FromJson(const json& obj, ObjectLinker* linker) override;

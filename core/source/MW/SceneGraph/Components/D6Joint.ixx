@@ -47,7 +47,7 @@ class D6Joint :
 {
     inline static Type::Pin<D6Joint> pin;
 
-    friend class PhysicsWorld;
+    friend PhysicsWorld;
 
     uptr<btGeneric6DofSpring2Constraint> joint;
     bool structureDirty = true;

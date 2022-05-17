@@ -14,24 +14,15 @@ BSPNodeAllocator::BSPNodeAllocator(uint32_t initialCapacity)
     pool.reserve(initialCapacity);
 
     for (uint32_t i = 0; i < initialCapacity; ++i)
-        pool.push_back( AllocateNode() );
+        pool.push_back(BSPNode::Allocate() );
 }
 
 BSPNodeAllocator::~BSPNodeAllocator()
 {
     for (auto& mem : pool)
-        DeallocateNode(mem);
+        BSPNode::Deallocate(mem);
 
     pool.clear();
-}
-
-BSPNode* BSPNodeAllocator::AllocateNode() {
-    return (BSPNode*)::operator new(sizeof(BSPNode));
-}
-
-void BSPNodeAllocator::DeallocateNode(BSPNode* pNode) {
-    assert(pNode);
-    ::operator delete(pNode);
 }
 
 BSPNodePtr BSPNodeAllocator::GetNode()
@@ -43,7 +34,7 @@ BSPNodePtr BSPNodeAllocator::GetNode()
         pool.pop_back();
     }
     else {
-        mem = AllocateNode();
+        mem = BSPNode::Allocate();
     }
 
     auto pNode = new (mem) BSPNode(SharedFrom(this));
@@ -54,15 +45,9 @@ BSPNodePtr BSPNodeAllocator::GetNode()
 void BSPNodeAllocator::ReturnNode(BSPNode* pNode)
 {
     assert(pNode);
-    
-    pNode->~BSPNode();
 
-    if (auto allocator = pNode->allocator.lock()) {
-        allocator->pool.push_back(pNode);
-    }
-    else {
-        DeallocateNode(pNode);
-    }
+    pNode->~BSPNode();
+    pool.push_back(pNode);
 }
 
 } // binpacking

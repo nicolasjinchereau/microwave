@@ -10,12 +10,8 @@ namespace mw {
 inline namespace utilities {
 inline namespace binpacking {
 
-void BSPNodeDeleter::operator()(BSPNode* n) {
-    BSPNodeAllocator::ReturnNode(n);
-}
-
-BSPNode::BSPNode(const wptr<BSPNodeAllocator>& allocator)
-    : allocator(allocator) {}
+BSPNode::BSPNode(const wptr<IBSPNodePool>& nodePool)
+    : nodePool(nodePool) {}
 
 void BSPNode::Reset(const IntRect& rc)
 {
@@ -81,11 +77,11 @@ BSPNode* BSPNode::Insert(RectMapping& mapping, int padding, bool allowRotation)
 
 void BSPNode::SplitBranch(int padding)
 {
-    auto alloc = allocator.lock();
-    assert(alloc);
+    auto pool = nodePool.lock();
+    assert(pool);
 
-    if (!left) left = alloc->GetNode();
-    if (!right) right = alloc->GetNode();
+    if (!left) left = pool->GetNode();
+    if (!right) right = pool->GetNode();
 
     int remWidth = rect.w - pMapping->mappedRect.w;
     int remHeight = rect.h - pMapping->mappedRect.h;

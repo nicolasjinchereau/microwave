@@ -4,6 +4,7 @@
 
 module Microwave.SceneGraph.Components.MeshRenderer;
 import Microwave.Graphics.Shader;
+import Microwave.SceneGraph.Node;
 import <cassert>;
 
 namespace mw {

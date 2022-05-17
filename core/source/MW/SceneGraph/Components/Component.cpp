@@ -29,5 +29,51 @@ void Component::FromJson(const json& obj, ObjectLinker* linker)
     enabled = obj.value("enabled", enabled);
 }
 
+bool Component::IsEnabled() const {
+    return enabled;
+}
+
+void Component::SetEnabled(bool enable)
+{
+    if (enable != enabled)
+    {
+        enabled = enable;
+        if (enabled)
+            OnEnable();
+        else
+            OnDisable();
+    }
+}
+
+bool Component::IsNodeBranchActive() const
+{
+    auto n = node.lock();
+    return n ? n->IsBranchActive() : false;
+}
+
+sptr<const Node> Component::GetNode() const {
+    return node.lock();
+}
+
+sptr<Node> Component::GetNode() {
+    return node.lock();
+}
+
+sptr<const Scene> Component::GetScene() const {
+    auto n = node.lock();
+    return n ? n->GetScene() : nullptr;
+}
+
+sptr<Scene> Component::GetScene() {
+    auto n = node.lock();
+    return n ? n->GetScene() : nullptr;
+}
+
+bool Component::IsActiveAndEnabled() const
+{
+    sptr<Node> n;
+    return enabled && ((n = node.lock()) ? n->IsBranchActive() : false);
+}
+
 } // scene
 } // mw

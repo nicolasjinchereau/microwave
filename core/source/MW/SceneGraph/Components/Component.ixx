@@ -16,9 +16,14 @@ class Node;
 class Camera;
 class Scene;
 
-class Component : public virtual EventTarget, public Object
+class Component : public Object
 {
     inline static Type::Pin<Component> pin;
+
+    bool enabled = true;
+    wptr<Node> node;
+
+    friend Node;
 public:
 
     Component(){}
@@ -44,7 +49,23 @@ public:
     virtual void OnStructureChanged() {}
 
     virtual void Draw(Camera* camera) {}
+
+    sptr<const Node> GetNode() const;
+    sptr<Node> GetNode();
+
+    sptr<const Scene> GetScene() const;
+    sptr<Scene> GetScene();
+
+    bool IsEnabled() const;
+    void SetEnabled(bool enable);
+
+    bool IsActiveAndEnabled() const;
+
+    virtual void OnEnable() {}
+    virtual void OnDisable() {}
+
+    bool IsNodeBranchActive() const;
 };
 
-}
-}
+} // scene
+} // mw

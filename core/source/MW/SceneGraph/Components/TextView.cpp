@@ -141,7 +141,7 @@ void TextView::UpdateText()
         vertexBuffer = spnew<Buffer>(
             BufferType::Vertex, BufferUsage::Dynamic,
             BufferCPUAccess::WriteOnly,
-            std::as_writable_bytes(std::span(verts)));
+            std::as_writable_bytes(std::span(verts.data(), verts.size())));
 
         textDirty = false;
     }

@@ -37,10 +37,7 @@ void Canvas::FromJson(const json& obj, ObjectLinker* linker)
     structureDirty = true;
 }
 
-Canvas::Canvas()
-{
-    SetEventBit(EventBit::CanvasInput);
-}
+Canvas::Canvas() {}
 
 void Canvas::SetReferenceSize(const Vec2& size) {
     referenceSize = size;

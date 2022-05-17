@@ -21,6 +21,7 @@ class DirectionalLight;
 class Node;
 class PhysicsWorld;
 class RigidBody;
+class SceneRenderer;
 class Script;
 
 class Scene : public Object
@@ -48,9 +49,9 @@ class Scene : public Object
     bool gizmosEnabled = false;
     bool updateEnabled = true;
 
-    friend class Node;
-    friend class RigidBody;
-    friend class SceneRenderer;
+    friend Node;
+    friend RigidBody;
+    friend SceneRenderer;
 
     void Construct();
     void Destruct();

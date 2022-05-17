@@ -642,9 +642,6 @@
     <ClCompile Include="..\..\source\MW\SceneGraph\Coroutine.ixx">
       <Filter>SceneGraph</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\SceneGraph\Events.cpp">
-      <Filter>SceneGraph</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\MW\SceneGraph\Events.ixx">
       <Filter>SceneGraph</Filter>
     </ClCompile>

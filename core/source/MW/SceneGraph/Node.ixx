@@ -4,7 +4,6 @@
 
 export module Microwave.SceneGraph.Node;
 import Microwave.Math;
-import Microwave.SceneGraph.Components.Component;
 import Microwave.SceneGraph.LayerMask;
 import Microwave.System.Json;
 import Microwave.System.Object;
@@ -23,7 +22,7 @@ export namespace mw {
 inline namespace scene {
 
 class Scene;
-//class Component;
+class Component;
 
 class Node : public Object
 {
@@ -44,8 +43,8 @@ class Node : public Object
     LayerMask                    _layerMask = LayerMask::Default;
 
 public:
-    friend class Component;
-    friend class Scene;
+    friend Component;
+    friend Scene;
 
     Node(){}
     virtual ~Node(){};
@@ -167,13 +166,12 @@ public:
     void SetLayerMask(LayerMask mask, bool includeChildren = false);
     LayerMask GetLayerMask() const;
 
-    sptr<Component> AddComponent(const sptr<Component>& comp);
     void RemoveComponent(const sptr<Component>& comp);
 
-    template<class T, std::enable_if_t<!std::is_same<T, Component>::value, bool> = true>
+    template<class T> requires std::is_base_of_v<Component, T>
     sptr<T> AddComponent(const sptr<T>& comp);
 
-    template<class T>
+    template<class T> requires std::is_base_of_v<Component, T>
     sptr<T> AddComponent();
 
     template<class T>
@@ -210,6 +208,8 @@ public:
     void FindComponentsUpward(F&& fun);
 
 private:
+    sptr<Component> AddComponentImpl(const sptr<Component>& comp);
+
     void SetScene(const sptr<Scene>& scene);
     void AttachToScene(const sptr<Scene>& scene);
     void DetachFromScene();
@@ -248,13 +248,13 @@ void Node::FindChildren(std::vector<sptr<Node>>& out, std::predicate<const sptr<
     }
 }
 
-template<class T, std::enable_if_t<!std::is_same<T, Component>::value, bool>>
+template<class T> requires std::is_base_of_v<Component, T>
 sptr<T> Node::AddComponent(const sptr<T>& comp) {
-    AddComponent(std::static_pointer_cast<Component>(comp));
+    AddComponentImpl(comp);
     return comp;
 }
 
-template<class T>
+template<class T> requires std::is_base_of_v<Component, T>
 sptr<T> Node::AddComponent() {
     return AddComponent(spnew<T>());
 }

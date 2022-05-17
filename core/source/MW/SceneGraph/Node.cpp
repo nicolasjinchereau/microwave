@@ -68,7 +68,7 @@ void Node::FromJson(const json& obj, ObjectLinker* linker)
     for (auto& compObj : componentsObj)
     {
         auto comp = Object::CreateFromJson<Component>(compObj, linker);
-        comp->SetNode(SharedFrom(this));
+        comp->node = SharedFrom(this);
         _components.push_back(std::move(comp));
     }
 
@@ -610,7 +610,7 @@ const std::vector<sptr<Node>>& Node::GetChildren() const {
     return _children;
 }
 
-sptr<Component> Node::AddComponent(const sptr<Component>& comp)
+sptr<Component> Node::AddComponentImpl(const sptr<Component>& comp)
 {
     auto oldOwner = comp->GetNode();
     auto newOwner = SharedFrom(this);
@@ -620,7 +620,7 @@ sptr<Component> Node::AddComponent(const sptr<Component>& comp)
         if (oldOwner)
             oldOwner->RemoveComponent(comp);
 
-        comp->SetNode(newOwner);
+        comp->node = newOwner;
         _components.push_back(comp);
 
         if (auto scene = _scene.lock()) {
@@ -647,7 +647,7 @@ void Node::RemoveComponent(const sptr<Component>& comp)
         }
         
         Erase(_components, comp);
-        comp->SetNode(wptr<Node>());
+        comp->node = wptr<Node>();
 
         SignalStructureChanged();
     }

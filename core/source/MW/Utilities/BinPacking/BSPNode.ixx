@@ -5,14 +5,15 @@
 export module Microwave.Utilities.BinPacking.BSPNode;
 import Microwave.Math;
 import Microwave.System.Pointers;
+import Microwave.System.Object;
 import Microwave.Utilities.BinPacking.RectMapping;
+import <cassert>;
 
 export namespace mw {
 inline namespace utilities {
 inline namespace binpacking {
 
 class BSPNode;
-class BSPNodeAllocator;
 
 enum class BSPNodeType
 {
@@ -24,22 +25,52 @@ enum class BSPNodeType
 struct BSPNodeDeleter { void operator()(BSPNode* n); };
 typedef uptr<BSPNode, BSPNodeDeleter> BSPNodePtr;
 
+class IBSPNodePool : public Object
+{
+public:
+    virtual BSPNodePtr GetNode() = 0;
+    virtual void ReturnNode(BSPNode* pNode) = 0;
+};
+
 class BSPNode
 {
 public:
-    wptr<BSPNodeAllocator> allocator;
+    wptr<IBSPNodePool> nodePool;
     IntRect rect = IntRect();
     BSPNodeType type = BSPNodeType::Empty;
     RectMapping* pMapping = nullptr;
     BSPNodePtr left;
     BSPNodePtr right;
 
-    BSPNode(const wptr<BSPNodeAllocator>& allocator);
+    BSPNode(const wptr<IBSPNodePool>& nodePool);
 
     void Reset(const IntRect& rc);
     BSPNode* Insert(RectMapping& mapping, int padding, bool allowRotation);
     void SplitBranch(int padding);
+
+    static BSPNode* Allocate() {
+        return (BSPNode*)::operator new(sizeof(BSPNode));
+    }
+
+    static void Deallocate(BSPNode* pNode) {
+        assert(pNode);
+        ::operator delete(pNode);
+    }
 };
+
+void BSPNodeDeleter::operator()(BSPNode* pNode)
+{
+    assert(pNode);
+
+    if (auto pool = pNode->nodePool.lock()) {
+        pool->ReturnNode(pNode);
+    }
+    else
+    {
+        pNode->~BSPNode();
+        BSPNode::Deallocate(pNode);
+    }
+}
 
 } // binpacking
 } // utilities

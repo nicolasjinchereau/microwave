@@ -125,7 +125,7 @@ struct CoroutinePromise
 struct Coroutine
 {
     typedef detail::CoroutinePromise promise_type;
-    friend struct promise_type;
+    friend promise_type;
 
     coroutine_handle<promise_type> handle{};
 

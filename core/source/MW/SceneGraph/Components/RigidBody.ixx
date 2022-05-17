@@ -63,10 +63,10 @@ class RigidBody : public Component
 
     Vec3 localCenterOfMass = {};
 
-    friend class PhysicsWorld;
-    friend class RigidBodyMotionState;
-    friend class Bullet;
-    friend class D6Joint;
+    friend Bullet;
+    friend D6Joint;
+    friend PhysicsWorld;
+    friend RigidBodyMotionState;
 
     void Construct();
     void Destruct();
@@ -126,8 +126,9 @@ public:
     virtual void OnAttachedToScene() override;
     virtual void OnDetachFromScene() override;
 
-    //virtual void OnEnable() override;
-    //virtual void OnDisable() override;
+    virtual void OnEnable() override;
+    virtual void OnDisable() override;
+
     virtual void OnNodeActivated() override;
     virtual void OnNodeDeactivated() override;
     

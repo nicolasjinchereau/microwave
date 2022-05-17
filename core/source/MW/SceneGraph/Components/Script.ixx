@@ -28,10 +28,7 @@ class Script : public Component
     std::vector<Coroutine> coroutines;
 public:
 
-    Script()
-    {
-        SetEventBit(EventBit::Script);
-    }
+    Script() {}
 
     Coroutine StartCoroutine(Coroutine coroutine)
     {

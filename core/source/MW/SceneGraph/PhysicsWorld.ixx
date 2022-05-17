@@ -22,6 +22,7 @@ export namespace mw {
 inline namespace scene {
 
 class Bullet;
+class D6Joint;
 class RigidBody;
 
 enum class CollisionState
@@ -44,9 +45,9 @@ class PhysicsWorld : public Object
 
     void PerformCollisionCallbacks(btPersistentManifold* manifold, CollisionState& state);
 
-    friend class Bullet;
-    friend class RigidBody;
-    friend class D6Joint;
+    friend Bullet;
+    friend D6Joint;
+    friend RigidBody;
 public:
     PhysicsWorld();
     ~PhysicsWorld();

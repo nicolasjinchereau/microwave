@@ -63,7 +63,7 @@ class AudioSource : public Component
     StreamController streamController;
 
     void OnBuffersCompleted(int count);
-    friend class AudioContext;
+    friend AudioContext;
 
     void Construct();
     void Destruct();

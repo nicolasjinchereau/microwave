@@ -96,7 +96,8 @@ inline void RunUpdates(
 
     for (auto& obj : updateCacheT)
     {
-        if (obj->IsActiveAndEnabled())
+        auto comp = dynamic_cast<Component*>(obj.get());
+        if (comp->IsActiveAndEnabled())
         {
             ((*obj).*fun)(std::forward<Args>(args)...);
 
@@ -168,73 +169,62 @@ void Scene::Update()
     clock->Tick();
 }
 
-template<class T>
-sptr<T> GetEventHandler(const sptr<Component>& comp, uint32_t eventBit)
-{
-    sptr<T> p;
-
-    if (comp->HasEventBit(eventBit))
-        p = spcast<T>(comp);
-
-    return p;
-}
-
 void Scene::RegisterComponent(const sptr<Component>& comp)
 {
-    if (auto p = GetEventHandler<Camera>(comp, EventBit::Camera))
+    if (auto p = spcast<Camera>(comp))
         cameras.push_back(p);
 
-    if (auto p = GetEventHandler<Canvas>(comp, EventBit::CanvasInput))
+    if (auto p = spcast<Canvas>(comp))
         canvases.push_back(p);
 
-    if (auto p = GetEventHandler<ISceneInputEvents>(comp, EventBit::SceneInput))
+    if (auto p = spcast<ISceneInputEvents>(comp))
         sceneInputHandlers.push_back(p);
 
-    if (auto p = GetEventHandler<IUserEvents>(comp, EventBit::User))
+    if (auto p = spcast<IUserEvents>(comp))
         userStarts.push_back(p);
 
-    if (auto p = GetEventHandler<ISystemEvents>(comp, EventBit::System))
+    if (auto p = spcast<ISystemEvents>(comp))
         systemStarts.push_back(p);
 
-    if (auto p = GetEventHandler<Script>(comp, EventBit::Script))
+    if (auto p = spcast<Script>(comp))
         scripts.push_back(p);
 
-    if (auto p = GetEventHandler<DirectionalLight>(comp, EventBit::Light))
+    if (auto p = spcast<DirectionalLight>(comp))
         lights.push_back(p);
 
-    if (auto p = GetEventHandler<IRenderEvents>(comp, EventBit::Rendering))
+    if (auto p = spcast<IRenderEvents>(comp))
         renderEvents.push_back(p);
 }
 
 void Scene::UnregisterComponent(const sptr<Component>& comp)
 {
-    if (auto p = GetEventHandler<Camera>(comp, EventBit::Camera))
-        Erase(cameras, p);
+    if (auto p = spcast<Camera>(comp))
+        std::erase(cameras, p);
 
-    if (auto p = GetEventHandler<Canvas>(comp, EventBit::CanvasInput))
-        Erase(canvases, p);
+    if (auto p = spcast<Canvas>(comp))
+        std::erase(canvases, p);
 
-    if (auto p = GetEventHandler<ISceneInputEvents>(comp, EventBit::SceneInput))
-        Erase(sceneInputHandlers, p);
+    if (auto p = spcast<ISceneInputEvents>(comp))
+        std::erase(sceneInputHandlers, p);
 
-    if (auto p = GetEventHandler<IUserEvents>(comp, EventBit::User)) {
-        Erase(userUpdates, p);
-        Erase(userStarts, p);
+    if (auto p = spcast<IUserEvents>(comp)) {
+        std::erase(userUpdates, p);
+        std::erase(userStarts, p);
     }
 
-    if (auto p = GetEventHandler<ISystemEvents>(comp, EventBit::System)) {
-        Erase(systemUpdates, p);
-        Erase(systemStarts, p);
+    if (auto p = spcast<ISystemEvents>(comp)) {
+        std::erase(systemUpdates, p);
+        std::erase(systemStarts, p);
     }
 
-    if (auto p = GetEventHandler<Script>(comp, EventBit::Script))
-        Erase(scripts, p);
+    if (auto p = spcast<Script>(comp))
+        std::erase(scripts, p);
 
-    if (auto p = GetEventHandler<DirectionalLight>(comp, EventBit::Light))
-        Erase(lights, p);
+    if (auto p = spcast<DirectionalLight>(comp))
+        std::erase(lights, p);
 
-    if (auto p = GetEventHandler<IRenderEvents>(comp, EventBit::Rendering))
-        Erase(renderEvents, p);
+    if (auto p = spcast<IRenderEvents>(comp))
+        std::erase(renderEvents, p);
 }
 
 }

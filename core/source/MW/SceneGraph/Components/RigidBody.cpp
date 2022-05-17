@@ -356,27 +356,27 @@ void RigidBody::OnDetachFromScene()
     ClearCollisionShape();
 }
 
-//void RigidBody::OnEnable()
-//{
-//    //if (IsActiveAndEnabled())
-//    //    structureDirty = true;
-//}
-//
-//void RigidBody::OnDisable()
-//{
-//    //if (auto w = world.lock())
-//    //{
-//    //    w->RemoveRigidBody(SharedFrom(this));
-//    //    world.reset();
-//    //}
-//}
+void RigidBody::OnEnable()
+{
+    if (IsActiveAndEnabled())
+        structureDirty = true;
+}
+
+void RigidBody::OnDisable()
+{
+    if (auto w = world.lock())
+    {
+        w->RemoveRigidBody(SharedFrom(this));
+        world.reset();
+    }
+}
 
 void RigidBody::OnNodeActivated() {
-    //OnEnable();
+    OnEnable();
 }
 
 void RigidBody::OnNodeDeactivated() {
-    //OnDisable();
+    OnDisable();
 }
 
 void RigidBody::OnTransformChanged() {

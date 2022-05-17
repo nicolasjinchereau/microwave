@@ -419,7 +419,6 @@
       <ObjectFileName>$(IntDir)\View1.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\SceneGraph\Coroutine.ixx" />
-    <ClCompile Include="..\..\source\MW\SceneGraph\Events.cpp" />
     <ClCompile Include="..\..\source\MW\SceneGraph\Events.ixx">
       <ObjectFileName>$(IntDir)\Events1.obj</ObjectFileName>
     </ClCompile>

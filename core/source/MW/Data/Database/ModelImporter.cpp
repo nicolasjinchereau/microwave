@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.Data.Database.ModelImporter;
+import Microwave.Data.Database.AssetDatabase;
 import Microwave.Data.Library.AssetLibrary;
 import Microwave.Data.Internal.FBXModelConverter;
 import Microwave.Graphics.AnimationClip;

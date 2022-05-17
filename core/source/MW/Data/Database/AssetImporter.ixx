@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Data.Database.AssetImporter;
+import Microwave.Data.Database.AssetDatabase;
 import Microwave.Data.Database.Metadata;
 import Microwave.Data.Library.AssetSettings;
 import Microwave.IO.File;
@@ -20,7 +21,7 @@ import <string>;
 export namespace mw {
 inline namespace data {
 
-class AssetDatabase;
+//class AssetDatabase;
 
 class AssetImporter
 {

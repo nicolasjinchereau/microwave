@@ -48,7 +48,8 @@ void SceneRenderer::Render(const sptr<Scene>& scene)
 
         for (sptr<IRenderEvents>& r : scene->renderEvents)
         {
-            if (r->IsActiveAndEnabled())
+            auto comp = dynamic_cast<Component*>(r.get());
+            if (comp->IsActiveAndEnabled())
             {
                 r->GetRenderables(temp);
 

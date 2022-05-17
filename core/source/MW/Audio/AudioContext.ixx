@@ -25,7 +25,7 @@ protected:
     virtual void SetActive() = 0;
     void NotifyBuffersCompleted(AudioSource* source, int bufferCount);
 
-    friend class AudioSource;
+    friend AudioSource;
 public:
 
     static sptr<AudioContext> New();

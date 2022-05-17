@@ -21,6 +21,7 @@ class HWSurface;
 
 inline namespace system {
 
+class App;
 class Window;
 
 enum class Keycode : int
@@ -90,7 +91,7 @@ class Window : public RenderTarget
 {
 protected:
     static sptr<Window> New(const std::string title, const IVec2& pos, const IVec2& size);
-    friend class App;
+    friend App;
 
     EventHandlerList<IWindowEventHandler> eventHandlers;
 

@@ -24,9 +24,7 @@ class DirectionalLight : public Component
     LayerMask cullingMask = LayerMask::All;
 
 public:
-    DirectionalLight() {
-        SetEventBit(EventBit::Light);
-    }
+    DirectionalLight() {}
 
     void SetCullingMask(LayerMask mask);
     LayerMask GetCullingMask() const;

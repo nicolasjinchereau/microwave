@@ -18,11 +18,6 @@ inline namespace scene {
 
 wptr<Camera> Camera::_currentCamera;
 
-//Camera::Camera()
-//{
-//    SetEventBit(EventBit::Camera);
-//}
-
 void Camera::SetMode(CameraViewMode mode)
 {
     _mode = mode;

@@ -17,6 +17,8 @@ import Microwave.Utilities.Sink;
 export namespace mw {
 inline namespace scene {
 
+class PhysicsWorld;
+
 class MeshCollider : public Collider, public IRenderEvents
 {
     inline static Type::Pin<MeshCollider> pin;
@@ -25,7 +27,7 @@ class MeshCollider : public Collider, public IRenderEvents
     sptr<Material> gizmoMat;
     sptr<Renderable> renderable;
 
-    friend class PhysicsWorld;
+    friend PhysicsWorld;
 public:
 
     MeshCollider(){}

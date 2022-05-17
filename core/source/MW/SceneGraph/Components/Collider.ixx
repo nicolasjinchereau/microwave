@@ -4,13 +4,14 @@
 
 export module Microwave.SceneGraph.Components.Collider;
 import Microwave.SceneGraph.Components.Component;
-import Microwave.SceneGraph.Node;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 
 export namespace mw {
 inline namespace scene {
+
+class Node;
 
 class Collider : public Component
 {

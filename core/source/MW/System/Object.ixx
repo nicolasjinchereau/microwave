@@ -54,7 +54,7 @@ public:
         return container;
     }
 
-    friend class Type;
+    friend Type;
 
     virtual ~ITypeHandle() = default;
     virtual const std::type_info& info() const = 0;
@@ -149,8 +149,8 @@ class ObjectLinker
 
     static bool AddObject(ObjectLinker* linker, const sptr<Object>& object);
 
-    friend class Object;
-    friend struct ILink;
+    friend Object;
+    friend ILink;
 public:
 
     const auto& GetObjects() const {
