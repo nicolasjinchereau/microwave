@@ -36,10 +36,10 @@ class Node : public Object
     mutable Vec3                 _worldScale = Vec3::One();
     mutable bool                 _dirty = true;
     bool                         _active = true;
-    std::vector<sptr<Node>>      _children;
-    std::vector<sptr<Component>> _components;
-    wptr<Node>                   _parent;
-    wptr<Scene>                  _scene;
+    gvector<gptr<Node>>          _children;
+    gvector<gptr<Component>>     _components;
+    gptr<Node>                   _parent;
+    gptr<Scene>                  _scene;
     LayerMask                    _layerMask = LayerMask::Default;
 
 public:
@@ -109,37 +109,37 @@ public:
     Mat4 GetLocalToWorldMatrix() const;
     Mat4 GetWorldToLocalMatrix() const;
 
-    sptr<Node> AddChild();
-    sptr<Node> AddChild(sptr<Node>&& child);
-    void AddChild(const sptr<Node>& child);
-    void RemoveChild(const sptr<Node>& child);
+    gptr<Node> AddChild();
+    gptr<Node> AddChild(gptr<Node>&& child);
+    void AddChild(const gptr<Node>& child);
+    void RemoveChild(const gptr<Node>& child);
     void ClearChildren();
 
-    void SetParent(const wptr<Node>& parent, bool preserveWorldTransform = true);
-    void SetParent(nullptr_t, bool preserveWorldTransform = true) { SetParent(wptr<Node>(), preserveWorldTransform); }
-    sptr<Node> GetParent() const;
+    void SetParent(const gptr<Node>& newParent, bool preserveWorldTransform = true);
+    void SetParent(nullptr_t, bool preserveWorldTransform = true) { SetParent(gptr<Node>(), preserveWorldTransform); }
+    gptr<Node> GetParent() const;
 
-    sptr<const Scene> GetScene() const;
-    sptr<Scene> GetScene();
+    gptr<const Scene> GetScene() const;
+    gptr<Scene> GetScene();
 
-    const std::vector<sptr<Node>>& GetChildren() const;
-    const std::vector<sptr<Component>>& GetComponents() const;
+    const gvector<gptr<Node>>& GetChildren() const;
+    const gvector<gptr<Component>>& GetComponents() const;
 
     size_t GetChildCount() const;
-    sptr<Node> GetChild(int index) const;
-    sptr<Node> GetChild(const UUID& uuid) const;
-    sptr<Node> GetChild(const path& fullPath);
+    gptr<Node> GetChild(int index) const;
+    gptr<Node> GetChild(const UUID& uuid) const;
+    gptr<Node> GetChild(const path& fullPath);
     path GetFullPath() const;
 
-    sptr<Node> FindChild(std::string_view name, bool allowPartialMatch = false);
-    sptr<Node> FindChild(LayerMask mask);
-    sptr<Node> FindChild(std::predicate<const sptr<Node>&> auto const& pred);
-    std::vector<sptr<Node>> FindChildren(std::string_view name, bool allowPartialMatch = false);
-    std::vector<sptr<Node>> FindChildren(LayerMask mask);
-    std::vector<sptr<Node>> FindChildren(std::predicate<const sptr<Node>&> auto const& pred);
-    void FindChildren(std::vector<sptr<Node>>& out, std::string_view name, bool allowPartialMatch = false);
-    void FindChildren(std::vector<sptr<Node>>& out, LayerMask mask);
-    void FindChildren(std::vector<sptr<Node>>& out, std::predicate<const sptr<Node>&> auto const& pred);
+    gptr<Node> FindChild(std::string_view name, bool allowPartialMatch = false);
+    gptr<Node> FindChild(LayerMask mask);
+    gptr<Node> FindChild(std::predicate<const gptr<Node>&> auto const& pred);
+    gvector<gptr<Node>> FindChildren(std::string_view name, bool allowPartialMatch = false);
+    gvector<gptr<Node>> FindChildren(LayerMask mask);
+    gvector<gptr<Node>> FindChildren(std::predicate<const gptr<Node>&> auto const& pred);
+    void FindChildren(gvector<gptr<Node>>& out, std::string_view name, bool allowPartialMatch = false);
+    void FindChildren(gvector<gptr<Node>>& out, LayerMask mask);
+    void FindChildren(gvector<gptr<Node>>& out, std::predicate<const gptr<Node>&> auto const& pred);
 
     void LookAt(const Vec3& target, const Vec3& up = Vec3::Up());
     void Translate(const Vec3& offset);
@@ -166,57 +166,68 @@ public:
     void SetLayerMask(LayerMask mask, bool includeChildren = false);
     LayerMask GetLayerMask() const;
 
-    void RemoveComponent(const sptr<Component>& comp);
+    void RemoveComponent(const gptr<Component>& comp);
 
     template<class T> requires std::is_base_of_v<Component, T>
-    sptr<T> AddComponent(const sptr<T>& comp);
+    gptr<T> AddComponent(const gptr<T>& comp);
 
     template<class T> requires std::is_base_of_v<Component, T>
-    sptr<T> AddComponent();
+    gptr<T> AddComponent();
 
     template<class T>
-    sptr<T> GetComponent();
+    gptr<T> GetComponent();
 
     template<class T>
-    std::vector<sptr<T>> GetComponents();
+    gvector<gptr<T>> GetComponents();
 
     template<class T>
-    void GetComponents(std::vector<sptr<T>>& out);
+    void GetComponents(gvector<gptr<T>>& out);
 
     template<class T>
-    sptr<T> FindComponentDownward();
+    gptr<T> FindComponentDownward();
 
     template<class T>
-    std::vector<sptr<T>> FindComponentsDownward();
+    gvector<gptr<T>> FindComponentsDownward();
 
     template<class T>
-    void FindComponentsDownward(std::vector<sptr<T>>& out);
+    void FindComponentsDownward(gvector<gptr<T>>& out);
 
     template<class T, class F>
     void FindComponentsDownward(F&& fun);
 
     template<class T>
-    sptr<T> FindComponentUpward();
+    gptr<T> FindComponentUpward();
 
     template<class T>
-    std::vector<sptr<T>> FindComponentsUpward();
+    gvector<gptr<T>> FindComponentsUpward();
 
     template<class T>
-    void FindComponentsUpward(std::vector<sptr<T>>& out);
+    void FindComponentsUpward(gvector<gptr<T>>& out);
 
     template<class T, class F>
     void FindComponentsUpward(F&& fun);
 
-private:
-    sptr<Component> AddComponentImpl(const sptr<Component>& comp);
+    int GetObjectCount() const
+    {
+        int totalObjects = 1;
+        totalObjects += (int)_components.size();
+        
+        for(auto& c : _children)
+            totalObjects += c->GetObjectCount();
+        
+        return totalObjects;
+    }
 
-    void SetScene(const sptr<Scene>& scene);
-    void AttachToScene(const sptr<Scene>& scene);
+private:
+    gptr<Component> AddComponentImpl(const gptr<Component>& comp);
+
+    void SetScene(const gptr<Scene>& scene);
+    void AttachToScene(const gptr<Scene>& scene);
     void DetachFromScene();
     void SignalStructureChanged();
 };
 
-sptr<Node> Node::FindChild(std::predicate<const sptr<Node>&> auto const& pred)
+gptr<Node> Node::FindChild(std::predicate<const gptr<Node>&> auto const& pred)
 {
     for (auto& c : _children)
     {
@@ -230,14 +241,14 @@ sptr<Node> Node::FindChild(std::predicate<const sptr<Node>&> auto const& pred)
     return nullptr;
 }
 
-std::vector<sptr<Node>> Node::FindChildren(std::predicate<const sptr<Node>&> auto const& pred)
+gvector<gptr<Node>> Node::FindChildren(std::predicate<const gptr<Node>&> auto const& pred)
 {
-    std::vector<sptr<Node>> ret;
+    gvector<gptr<Node>> ret;
     FindChildren(ret, pred);
     return ret;
 }
 
-void Node::FindChildren(std::vector<sptr<Node>>& out, std::predicate<const sptr<Node>&> auto const& pred)
+void Node::FindChildren(gvector<gptr<Node>>& out, std::predicate<const gptr<Node>&> auto const& pred)
 {
     for (auto& c : _children)
     {
@@ -249,24 +260,26 @@ void Node::FindChildren(std::vector<sptr<Node>>& out, std::predicate<const sptr<
 }
 
 template<class T> requires std::is_base_of_v<Component, T>
-sptr<T> Node::AddComponent(const sptr<T>& comp) {
+gptr<T> Node::AddComponent(const gptr<T>& comp) {
     AddComponentImpl(comp);
     return comp;
 }
 
 template<class T> requires std::is_base_of_v<Component, T>
-sptr<T> Node::AddComponent() {
-    return AddComponent(spnew<T>());
+gptr<T> Node::AddComponent() {
+    auto comp = gpnew<T>();
+    AddComponent(comp);
+    return comp;
 }
 
 template<class T>
-sptr<T> Node::GetComponent()
+gptr<T> Node::GetComponent()
 {
-    sptr<T> ret;
+    gptr<T> ret;
 
     for (auto& c : _components)
     {
-        if (ret = spcast<T>(c))
+        if (ret = gpcast<T>(c))
             break;
     }
 
@@ -274,40 +287,40 @@ sptr<T> Node::GetComponent()
 }
 
 template<class T>
-std::vector<sptr<T>> Node::GetComponents()
+gvector<gptr<T>> Node::GetComponents()
 {
-    std::vector<sptr<T>> ret;
+    gvector<gptr<T>> ret;
     GetComponents(ret);
     return ret;
 }
 
 template<class T>
-void Node::GetComponents(std::vector<sptr<T>>& out)
+void Node::GetComponents(gvector<gptr<T>>& out)
 {
     for (auto& c : _components)
     {
-        if (sptr<T> t = spcast<T>(c)) {
+        if (gptr<T> t = gpcast<T>(c)) {
             out.push_back(std::move(t));
         }
     }
 }
 
 template<class T>
-sptr<T> Node::FindComponentDownward()
+gptr<T> Node::FindComponentDownward()
 {
     struct R
     {
-        static sptr<T> FindComponent(const sptr<Node>& node)
+        static gptr<T> FindComponent(const gptr<Node>& node)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = spcast<T>(c))
+                if (gptr<T> t = gpcast<T>(c))
                     return std::move(t);
             }
 
             for (auto& n : node->_children)
             {
-                if (sptr<T> t = FindComponent(n))
+                if (gptr<T> t = FindComponent(n))
                     return std::move(t);
             }
 
@@ -315,28 +328,28 @@ sptr<T> Node::FindComponentDownward()
         }
     };
 
-    return R::FindComponent(SharedFrom(this));
+    return R::FindComponent(self(this));
 }
 
 template<class T>
-std::vector<sptr<T>> Node::FindComponentsDownward()
+gvector<gptr<T>> Node::FindComponentsDownward()
 {
-    std::vector<sptr<T>> ret;
+    gvector<gptr<T>> ret;
     FindComponentsDownward(ret);
     return ret;
 }
 
 template<class T>
-void Node::FindComponentsDownward(std::vector<sptr<T>>& out)
+void Node::FindComponentsDownward(gvector<gptr<T>>& out)
 {
     struct R
     {
         static void FindComponents(
-            const sptr<Node>& node, std::vector<sptr<T>>& out)
+            const gptr<Node>& node, gvector<gptr<T>>& out)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = spcast<T>(c))
+                if (gptr<T> t = gpcast<T>(c))
                     out.push_back(std::move(t));
             }
 
@@ -345,7 +358,7 @@ void Node::FindComponentsDownward(std::vector<sptr<T>>& out)
         }
     };
 
-    R::FindComponents(SharedFrom(this), out);
+    R::FindComponents(self(this), out);
 }
 
 template<class T, class F>
@@ -354,11 +367,11 @@ void Node::FindComponentsDownward(F&& fun)
     struct R
     {
         static void FindComponents(
-            const sptr<Node>& node, F& fun)
+            const gptr<Node>& node, F& fun)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = spcast<T>(c))
+                if (gptr<T> t = gpcast<T>(c))
                     fun(t);
             }
 
@@ -367,25 +380,25 @@ void Node::FindComponentsDownward(F&& fun)
         }
     };
 
-    R::FindComponents(SharedFrom(this), fun);
+    R::FindComponents(self(this), fun);
 }
 
 template<class T>
-sptr<T> Node::FindComponentUpward()
+gptr<T> Node::FindComponentUpward()
 {
     struct R
     {
-        static sptr<T> FindComponent(const sptr<Node>& node)
+        static gptr<T> FindComponent(const gptr<Node>& node)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = spcast<T>(c))
+                if (gptr<T> t = gpcast<T>(c))
                     return std::move(t);
             }
 
             if (auto parent = node->GetParent())
             {
-                if (sptr<T> t = FindComponent(parent))
+                if (gptr<T> t = FindComponent(parent))
                     return std::move(t);
             }
 
@@ -393,27 +406,27 @@ sptr<T> Node::FindComponentUpward()
         }
     };
 
-    return R::FindComponent(SharedFrom(this));
+    return R::FindComponent(self(this));
 }
 
 template<class T>
-std::vector<sptr<T>> Node::FindComponentsUpward()
+gvector<gptr<T>> Node::FindComponentsUpward()
 {
-    std::vector<sptr<T>> ret;
+    gvector<gptr<T>> ret;
     FindComponentsUpward(ret);
     return ret;
 }
 
 template<class T>
-void Node::FindComponentsUpward(std::vector<sptr<T>>& out)
+void Node::FindComponentsUpward(gvector<gptr<T>>& out)
 {
     struct R
     {
-        static void FindComponents(const sptr<Node>& node, std::vector<sptr<T>>& out)
+        static void FindComponents(const gptr<Node>& node, gvector<gptr<T>>& out)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = spcast<T>(c))
+                if (gptr<T> t = gpcast<T>(c))
                     out.push_back(std::move(t));
             }
 
@@ -422,7 +435,7 @@ void Node::FindComponentsUpward(std::vector<sptr<T>>& out)
         }
     };
 
-    R::FindComponents(SharedFrom(this), out);
+    R::FindComponents(self(this), out);
 }
 
 template<class T, class F>
@@ -430,11 +443,11 @@ void Node::FindComponentsUpward(F&& fun)
 {
     struct R
     {
-        static void FindComponents(const sptr<Node>& node, F& fun)
+        static void FindComponents(const gptr<Node>& node, F& fun)
         {
             for (auto& c : node->_components)
             {
-                if (sptr<T> t = spcast<T>(c))
+                if (gptr<T> t = gpcast<T>(c))
                     fun(t);
             }
 
@@ -443,7 +456,7 @@ void Node::FindComponentsUpward(F&& fun)
         }
     };
 
-    R::FindComponents(SharedFrom(this), fun);
+    R::FindComponents(self(this), fun);
 }
 
 } // scene

@@ -4,11 +4,12 @@
 
 export module Microwave.System.PostExecutor;
 import Microwave.System.Dispatcher;
+import Microwave.System.Exception;
 import Microwave.System.Executor;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
+import <MW/System/Debug.h>;
 import <functional>;
-import <cassert>;
 
 export namespace mw {
 inline namespace system {
@@ -16,18 +17,18 @@ inline namespace system {
 class PostExecutor : public Executor
 {
     inline static Type::Pin<PostExecutor> pin;
-    sptr<Dispatcher> dispatcher;
+    gptr<Dispatcher> dispatcher;
 protected:
-    virtual void Execute(const std::function<void()>& job) override
+    virtual void Execute(const gfunction<void()>& job) override
     {
         dispatcher->InvokeAsync(job);
     }
 
 public:
-    PostExecutor(sptr<Dispatcher> dispatcher)
+    PostExecutor(gptr<Dispatcher> dispatcher)
         : dispatcher(dispatcher)
     {
-        assert(dispatcher);
+        Assert(dispatcher);
         SetName("PostExecutor");
     }
 };

@@ -17,8 +17,8 @@ extern android_app* androidApp;
 
 WindowAndroid* WindowAndroid::instance = nullptr;
 
-sptr<Window> Window::New(const std::string title, const IVec2& pos, const IVec2& size) {
-    return spnew<WindowAndroid>();
+gptr<Window> Window::New(const std::string title, const IVec2& pos, const IVec2& size) {
+    return gpnew<WindowAndroid>();
 }
 
 WindowAndroid::WindowAndroid()
@@ -251,7 +251,7 @@ Keycode WindowAndroid::TranslateKey(int keycode)
     return (Keycode)((int)Keycode::Unknown + keycode);
 }
 
-sptr<HWRenderTarget> WindowAndroid::GetHWRenderTarget() {
+gptr<HWRenderTarget> WindowAndroid::GetHWRenderTarget() {
     return surface;
 }
 

@@ -16,7 +16,7 @@ class LossScreen : public Script
                  , public IUserEvents
 {
 public:
-    wptr<Game> game;
+    gptr<Game> game;
 
     void PlayAgain();
     Task<void> InitAsync();

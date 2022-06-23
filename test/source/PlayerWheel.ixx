@@ -15,7 +15,7 @@ class PlayerWheel : public Script
                   , public ICollisionEvents
 {
 public:
-    wptr<Player> player;
+    gptr<Player> player;
     virtual void OnCollisionStart(const Collision& collision) override;
     virtual void OnCollisionUpdate(const Collision& collision) override;
 };

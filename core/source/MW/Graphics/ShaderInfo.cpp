@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.Graphics.ShaderInfo;
+import Microwave.System.Exception;
 import <HLSLParser.h>;
 import <GLSLGenerator.h>;
 import <HLSLGenerator.h>;
@@ -145,7 +146,7 @@ ShaderInfo::ShaderInfo(const std::string& source, ShaderLanguage lang)
 
     ParserError error;
     if(!parser.Parse(&tree, &error))
-        throw std::runtime_error(format("(%): %", error.line, error.msg));
+        throw Exception({ "(", error.line, "): ", error.msg });
 
     // find entry points
     std::regex vs_reg("#pragma[\\s\\n]+vertex[\\s\\n]+(\\w+)");
@@ -155,10 +156,10 @@ ShaderInfo::ShaderInfo(const std::string& source, ShaderLanguage lang)
     std::smatch fs_match;
 
     if(!regex_search(source.cbegin(), source.cend(), vs_match, vs_reg))
-        throw std::runtime_error("error: entry point not found for vertex shader.");
+        throw Exception("error: entry point not found for vertex shader.");
 
     if(!regex_search(source.cbegin(), source.cend(), fs_match, fs_reg))
-        throw std::runtime_error("error: entry point not found for fragment shader.");
+        throw Exception("error: entry point not found for fragment shader.");
 
     this->vertShaderEntryPoint = vs_match[1];
     this->fragShaderEntryPoint = fs_match[1];
@@ -248,11 +249,11 @@ ShaderInfo::ShaderInfo(const std::string& source, ShaderLanguage lang)
 
         GLSLGenerator vsGenerator;
         if (!vsGenerator.Generate(&tree, GLSLGenerator::Target_VertexShader, version, this->vertShaderEntryPoint.c_str()))
-            throw std::runtime_error("failed to generate vertex shader");
+            throw Exception("failed to generate vertex shader");
 
         GLSLGenerator fsGenerator;
         if (!fsGenerator.Generate(&tree, GLSLGenerator::Target_FragmentShader, version, this->fragShaderEntryPoint.c_str()))
-            throw std::runtime_error("failed to generate fragment shader");
+            throw Exception("failed to generate fragment shader");
 
         this->vertShaderSource = vsGenerator.GetResult();
         this->fragShaderSource = fsGenerator.GetResult();
@@ -261,11 +262,11 @@ ShaderInfo::ShaderInfo(const std::string& source, ShaderLanguage lang)
     {
         HLSLGenerator vsGenerator;
         if (!vsGenerator.Generate(&tree, HLSLGenerator::Target_VertexShader, this->vertShaderEntryPoint.c_str(), false))
-            throw std::runtime_error("failed to generate vertex shader");
+            throw Exception("failed to generate vertex shader");
 
         HLSLGenerator fsGenerator;
         if (!fsGenerator.Generate(&tree, HLSLGenerator::Target_PixelShader, this->fragShaderEntryPoint.c_str(), false))
-            throw std::runtime_error("failed to generate fragment shader");
+            throw Exception("failed to generate fragment shader");
 
         this->vertShaderSource = vsGenerator.GetResult();
         this->fragShaderSource = fsGenerator.GetResult();

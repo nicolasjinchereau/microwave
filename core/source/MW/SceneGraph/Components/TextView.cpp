@@ -31,7 +31,7 @@ void TextView::FromJson(const json& obj, ObjectLinker* linker)
 {
     View::FromJson(obj, linker);
 
-    ObjectLinker::RestoreAsset(linker, SharedFrom(this), font, obj, "font");
+    ObjectLinker::RestoreAsset(linker, self(this), font, obj, "font");
 
     fontSize = obj.value("fontSize", fontSize);
     wrapping = obj.value("wrapping", wrapping);
@@ -44,12 +44,12 @@ void TextView::FromJson(const json& obj, ObjectLinker* linker)
 
 void TextView::Construct()
 {
-    vertexBuffer = spnew<Buffer>(
+    vertexBuffer = gpnew<Buffer>(
         BufferType::Vertex, BufferUsage::Dynamic,
         BufferCPUAccess::WriteOnly, sizeof(UIVertex) * 4);
 
     auto assetLib = App::Get()->GetAssetLibrary();
-    mat = spnew<Material>();
+    mat = gpnew<Material>();
     mat->shader = assetLib->GetAsset<Shader>(".internal/ui-default.cg");
     mat->depthTest = DepthTest::Always;
     mat->depthWriteEnabled = false;
@@ -57,13 +57,13 @@ void TextView::Construct()
     mat->SetBlendFactors(BlendFactor::SrcAlpha, BlendFactor::OneMinusSrcAlpha);
 }
 
-void TextView::SetFont(const sptr<Font>& font)
+void TextView::SetFont(const gptr<Font>& font)
 {
     this->font = font;
     textDirty = true;
 }
 
-const sptr<Font>& TextView::GetFont() const {
+const gptr<Font>& TextView::GetFont() const {
     return font;
 }
 
@@ -138,7 +138,7 @@ void TextView::UpdateText()
             verts,
             vertexRanges);
 
-        vertexBuffer = spnew<Buffer>(
+        vertexBuffer = gpnew<Buffer>(
             BufferType::Vertex, BufferUsage::Dynamic,
             BufferCPUAccess::WriteOnly,
             std::as_writable_bytes(std::span(verts.data(), verts.size())));
@@ -152,7 +152,7 @@ void TextView::OnSizeChanged()
     textDirty = true;
 }
 
-void TextView::GetRenderables(Sink<sptr<Renderable>> sink)
+void TextView::GetRenderables(Sink<gptr<Renderable>> sink)
 {
     if (!font || text.empty())
         return;
@@ -161,7 +161,7 @@ void TextView::GetRenderables(Sink<sptr<Renderable>> sink)
     float hw = sz.x * 0.5f;
     float hh = sz.y * 0.5f;
 
-    sptr<Node> node = GetNode();
+    gptr<Node> node = GetNode();
     Mat4 mtxTrans = Mat4::Translation(-hw, -hh, 0);
     Mat4 mtxModel = mtxTrans * node->GetLocalToWorldMatrix();
 
@@ -180,9 +180,9 @@ void TextView::GetRenderables(Sink<sptr<Renderable>> sink)
         auto& rng = vertexRanges[i];
 
         if (!renderables[i])
-            renderables[i] = spnew<Renderable>();
+            renderables[i] = gpnew<Renderable>();
 
-        sptr<Renderable> renderable = renderables[i];
+        gptr<Renderable> renderable = renderables[i];
 
         renderable->vertexMapping = {
             { Semantic::POSITION, 0, vertexBuffer, 0, sizeof(UIVertex) },

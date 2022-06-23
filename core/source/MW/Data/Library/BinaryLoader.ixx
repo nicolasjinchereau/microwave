@@ -23,14 +23,14 @@ inline namespace data {
 class BinaryLoader : public AssetLoader
 {
 public:
-    virtual Task<sptr<Object>> LoadAsync(
+    virtual Task<gptr<Object>> LoadAsync(
         const path& filePath,
         const AssetArtifact& artifact,
-        const sptr<Executor>& executor
+        const gptr<Executor>& executor
     ) const override
     {
         std::vector<std::byte> data = File::ReadAllBytes(filePath);
-        auto obj = spnew<MemoryStream>(std::move(data));
+        auto obj = gpnew<MemoryStream>(std::move(data));
         obj->SetUUID(artifact.uuid);
         co_return obj;
     }

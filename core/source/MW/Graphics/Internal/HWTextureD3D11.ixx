@@ -22,7 +22,7 @@ class HWContextD3D11;
 class HWTextureD3D11 : public HWTexture
 {
 public:
-    sptr<HWContextD3D11> context;
+    gptr<HWContextD3D11> context;
     IVec2 size = IVec2::Zero();
     PixelDataFormat format = PixelDataFormat::RGBA32;
     PixelDataFormat internalFormat = PixelDataFormat::RGBA32;
@@ -38,18 +38,18 @@ public:
     Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 
     HWTextureD3D11(
-        const sptr<HWContextD3D11>& context,
+        const gptr<HWContextD3D11>& context,
         const IVec2& size,
         PixelDataFormat format,
         bool dynamic,
         const std::span<std::byte>& data);
     
     HWTextureD3D11(
-        const sptr<HWContextD3D11>& context,
+        const gptr<HWContextD3D11>& context,
         const IVec2& size,
         PixelDataFormat format,
         bool dynamic,
-        const sptr<HWBuffer>& buffer);
+        const gptr<HWBuffer>& buffer);
 
     virtual ~HWTextureD3D11();
 

@@ -66,7 +66,7 @@ float CapsuleCollider::GetHeight() const {
 void CapsuleCollider::FitToMesh(bool searchChildren)
 {
     auto node = GetNode();
-    sptr<MeshRenderer> mr = searchChildren ?
+    gptr<MeshRenderer> mr = searchChildren ?
         node->FindComponentDownward<MeshRenderer>() :
         node->GetComponent<MeshRenderer>();
 
@@ -139,15 +139,15 @@ void CapsuleCollider::UpdateGizmo()
         upRotation;
 }
 
-void CapsuleCollider::GetRenderables(Sink<sptr<Renderable>> sink)
+void CapsuleCollider::GetRenderables(Sink<gptr<Renderable>> sink)
 {
     if (!GetScene()->GetGizmosEnabled())
         return;
 
     UpdateGizmo();
 
-    sptr<Node> node = GetNode();
-    sptr<Node> pivot = GetPivot();
+    gptr<Node> node = GetNode();
+    gptr<Node> pivot = GetPivot();
     
     Mat4 mtxModel = pivot->GetLocalToWorldMatrix();
 
@@ -164,7 +164,7 @@ void CapsuleCollider::GetRenderables(Sink<sptr<Renderable>> sink)
     for (int i = 0; i != 3; ++i)
     {
         if (!renderables[i])
-            renderables[i] = spnew<Renderable>();
+            renderables[i] = gpnew<Renderable>();
     }
 
     renderables[0]->vertexMapping = {

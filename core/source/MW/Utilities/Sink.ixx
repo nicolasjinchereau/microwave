@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Utilities.Sink;
+import Microwave.System.Pointers;
 import <vector>;
 import <utility>;
 
@@ -12,9 +13,9 @@ inline namespace utilities {
 template<class T>
 class Sink
 {
-    std::vector<T>& cont;
+    gvector<T>& cont;
 public:
-    Sink(std::vector<T>& cont) : cont(cont) {}
+    Sink(gvector<T>& cont) : cont(cont) {}
 
     template<class U>
     void Add(U&& value) {

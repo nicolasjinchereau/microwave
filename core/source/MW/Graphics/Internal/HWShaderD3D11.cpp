@@ -7,6 +7,8 @@ import Microwave.Graphics.Internal.HWBufferD3D11;
 import Microwave.Graphics.Internal.HWContextD3D11;
 import Microwave.Graphics.Internal.HWTextureD3D11;
 import Microwave.Graphics.ShaderInfo;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -33,15 +35,15 @@ ComPtr<ID3DBlob> CompileShader(const std::string& source, const std::string& ent
 
     if (FAILED(hr)) {
         std::string err = (const char*)error->GetBufferPointer();
-        throw std::runtime_error(err);
+        throw Exception(err);
     }
 
     return result;
 }
 
 HWShaderD3D11::HWShaderD3D11(
-    const sptr<HWContextD3D11>& context,
-    const sptr<ShaderInfo>& info)
+    const gptr<HWContextD3D11>& context,
+    const gptr<ShaderInfo>& info)
     : context(context)
     , HWShader(info)
 {
@@ -57,7 +59,7 @@ HWShaderD3D11::HWShaderD3D11(
         &vertexShader);
 
     if(FAILED(hr))
-        throw std::runtime_error("could not create vertex shader");
+        throw Exception("could not create vertex shader");
 
     hr = context->device->CreatePixelShader(
         psBytecode->GetBufferPointer(),
@@ -66,7 +68,7 @@ HWShaderD3D11::HWShaderD3D11(
         &pixelShader);
 
     if(FAILED(hr))
-        throw std::runtime_error("could not create pixel shader");
+        throw Exception("could not create pixel shader");
 
     std::vector<D3D11_INPUT_ELEMENT_DESC> inputElements;
     std::list<std::string> semanticNames;
@@ -112,7 +114,7 @@ HWShaderD3D11::HWShaderD3D11(
         &inputLayout);
 
     if(FAILED(hr))
-        throw std::runtime_error("could not create input layout for shader");
+        throw Exception("could not create input layout for shader");
 
     // create a constant buffer for uniforms
     uint32_t bufferSize = 0;
@@ -154,7 +156,7 @@ HWShaderD3D11::HWShaderD3D11(
 
     hr = context->device->CreateBuffer(&cbDesc, &resData, &uniformBuffer);
     if(FAILED(hr))
-        throw std::runtime_error("failed to create uniform buffer");
+        throw Exception("failed to create uniform buffer");
 }
 
 HWShaderD3D11::~HWShaderD3D11()
@@ -179,13 +181,13 @@ void HWShaderD3D11::Unbind()
     context->deviceContext->PSSetShader(nullptr, nullptr, 0);
 }
 
-void HWShaderD3D11::SetVertexBuffer(int id, const sptr<Buffer>& buffer, size_t offset, size_t stride)
+void HWShaderD3D11::SetVertexBuffer(int id, const gptr<Buffer>& buffer, size_t offset, size_t stride)
 {
     if(id >= 0)
     {
-        assert(buffer->GetType() == BufferType::Vertex);
-        auto pb = spcast<HWBufferD3D11>(buffer->GetHWBuffer());
-        assert(pb);
+        Assert(buffer->GetType() == BufferType::Vertex);
+        auto pb = gpcast<HWBufferD3D11>(buffer->GetHWBuffer());
+        Assert(pb);
 
         auto& attrib = info->attributes[id];
         context->deviceContext->IASetVertexBuffers(
@@ -193,18 +195,18 @@ void HWShaderD3D11::SetVertexBuffer(int id, const sptr<Buffer>& buffer, size_t o
     }
 }
 
-void HWShaderD3D11::SetIndexBuffer(const sptr<Buffer>& buffer)
+void HWShaderD3D11::SetIndexBuffer(const gptr<Buffer>& buffer)
 {
-    assert(buffer->GetType() == BufferType::Index);
-    auto pb = spcast<HWBufferD3D11>(buffer->GetHWBuffer());
-    assert(pb);
+    Assert(buffer->GetType() == BufferType::Index);
+    auto pb = gpcast<HWBufferD3D11>(buffer->GetHWBuffer());
+    Assert(pb);
 
     context->deviceContext->IASetIndexBuffer(pb->GetBuffer().Get(), DXGI_FORMAT_R32_UINT, 0);
 }
 
 template<class T>
 void SetUniformD3D(
-    const sptr<HWContextD3D11>& context,
+    const gptr<HWContextD3D11>& context,
     std::vector<uint8_t>& uniformData,
     UINT offset,
     ID3D11Buffer* buffer,
@@ -216,7 +218,7 @@ void SetUniformD3D(
     auto res = context->deviceContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
     if(SUCCEEDED(res))
     {
-        //assert((resource.RowPitch * resource.DepthPitch) == sizeof(T))
+        //Assert((resource.RowPitch * resource.DepthPitch) == sizeof(T))
         memcpy(resource.pData, uniformData.data(), uniformData.size());
         context->deviceContext->Unmap(buffer, 0);
     }
@@ -273,16 +275,16 @@ void HWShaderD3D11::SetUniform(int id, const Color& value)
         SetUniformD3D(context, uniformData, info->uniforms[id].slot, uniformBuffer.Get(), value);
 }
 
-void HWShaderD3D11::SetUniform(int id, const sptr<Texture>& texture)
+void HWShaderD3D11::SetUniform(int id, const gptr<Texture>& texture)
 {
     if(id >= 0)
     {
-        sptr<HWTexture> hwTex = texture->GetHWTexture();
+        gptr<HWTexture> hwTex = texture->GetHWTexture();
         if (!hwTex)
             return;
 
-        auto pt = spcast<HWTextureD3D11>(hwTex);
-        assert(pt);
+        auto pt = gpcast<HWTextureD3D11>(hwTex);
+        Assert(pt);
 
         auto& uniform = info->uniforms[id];
 

@@ -8,6 +8,7 @@ import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Graphics.Internal.HWRenderTarget;
 import Microwave.Graphics.Internal.HWRenderTexture;
+import Microwave.System.Exception;
 import <vector>;
 import <span>;
 import <cstddef>;
@@ -19,7 +20,7 @@ RenderTexture::RenderTexture(const IVec2& size)
 {
     auto graphics = GraphicsContext::GetCurrent();
     if (!graphics)
-        throw std::runtime_error("no active graphics context");
+        throw Exception("no active graphics context");
 
     std::vector<Color32> pixels;
     pixels.resize(size.x * size.y);
@@ -32,7 +33,7 @@ RenderTexture::RenderTexture(const IVec2& size)
     renderTexture = graphics->context->CreateRenderTexture(tex);
 }
 
-sptr<HWRenderTarget> RenderTexture::GetHWRenderTarget() {
+gptr<HWRenderTarget> RenderTexture::GetHWRenderTarget() {
     return renderTexture;
 }
 

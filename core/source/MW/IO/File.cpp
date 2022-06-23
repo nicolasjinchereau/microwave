@@ -6,7 +6,8 @@ module;
 #include <MW/System/Internal/Platform.h>
 
 module Microwave.IO.File;
-import <cassert>;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <chrono>;
 import <fstream>;
 import <functional>;
@@ -38,8 +39,8 @@ public:
         return scheme;
     }
 
-    virtual sptr<FileStream> Open(const path& path, OpenMode openMode) override {
-        return spnew<FileStream>(path, openMode);
+    virtual gptr<FileStream> Open(const path& path, OpenMode openMode) override {
+        return gpnew<FileStream>(path, openMode);
     }
 };
 
@@ -52,8 +53,8 @@ public:
         return scheme;
     }
 
-    virtual sptr<FileStream> Open(const path& path, OpenMode openMode) override {
-        return spnew<AndroidAssetStream>(path, openMode);
+    virtual gptr<FileStream> Open(const path& path, OpenMode openMode) override {
+        return gpnew<AndroidAssetStream>(path, openMode);
     }
 };
 #endif
@@ -68,29 +69,29 @@ public:
     RelativeFileResolver(const std::string& scheme, const std::function<path(const path&)>& pathCompleter)
         : scheme(scheme), pathCompleter(pathCompleter)
     {
-        assert(!!pathCompleter);
+        Assert(!!pathCompleter);
     }
 
     virtual const std::string& GetScheme() override {
         return scheme;
     }
 
-    virtual sptr<FileStream> Open(const path& path, OpenMode openMode) override {
+    virtual gptr<FileStream> Open(const path& path, OpenMode openMode) override {
         auto fullPath = pathCompleter(path);
-        return spnew<FileStream>(fullPath, openMode);
+        return gpnew<FileStream>(fullPath, openMode);
     }
 };
 
 path File::_defaultDataPath = {};
 
-std::unordered_map<std::string, sptr<FileResolver>> File::_fileResolvers =
+gmap<std::string, gptr<FileResolver>> File::_fileResolvers =
 {
-    { "", spnew<StandardFileResolver>() },
+    { "", gpnew<StandardFileResolver>() },
 
 #if PLATFORM_ANDROID
-    { "android.asset", spnew<AndroidAssetResolver>() },
-    { "android.internal", spnew<RelativeFileResolver>("android.internal", [](const path& relativePath) { return path((androidApp && androidApp->activity) ? androidApp->activity->internalDataPath : nullptr) / relativePath; }) },
-    { "android.external", spnew<RelativeFileResolver>("android.external", [](const path& relativePath) { return path((androidApp && androidApp->activity) ? androidApp->activity->externalDataPath : nullptr) / relativePath; }) }
+    { "android.asset", gpnew<AndroidAssetResolver>() },
+    { "android.internal", gpnew<RelativeFileResolver>("android.internal", [](const path& relativePath) { return path((androidApp && androidApp->activity) ? androidApp->activity->internalDataPath : nullptr) / relativePath; }) },
+    { "android.external", gpnew<RelativeFileResolver>("android.external", [](const path& relativePath) { return path((androidApp && androidApp->activity) ? androidApp->activity->externalDataPath : nullptr) / relativePath; }) }
 #endif
 };
 
@@ -118,13 +119,13 @@ void File::SetDefaultDataPath(const path& p)
     _defaultDataPath = !p.empty() ? p : ".";
 }
 
-void File::AddResolver(const sptr<FileResolver>& resolver)
+void File::AddResolver(const gptr<FileResolver>& resolver)
 {
     if (!resolver)
-        throw std::runtime_error("resolver cannot be null");
+        throw Exception("resolver cannot be null");
 
     auto scheme = resolver->GetScheme();
-    assert(!scheme.empty());
+    Assert(!scheme.empty());
 
     _fileResolvers[scheme] = resolver;
 }
@@ -134,7 +135,7 @@ void File::RemoveResolver(const std::string& scheme)
     _fileResolvers.erase(scheme);
 }
 
-sptr<FileResolver> File::GetResolver(const std::string& scheme)
+gptr<FileResolver> File::GetResolver(const std::string& scheme)
 {
     auto it = _fileResolvers.find(scheme);
     return it != _fileResolvers.end() ? it->second : nullptr;
@@ -162,16 +163,16 @@ std::tuple<std::string, path> SplitSchemeAndPath(const path& p)
     }
 }
 
-sptr<FileStream> File::Open(const path& p, OpenMode openMode)
+gptr<FileStream> File::Open(const path& p, OpenMode openMode)
 {
     if (p.empty())
-        throw std::runtime_error("File::Open -'path' cannot be empty");
+        throw Exception("File::Open -'path' cannot be empty");
 
     auto [scheme, relativePath] = SplitSchemeAndPath(p);
 
     auto it = _fileResolvers.find(scheme);
     if (it == _fileResolvers.end())
-        throw std::runtime_error("file resolver not found for specified scheme");
+        throw Exception("file resolver not found for specified scheme");
 
     auto& resolver = it->second;
     return resolver->Open(relativePath, openMode);
@@ -186,7 +187,7 @@ std::vector<std::byte> File::ReadAllBytes(const path& p)
     buffer.resize(size);
 
     int read = stream->Read(buffer);
-    assert(read == size);
+    Assert(read == size);
 
     return buffer;
 }
@@ -203,7 +204,7 @@ Task<std::vector<std::byte>> File::ReadAllBytesAsync(const path& p)
         buffer.resize(size);
 
         int read = stream->Read(buffer);
-        assert(read == size);
+        Assert(read == size);
     });
 
     co_return buffer;
@@ -233,7 +234,7 @@ std::string File::ReadAllText(const path& p)
     text.resize(size);
 
     int read = stream->Read(std::span<std::byte>((std::byte*)text.data(), text.size()));
-    assert(read == size);
+    Assert(read == size);
 
     return text;
 }
@@ -250,7 +251,7 @@ Task<std::string> File::ReadAllTextAsync(const path& p)
         text.resize(size);
 
         int read = stream->Read(std::span<std::byte>((std::byte*)text.data(), text.size()));
-        assert(read == size);
+        Assert(read == size);
     });
 
     co_return text;

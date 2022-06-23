@@ -17,13 +17,13 @@ class Scene;
 class SceneRenderer
 {
     bool gizmosEnabled = false;
-    std::vector<sptr<Renderable>> renderables;
-    std::vector<sptr<Renderable>> temp;
+    gvector<gptr<Renderable>> renderables;
+    gvector<gptr<Renderable>> temp;
 
 public:
     SceneRenderer();
 
-    void Render(const sptr<Scene>& scene);
+    void Render(const gptr<Scene>& scene);
 
     void SetGizmosEnabled(bool enable);
     bool GetGizmosEnabled() const;

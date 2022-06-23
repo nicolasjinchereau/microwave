@@ -9,8 +9,8 @@ namespace mw {
 inline namespace gfx {
 
 HWSurfaceNSGL::HWSurfaceNSGL(
-    const sptr<HWContextNSGL>& context,
-    const sptr<WindowMacOS>& window)
+    const gptr<HWContextNSGL>& context,
+    const gptr<WindowMacOS>& window)
     : context(context)
     , window(window)
 {

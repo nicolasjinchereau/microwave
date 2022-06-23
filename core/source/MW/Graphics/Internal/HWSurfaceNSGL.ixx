@@ -20,15 +20,15 @@ class HWContextNSGL;
 class HWSurfaceNSGL : public HWSurface
 {
 public:
-    sptr<HWContextNSGL> context;
-    wptr<WindowMacOS> window;
+    gptr<HWContextNSGL> context;
+    wgptr<WindowMacOS> window;
 
     IVec2 size;
     int depthBits = 0;
 
     HWSurfaceNSGL(
-        const sptr<HWContextNSGL>& context,
-        const sptr<WindowMacOS>& window);
+        const gptr<HWContextNSGL>& context,
+        const gptr<WindowMacOS>& window);
 
     ~HWSurfaceNSGL();
 

@@ -63,14 +63,14 @@
     <ClInclude Include="..\..\source\MW\Data\Internal\FBX_SDK.h">
       <Filter>Data\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\MW\Data\Internal\FbxMemoryStream.h">
-      <Filter>Data\Internal</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\MW\Graphics\Internal\FreeType2.h">
       <Filter>Graphics\Internal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\MW\SceneGraph\Internal\Bullet.h">
       <Filter>SceneGraph\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\MW\System\Debug.h">
+      <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\MW\System\Internal\Platform.h">
       <Filter>System\Internal</Filter>
@@ -458,6 +458,9 @@
     <ClCompile Include="..\..\source\MW\IO\Stream.ixx">
       <Filter>IO</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\IO\Terminal.ixx">
+      <Filter>IO</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Math\AABox.ixx">
       <Filter>Math</Filter>
     </ClCompile>
@@ -702,12 +705,6 @@
     <ClCompile Include="..\..\source\MW\System\Clock.ixx">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\System\Console.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\System\Console.ixx">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Dispatcher.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -718,6 +715,9 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\System\EventHandlerList.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\Exception.ixx">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\System\Executor.ixx">
@@ -819,9 +819,6 @@
     <ClCompile Include="..\..\source\MW\Utilities\EnumFlags.ixx">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\MW\Utilities\Format.ixx">
-      <Filter>Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\Sink.ixx">
       <Filter>Utilities</Filter>
     </ClCompile>
@@ -830,6 +827,9 @@
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\Utilities.ixx">
       <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\GC.ixx">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

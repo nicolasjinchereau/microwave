@@ -3,11 +3,11 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.IO.Stream;
+import Microwave.System.Exception;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.System.Task;
 import Microwave.System.ThreadPool;
-import <cassert>;
 import <cstdint>;
 import <cstdlib>;
 import <memory>;
@@ -49,8 +49,8 @@ public:
     Task<void> FlushAsync();
     Task<int> ReadAsync(std::span<std::byte> buffer);
     Task<void> WriteAsync(std::span<std::byte> buffer);
-    void CopyTo(sptr<Stream>& stream);
-    Task<void> CopyToAsync(sptr<Stream>& stream);
+    void CopyTo(gptr<Stream>& stream);
+    Task<void> CopyToAsync(gptr<Stream>& stream);
     template<class T> T ReadValue();
     template<class T> bool ReadValue(T& output);
     template<class T> void WriteValue(const T& value);
@@ -80,7 +80,7 @@ Task<void> Stream::WriteAsync(std::span<std::byte> buffer)
     co_await ThreadPool::InvokeAsync([&] { Write(buffer); });
 }
 
-void Stream::CopyTo(sptr<Stream>& stream)
+void Stream::CopyTo(gptr<Stream>& stream)
 {
     std::array<std::byte, DefaultBufferSize> buffer;
 
@@ -91,7 +91,7 @@ void Stream::CopyTo(sptr<Stream>& stream)
     }
 }
 
-Task<void> Stream::CopyToAsync(sptr<Stream>& stream) {
+Task<void> Stream::CopyToAsync(gptr<Stream>& stream) {
     co_await ThreadPool::InvokeAsync([&] { CopyTo(stream); });
 }
 
@@ -100,7 +100,7 @@ T Stream::ReadValue()
 {
     T ret;
     size_t read = Read({ (std::byte*)&ret, sizeof(T) });
-    if (read < sizeof(T)) throw std::runtime_error("unexpected end of stream");
+    if (read < sizeof(T)) throw Exception("unexpected end of stream");
     return ret;
 }
 

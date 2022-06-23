@@ -8,9 +8,11 @@ import Microwave.Graphics.Internal.HWDriverContext;
 import Microwave.Graphics.Internal.HWRenderTextureOpenGL;
 import Microwave.Graphics.Internal.OpenGLAPI;
 import Microwave.Graphics.Internal.HWSurfaceWGL;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import Microwave.System.Internal.WindowWindows;
 import <MW/System/Internal/PlatformHeaders.h>;
+import <MW/System/Debug.h>;
 import <memory>;
 
 export namespace mw {
@@ -50,15 +52,15 @@ public:
         wcex.hIconSm = NULL;
 
         if (!RegisterClassEx(&wcex))
-            throw std::runtime_error("failed to register window class for surrogate window");
+            throw Exception("failed to register window class for surrogate window");
 
         hWnd = CreateWindow(name, name, style, 0, 0, width, height, NULL, NULL, hInst, NULL);
         if (!hWnd)
-            throw std::runtime_error("failed to create surrogate window for graphics");
+            throw Exception("failed to create surrogate window for graphics");
 
         hDC = GetDC(hWnd);
         if (!hDC)
-            throw std::runtime_error("failed to get device context for window");
+            throw Exception("failed to get device context for window");
 
         PIXELFORMATDESCRIPTOR pfd = {
             sizeof(PIXELFORMATDESCRIPTOR),
@@ -77,13 +79,13 @@ public:
 
         hGLRC = wglCreateContext(hDC);
         if (!hGLRC)
-            throw std::runtime_error("couldn't create an OpenGL context");
+            throw Exception("couldn't create an OpenGL context");
 
         boundDC = hDC;
         wglMakeCurrent(boundDC, hGLRC);
         
         if (glewInit() != GLEW_OK)
-            throw std::runtime_error("couldn't initialize OpenGL extensions");
+            throw Exception("couldn't initialize OpenGL extensions");
 
         wglSwapIntervalEXT = (PFNWGLSWAPINTERVALFARPROC)wglGetProcAddress("wglSwapIntervalEXT");
     }
@@ -108,9 +110,9 @@ public:
             wglMakeCurrent(nullptr, nullptr);
     }
 
-    virtual void SetRenderTarget(const sptr<HWRenderTarget>& target) override
+    virtual void SetRenderTarget(const gptr<HWRenderTarget>& target) override
     {
-        if (auto surf = spcast<HWSurfaceWGL>(target))
+        if (auto surf = gpcast<HWSurfaceWGL>(target))
         {
             if (auto win = surf->window.lock())
             {
@@ -119,7 +121,7 @@ public:
                 gl::BindFramebuffer(gl::FRAMEBUFFER, 0);
             }
         }
-        else if (auto tex = spcast<HWRenderTextureOpenGL>(target))
+        else if (auto tex = gpcast<HWRenderTextureOpenGL>(target))
         {
             boundDC = hDC;
             wglMakeCurrent(boundDC, hGLRC);
@@ -133,9 +135,9 @@ public:
         }
     }
 
-    virtual void Flip(const sptr<HWRenderTarget>& target) override
+    virtual void Flip(const gptr<HWRenderTarget>& target) override
     {
-        if (auto surf = spcast<HWSurfaceWGL>(target))
+        if (auto surf = gpcast<HWSurfaceWGL>(target))
         {
             if (auto win = surf->window.lock())
                 SwapBuffers(win->hDC);
@@ -148,11 +150,11 @@ public:
             wglSwapIntervalEXT(interval);
     }
 
-    virtual sptr<HWSurface> CreateSurface(const sptr<Window>& window) override
+    virtual gptr<HWSurface> CreateSurface(const gptr<Window>& window) override
     {
-        auto win = spcast<WindowWindows>(window);
-        assert(win);
-        return spnew<HWSurfaceWGL>(win);
+        auto win = gpcast<WindowWindows>(window);
+        Assert(win);
+        return gpnew<HWSurfaceWGL>(win);
     }
 };
 

@@ -20,8 +20,8 @@ class HWContextEAGL;
 class HWSurfaceEAGL : public HWSurface
 {
 public:
-    sptr<HWContextEAGL> context;
-    wptr<WindowIOS> window;
+    gptr<HWContextEAGL> context;
+    wgptr<WindowIOS> window;
     IVec2 size;
 
     int depthBits = 0;
@@ -30,8 +30,8 @@ public:
     gl::Uint depthBuffer = 0;
 
     HWSurfaceEAGL(
-        const sptr<HWContextEAGL>& context,
-        const sptr<WindowIOS>& window);
+        const gptr<HWContextEAGL>& context,
+        const gptr<WindowIOS>& window);
 
     ~HWSurfaceEAGL();
 

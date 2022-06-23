@@ -18,11 +18,11 @@ class WinScreen : public Script
 {
     int coinCount = 0;
     int completionTime = 0;
-    sptr<TextView> coinCountText;
-    sptr<TextView> completionTimeText;
+    gptr<TextView> coinCountText;
+    gptr<TextView> completionTimeText;
 public:
     
-    wptr<Game> game;
+    gptr<Game> game;
 
     void SetCoinCount(int count);
     void SetCompletionTime(float seconds);

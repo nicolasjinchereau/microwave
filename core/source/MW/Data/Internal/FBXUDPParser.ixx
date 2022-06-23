@@ -3,8 +3,9 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Data.Internal.FBXUDPParser;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <charconv>;
-import <cassert>;
 import <cstdint>;
 import <optional>;
 import <string>;
@@ -117,7 +118,7 @@ private:
 
     static std::string_view UnQuoted(std::string_view str)
     {
-        assert(IsQuoted(str));
+        Assert(IsQuoted(str));
         return str.substr(1, str.size() - 2);
     }
 

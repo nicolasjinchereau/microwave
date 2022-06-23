@@ -23,7 +23,7 @@ inline namespace system {
 class WindowMacOS : public Window
 {
 public:
-    sptr<Dispatcher> dispatcher;
+    gptr<Dispatcher> dispatcher;
     MainWindow* mainWindow = nil;
     int buttonsDown = 0;
     bool shiftPressed = false;
@@ -32,7 +32,7 @@ public:
     std::string title;
     bool visible = false;
     bool resizeable = false;
-    sptr<HWSurface> surface;
+    gptr<HWSurface> surface;
 
     WindowMacOS();
     WindowMacOS(const std::string title, const IVec2& pos, const IVec2& size);
@@ -53,7 +53,7 @@ public:
     virtual void Close()  override;
     virtual uintptr_t GetHandle() const override;
 
-    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
+    virtual gptr<HWRenderTarget> GetHWRenderTarget() override;
 
     MainWindow* CreateNativeWindow(const std::string title, const IVec2& pos, const IVec2& size, bool resizeable);
     
@@ -65,7 +65,7 @@ public:
 
 @interface MainWindow : NSWindow<NSWindowDelegate>
 {
-    @public mw::wptr<mw::WindowMacOS> window;
+    @public mw::gwptr<mw::WindowMacOS> window;
 }
 -(MainWindow*)initWithContentRect:(NSRect)contentRect;
 @end

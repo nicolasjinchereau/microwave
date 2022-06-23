@@ -43,7 +43,7 @@ Vec3 BoxCollider::GetExtents() const {
 void BoxCollider::FitToMesh(bool searchChildren)
 {
     auto node = GetNode();
-    sptr<MeshRenderer> mr =  searchChildren ? 
+    gptr<MeshRenderer> mr =  searchChildren ? 
         node->FindComponentDownward<MeshRenderer>() :
         node->GetComponent<MeshRenderer>();
     
@@ -71,15 +71,15 @@ void BoxCollider::UpdateGizmo()
         gizmoMat = assetLib->GetAsset<Material>(".internal/wire-gizmo.mat");
 }
 
-void BoxCollider::GetRenderables(Sink<sptr<Renderable>> sink)
+void BoxCollider::GetRenderables(Sink<gptr<Renderable>> sink)
 {
     if(!GetScene()->GetGizmosEnabled())
         return;
 
     UpdateGizmo();
 
-    sptr<Node> node = GetNode();
-    sptr<Node> pivot = GetPivot();
+    gptr<Node> node = GetNode();
+    gptr<Node> pivot = GetPivot();
 
     Mat4 mtxGizmo = Mat4::Scale(extents);
     Mat4 mtxModel = mtxGizmo * pivot->GetLocalToWorldMatrix();
@@ -87,7 +87,7 @@ void BoxCollider::GetRenderables(Sink<sptr<Renderable>> sink)
     auto bounds = gizmoMesh->bbox.Transform(mtxModel);
 
     if(!renderable)
-        renderable = spnew<Renderable>();
+        renderable = gpnew<Renderable>();
 
     renderable->vertexMapping = {
         { Semantic::POSITION, 0, gizmoMesh->vertexBuffer, 0, sizeof(Vec3) }

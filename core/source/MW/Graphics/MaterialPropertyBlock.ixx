@@ -12,7 +12,6 @@ import Microwave.System.Object;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.UUID;
-import <cassert>;
 import <string>;
 import <unordered_map>;
 
@@ -23,7 +22,7 @@ class MaterialProperty : public Object
 {
 public:
     virtual ShaderVarType GetUniformType() const = 0;
-    virtual void Apply(const sptr<Shader>& shader) = 0;
+    virtual void Apply(const gptr<Shader>& shader) = 0;
     virtual void ToJson(json& obj) const = 0;
     virtual void FromJson(const json& obj, ObjectLinker* linker) = 0;
 };
@@ -35,7 +34,7 @@ public:
 
     MaterialPropertyBlock(){}
 
-    std::unordered_map<std::string, sptr<MaterialProperty>> properties;
+    gmap<std::string, gptr<MaterialProperty>> properties;
 
     void SetUniform(const std::string& name, float value);
     void SetUniform(const std::string& name, const Vec2& value);
@@ -45,9 +44,9 @@ public:
     void SetUniform(const std::string& name, const Mat3& value);
     void SetUniform(const std::string& name, const Mat4& value);
     void SetUniform(const std::string& name, const Color& value);
-    void SetUniform(const std::string& name, const sptr<Texture>& value);
+    void SetUniform(const std::string& name, const gptr<Texture>& value);
 
-    sptr<Texture> GetTexture(const std::string& name);
+    gptr<Texture> GetTexture(const std::string& name);
 
     virtual void ToJson(json& obj) const override;
     virtual void FromJson(const json& obj, ObjectLinker* linker) override;

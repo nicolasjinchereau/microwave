@@ -24,28 +24,28 @@ class FileResolver
 public:
     virtual ~FileResolver() = default;
     virtual const std::string& GetScheme() = 0;
-    virtual sptr<FileStream> Open(const path& path, OpenMode openMode) = 0;
+    virtual gptr<FileStream> Open(const path& path, OpenMode openMode) = 0;
 };
 
 class File
 {
     static path _defaultDataPath;
-    static std::unordered_map<std::string, sptr<FileResolver>> _fileResolvers;
+    static gmap<std::string, gptr<FileResolver>> _fileResolvers;
 public:
 
     static const path& GetDefaultDataPath();
     static void SetDefaultDataPath(const path& p);
 
-    static void AddResolver(const sptr<FileResolver>& resolver);
+    static void AddResolver(const gptr<FileResolver>& resolver);
     static void RemoveResolver(const std::string& scheme);
-    static sptr<FileResolver> GetResolver(const std::string& scheme);
+    static gptr<FileResolver> GetResolver(const std::string& scheme);
 
     // Open a FileStream to the specified path using optional URL scheme
     //   <path>                    = open file using default file system
     //   android.asset://<path>    = open asset stream from Android APK
     //   android.internal://<path> = open file from android internal data path
     //   android.external://<path> = open file from android external data path
-    static sptr<FileStream> Open(const path& p, OpenMode openMode);
+    static gptr<FileStream> Open(const path& p, OpenMode openMode);
 
     static std::vector<std::byte> ReadAllBytes(const path& p);
     static Task<std::vector<std::byte>> ReadAllBytesAsync(const path& p);

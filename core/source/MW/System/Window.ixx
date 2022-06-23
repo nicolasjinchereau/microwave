@@ -90,12 +90,12 @@ public:
 class Window : public RenderTarget
 {
 protected:
-    static sptr<Window> New(const std::string title, const IVec2& pos, const IVec2& size);
+    static gptr<Window> New(const std::string title, const IVec2& pos, const IVec2& size);
     friend App;
 
     EventHandlerList<IWindowEventHandler> eventHandlers;
 
-    mutable sptr<HWSurface> surface;
+    mutable gptr<HWSurface> surface;
 public:
 
     virtual ~Window(){};
@@ -115,8 +115,8 @@ public:
     virtual void Close() = 0;
     virtual uintptr_t GetHandle() const = 0;
 
-    virtual void AddEventHandler(const sptr<IWindowEventHandler>& handler);
-    virtual void RemoveEventHandler(const sptr<IWindowEventHandler>& handler);
+    virtual void AddEventHandler(const gptr<IWindowEventHandler>& handler);
+    virtual void RemoveEventHandler(const gptr<IWindowEventHandler>& handler);
 
     virtual void OnCreate();
     virtual void OnShow();

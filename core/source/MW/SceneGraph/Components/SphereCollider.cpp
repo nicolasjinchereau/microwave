@@ -40,7 +40,7 @@ float SphereCollider::GetRadius() const {
 void SphereCollider::FitToMesh(bool searchChildren)
 {
     auto node = GetNode();
-    sptr<MeshRenderer> mr = searchChildren ?
+    gptr<MeshRenderer> mr = searchChildren ?
         node->FindComponentDownward<MeshRenderer>() :
         node->GetComponent<MeshRenderer>();
 
@@ -68,15 +68,15 @@ void SphereCollider::UpdateGizmo()
         gizmoMat = assetLib->GetAsset<Material>(".internal/wire-gizmo.mat");
 }
 
-void SphereCollider::GetRenderables(Sink<sptr<Renderable>> sink)
+void SphereCollider::GetRenderables(Sink<gptr<Renderable>> sink)
 {
     if (!GetScene()->GetGizmosEnabled())
         return;
 
     UpdateGizmo();
 
-    sptr<Node> node = GetNode();
-    sptr<Node> pivot = GetPivot();
+    gptr<Node> node = GetNode();
+    gptr<Node> pivot = GetPivot();
 
     Mat4 mtxGizmo = Mat4::Scale(radius, radius, radius);
     Mat4 mtxModel = mtxGizmo * pivot->GetLocalToWorldMatrix();
@@ -84,7 +84,7 @@ void SphereCollider::GetRenderables(Sink<sptr<Renderable>> sink)
     auto bounds = gizmoMesh->bbox.Transform(mtxModel);
 
     if (!renderable)
-        renderable = spnew<Renderable>();
+        renderable = gpnew<Renderable>();
 
     renderable->vertexMapping = {
         { Semantic::POSITION, 0, gizmoMesh->vertexBuffer, 0, sizeof(Vec3) }

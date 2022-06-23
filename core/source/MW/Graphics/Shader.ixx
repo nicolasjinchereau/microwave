@@ -23,14 +23,14 @@ struct VertexSlot
 {
     Semantic semantic = {};
     int semanticIndex = 0;
-    sptr<Buffer> buffer;
+    gptr<Buffer> buffer;
     size_t offset = 0;
     size_t stride = 0;
 
     VertexSlot(
         Semantic semantic,
         int semanticIndex,
-        const sptr<Buffer>& buffer,
+        const gptr<Buffer>& buffer,
         size_t offset,
         size_t stride)
         : semantic(semantic)
@@ -41,7 +41,7 @@ struct VertexSlot
 
     VertexSlot(
         Semantic semantic,
-        const sptr<Buffer>& buffer,
+        const gptr<Buffer>& buffer,
         size_t offset,
         size_t size)
         : semantic(semantic)
@@ -54,7 +54,7 @@ struct VertexSlot
 // maps one or more Buffer objects to vertex input slots
 struct VertexMapping
 {
-    std::vector<VertexSlot> slots;
+    gvector<VertexSlot> slots;
 
     VertexMapping(){}
 
@@ -70,10 +70,10 @@ struct VertexMapping
 class Shader : public Object
 {
 protected:
-    sptr<HWShader> shader;
+    gptr<HWShader> shader;
 public:
     Shader(const std::string& source);
-    Shader(const sptr<ShaderInfo>& info);
+    Shader(const gptr<ShaderInfo>& info);
     virtual ~Shader(){}
 
     int GetAttributeID(const std::string& name);
@@ -96,9 +96,9 @@ public:
     void Unbind();
 
     void SetVertexBuffer(const VertexMapping& vm);
-    void SetVertexBuffer(Semantic semantic, int semanticIndex, const sptr<Buffer>& buffer, size_t offset, size_t stride);
-    void SetVertexBuffer(const std::string& name, const sptr<Buffer>& buffer, size_t offset, size_t stride);
-    void SetIndexBuffer(const sptr<Buffer>& buffer);
+    void SetVertexBuffer(Semantic semantic, int semanticIndex, const gptr<Buffer>& buffer, size_t offset, size_t stride);
+    void SetVertexBuffer(const std::string& name, const gptr<Buffer>& buffer, size_t offset, size_t stride);
+    void SetIndexBuffer(const gptr<Buffer>& buffer);
 
     void SetUniform(const std::string& name, float value);
     void SetUniform(const std::string& name, const Vec2& value);
@@ -108,7 +108,7 @@ public:
     void SetUniform(const std::string& name, const Mat3& value);
     void SetUniform(const std::string& name, const Mat4& value);
     void SetUniform(const std::string& name, const Color& value);
-    void SetUniform(const std::string& name, const sptr<Texture>& texture);
+    void SetUniform(const std::string& name, const gptr<Texture>& texture);
 };
 
 } // gfx

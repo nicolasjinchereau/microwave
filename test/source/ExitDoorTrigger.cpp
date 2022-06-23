@@ -28,12 +28,12 @@ void ExitDoorTrigger::OnCollisionStop(const Collision& collision)
     
     if (node->GetName() == "Player")
     {
-        if (auto door = exitDoor.lock())
+        if (exitDoor)
         {
-            if(node->GetPosition().x > door->GetNode()->GetPosition().x)
+            if(node->GetPosition().x > exitDoor->GetNode()->GetPosition().x)
             {
-                if (auto g = game.lock()) {
-                    g->OnPlayerExit();
+                if (game) {
+                    game->OnPlayerExit();
                 }
             }
         }

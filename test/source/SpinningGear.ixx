@@ -13,7 +13,7 @@ export namespace Test {
 class SpinningGear : public Script
                    , public IUserEvents
 {
-    sptr<RigidBody> body;
+    gptr<RigidBody> body;
     float rotationSpeed = 30.0f;
     bool reverse = false;
 public:

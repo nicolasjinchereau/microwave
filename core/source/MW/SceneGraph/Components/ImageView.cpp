@@ -9,7 +9,8 @@ import Microwave.Graphics.Shader;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Components.Canvas;
 import Microwave.System.App;
-import <cassert>;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 
 namespace mw {
 inline namespace scene {
@@ -29,7 +30,7 @@ void ImageView::FromJson(const json& obj, ObjectLinker* linker)
 
     border = obj.value("border", border);
     color = obj.value("color", color);
-    ObjectLinker::RestoreAsset(linker, SharedFrom(this), tex, obj, "tex");
+    ObjectLinker::RestoreAsset(linker, self(this), tex, obj, "tex");
 
     meshDirty = true;
 }
@@ -37,7 +38,7 @@ void ImageView::FromJson(const json& obj, ObjectLinker* linker)
 void ImageView::Construct()
 {
     auto assetLib = App::Get()->GetAssetLibrary();
-    mat = spnew<Material>();
+    mat = gpnew<Material>();
     mat->shader = assetLib->GetAsset<Shader>(".internal/ui-default.cg");
     mat->depthTest = DepthTest::Always;
     mat->depthWriteEnabled = false;
@@ -69,17 +70,17 @@ Color ImageView::GetColor() const {
     return color;
 }
 
-void ImageView::SetTexture(const sptr<Texture>& tex) {
+void ImageView::SetTexture(const gptr<Texture>& tex) {
     this->tex = tex;
 }
 
-sptr<Texture> ImageView::GetTexture() const {
+gptr<Texture> ImageView::GetTexture() const {
     return tex;
 }
 
 void ImageView::UpdateMesh()
 {
-    assert(tex);
+    Assert(tex);
 
     if (meshDirty)
     {
@@ -157,7 +158,7 @@ void ImageView::UpdateMesh()
             }
             else
             {
-                vertexBuffer = spnew<Buffer>(
+                vertexBuffer = gpnew<Buffer>(
                     BufferType::Vertex,
                     BufferUsage::Dynamic,
                     BufferCPUAccess::WriteOnly,
@@ -170,7 +171,7 @@ void ImageView::UpdateMesh()
             }
             else
             {
-                indexBuffer = spnew<Buffer>(
+                indexBuffer = gpnew<Buffer>(
                     BufferType::Index,
                     BufferUsage::Dynamic,
                     BufferCPUAccess::WriteOnly,
@@ -211,7 +212,7 @@ void ImageView::UpdateMesh()
             }
             else
             {
-                vertexBuffer = spnew<Buffer>(
+                vertexBuffer = gpnew<Buffer>(
                     BufferType::Vertex,
                     BufferUsage::Dynamic,
                     BufferCPUAccess::WriteOnly,
@@ -224,7 +225,7 @@ void ImageView::UpdateMesh()
             }
             else
             {
-                indexBuffer = spnew<Buffer>(
+                indexBuffer = gpnew<Buffer>(
                     BufferType::Index,
                     BufferUsage::Dynamic,
                     BufferCPUAccess::WriteOnly,
@@ -241,7 +242,7 @@ void ImageView::OnSizeChanged()
     meshDirty = true;
 }
 
-void ImageView::GetRenderables(Sink<sptr<Renderable>> sink)
+void ImageView::GetRenderables(Sink<gptr<Renderable>> sink)
 {
     if (!tex)
         return;
@@ -250,7 +251,7 @@ void ImageView::GetRenderables(Sink<sptr<Renderable>> sink)
     float hw = sz.x * 0.5f;
     float hh = sz.y * 0.5f;
 
-    sptr<Node> node = GetNode();
+    gptr<Node> node = GetNode();
     Mat4 mtxModel = node->GetLocalToWorldMatrix();
 
     AABox bounds = AABox(Vec3(0, 0, 0), Vec3(hw, hh, 0));
@@ -259,7 +260,7 @@ void ImageView::GetRenderables(Sink<sptr<Renderable>> sink)
     UpdateMesh();
 
     if (!renderable)
-        renderable = spnew<Renderable>();
+        renderable = gpnew<Renderable>();
 
     renderable->vertexMapping = {
         { Semantic::POSITION, 0, vertexBuffer, 0, sizeof(UIVertex) },

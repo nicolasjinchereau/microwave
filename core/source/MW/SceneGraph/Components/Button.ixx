@@ -9,6 +9,7 @@ import Microwave.SceneGraph.Components.View;
 import Microwave.SceneGraph.Components.ImageView;
 import Microwave.System.Json;
 import Microwave.System.Object;
+import Microwave.System.Pointers;
 import <functional>;
 
 export namespace mw {

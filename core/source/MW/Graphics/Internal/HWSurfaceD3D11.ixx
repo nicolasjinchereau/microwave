@@ -26,16 +26,16 @@ class HWSurfaceD3D11 : public HWSurface
     void Create();
     void Destroy();
 public:
-    sptr<HWContextD3D11> context;
-    sptr<WindowWindows> window;
+    gptr<HWContextD3D11> context;
+    gptr<WindowWindows> window;
 
     ComPtr<ID3D11RenderTargetView> renderTargetView;
     ComPtr<ID3D11DepthStencilView> depthStencilView;
     ComPtr<IDXGISwapChain1> swapChain;
     
     HWSurfaceD3D11(
-        const sptr<HWContextD3D11>& context,
-        const sptr<WindowWindows>& window);
+        const gptr<HWContextD3D11>& context,
+        const gptr<WindowWindows>& window);
 
     ~HWSurfaceD3D11();
 

@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.Graphics.Internal.HWBufferOpenGL;
+import Microwave.System.Exception;
 
 namespace mw {
 inline namespace gfx {
@@ -64,7 +65,7 @@ HWBufferOpenGL::HWBufferOpenGL(
 	: type(type), size(data.size())
 {
 	if (data.empty())
-		throw std::runtime_error("'data' cannot be empty");
+		throw Exception("'data' cannot be empty");
 
 	auto typ = bufferTypes[type];
 	auto usg = bufferUsage[usage];

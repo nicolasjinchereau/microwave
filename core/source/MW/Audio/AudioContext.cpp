@@ -6,7 +6,7 @@ module Microwave.Audio.AudioContext;
 import Microwave.SceneGraph.Components.AudioSource;
 import Microwave.System.Pointers;
 import Microwave.System.Spinlock;
-import <cassert>;
+import <MW/System/Debug.h>;
 import <memory>;
 import <mutex>;
 
@@ -14,9 +14,9 @@ namespace mw {
 inline namespace audio {
 
 Spinlock contextLock;
-sptr<AudioContext> currentContext = nullptr;
+gptr<AudioContext> currentContext = nullptr;
 
-void AudioContext::SetCurrent(const sptr<AudioContext>& context)
+void AudioContext::SetCurrent(const gptr<AudioContext>& context)
 {
     std::lock_guard<Spinlock> lk(contextLock);
 
@@ -27,7 +27,7 @@ void AudioContext::SetCurrent(const sptr<AudioContext>& context)
     }
 }
 
-sptr<AudioContext> AudioContext::GetCurrent()
+gptr<AudioContext> AudioContext::GetCurrent()
 {
     std::lock_guard<Spinlock> lk(contextLock);
     return currentContext;
@@ -35,7 +35,7 @@ sptr<AudioContext> AudioContext::GetCurrent()
 
 void AudioContext::NotifyBuffersCompleted(AudioSource* source, int bufferCount)
 {
-    assert(source);
+    Assert(source);
     source->OnBuffersCompleted(bufferCount);
 }
 

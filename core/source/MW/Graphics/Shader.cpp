@@ -6,9 +6,8 @@ module Microwave.Graphics.Shader;
 import Microwave.Graphics.Internal.HWShader;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.ShaderInfo;
-import Microwave.System.Console;
-import Microwave.Utilities.Format;
-import <cassert>;
+import Microwave.IO.Terminal;
+import Microwave.System.Exception;
 import <regex>;
 import <algorithm>;
 import <unordered_map>;
@@ -20,17 +19,17 @@ Shader::Shader(const std::string& source)
 {
     auto graphics = GraphicsContext::GetCurrent();
     if (!graphics)
-        throw std::runtime_error("no active graphics context");
+        throw Exception("no active graphics context");
 
-    auto info = spnew<ShaderInfo>(source, graphics->context->GetShaderLanguage());
+    auto info = gpnew<ShaderInfo>(source, graphics->context->GetShaderLanguage());
     shader = graphics->context->CreateShader(info);
 }
 
-Shader::Shader(const sptr<ShaderInfo>& info)
+Shader::Shader(const gptr<ShaderInfo>& info)
 {
     auto graphics = GraphicsContext::GetCurrent();
     if (!graphics)
-        throw std::runtime_error("no active graphics context");
+        throw Exception("no active graphics context");
 
     shader = graphics->context->CreateShader(info);
 }
@@ -39,7 +38,7 @@ int Shader::GetAttributeID(const std::string& name)
 {
     auto it = shader->info->attribIDs.find(name);
     if(it == shader->info->attribIDs.end()) {
-        Console::WriteLine("Warning: Couldn't find ID for attribute %", name);
+        writeln("Warning: Couldn't find ID for attribute ", name);
         return -1;
     }
 
@@ -127,15 +126,15 @@ void Shader::SetVertexBuffer(const VertexMapping& vm)
     }
 }
 
-void Shader::SetVertexBuffer(Semantic semantic, int semanticIndex, const sptr<Buffer>& buffer, size_t offset, size_t stride) {
+void Shader::SetVertexBuffer(Semantic semantic, int semanticIndex, const gptr<Buffer>& buffer, size_t offset, size_t stride) {
     shader->SetVertexBuffer(GetAttributeID(semantic, semanticIndex), buffer, offset, stride);
 }
 
-void Shader::SetVertexBuffer(const std::string& name, const sptr<Buffer>& buffer, size_t offset, size_t stride) {
+void Shader::SetVertexBuffer(const std::string& name, const gptr<Buffer>& buffer, size_t offset, size_t stride) {
     shader->SetVertexBuffer(GetAttributeID(name), buffer, offset, stride);
 }
 
-void Shader::SetIndexBuffer(const sptr<Buffer>& buffer) {
+void Shader::SetIndexBuffer(const gptr<Buffer>& buffer) {
     shader->SetIndexBuffer(buffer);
 }
 
@@ -171,7 +170,7 @@ void Shader::SetUniform(const std::string& name, const Color& value) {
     shader->SetUniform(GetUniformID(name), value);
 }
 
-void Shader::SetUniform(const std::string& name, const sptr<Texture>& texture) {
+void Shader::SetUniform(const std::string& name, const gptr<Texture>& texture) {
     shader->SetUniform(GetUniformID(name), texture);
 }
 

@@ -3,11 +3,12 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.System.Json;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import Microwave.System.Path;
+import <MW/System/Debug.h>;
 import <algorithm>;
 import <array>;
-import <cassert>;
 import <cfloat>;
 import <charconv>;
 import <cstdint>;
@@ -209,7 +210,7 @@ public:
             return GetNullToken();
         }
         else {
-            throw std::runtime_error(std::string("found unexpected input: ") + (char)value);
+            throw Exception({ "found unexpected input: ", (char)value });
         }
     }
 
@@ -248,7 +249,7 @@ private:
 
     void SkipChar()
     {
-        assert(pos != next);
+        Assert(pos != next);
         pos = next;
         value = (next != chars.end()) ?
             utf8::next(next, chars.end()) : 0;
@@ -256,7 +257,7 @@ private:
 
     void SkipChars(ptrdiff_t count)
     {
-        assert(pos != next);
+        Assert(pos != next);
         utf8::advance(pos, count, chars.end());
         next = pos;
         value = (next != chars.end()) ?
@@ -273,7 +274,7 @@ private:
 
     JsonToken GetStringToken()
     {
-        assert(value == U'\"');
+        Assert(value == U'\"');
 
         auto start = pos;
         SkipChar();
@@ -292,7 +293,7 @@ private:
                 SkipChar();
 
                 if (pos == chars.end())
-                    throw std::runtime_error("unexpected end of input");
+                    throw Exception("unexpected end of input");
 
                 if (value == U'\"') {
                     SkipChar();
@@ -327,14 +328,14 @@ private:
                     SkipChar();
 
                     if ((chars.end() - pos) < 4)
-                        throw std::runtime_error("unexpected end of input");
+                        throw Exception("unexpected end of input");
 
                     char hex[4];
 
                     for (int i = 0; i < 4; ++i)
                     {
                         if (!isxdigit(value))
-                            throw std::runtime_error("invalid unicode escape sequence");
+                            throw Exception("invalid unicode escape sequence");
 
                         hex[i] = (char)value;
                         SkipChar();
@@ -356,8 +357,8 @@ private:
             }
         }
 
-        assert(pos == chars.end());
-        throw std::runtime_error("unexpected end of input");
+        Assert(pos == chars.end());
+        throw Exception("unexpected end of input");
     }
 
     JsonToken GetNumberToken()
@@ -369,7 +370,7 @@ private:
         double value;
         std::from_chars_result ret = std::from_chars(beg, end, value);
         if(ret.ec != std::errc())
-            throw std::runtime_error("invalid number");
+            throw Exception("invalid number");
 
         auto len = ret.ptr - &start[0];
         std::string_view number(beg, beg + len);
@@ -385,7 +386,7 @@ private:
             int64_t intValue;
             ret = std::from_chars(beg, end, intValue);
             if(ret.ec != std::errc())
-                throw std::runtime_error("invalid number");
+                throw Exception("invalid number");
 
             return JsonToken(JsonTokenType::Integer, start, intValue);
         }
@@ -407,7 +408,7 @@ private:
             SkipChars(5);
         }
         else {
-            throw std::runtime_error("expected boolean literal");
+            throw Exception("expected boolean literal");
         }
 
         return JsonToken(JsonTokenType::Boolean, start, val);
@@ -421,7 +422,7 @@ private:
         if (std::equal(p, p + 4, "null"))
             SkipChars(4);
         else
-            throw std::runtime_error("expected null literal");
+            throw Exception("expected null literal");
 
         return JsonToken(JsonTokenType::Null, start, nullptr);
     }
@@ -927,7 +928,7 @@ public:
             else if (IsArrayIter())
                 return *GetArrayIter();
 
-            throw std::runtime_error("null");
+            throw Exception("null");
         }
 
         const json& operator*() const {
@@ -947,7 +948,7 @@ public:
             else if (IsArrayIter())
                 ++GetArrayIter();
             else
-                throw std::runtime_error("null");
+                throw Exception("null");
 
             return ret;
         }
@@ -959,14 +960,14 @@ public:
             else if (IsArrayIter())
                 ++GetArrayIter();
             else
-                throw std::runtime_error("null");
+                throw Exception("null");
 
             return *this;
         }
 
         bool operator==(const base_const_iterator& it) const
         {
-            assert(var.index() == it.var.index());
+            Assert(var.index() == it.var.index());
 
             bool result;
 
@@ -996,7 +997,7 @@ public:
             else if (this->IsArrayIter())
                 return *this->GetArrayIter();
 
-            throw std::runtime_error("null");
+            throw Exception("null");
         }
 
         json& operator*() {
@@ -1139,8 +1140,8 @@ void from_json(const json& obj, std::nullptr_t& val) {
     val = nullptr;
 }
 
-template<class T>
-void to_json(json& obj, const std::forward_list<T>& cont)
+template<class T, class A>
+void to_json(json& obj, const std::forward_list<T, A>& cont)
 {
     json val = json::array();
 
@@ -1151,8 +1152,8 @@ void to_json(json& obj, const std::forward_list<T>& cont)
     obj = std::move(val);
 }
 
-template<class T>
-void from_json(const json& obj, std::forward_list<T>& cont)
+template<class T, class A>
+void from_json(const json& obj, std::forward_list<T, A>& cont)
 {
     auto& arr = obj.GetArray();
     cont.clear();
@@ -1162,8 +1163,8 @@ void from_json(const json& obj, std::forward_list<T>& cont)
     }
 }
 
-template<class T>
-void to_json(json& obj, const std::list<T>& cont)
+template<class T, class A>
+void to_json(json& obj, const std::list<T, A>& cont)
 {
     json val = json::array();
 
@@ -1174,8 +1175,8 @@ void to_json(json& obj, const std::list<T>& cont)
     obj = std::move(val);
 }
 
-template<class T>
-void from_json(const json& obj, std::list<T>& cont)
+template<class T, class A>
+void from_json(const json& obj, std::list<T, A>& cont)
 {
     auto& arr = obj.GetArray();
     cont.clear();
@@ -1207,8 +1208,8 @@ void from_json(const json& obj, std::array<T, N>& cont)
     }
 }
 
-template<class T>
-void to_json(json& obj, const std::vector<T>& cont)
+template<class T, class A>
+void to_json(json& obj, const std::vector<T, A>& cont)
 {
     json val = json::array();
 
@@ -1218,8 +1219,8 @@ void to_json(json& obj, const std::vector<T>& cont)
     obj = std::move(val);
 }
 
-template<class T>
-void from_json(const json& obj, std::vector<T>& cont)
+template<class T, class A>
+void from_json(const json& obj, std::vector<T, A>& cont)
 {
     auto& arr = obj.GetArray();
     cont.clear();
@@ -1229,8 +1230,8 @@ void from_json(const json& obj, std::vector<T>& cont)
     }
 }
 
-template<class K, class T, class H> requires (std::is_constructible_v<typename json::StringType, K> || has_to_string<K>::value)
-void to_json(json& obj, const std::unordered_map<K, T, H>& cont)
+template<class K, class T, class H, class E, class A> requires (std::is_constructible_v<typename json::StringType, K> || has_to_string<K>::value)
+void to_json(json& obj, const std::unordered_map<K, T, H, E, A>& cont)
 {
     json ret = json::object();
     auto& objectValue = ret.GetObject();
@@ -1250,8 +1251,8 @@ void to_json(json& obj, const std::unordered_map<K, T, H>& cont)
     obj = std::move(ret);
 }
 
-template<class K, class T, class H> requires (std::is_constructible_v<K, typename json::StringType> || has_from_string<K>::value)
-void from_json(const json& obj, std::unordered_map<K, T, H>& cont)
+template<class K, class T, class H, class E, class A> requires (std::is_constructible_v<K, typename json::StringType> || has_from_string<K>::value)
+void from_json(const json& obj, std::unordered_map<K, T, H, E, A>& cont)
 {
     auto& objectValue = obj.GetObject();
     cont.clear();
@@ -1269,8 +1270,8 @@ void from_json(const json& obj, std::unordered_map<K, T, H>& cont)
     }
 }
 
-template<class K, class T, class H>
-void to_json(json& obj, const std::map<K, T, H>& cont)
+template<class K, class T, class C, class A>
+void to_json(json& obj, const std::map<K, T, C, A>& cont)
 {
     json ret = json::object();
     auto& objectValue = ret.GetObject();
@@ -1281,8 +1282,8 @@ void to_json(json& obj, const std::map<K, T, H>& cont)
     obj = std::move(ret);
 }
 
-template<class K, class T, class H>
-void from_json(const json& obj, std::map<K, T, H>& cont)
+template<class K, class T, class C, class A>
+void from_json(const json& obj, std::map<K, T, C, A>& cont)
 {
     auto& objectValue = obj.GetObject();
     cont.clear();
@@ -1299,7 +1300,7 @@ JsonParser::JsonParser(const std::string& text)
 json JsonParser::parse()
 {
     if (!NextToken())
-        throw std::runtime_error("input is empty");
+        throw Exception("input is empty");
 
     return ParseValue();
 }
@@ -1328,15 +1329,15 @@ json JsonParser::ParseValue()
     case JsonTokenType::Null:
         return ParseNull();
     case JsonTokenType::EndOfFile:
-        throw std::runtime_error("unexpected end of input");
+        throw Exception("unexpected end of input");
     default:
-        throw std::runtime_error("unexpected token");
+        throw Exception("unexpected token");
     }
 }
 
 json JsonParser::ParseString()
 {
-    assert(token.type == JsonTokenType::String);
+    Assert(token.type == JsonTokenType::String);
     auto ret = json(token.GetString());
     NextToken(false);
     return ret;
@@ -1344,7 +1345,7 @@ json JsonParser::ParseString()
 
 json JsonParser::ParseInteger()
 {
-    assert(token.type == JsonTokenType::Integer);
+    Assert(token.type == JsonTokenType::Integer);
     auto ret = json(token.GetInteger());
     NextToken(false);
     return ret;
@@ -1352,7 +1353,7 @@ json JsonParser::ParseInteger()
 
 json JsonParser::ParseFloat()
 {
-    assert(token.type == JsonTokenType::Float);
+    Assert(token.type == JsonTokenType::Float);
     auto ret = json(token.GetFloat());
     NextToken(false);
     return ret;
@@ -1360,7 +1361,7 @@ json JsonParser::ParseFloat()
 
 json JsonParser::ParseBoolean()
 {
-    assert(token.type == JsonTokenType::Boolean);
+    Assert(token.type == JsonTokenType::Boolean);
     auto ret = json(token.GetBoolean());
     NextToken(false);
     return ret;
@@ -1368,7 +1369,7 @@ json JsonParser::ParseBoolean()
 
 json JsonParser::ParseNull()
 {
-    assert(token.type == JsonTokenType::Null);
+    Assert(token.type == JsonTokenType::Null);
     auto ret = json();
     NextToken(false);
     return ret;
@@ -1376,7 +1377,7 @@ json JsonParser::ParseNull()
 
 json JsonParser::ParseObject()
 {
-    assert(token.type == JsonTokenType::ObjectStart);
+    Assert(token.type == JsonTokenType::ObjectStart);
     NextToken();
 
     json::ObjectType values;
@@ -1384,12 +1385,12 @@ json JsonParser::ParseObject()
     while (token.type != JsonTokenType::ObjectEnd)
     {
         if (token.type != JsonTokenType::String)
-            throw std::runtime_error("expected string");
+            throw Exception("expected string");
 
         json key = ParseString();
 
         if (token.type != JsonTokenType::Colon)
-            throw std::runtime_error("expected colon");
+            throw Exception("expected colon");
 
         NextToken();
 
@@ -1400,12 +1401,12 @@ json JsonParser::ParseObject()
             NextToken();
 
             if (token.type == JsonTokenType::ObjectEnd)
-                throw std::runtime_error("expected a value");
+                throw Exception("expected a value");
         }
         else
         {
             if (token.type != JsonTokenType::ObjectEnd)
-                throw std::runtime_error("expected '}'");
+                throw Exception("expected '}'");
         }
     }
 
@@ -1416,7 +1417,7 @@ json JsonParser::ParseObject()
 
 json JsonParser::ParseArray()
 {
-    assert(token.type == JsonTokenType::ArrayStart);
+    Assert(token.type == JsonTokenType::ArrayStart);
     NextToken();
 
     std::vector<json> values;
@@ -1430,12 +1431,12 @@ json JsonParser::ParseArray()
             NextToken();
 
             if (token.type == JsonTokenType::ArrayEnd)
-                throw std::runtime_error("expected a value");
+                throw Exception("expected a value");
         }
         else
         {
             if (token.type != JsonTokenType::ArrayEnd)
-                throw std::runtime_error("expected ']'");
+                throw Exception("expected ']'");
         }
     }
 
@@ -1612,15 +1613,15 @@ void JsonPrinter::ToStream(std::ostream& stream, int indent, const json& value)
 }
 
 template<class T>
-void to_json(json& val, const sptr<T>& object) {
+void to_json(json& val, const gptr<T>& object) {
     val = object ? json(*object) : json(nullptr);
 }
 
 template<class T>
-void from_json(const json& obj, sptr<T>& object)
+void from_json(const json& obj, gptr<T>& object)
 {
     if(!obj.IsNull()) {
-        object = spnew<T>();
+        object = gpnew<T>();
         from_json(obj, *object);
     }
     else {

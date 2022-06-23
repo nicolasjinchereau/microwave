@@ -15,8 +15,8 @@ class FBXModelConverter
 {
 public:
     FBXModelConverter(){}
-    static sptr<Model> Convert(
-        const sptr<Stream>& stream,
+    static gptr<Model> Convert(
+        const gptr<Stream>& stream,
         ModelSettings& importSettings);
 };
 

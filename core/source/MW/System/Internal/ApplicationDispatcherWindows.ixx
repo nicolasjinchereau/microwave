@@ -29,8 +29,8 @@ public:
     ApplicationDispatcherWindows();
     ~ApplicationDispatcherWindows();
 
-    virtual sptr<DispatchAction> InvokeAsync(
-        std::function<void()> function,
+    virtual gptr<DispatchAction> InvokeAsync(
+        gfunction<void()> function,
         std::chrono::steady_clock::time_point when = std::chrono::steady_clock::time_point{ std::chrono::steady_clock::duration::zero() }
     ) override;
 
@@ -43,7 +43,7 @@ private:
     static LRESULT CALLBACK StaticWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
     LRESULT CALLBACK InstanceWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
     void ProcessActions();
-    sptr<DispatchAction> GetNextAction();
+    gptr<DispatchAction> GetNextAction();
     void UpdateActionTimer();
 };
 

@@ -16,11 +16,11 @@ class Player;
 class BatteryMeter : public Script
                    , public IUserEvents
 {
-    std::vector<sptr<ImageView>> bars;
+    gvector<gptr<ImageView>> bars;
     Color barColor = Color32(175, 248, 255, 210);
 
 public:
-    wptr<Player> player;
+    gptr<Player> player;
     BatteryMeter(){}
 
     Task<void> InitAsync()
@@ -30,7 +30,7 @@ public:
         auto backgroundTex = co_await assetLibrary->GetAssetAsync<Texture>("Textures/UI/BatteryMeter.png");
         auto meterBarTex = co_await assetLibrary->GetAssetAsync<Texture>("Textures/UI/BatteryMeterBar.png");
 
-        auto batteryMeterNode = GetNode();
+        gptr<Node> batteryMeterNode = GetNode();
         auto batteryMeterView = batteryMeterNode->AddComponent<ImageView>();
         batteryMeterView->SetTexture(backgroundTex);
         batteryMeterView->SetAnchor(Box(0.5f, 0.0f, 0.5f, 0.0f)); // bottom center
@@ -40,7 +40,7 @@ public:
 
         for (int i = 0; i != 20; ++i)
         {
-            auto meterBarNode = batteryMeterNode->AddChild(spnew<Node>());
+            auto meterBarNode = batteryMeterNode->AddChild(gpnew<Node>());
             auto meterBarView = meterBarNode->AddComponent<ImageView>();
             meterBarView->SetTexture(meterBarTex);
             meterBarView->SetAnchor(Box(0.0f, 1.0f, 0.0f, 1.0f)); // top left
@@ -60,14 +60,14 @@ public:
 
     void UpdateBatteryBars()
     {
-        if(auto p = player.lock())
+        if(player)
         {
             auto count = bars.size();
             auto barWidth = 1.0f / count;
 
             for (auto i = 0u; i != count; ++i)
             {
-                float alpha = math::Clamp01((p->batteryLevel - i * barWidth) / barWidth);
+                float alpha = math::Clamp01((player->batteryLevel - i * barWidth) / barWidth);
 
                 auto col = barColor;
                 col.a *= alpha;

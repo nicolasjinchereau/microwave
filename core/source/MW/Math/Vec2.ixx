@@ -3,7 +3,8 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Math.Vec2;
-import <cassert>;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <ostream>;
 import <cmath>;
 
@@ -27,7 +28,7 @@ public:
     Vec2(float x, float y) : x(x), y(y) { }
 
     float& operator[](size_t index) {
-        assert(index >= 0 && index < 2);
+        Assert(index >= 0 && index < 2);
         return ((float*)this)[index];
     }
 

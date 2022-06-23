@@ -10,6 +10,8 @@ cd ..\freetype2
 ..\..\premake\premake5 vs2022 --os=windows
 cd ..\GLEW
 ..\..\premake\premake5 vs2022 --os=windows
+cd ..\graph-collector
+..\..\premake\premake5 vs2022 --os=windows
 cd ..\hlslparser
 ..\..\premake\premake5 vs2022 --os=windows
 cd ..\libjpeg

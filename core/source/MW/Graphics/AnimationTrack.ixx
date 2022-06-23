@@ -3,9 +3,10 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Graphics.AnimationTrack;
+import Microwave.System.Exception;
 import Microwave.System.Json;
 import Microwave.Math;
-import <cassert>;
+import <MW/System/Debug.h>;
 import <climits>;
 import <cstdint>;
 import <vector>;
@@ -49,7 +50,7 @@ public:
         {
             const auto& a = *(it - 1);
             const auto& b = *it;
-            assert((b.time - a.time) >= FLT_EPSILON);
+            Assert((b.time - a.time) >= FLT_EPSILON);
             auto t = (time - a.time) / (b.time - a.time);
 
             Transform ret;

@@ -4,6 +4,7 @@
 
 module Microwave.Graphics.Internal.HWSurfaceD3D11;
 import Microwave.Graphics.Internal.HWContextD3D11;
+import Microwave.System.Exception;
 import Microwave.System.Internal.WindowWindows;
 import <stdexcept>;
 import <MW/System/Internal/PlatformHeaders.h>;
@@ -12,8 +13,8 @@ namespace mw {
 inline namespace gfx {
 
 HWSurfaceD3D11::HWSurfaceD3D11(
-    const sptr<HWContextD3D11>& context,
-    const sptr<WindowWindows>& window)
+    const gptr<HWContextD3D11>& context,
+    const gptr<WindowWindows>& window)
     : context(context)
     , window(window)
 {
@@ -78,7 +79,7 @@ void HWSurfaceD3D11::Create()
         &swapChain);
     
     if(FAILED(res))
-        throw std::runtime_error("failed to create d3d11 swap chain");
+        throw Exception("failed to create d3d11 swap chain");
 
     dxgiDevice->SetMaximumFrameLatency(1);
     
@@ -88,7 +89,7 @@ void HWSurfaceD3D11::Create()
     res = context->device->CreateRenderTargetView(backBufferTex.Get(), nullptr, &renderTargetView);
 
     if(FAILED(res))
-        throw std::runtime_error("failed to create d3d11 render target view");
+        throw Exception("failed to create d3d11 render target view");
 
 // create depth stencil view
     CD3D11_TEXTURE2D_DESC depthTextureDesc = CreateDepthTextureDesc();
@@ -96,14 +97,14 @@ void HWSurfaceD3D11::Create()
     res = context->device->CreateTexture2D(&depthTextureDesc, nullptr, &depthStencilTex);
 
     if(FAILED(res))
-        throw std::runtime_error("failed to create texture for d3d11 depth stencil");
+        throw Exception("failed to create texture for d3d11 depth stencil");
 
     CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);
     res = context->device->CreateDepthStencilView(
         depthStencilTex.Get(), &depthStencilViewDesc, &depthStencilView);
 
     if(FAILED(res))
-        throw std::runtime_error("failed to create d3d11 depth stencil view");
+        throw Exception("failed to create d3d11 depth stencil view");
 }
 
 void HWSurfaceD3D11::Destroy() {

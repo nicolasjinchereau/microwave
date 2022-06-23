@@ -5,11 +5,12 @@
 module Microwave.Graphics.Texture;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.Image;
-import Microwave.System.Console;
+import Microwave.IO.Terminal;
+import Microwave.System.Exception;
 import Microwave.System.ThreadPool;
-import <algorithm>;
-import <cassert>;
 import <MW/System/Internal/PlatformHeaders.h>;
+import <MW/System/Debug.h>;
+import <algorithm>;
 
 namespace mw {
 inline namespace gfx {
@@ -43,10 +44,10 @@ Texture::Texture(
 {
     auto graphics = GraphicsContext::GetCurrent();
     if (!graphics)
-        throw std::runtime_error("no active graphics context");
+        throw Exception("no active graphics context");
 
     if (data.size() != size.x * size.y * GetBytesPerPixel(format))
-        throw std::runtime_error("incorrect 'size' or 'format' for 'data'");
+        throw Exception("incorrect 'size' or 'format' for 'data'");
 
     tex = graphics->context->CreateTexture(size, format, dynamic, data);
     tex->SetWrapMode(wrapMode);
@@ -56,7 +57,7 @@ Texture::Texture(
     loadState = LoadState::Loaded;
 }
 
-sptr<HWTexture> Texture::GetHWTexture()
+gptr<HWTexture> Texture::GetHWTexture()
 {
     auto ret = tex;
 
@@ -89,13 +90,13 @@ void Texture::SetPixels(const std::span<std::byte>& data) {
 void Texture::SetPixels(const std::span<std::byte>& data, const IntRect& rect)
 {
     if (!dynamic)
-        throw std::runtime_error("texture is not dynamic");
+        throw Exception("texture is not dynamic");
 
     auto bytesPerPixel = GetBytesPerPixel(format);
     if (data.size() != rect.w * rect.h * bytesPerPixel)
-        throw std::runtime_error("incorrect rect size for data");
+        throw Exception("incorrect rect size for data");
 
-    assert(tex);
+    Assert(tex);
     tex->SetPixels(data, rect);
 }
 
@@ -146,9 +147,9 @@ void Texture::LoadFile()
 
     auto graphics = GraphicsContext::GetCurrent();
     if (!graphics)
-        throw std::runtime_error("no active graphics context");
+        throw Exception("no active graphics context");
 
-    auto img = spnew<Image>(filePath, fileFormat);
+    auto img = gpnew<Image>(filePath, fileFormat);
 
     tex = graphics->context->CreateTexture(size, format, dynamic, img->GetData());
     tex->SetWrapMode(wrapMode);
@@ -163,7 +164,7 @@ Task<void> Texture::LoadFileAsync()
     if(loadState != LoadState::Unloaded || filePath.empty())
         co_return;
 
-    sptr<Texture> pin = SharedFrom(this);
+    gptr<Texture> pin = self(this);
 
     try
     {
@@ -171,11 +172,11 @@ Task<void> Texture::LoadFileAsync()
 
         auto graphics = GraphicsContext::GetCurrent();
         if (!graphics)
-            throw std::runtime_error("no active graphics context");
+            throw Exception("no active graphics context");
 
         auto totalBytes = size.x * size.y * GetBytesPerPixel(format);
 
-        sptr<HWBuffer> buffer = graphics->context->CreateBuffer(
+        gptr<HWBuffer> buffer = graphics->context->CreateBuffer(
             BufferType::PixelUnpack,
             BufferUsage::Static,
             BufferCPUAccess::WriteOnly,
@@ -183,11 +184,11 @@ Task<void> Texture::LoadFileAsync()
 
         std::span<std::byte> mapping = buffer->Map(BufferMapAccess::WriteNoSync);
 
-        assert(!filePath.empty());
+        Assert(!filePath.empty());
 
         co_await ThreadPool::InvokeAsync(
             [=](){
-                auto img = spnew<Image>(filePath, fileFormat);
+                auto img = gpnew<Image>(filePath, fileFormat);
                 std::span<std::byte> data = img->GetData();
                 std::copy(data.begin(), data.end(), mapping.begin());
             });
@@ -203,9 +204,9 @@ Task<void> Texture::LoadFileAsync()
             loadState = LoadState::Loaded;
         }
     }
-    catch(const std::exception& ex)
+    catch(const Exception& ex)
     {
-        Console::WriteLine(ex.what());
+        writeln(ex.what());
 
         if (loadState == LoadState::Loading)
         {

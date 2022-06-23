@@ -10,15 +10,15 @@ import Microwave.Graphics.Internal.HWContextD3D11;
 import Microwave.Graphics.Internal.HWContextOpenGL;
 import Microwave.Graphics;
 import Microwave.System.Dispatcher;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
-import <stdexcept>;
 
 namespace mw {
 inline namespace gfx {
 
-thread_local sptr<GraphicsContext> GraphicsContext::currentContext = {};
+thread_local gptr<GraphicsContext> GraphicsContext::currentContext = {};
 
-void GraphicsContext::SetCurrent(const sptr<GraphicsContext>& current)
+void GraphicsContext::SetCurrent(const gptr<GraphicsContext>& current)
 {
     if(currentContext)
         currentContext->context->SetActive(false);
@@ -29,7 +29,7 @@ void GraphicsContext::SetCurrent(const sptr<GraphicsContext>& current)
         currentContext->context->SetActive(true);
 }
 
-sptr<GraphicsContext> GraphicsContext::GetCurrent() {
+gptr<GraphicsContext> GraphicsContext::GetCurrent() {
     return currentContext;
 }
 
@@ -38,26 +38,26 @@ GraphicsContext::GraphicsContext(GraphicsDriverType type)
     if(type == GraphicsDriverType::Default)
     {
 #if PLATFORM_WINDOWS
-        context = spnew<HWContextD3D11>();
+        context = gpnew<HWContextD3D11>();
 #elif PLATFORM_IOS || PLATFORM_ANDROID || PLATFORM_MACOS
-        context = spnew<HWContextOpenGL>();
+        context = gpnew<HWContextOpenGL>();
 #endif
     }
     else if(type == GraphicsDriverType::Direct3D11)
     {
 #if PLATFORM_WINDOWS
-        context = spnew<HWContextD3D11>();
+        context = gpnew<HWContextD3D11>();
 #endif
     }
     else if(type == GraphicsDriverType::OpenGL)
     {
 #if PLATFORM_WINDOWS || PLATFORM_IOS || PLATFORM_ANDROID || PLATFORM_MACOS
-        context = spnew<HWContextOpenGL>();
+        context = gpnew<HWContextOpenGL>();
 #endif
     }
 
     if(!context)
-        throw std::runtime_error("requested driver is not available");
+        throw Exception("requested driver is not available");
 
     context->SetDepthTest(depthTest);
     context->SetDepthWriteEnabled(depthWriteEnabled);
@@ -285,11 +285,11 @@ void GraphicsContext::SetSwapInterval(int interval) {
     }
 }
 
-sptr<RenderTarget> GraphicsContext::GetRenderTarget() const {
+gptr<RenderTarget> GraphicsContext::GetRenderTarget() const {
     return renderTarget;
 }
 
-void GraphicsContext::SetRenderTarget(const sptr<RenderTarget>& target)
+void GraphicsContext::SetRenderTarget(const gptr<RenderTarget>& target)
 {
     if(renderTarget != target)
     {

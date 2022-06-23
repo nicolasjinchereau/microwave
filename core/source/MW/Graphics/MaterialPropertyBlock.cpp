@@ -5,6 +5,8 @@
 module Microwave.Graphics.MaterialPropertyBlock;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.Texture;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -18,7 +20,7 @@ template<> struct ShaderVarLangType<Mat2> { const static ShaderVarType type = Sh
 template<> struct ShaderVarLangType<Mat3> { const static ShaderVarType type = ShaderVarType::Float3x3; };
 template<> struct ShaderVarLangType<Mat4> { const static ShaderVarType type = ShaderVarType::Float4x4; };
 template<> struct ShaderVarLangType<Color> { const static ShaderVarType type = ShaderVarType::Float4; };
-template<> struct ShaderVarLangType<sptr<Texture>> { const static ShaderVarType type = ShaderVarType::Sampler2D; };
+template<> struct ShaderVarLangType<gptr<Texture>> { const static ShaderVarType type = ShaderVarType::Sampler2D; };
 
 template<class T>
 class MaterialPropertyT : public MaterialProperty
@@ -33,7 +35,7 @@ public:
         return ShaderVarLangType<T>::type;
     }
 
-    virtual void Apply(const sptr<Shader>& shader) override {
+    virtual void Apply(const gptr<Shader>& shader) override {
         shader->SetUniform(name, value);
     }
 
@@ -77,16 +79,16 @@ class MaterialPropertyTexture : public MaterialProperty
 {
     inline static Type::Pin<MaterialPropertyTexture> pin;
 public:
-    typedef sptr<Texture> value_type;
-    constexpr static ShaderVarType var_type = ShaderVarLangType<sptr<Texture>>::type;
+    typedef gptr<Texture> value_type;
+    constexpr static ShaderVarType var_type = ShaderVarLangType<gptr<Texture>>::type;
 
-    sptr<Texture> value = {};
+    gptr<Texture> value = {};
 
     virtual ShaderVarType GetUniformType() const override {
-        return ShaderVarLangType<sptr<Texture>>::type;
+        return ShaderVarLangType<gptr<Texture>>::type;
     }
 
-    virtual void Apply(const sptr<Shader>& shader) override {
+    virtual void Apply(const gptr<Shader>& shader) override {
         shader->SetUniform(name, value);
     }
 
@@ -97,28 +99,28 @@ public:
 
     virtual void FromJson(const json& obj, ObjectLinker* linker) override {
         Object::FromJson(obj, linker);
-        ObjectLinker::RestoreAsset(linker, SharedFrom(this), value, obj, "value");
+        ObjectLinker::RestoreAsset(linker, self(this), value, obj, "value");
     }
 };
 
 template<class PTy>
 void SetUniformImpl(MaterialPropertyBlock& block, const std::string& name, const typename PTy::value_type& value)
 {
-    sptr<PTy> prop;
+    gptr<PTy> prop;
 
     auto it = block.properties.find(name);
     if (it == block.properties.end() || it->second->GetUniformType() != ShaderVarLangType<typename PTy::value_type>::type)
     {
-        prop = spnew<PTy>();
+        prop = gpnew<PTy>();
         prop->SetName(name);
         block.properties[name] = prop;
     }
     else
     {
-        prop = spcast<PTy>(it->second);
+        prop = gpcast<PTy>(it->second);
     }
 
-    assert(prop);
+    Assert(prop);
     prop->value = value;
 }
 
@@ -154,13 +156,13 @@ void MaterialPropertyBlock::SetUniform(const std::string& name, const Color& val
     SetUniformImpl<MaterialPropertyColor>(*this, name, (Vec4&)value);
 }
 
-void MaterialPropertyBlock::SetUniform(const std::string& name, const sptr<Texture>& value) {
+void MaterialPropertyBlock::SetUniform(const std::string& name, const gptr<Texture>& value) {
     SetUniformImpl<MaterialPropertyTexture>(*this, name, value);
 }
 
-sptr<Texture> MaterialPropertyBlock::GetTexture(const std::string& name)
+gptr<Texture> MaterialPropertyBlock::GetTexture(const std::string& name)
 {
-    sptr<Texture> ret;
+    gptr<Texture> ret;
 
     auto it = properties.find(name);
     if (it != properties.end() && it->second->GetUniformType() == ShaderVarType::Sampler2D)

@@ -5,6 +5,7 @@
 export module Microwave.System.AsyncExecutor;
 import Microwave.System.Dispatcher;
 import Microwave.System.Executor;
+import Microwave.System.Pointers;
 import <atomic>;
 import <condition_variable>;
 import <deque>;
@@ -20,7 +21,7 @@ class AsyncExecutor : public Executor
 {
     inline static Type::Pin<AsyncExecutor> pin;
 
-    std::deque<std::function<void()>> jobs;
+    gvector<gfunction<void()>> jobs;
     std::vector<std::thread> threads;
     std::condition_variable cond;
     std::mutex mut;
@@ -53,7 +54,7 @@ public:
     }
 
 protected:
-    virtual void Execute(const std::function<void()>& job) override
+    virtual void Execute(const gfunction<void()>& job) override
     {
         {
             std::unique_lock<std::mutex> lk(mut);
@@ -67,7 +68,7 @@ protected:
     {
         while (run)
         {
-            std::function<void()> job;
+            gfunction<void()> job;
 
             {
                 std::unique_lock<std::mutex> lk(mut);
@@ -76,7 +77,7 @@ protected:
                 if (!jobs.empty())
                 {
                     job = std::move(jobs.front());
-                    jobs.pop_front();
+                    jobs.erase(jobs.begin());
                 }
             }
 

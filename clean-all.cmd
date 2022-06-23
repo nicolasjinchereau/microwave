@@ -16,6 +16,10 @@ cd ..\GLEW
 if exist lib rmdir /s /q lib
 if exist obj rmdir /s /q obj
 if exist projects\windows\.vs rmdir /s /q projects\windows\.vs
+cd ..\graph-collector
+if exist lib rmdir /s /q lib
+if exist obj rmdir /s /q obj
+if exist projects\windows\.vs rmdir /s /q projects\windows\.vs
 cd ..\hlslparser
 if exist lib rmdir /s /q lib
 if exist obj rmdir /s /q obj

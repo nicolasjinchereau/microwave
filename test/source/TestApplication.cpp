@@ -18,11 +18,11 @@ class TestApplication : public App
                       , public IDispatchHandler
 {
 public:
-    sptr<GraphicsContext> graphics;
-    sptr<AudioContext> audio;
-    sptr<AssetLibrary> assetLibrary;
-    sptr<Scene> scene;
-    sptr<SceneRenderer> sceneRenderer;
+    gptr<GraphicsContext> graphics;
+    gptr<AudioContext> audio;
+    gptr<AssetLibrary> assetLibrary;
+    gptr<Scene> scene;
+    gptr<SceneRenderer> sceneRenderer;
 
     virtual void OnInitialize(AppConfig& config) override
     {
@@ -38,35 +38,35 @@ public:
             audio = AudioContext::New();
             AudioContext::SetCurrent(audio);
 
-            //graphics = spnew<GraphicsContext>(GraphicsDriverType::Direct3D11);
-            graphics = spnew<GraphicsContext>(GraphicsDriverType::OpenGL);
+            //graphics = gpnew<GraphicsContext>(GraphicsDriverType::Direct3D11);
+            graphics = gpnew<GraphicsContext>(GraphicsDriverType::OpenGL);
             GraphicsContext::SetCurrent(graphics);
 
             graphics->SetRenderTarget(GetMainWindow());
             
             // set up asset library
             auto rootDir = io::File::GetDefaultDataPath();
-            assetLibrary = spnew<AssetLibrary>(rootDir);
+            assetLibrary = gpnew<AssetLibrary>(rootDir);
             SetAssetLibrary(assetLibrary);
 
             bool forceImport = false;
-            auto assetDatabase = spnew<AssetDatabase>(assetLibrary);
+            auto assetDatabase = gpnew<AssetDatabase>(assetLibrary);
             assetDatabase->Refresh(forceImport);
             assetDatabase.reset();
 
             // set up scene
-            scene = spnew<Scene>();
+            scene = gpnew<Scene>();
             scene->GetRootNode()->AddChild()->AddComponent<Game>();
 
-            sceneRenderer = spnew<SceneRenderer>();
+            sceneRenderer = gpnew<SceneRenderer>();
 
-            Dispatcher::GetCurrent()->AddHandler(SharedFrom(this));
+            Dispatcher::GetCurrent()->AddHandler(self(this));
             Dispatcher::GetCurrent()->SetContinuousDispatchRate(1000);
         }
-        catch (std::exception& ex)
+        catch (const Exception& ex)
         {
             std::string msg = ex.what();
-            Console::WriteLine("initialization failed: %", msg);
+            writeln("initialization failed: ", msg);
         }
     }
     
@@ -120,6 +120,6 @@ public:
     }
 };
 
-sptr<TestApplication> app = spnew<TestApplication>();
+gptr<TestApplication> app = gpnew<TestApplication>();
 
 } // Test

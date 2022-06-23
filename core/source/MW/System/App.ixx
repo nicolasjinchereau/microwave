@@ -31,30 +31,30 @@ public:
 class App : public Object, public IWindowEventHandler
 {
     static App* _instance;
-    sptr<ApplicationDispatcher> _dispatcher;
+    gptr<ApplicationDispatcher> _dispatcher;
 protected:
-    sptr<Window> _mainWindow;
-    std::vector<wptr<Window>> _allWindows;
-    sptr<AssetLibrary> _assetLibrary;
+    gptr<Window> _mainWindow;
+    gvector<wgptr<Window>> _allWindows;
+    gptr<AssetLibrary> _assetLibrary;
 
-    void SetMainWindow(sptr<Window> mainWindow);
+    void SetMainWindow(gptr<Window> mainWindow);
 
     void FlushWindowList();
 public:
     App();
     ~App();
 
-    static sptr<App> Get();
-    sptr<ApplicationDispatcher> GetDispatcher();
+    static gptr<App> Get();
+    gptr<ApplicationDispatcher> GetDispatcher();
     
     // only works on desktop platforms
-    sptr<Window> CreateWindow(const std::string title, const IVec2& pos, const IVec2& size);
-    const std::vector<wptr<Window>>& GetWindows();
-    void GetWindows(std::vector<sptr<Window>>& windows);
-    sptr<Window> GetMainWindow();
+    gptr<Window> CreateWindow(const std::string title, const IVec2& pos, const IVec2& size);
+    const gvector<wgptr<Window>>& GetWindows();
+    void GetWindows(gvector<gptr<Window>>& windows);
+    gptr<Window> GetMainWindow();
 
-    void SetAssetLibrary(const sptr<AssetLibrary>& assetLibrary);
-    sptr<AssetLibrary> GetAssetLibrary();
+    void SetAssetLibrary(const gptr<AssetLibrary>& assetLibrary);
+    gptr<AssetLibrary> GetAssetLibrary();
 
     virtual void OnInitialize(AppConfig& config) {}
     virtual void OnStart() {}

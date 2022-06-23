@@ -6,8 +6,9 @@ module Microwave.SceneGraph.Components.Canvas;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.RenderTarget;
 import Microwave.SceneGraph.Node;
+import Microwave.System.Exception;
 import Microwave.System.Object;
-import <cassert>;
+import <MW/System/Debug.h>;
 import <string>;
 import <unordered_map>;
 import <vector>;
@@ -32,7 +33,7 @@ void Canvas::FromJson(const json& obj, ObjectLinker* linker)
     referenceSize = obj.value("referenceSize", referenceSize);
     fitMode = obj.value("fitMode", fitMode);
 
-    ObjectLinker::RestoreLink(linker, SharedFrom(this), camera, obj, "camera");
+    ObjectLinker::RestoreLink(linker, self(this), camera, obj, "camera");
 
     structureDirty = true;
 }
@@ -55,11 +56,11 @@ FitMode Canvas::GetFitMode() const {
     return fitMode;
 }
 
-void Canvas::SetCamera(const sptr<Camera>& camera) {
+void Canvas::SetCamera(const gptr<Camera>& camera) {
     this->camera = camera;
 }
 
-sptr<Camera> Canvas::GetCamera() const {
+gptr<Camera> Canvas::GetCamera() const {
     return camera.lock();
 }
 
@@ -78,16 +79,16 @@ void Canvas::UpdateStructure()
         struct R
         {
             static void SetViewDepths(
-                const sptr<Node>& canvasNode,
-                const sptr<Node>& node,
+                const gptr<Node>& canvasNode,
+                const gptr<Node>& node,
                 int depth)
             {
                 for (auto& c : node->GetComponents())
                 {
-                    if (depth != 0 && spcast<Canvas>(c))
+                    if (depth != 0 && gpcast<Canvas>(c))
                         return;
 
-                    if (auto v = spcast<View>(c)) {
+                    if (auto v = gpcast<View>(c)) {
                         v->SetRenderDepth(depth);
                     }
                 }
@@ -145,12 +146,12 @@ void Canvas::SystemLateUpdate()
     FitCameraToCanvas();
 }
 
-Vec2 Canvas::WorldToCanvasPos(const Vec3& pos, const sptr<Camera>& camera) const
+Vec2 Canvas::WorldToCanvasPos(const Vec3& pos, const gptr<Camera>& camera) const
 {
-    assert(camera);
+    Assert(camera);
 
     auto graphics = GraphicsContext::GetCurrent();
-    assert(graphics);
+    Assert(graphics);
 
     auto screenPos = camera->WorldToScreen(pos);
     auto viewport = graphics->GetViewport();

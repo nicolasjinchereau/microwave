@@ -29,7 +29,7 @@ public:
 
     virtual void ImportFile(
         AssetMetadata& meta,
-        const sptr<Stream>& stream,
+        const gptr<Stream>& stream,
         const path& dataDir) override
     {
         ArtifactMetadata art;
@@ -58,7 +58,7 @@ public:
         if (path::exists(artifactFilePath))
             path::remove(artifactFilePath);
 
-        sptr<Stream> output = File::Open(artifactFilePath, OpenMode::Out | OpenMode::Binary);
+        gptr<Stream> output = File::Open(artifactFilePath, OpenMode::Out | OpenMode::Binary);
         stream->CopyTo(output);
         output = nullptr;
         

@@ -3,10 +3,10 @@
 *--------------------------------------------------------------*/
 
 module Microwave.Utilities.BinPacking.BinPacker;
-import Microwave.Utilities.Format;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <algorithm>;
 import <array>;
-import <cassert>;
 import <cmath>;
 import <memory>;
 import <stdexcept>;
@@ -102,7 +102,7 @@ Bin BinPacker::PackBin(
 void BinPacker::PackBoxes(const std::vector<IVec2>& boxes, int maxSize, int padding, bool allowRotation)
 {
     if (maxSize > 0 && (maxSize & (maxSize - 1)) != 0)
-        throw std::runtime_error("'maxSize' must be a power of two");
+        throw Exception("'maxSize' must be a power of two");
 
     dynamicPacking = false;
 
@@ -115,7 +115,7 @@ void BinPacker::PackBoxes(const std::vector<IVec2>& boxes, int maxSize, int padd
     for (auto& box : boxes)
     {
         if (box.x > maxSize || box.y > maxSize)
-            throw std::runtime_error("all boxes must fit inside bounds 'maxSize'x'maxSize'");
+            throw Exception("all boxes must fit inside bounds 'maxSize'x'maxSize'");
 
         input.push_back(RectMapping(box, inputIndex++));
     }
@@ -164,10 +164,10 @@ void BinPacker::StartDynamicPacking(const IVec2& binSize, int boxPadding, bool a
 RectMapping BinPacker::PackBox(const IVec2& box)
 {
     if (!dynamicPacking)
-        throw std::runtime_error("'StartDynamicPacking' must be called first");
+        throw Exception("'StartDynamicPacking' must be called first");
 
     if (box.x > binSize.x || box.y > binSize.y)
-        throw std::runtime_error(format("specified box does not fit in bin (%x%)", binSize.x, binSize.y));
+        throw Exception({ "specified box does not fit in bin (", binSize.x, "x", binSize.y, ")" });
 
     BSPNode* insertedNode = nullptr;
 
@@ -198,7 +198,7 @@ RectMapping BinPacker::PackBox(const IVec2& box)
         auto mapping = RectMapping{ box, i };
 
         insertedNode = bin.root->Insert(mapping, boxPadding, allowRotation);
-        assert(insertedNode);
+        Assert(insertedNode);
 
         bin.mappings.push_back(mapping);
         insertedNode->pMapping = &bin.mappings.back();

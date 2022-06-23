@@ -23,7 +23,7 @@ struct WavPeakPos
 
 class WavStream : public AudioStream
 {
-    sptr<Stream> stream;
+    gptr<Stream> stream;
 
     SampleType sampleType = {};
     int samplesPerSec = {}; // frames per second
@@ -37,7 +37,7 @@ class WavStream : public AudioStream
     std::vector<WavPeakPos> peaks; // one per channel
 public:
     // view of a *.wav file as a stream of samples
-    WavStream(const sptr<Stream>& stream);
+    WavStream(const gptr<Stream>& stream);
 
     // `Stream` interface
     virtual bool CanRead() const override;
@@ -62,7 +62,7 @@ public:
     // extra
     const std::vector<WavPeakPos> &GetPeaks() const;
 
-    static void Save(const sptr<AudioStream>& stream, const sptr<Stream>& output);
+    static void Save(const gptr<AudioStream>& stream, const gptr<Stream>& output);
 };
 
 } // audio

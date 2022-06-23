@@ -3,12 +3,14 @@
 *--------------------------------------------------------------*/
 
 module Microwave.System.Dispatcher;
+import Microwave.IO.Terminal;
+import Microwave.System.Exception;
 import <chrono>;
 
 namespace mw {
 inline namespace system {
 
-thread_local sptr<Dispatcher> Dispatcher::_currentDispatcher;
+thread_local gptr<Dispatcher> Dispatcher::_currentDispatcher;
 
 Dispatcher::Dispatcher()
 {
@@ -23,20 +25,20 @@ void Dispatcher::Wake()
     cv.notify_one();
 }
 
-sptr<DispatchAction> Dispatcher::InvokeAsync(
-    std::function<void()> function,
+gptr<DispatchAction> Dispatcher::InvokeAsync(
+    gfunction<void()> function,
     std::chrono::steady_clock::time_point when
 )
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    auto action = spnew<DispatchAction>(std::move(function), when);
-    sorted_insert(actions, action, DispatchActionComparison());
+    auto action = gpnew<DispatchAction>(std::move(function), when);
+    sorted_insert(actions, std::move(action), DispatchActionComparison());
     Wake();
     return action;
 }
 
-bool Dispatcher::Cancel(const sptr<DispatchAction>& action)
+bool Dispatcher::Cancel(const gptr<DispatchAction>& action)
 {
     std::unique_lock<std::mutex> lk(mut);
 
@@ -86,7 +88,7 @@ void Dispatcher::SetContinuousDispatchRate(uint32_t rate)
                 continuousDispatchAction->when = std::chrono::steady_clock::time_point{ std::chrono::steady_clock::duration::zero() };
             }
 
-            continuousDispatchAction = spnew<DispatchAction>(
+            continuousDispatchAction = gpnew<DispatchAction>(
                 [this]{
                     InvokeDelegates();
 
@@ -120,35 +122,35 @@ uint32_t Dispatcher::GetContinuousDispatchRate() const
     return continuousDispatchRate;
 }
 
-void Dispatcher::AddHandler(const sptr<IDispatchHandler>& handler)
+void Dispatcher::AddHandler(const gptr<IDispatchHandler>& handler)
 {
     std::unique_lock<std::mutex> lk(mut);
     dispatchHandlers.Add(handler);
 }
 
-void Dispatcher::RemoveHandler(const sptr<IDispatchHandler>& handler)
+void Dispatcher::RemoveHandler(const gptr<IDispatchHandler>& handler)
 {
     std::unique_lock<std::mutex> lk(mut);
     dispatchHandlers.Remove(handler);
 }
 
-sptr<Dispatcher> Dispatcher::GetCurrent() {
+gptr<Dispatcher> Dispatcher::GetCurrent() {
     return _currentDispatcher;
 }
 
-void Dispatcher::SetCurrent(sptr<Dispatcher> dispatcher) {
+void Dispatcher::SetCurrent(gptr<Dispatcher> dispatcher) {
     _currentDispatcher = dispatcher;
 }
 
-void Dispatcher::InvokeFunction(const sptr<DispatchAction>& action)
+void Dispatcher::InvokeFunction(const gptr<DispatchAction>& action)
 {
     try
     {
         if (action->function)
             action->function();
     }
-    catch (std::exception & ex) {
-        Console::WriteLine("Dispatcher: error invoking dispatch action - %", ex.what());
+    catch (const Exception& ex) {
+        writeln("Dispatcher: error invoking dispatch action - ", ex.what());
     }
 }
 
@@ -157,7 +159,7 @@ void Dispatcher::InvokeDelegates()
     dispatchHandlers.RaiseEvent(mut, &IDispatchHandler::OnDispatch);
 }
 
-sptr<DispatchAction> Dispatcher::WaitForNextAction()
+gptr<DispatchAction> Dispatcher::WaitForNextAction()
 {
     std::unique_lock<std::mutex> lk(mut);
 
@@ -170,11 +172,11 @@ sptr<DispatchAction> Dispatcher::WaitForNextAction()
         [this]{ return !run || (!actions.empty() && std::chrono::steady_clock::now() > actions.front()->when); }
     );
 
-    sptr<DispatchAction> action;
+    gptr<DispatchAction> action;
 
     if (run) {
         action = std::move(actions.front());
-        actions.pop_front();
+        actions.erase(actions.begin());
     }
 
     return action;

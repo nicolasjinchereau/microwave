@@ -33,7 +33,7 @@ public:
     // should generate artifact files and update metadata
     virtual void ImportFile(
         AssetMetadata& meta,
-        const sptr<Stream>& file,
+        const gptr<Stream>& file,
         const path& dataDir) = 0;
 
     virtual bool Resolve(

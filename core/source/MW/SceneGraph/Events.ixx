@@ -69,7 +69,7 @@ class RigidBody;
 
 struct Collision
 {
-    sptr<RigidBody> body;
+    gptr<RigidBody> body;
     std::span<ContactPoint> contacts;
 };
 
@@ -86,7 +86,7 @@ class IRenderEvents
 {
 public:
     virtual ~IRenderEvents(){}
-    virtual void GetRenderables(Sink<sptr<Renderable>> sink) = 0;
+    virtual void GetRenderables(Sink<gptr<Renderable>> sink) = 0;
 };
 
 } // scene

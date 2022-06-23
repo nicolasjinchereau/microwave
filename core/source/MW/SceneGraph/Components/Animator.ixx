@@ -21,7 +21,7 @@ inline namespace scene {
 class AnimationState
 {
 public:
-    sptr<AnimationClip> clip;
+    gptr<AnimationClip> clip;
     float speed = 1.0f;
 
     float time = 0.0f;
@@ -44,7 +44,7 @@ class Animator : public Component, public ISystemEvents
 {
     inline static Type::Pin<Animator> pin;
 
-    std::unordered_map<std::string, sptr<AnimationState>> animationStates;
+    gmap<std::string, gptr<AnimationState>> animationStates;
     std::unordered_map<path, Influence> influences;
     bool dirtyInfluences = true;
 
@@ -58,8 +58,8 @@ public:
     virtual void ToJson(json& obj) const override;
     virtual void FromJson(const json& obj, ObjectLinker* linker) override;
 
-    void AddClip(const sptr<AnimationClip>& clip, const std::string& clipName);
-    void RemoveClip(const sptr<AnimationClip>& clip);
+    void AddClip(const gptr<AnimationClip>& clip, const std::string& clipName);
+    void RemoveClip(const gptr<AnimationClip>& clip);
     void RemoveClip(const std::string& clipName);
     int GetClipCount() const;
 

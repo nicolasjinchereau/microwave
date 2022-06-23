@@ -7,12 +7,13 @@ import Microwave.SceneGraph.Components.RigidBody;
 import Microwave.SceneGraph.Events;
 import Microwave.SceneGraph.Node;
 import Microwave.System.App;
+import Microwave.System.Exception;
 import Microwave.Utilities.Util;
+import <MW/SceneGraph/Internal/Bullet.h>;
+import <MW/System/Debug.h>;
 import <array>;
-import <cassert>;
 import <span>;
 import <utility>;
-import <MW/SceneGraph/Internal/Bullet.h>;
 
 namespace mw {
 inline namespace scene {
@@ -61,24 +62,24 @@ void PhysicsWorld::SetGravity(const Vec3& gravity) {
     world->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
 }
 
-void PhysicsWorld::AddRigidBody(const sptr<RigidBody>& body)
+void PhysicsWorld::AddRigidBody(const gptr<RigidBody>& body)
 {
     auto bodyWorld = body->world.lock();
     if (!bodyWorld)
     {
         bodies.push_back(body);
         world->addRigidBody(body->body.get());
-        body->world = SharedFrom(this);
+        body->world = self(this);
     }
 }
 
-void PhysicsWorld::RemoveRigidBody(const sptr<RigidBody>& body)
+void PhysicsWorld::RemoveRigidBody(const gptr<RigidBody>& body)
 {
     auto bodyWorld = body->world.lock();
     if (bodyWorld.get() == this)
     {
         body->world.reset();
-        Erase(bodies, body);
+        std::erase(bodies, body);
         
         for (auto& [manifold, state] : collisions)
         {
@@ -153,7 +154,7 @@ void PhysicsWorld::PerformCollisionCallbacks(btPersistentManifold* manifold, Col
 {
     auto body0 = (RigidBody*)manifold->getBody0()->getUserPointer();
     auto body1 = (RigidBody*)manifold->getBody1()->getUserPointer();
-    assert(body0 && body1);
+    Assert(body0 && body1);
     
     int contacts = 0;
     std::array<ContactPoint, 8> contactPoints;
@@ -164,7 +165,7 @@ void PhysicsWorld::PerformCollisionCallbacks(btPersistentManifold* manifold, Col
         btManifoldPoint& contactPoint = manifold->getContactPoint(c);
         auto worldPosA = contactPoint.m_positionWorldOnA;
         auto worldPosB = contactPoint.m_positionWorldOnB;
-        auto point = worldPosA + (worldPosB - worldPosA) * 0.5f;
+        btVector3 point = worldPosA + ((worldPosB - worldPosA) *= 0.5f);
         auto normal = contactPoint.m_normalWorldOnB;
         auto distance = contactPoint.m_distance1;
 
@@ -181,7 +182,7 @@ void PhysicsWorld::PerformCollisionCallbacks(btPersistentManifold* manifold, Col
     }
 
     Collision collision = {
-        body1->SharedFrom(body1),
+        body1->self(body1),
         std::span<ContactPoint>(contactPoints.data(), contacts)
     };
 
@@ -209,7 +210,7 @@ void PhysicsWorld::PerformCollisionCallbacks(btPersistentManifold* manifold, Col
         }
     }
 
-    collision.body = body0->SharedFrom(body0);
+    collision.body = body0->self(body0);
     
     for (auto& contact : collision.contacts)
         contact.normal = -contact.normal;

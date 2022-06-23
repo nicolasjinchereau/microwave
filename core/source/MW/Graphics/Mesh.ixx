@@ -8,12 +8,10 @@ import Microwave.Graphics.Buffer;
 import Microwave.Graphics.Material;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Math;
-import Microwave.System.Console;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
-import <cassert>;
 import <span>;
 import <vector>;
 
@@ -50,7 +48,7 @@ struct MeshElement
 {
     DrawMode drawMode = DrawMode::Triangles;
     std::vector<int> indices;
-    sptr<Buffer> indexBuffer;
+    gptr<Buffer> indexBuffer;
 };
 
 class Mesh : public Object
@@ -61,18 +59,18 @@ public:
     std::vector<Vec3> vertices;
     std::vector<Vec3> normals;
     std::vector<Vec2> texcoords;
-    std::vector<MeshElement> elements;
+    gvector<MeshElement> elements;
 
     SkinType skinType = SkinType::None;
     std::vector<Bone> bones;
     std::vector<IVec4> boneIndices; // 4 indices per vertex
     std::vector<Vec4> boneWeights; // 4 weights per vertex
 
-    sptr<Buffer> vertexBuffer;
-    sptr<Buffer> normalBuffer;
-    sptr<Buffer> texcoordBuffer;
-    sptr<Buffer> boneIndexBuffer;
-    sptr<Buffer> boneWeightBuffer;
+    gptr<Buffer> vertexBuffer;
+    gptr<Buffer> normalBuffer;
+    gptr<Buffer> texcoordBuffer;
+    gptr<Buffer> boneIndexBuffer;
+    gptr<Buffer> boneWeightBuffer;
 
     Sphere bsphere;
     AABox bbox;

@@ -46,8 +46,8 @@ public:
     Image(Image&&) = default;
     Image(const path& p);
     Image(const path& p, ImageFileFormat fileFormat);
-    Image(const sptr<FileStream>& stream);
-    Image(const sptr<FileStream>& stream, ImageFileFormat fileFormat);
+    Image(const gptr<FileStream>& stream);
+    Image(const gptr<FileStream>& stream, ImageFileFormat fileFormat);
     Image(PixelDataFormat pixelFormat, const IVec2& size);
     Image(PixelDataFormat pixelFormat, const IVec2& size, std::span<std::byte> pixelData);
     Image(ImageFileFormat fileFormat, std::span<std::byte> fileData);
@@ -65,8 +65,8 @@ public:
     void Load(PixelDataFormat pixelFormat, const IVec2& size);
     void Load(PixelDataFormat pixelFormat, const IVec2& size, std::span<std::byte> pixelData);
 
-    void Load(const sptr<FileStream>& stream);
-    void Load(const sptr<FileStream>& stream, ImageFileFormat fileFormat);
+    void Load(const gptr<FileStream>& stream);
+    void Load(const gptr<FileStream>& stream, ImageFileFormat fileFormat);
     void Load(ImageFileFormat fileFormat, std::span<std::byte> fileData);
     void LoadTGA(std::span<std::byte> fileData);
     void LoadPNG(std::span<std::byte> fileData);

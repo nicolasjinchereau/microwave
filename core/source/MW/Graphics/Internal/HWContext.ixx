@@ -44,26 +44,26 @@ public:
     virtual void SetColorMask(bool red, bool green, bool blue, bool alpha) = 0;
     virtual void SetBlendColor(Color color) = 0;
     virtual void SetViewport(const IntRect& rect) = 0;
-    virtual void SetRenderTarget(const sptr<HWRenderTarget>& target) = 0;
+    virtual void SetRenderTarget(const gptr<HWRenderTarget>& target) = 0;
     virtual void SetSwapInterval(int interval) = 0;
-    virtual void Clear(const sptr<HWRenderTarget>& target, bool depth, bool color) = 0;
+    virtual void Clear(const gptr<HWRenderTarget>& target, bool depth, bool color) = 0;
     virtual void DrawArray(int start, int count, DrawMode mode) = 0;
     virtual void DrawIndexed(int start, int count, DrawMode mode) = 0;
     virtual void Flush() = 0;
-    virtual void Flip(const sptr<HWRenderTarget>& target) = 0;
+    virtual void Flip(const gptr<HWRenderTarget>& target) = 0;
     virtual Mat4 GetOrthoMatrix(float left, float right, float bottom, float top, float znear, float zfar) = 0;
     virtual Mat4 GetPerspectiveMatrix(float fovY, float aspect, float znear, float zfar) = 0;
 
     virtual ShaderLanguage GetShaderLanguage() const = 0;
 
-    virtual sptr<HWShader> CreateShader(const sptr<ShaderInfo>& info) = 0;
-    virtual sptr<HWRenderTexture> CreateRenderTexture(const sptr<HWTexture>& tex) = 0;
-    virtual sptr<HWBuffer> CreateBuffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, size_t size) = 0;
-    virtual sptr<HWBuffer> CreateBuffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, const std::span<std::byte>& data) = 0;
-    virtual sptr<HWSurface> CreateSurface(const sptr<Window>& window) = 0;
-    virtual sptr<HWTexture> CreateTexture(const IVec2& size, PixelDataFormat format, bool dynamic, const std::span<std::byte>& data) = 0;
-    virtual sptr<HWTexture> CreateTexture(const IVec2& size, PixelDataFormat format, bool dynamic, const sptr<HWBuffer>& buffer) = 0;
-    virtual sptr<HWTexture> GetDefaultTexture() = 0;
+    virtual gptr<HWShader> CreateShader(const gptr<ShaderInfo>& info) = 0;
+    virtual gptr<HWRenderTexture> CreateRenderTexture(const gptr<HWTexture>& tex) = 0;
+    virtual gptr<HWBuffer> CreateBuffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, size_t size) = 0;
+    virtual gptr<HWBuffer> CreateBuffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, const std::span<std::byte>& data) = 0;
+    virtual gptr<HWSurface> CreateSurface(const gptr<Window>& window) = 0;
+    virtual gptr<HWTexture> CreateTexture(const IVec2& size, PixelDataFormat format, bool dynamic, const std::span<std::byte>& data) = 0;
+    virtual gptr<HWTexture> CreateTexture(const IVec2& size, PixelDataFormat format, bool dynamic, const gptr<HWBuffer>& buffer) = 0;
+    virtual gptr<HWTexture> GetDefaultTexture() = 0;
 };
 
 } // gfx

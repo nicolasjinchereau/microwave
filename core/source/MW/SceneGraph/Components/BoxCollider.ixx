@@ -24,9 +24,9 @@ class BoxCollider : public Collider, public IRenderEvents
 
     Vec3 extents = Vec3(0.5f, 0.5f, 0.5f);
 
-    sptr<Mesh> gizmoMesh;
-    sptr<Material> gizmoMat;
-    sptr<Renderable> renderable;
+    gptr<Mesh> gizmoMesh;
+    gptr<Material> gizmoMat;
+    gptr<Renderable> renderable;
 public:
 
     BoxCollider(){}
@@ -42,7 +42,7 @@ public:
 
     void UpdateGizmo();
 
-    virtual void GetRenderables(Sink<sptr<Renderable>> sink) override;
+    virtual void GetRenderables(Sink<gptr<Renderable>> sink) override;
 };
 
 } // scene

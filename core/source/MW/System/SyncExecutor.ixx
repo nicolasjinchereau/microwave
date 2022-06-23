@@ -15,7 +15,7 @@ class SyncExecutor : public Executor
 {
     inline static Type::Pin<SyncExecutor> pin;
 protected:
-    virtual void Execute(const std::function<void()>& job) override
+    virtual void Execute(const gfunction<void()>& job) override
     {
         job();
     }
@@ -26,8 +26,8 @@ public:
         SetName("SyncExecutor");
     }
 
-    static const sptr<SyncExecutor>& GetInstance() {
-        static sptr<SyncExecutor> executor = spnew<SyncExecutor>();
+    static const gptr<SyncExecutor>& GetInstance() {
+        static gptr<SyncExecutor> executor = gpnew<SyncExecutor>();
         return executor;
     }
 };

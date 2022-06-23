@@ -15,9 +15,9 @@ class CoinCounter : public Script
 {
 public:
     int coinsCollected = 0;
-    sptr<ImageView> coinImage;
-    sptr<TextView> coinText;
-    sptr<AudioSource> coinSound;
+    gptr<ImageView> coinImage;
+    gptr<TextView> coinText;
+    gptr<AudioSource> coinSound;
 
     Task<void> InitAsync()
     {
@@ -70,7 +70,7 @@ public:
 private:
     Coroutine CoinAnimation(const Vec2& canvasPos)
     {
-        sptr<Node> coinCopy = Instantiate<Node>(coinImage->GetNode());
+        gptr<Node> coinCopy = Instantiate<Node>(coinImage->GetNode());
         GetNode()->AddChild(coinCopy);
         auto view = coinCopy->GetComponent<ImageView>();
         view->SetAnchorEnabled(false);

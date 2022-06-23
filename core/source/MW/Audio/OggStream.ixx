@@ -18,7 +18,7 @@ class OggDecoder;
 
 class OggStream : public AudioStream
 {
-    sptr<Stream> stream;
+    gptr<Stream> stream;
     uptr<OggDecoder> decoder;
 
     SampleType sampleType = {};
@@ -31,7 +31,7 @@ class OggStream : public AudioStream
 public:
 
     // view of an *.ogg file as a stream of samples
-    OggStream(const sptr<Stream>& stream);
+    OggStream(const gptr<Stream>& stream);
     ~OggStream();
 
     virtual bool CanRead() const override;

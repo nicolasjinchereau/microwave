@@ -3,8 +3,9 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Math.IVec2;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <cstdint>;
-import <cassert>;
 import <ostream>;
 
 export namespace mw {
@@ -27,7 +28,7 @@ public:
     IVec2(int x, int y) : x(x), y(y) { }
 
     int& operator[](size_t index) {
-        //assert(index >= 0 && index < 2);
+        Assert(index >= 0 && index < 2);
         return ((int*)this)[index];
     }
 

@@ -6,6 +6,7 @@ module Microwave.Audio.Mp3Stream;
 import Microwave.Audio.Internal.Mp3Decoder;
 import Microwave.Audio.AudioSample;
 import Microwave.IO.Stream;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import <cstddef>;
 import <cstdint>;
@@ -16,7 +17,7 @@ import <algorithm>;
 namespace mw {
 inline namespace audio {
 
-Mp3Stream::Mp3Stream(const sptr<Stream>& stream)
+Mp3Stream::Mp3Stream(const gptr<Stream>& stream)
     : stream(stream), decoder(upnew<Mp3Decoder>(stream.get()))
 {
     sampleType = SampleType::Int16;
@@ -55,7 +56,7 @@ size_t Mp3Stream::GetPosition() const {
 size_t Mp3Stream::Seek(int64_t offset, SeekOrigin origin)
 {
     if (!CanSeek())
-        throw std::runtime_error("stream is not seekable");
+        throw Exception("stream is not seekable");
 
     int64_t frameOffset = offset / bytesPerFrame;
 
@@ -70,7 +71,7 @@ size_t Mp3Stream::Seek(int64_t offset, SeekOrigin origin)
 
     auto ret = decoder->SeekToPCMFrame((uint64_t)pos);
     if(!ret)
-        throw std::runtime_error("seek failed");
+        throw Exception("seek failed");
 
     framePos = pos;
 
@@ -78,7 +79,7 @@ size_t Mp3Stream::Seek(int64_t offset, SeekOrigin origin)
 }
 
 void Mp3Stream::SetLength(size_t length) {
-    throw std::runtime_error("not implemented");
+    throw Exception("not implemented");
 }
 
 int Mp3Stream::Read(std::span<std::byte> output)
@@ -107,7 +108,7 @@ int Mp3Stream::Read(std::span<std::byte> output)
 }
 
 void Mp3Stream::Write(std::span<std::byte> buffer) {
-    throw std::runtime_error("stream is not writable");
+    throw Exception("stream is not writable");
 }
 
 void Mp3Stream::Flush() {

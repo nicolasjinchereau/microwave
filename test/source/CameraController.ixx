@@ -29,7 +29,7 @@ public:
     float camMaxSpeed = 200.0f;
     float camDampening = 4.0f;
 
-    sptr<Camera> camera;
+    gptr<Camera> camera;
     Vec3 offset = Vec3(0, 9.5f, -6.662f);
     float camAngle = 55.0f;
     float defaultFOV = 68.0f;
@@ -37,7 +37,7 @@ public:
     float maxX = 68.25f;
     float zoom = 1.0f;
 
-    wptr<Node> player;
+    gptr<Node> player;
 
     virtual void Start() override
     {
@@ -49,7 +49,7 @@ public:
     {
         if(pointerID == -1)
         {
-            if (auto player = this->player.lock())
+            if (player)
             {
                 float camX = math::Clamp(player->GetPosition().x, minX, maxX);
                 auto pos = Vec3::Right() * camX + offset * (1.0f / zoom);

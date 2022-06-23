@@ -28,11 +28,11 @@ class TextView : public View, public IRenderEvents
     inline static Type::Pin<TextView> pin;
 protected:
     std::vector<IVec2> vertexRanges;
-    sptr<Buffer> vertexBuffer;
-    sptr<Material> mat;
+    gptr<Buffer> vertexBuffer;
+    gptr<Material> mat;
     bool textDirty = true;
 
-    sptr<Font> font;
+    gptr<Font> font;
     int fontSize = 32;
     bool wrapping = false;
     TextAlign alignment = TextAlign::MiddleCenter;
@@ -48,8 +48,8 @@ public:
 
     TextView(){ Construct(); }
 
-    void SetFont(const sptr<Font>& font);
-    const sptr<Font>& GetFont() const;
+    void SetFont(const gptr<Font>& font);
+    const gptr<Font>& GetFont() const;
 
     void SetFontSize(int fontSize);
     int GetFontSize() const;
@@ -68,10 +68,10 @@ public:
 
     virtual void OnSizeChanged() override;
     
-    virtual void GetRenderables(Sink<sptr<Renderable>> sink) override;
+    virtual void GetRenderables(Sink<gptr<Renderable>> sink) override;
 
 private:
-    std::vector<sptr<Renderable>> renderables;
+    gvector<gptr<Renderable>> renderables;
 };
 
 } // scene

@@ -5,26 +5,27 @@
 module Microwave.Graphics.Internal.HWRenderTextureOpenGL;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.Internal.HWTextureOpenGL;
+import Microwave.System.Exception;
 import <stdexcept>;
 import <string>;
 
 namespace mw {
 inline namespace gfx {
 
-HWRenderTextureOpenGL::HWRenderTextureOpenGL(const sptr<HWTexture>& backingTex)
-	: tex(spcast<HWTextureOpenGL>(backingTex))
+HWRenderTextureOpenGL::HWRenderTextureOpenGL(const gptr<HWTexture>& backingTex)
+	: tex(gpcast<HWTextureOpenGL>(backingTex))
 {
 	if(!tex)
-		throw std::runtime_error("'tex' cannot be null");
+		throw Exception("'tex' cannot be null");
 
 	size = tex->size;
 
 	auto graphics = GraphicsContext::GetCurrent();
 	if (!graphics)
-		throw std::runtime_error("no active graphics context");
+		throw Exception("no active graphics context");
 
 	if(tex->format != PixelDataFormat::RGBA32)
-		throw std::runtime_error("The only supported texture format is RGBA32");
+		throw Exception("The only supported texture format is RGBA32");
 
 	// create framebuffer object
 	gl::Int fb;
@@ -65,7 +66,7 @@ HWRenderTextureOpenGL::HWRenderTextureOpenGL(const sptr<HWTexture>& backingTex)
 			break;
 		}
 
-		throw std::runtime_error(err);
+		throw Exception(err);
 	}
 
 	gl::BindFramebuffer(gl::FRAMEBUFFER, fb);
@@ -84,7 +85,7 @@ IVec2 HWRenderTextureOpenGL::GetSize() {
     return size;
 }
 
-sptr<HWTexture> HWRenderTextureOpenGL::GetTexture() {
+gptr<HWTexture> HWRenderTextureOpenGL::GetTexture() {
 	return tex;
 }
 

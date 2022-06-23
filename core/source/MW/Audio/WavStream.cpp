@@ -6,9 +6,10 @@ module Microwave.Audio.WavStream;
 import Microwave.Audio.AudioSample;
 import Microwave.Audio.AudioStream;
 import Microwave.IO.Stream;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
+import <MW/System/Debug.h>;
 import <array>;
-import <cassert>;
 import <cstddef>;
 import <cstdint>;
 import <span>;
@@ -71,7 +72,7 @@ struct WavDataChunk
     //std::byte data[];
 };
 
-WavStream::WavStream(const sptr<Stream>& stream)
+WavStream::WavStream(const gptr<Stream>& stream)
     : stream(stream)
 {
     uint64_t dataSize64 = 0;
@@ -82,17 +83,17 @@ WavStream::WavStream(const sptr<Stream>& stream)
         WavChunkInfo info;
         if (!stream->ReadValue(info))
         {
-            throw std::runtime_error("cannot read chunk info");
+            throw Exception("cannot read chunk info");
         }
 
         if (strncmp(info.type, "RIFF", 4) == 0)
         {
             WavHeaderChunk headerChunk;
             if (!stream->ReadValue(headerChunk))
-                throw std::runtime_error("cannot read RIFF chunk");
+                throw Exception("cannot read RIFF chunk");
 
             if (strncmp(headerChunk.type, "WAVE", 4) != 0)
-                throw std::runtime_error("invalid RIFF type");
+                throw Exception("invalid RIFF type");
 
             // skip padding byte
             stream->Ignore(info.size % 2);
@@ -101,10 +102,10 @@ WavStream::WavStream(const sptr<Stream>& stream)
         {
             WavHeaderChunk headerChunk;
             if (!stream->ReadValue(headerChunk))
-                throw std::runtime_error("cannot read RF64 chunk");
+                throw Exception("cannot read RF64 chunk");
 
             if (strncmp(headerChunk.type, "WAVE", 4) != 0)
-                throw std::runtime_error("invalid RF64 type");
+                throw Exception("invalid RF64 type");
 
             // skip padding byte
             stream->Ignore(info.size % 2);
@@ -113,7 +114,7 @@ WavStream::WavStream(const sptr<Stream>& stream)
         {
             WavDS64Chunk ds64Chunk;
             if (!stream->ReadValue(ds64Chunk))
-                throw std::runtime_error("cannot read ds64 chunk");
+                throw Exception("cannot read ds64 chunk");
 
             dataSize64 = ds64Chunk.dataSize;
             stream->Ignore(info.size - sizeof(WavDS64Chunk));
@@ -125,7 +126,7 @@ WavStream::WavStream(const sptr<Stream>& stream)
         {
             WavFormatChunk formatChunk;
             if (!stream->ReadValue(formatChunk))
-                throw std::runtime_error("cannot read format chunk");
+                throw Exception("cannot read format chunk");
 
             numOfChan = formatChunk.numOfChan;
             samplesPerSec = formatChunk.samplesPerSec;
@@ -171,16 +172,16 @@ WavStream::WavStream(const sptr<Stream>& stream)
         {
             WavPeakChunk peakChunk;
             if (!stream->ReadValue(peakChunk))
-                throw std::runtime_error("failed to read PEAK chunk");
+                throw Exception("failed to read PEAK chunk");
 
-            assert(sizeof(WavPeakPos) == (info.size - sizeof(WavPeakChunk)) / GetChannels());
+            Assert(sizeof(WavPeakPos) == (info.size - sizeof(WavPeakChunk)) / GetChannels());
 
             peaks.resize(GetChannels());
 
             for (int i = 0; i < GetChannels(); ++i)
             {
                 if (!stream->ReadValue(peaks[i]))
-                    throw std::runtime_error("cannot read peak pos");
+                    throw Exception("cannot read peak pos");
             }
 
             size_t bytesRead = sizeof(WavPeakChunk) + sizeof(WavPeakPos) * GetChannels();
@@ -198,7 +199,7 @@ WavStream::WavStream(const sptr<Stream>& stream)
                 if constexpr (sizeof(size_t) >= sizeof(uint64_t))
                     dataSize = dataSize64;
                 else
-                    throw std::runtime_error("RF64 wav only supported in 64 library");
+                    throw Exception("RF64 wav only supported in 64 library");
             }
             else
             {
@@ -250,13 +251,13 @@ size_t WavStream::Seek(int64_t offset, SeekOrigin origin)
         pos = dataSize + byteOffset;
 
     if (pos < (int64_t)dataOffset)
-        throw std::runtime_error("seek position out of range");
+        throw Exception("seek position out of range");
 
     return stream->Seek(pos, SeekOrigin::Begin);
 }
 
 void WavStream::SetLength(size_t length) {
-    throw std::runtime_error("not implemented");
+    throw Exception("not implemented");
 }
 
 int WavStream::Read(std::span<std::byte> output)
@@ -294,7 +295,7 @@ int WavStream::Read(std::span<std::byte> output)
 }
 
 void WavStream::Write(std::span<std::byte> buffer) {
-    throw std::runtime_error("not implemented");
+    throw Exception("not implemented");
 }
 
 void WavStream::Flush() {
@@ -329,13 +330,13 @@ const std::vector<WavPeakPos>& WavStream::GetPeaks() const {
     return peaks;
 }
 
-void WavStream::Save(const sptr<AudioStream>& stream, const sptr<Stream>& output)
+void WavStream::Save(const gptr<AudioStream>& stream, const gptr<Stream>& output)
 {
     if (!stream)
-        throw std::runtime_error("'stream' cannot be null");
+        throw Exception("'stream' cannot be null");
 
     if (!output)
-        throw std::runtime_error("'output' cannot be null");
+        throw Exception("'output' cannot be null");
 
     uint32_t size = 0;
 
@@ -449,7 +450,7 @@ void WavStream::Save(const sptr<AudioStream>& stream, const sptr<Stream>& output
     data.resize(dataSize);
 
     if (stream->Read(data) != dataSize)
-        throw std::runtime_error("failed to read data");
+        throw Exception("failed to read data");
 
     // DATA
     WavChunkInfo dataChunkInfo = {

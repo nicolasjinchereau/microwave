@@ -8,7 +8,6 @@ import Microwave.SceneGraph.Node;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <cassert>;
 import <string>;
 import <utility>;
 
@@ -36,7 +35,7 @@ void AnimationClip::FromJson(const json& obj, ObjectLinker* linker)
     const json& trackObjs = obj["tracks"];
     for (auto& [key, trackObj] : trackObjs.items())
     {
-        auto track = spnew<AnimationTrack>();
+        auto track = gpnew<AnimationTrack>();
         from_json(trackObj, *track);
         tracks[key] = track;
 
@@ -47,7 +46,7 @@ void AnimationClip::FromJson(const json& obj, ObjectLinker* linker)
     wrapMode = obj.value("wrapMode", wrapMode);
 }
 
-void AnimationClip::AddTrack(const std::string& path, const sptr<AnimationTrack>& track)
+void AnimationClip::AddTrack(const std::string& path, const gptr<AnimationTrack>& track)
 {
     tracks[path] = track;
 

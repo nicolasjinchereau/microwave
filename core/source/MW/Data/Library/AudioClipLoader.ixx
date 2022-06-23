@@ -18,10 +18,10 @@ inline namespace data {
 class AudioClipLoader : public AssetLoader
 {
 public:
-    virtual Task<sptr<Object>> LoadAsync(
+    virtual Task<gptr<Object>> LoadAsync(
         const path& filePath,
         const AssetArtifact& artifact,
-        const sptr<Executor>& executor
+        const gptr<Executor>& executor
     ) const override;
 };
 

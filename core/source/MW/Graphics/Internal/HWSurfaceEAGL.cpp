@@ -4,6 +4,7 @@
 
 module Microwave.Graphics.Internal.HWSurfaceEAGL;
 import Microwave.Graphics.Internal.HWContextEAGL;
+import Microwave.System.Exception;
 import <MW/System/Internal/PlatformHeaders.h>;
 import <stdexcept>;
 
@@ -11,8 +12,8 @@ namespace mw {
 inline namespace gfx {
 
 HWSurfaceEAGL::HWSurfaceEAGL(
-    const sptr<HWContextEAGL>& context,
-    const sptr<WindowIOS>& window)
+    const gptr<HWContextEAGL>& context,
+    const gptr<WindowIOS>& window)
     : context(context)
     , window(window)
 {
@@ -39,7 +40,7 @@ HWSurfaceEAGL::HWSurfaceEAGL(
     
     GLenum status = gl::CheckFramebufferStatus(gl::FRAMEBUFFER);
     if(status != gl::FRAMEBUFFER_COMPLETE)
-        throw std::runtime_error("failed to create framebuffer");
+        throw Exception("failed to create framebuffer");
 
     size = IVec2(width, height);
 }
@@ -70,7 +71,7 @@ void HWSurfaceEAGL::UpdateSize()
     
     gl::Enum status = gl::CheckFramebufferStatus(gl::FRAMEBUFFER);
     if(status != gl::FRAMEBUFFER_COMPLETE)
-        throw std::runtime_error("failed to update framebuffer");
+        throw Exception("failed to update framebuffer");
     
     size = IVec2(width, height);
 }

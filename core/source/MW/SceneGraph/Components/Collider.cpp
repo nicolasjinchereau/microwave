@@ -17,14 +17,14 @@ void Collider::ToJson(json& obj) const
 void Collider::FromJson(const json& obj, ObjectLinker* linker)
 {
     Component::FromJson(obj, linker);
-    ObjectLinker::RestoreLink(linker, SharedFrom(this), pivot, obj, "pivot");
+    ObjectLinker::RestoreLink(linker, self(this), pivot, obj, "pivot");
 }
 
-void Collider::SetPivot(const sptr<Node>& pv) {
+void Collider::SetPivot(const gptr<Node>& pv) {
     pivot = pv;
 }
 
-sptr<Node> Collider::GetPivot()
+gptr<Node> Collider::GetPivot()
 {
     auto p = pivot.lock();
     if (!p) pivot = (p = GetNode());

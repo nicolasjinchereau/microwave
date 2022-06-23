@@ -41,7 +41,7 @@ class PhysicsWorld : public Object
     uptr<btSequentialImpulseConstraintSolver> solver;
     uptr<btDiscreteDynamicsWorld> world;
     std::unordered_map<btPersistentManifold*, CollisionState> collisions;
-    std::vector<sptr<RigidBody>> bodies;
+    gvector<gptr<RigidBody>> bodies;
 
     void PerformCollisionCallbacks(btPersistentManifold* manifold, CollisionState& state);
 
@@ -57,9 +57,10 @@ public:
 
     void StepSimulation(float deltaTime);
 
+    int GetBodyCount() const { return (int)bodies.size(); }
 private:
-    void AddRigidBody(const sptr<RigidBody>& body);
-    void RemoveRigidBody(const sptr<RigidBody>& body);
+    void AddRigidBody(const gptr<RigidBody>& body);
+    void RemoveRigidBody(const gptr<RigidBody>& body);
 };
 
 } // scene

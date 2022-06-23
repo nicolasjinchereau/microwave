@@ -21,16 +21,16 @@ inline namespace data {
 class FontLoader : public AssetLoader
 {
 public:
-    virtual Task<sptr<Object>> LoadAsync(
+    virtual Task<gptr<Object>> LoadAsync(
         const path& filePath,
         const AssetArtifact& artifact,
-        const sptr<Executor>& executor
+        const gptr<Executor>& executor
     ) const override
     {
         FontSettings fontSettings = artifact.settings;
         auto data = File::ReadAllBytes(filePath);
 
-        sptr<Font> font = spnew<Font>(
+        gptr<Font> font = gpnew<Font>(
             data,
             fontSettings.atlasSize,
             fontSettings.fontMode,

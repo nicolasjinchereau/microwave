@@ -6,11 +6,13 @@ module Microwave.Graphics.Internal.HWShaderOpenGL;
 import Microwave.Graphics.Internal.HWBufferOpenGL;
 import Microwave.Graphics.Internal.HWTextureOpenGL;
 import Microwave.Graphics.Internal.HWShader;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 
 namespace mw {
 inline namespace gfx {
 
-HWShaderOpenGL::HWShaderOpenGL(const sptr<ShaderInfo>& info)
+HWShaderOpenGL::HWShaderOpenGL(const gptr<ShaderInfo>& info)
     : HWShader(info)
 {
     const char* vs = info->vertShaderSource.data();
@@ -36,14 +38,14 @@ HWShaderOpenGL::HWShaderOpenGL(const sptr<ShaderInfo>& info)
     {
         gl::DeleteShader(vertShaderID);
         gl::DeleteShader(fragShaderID);
-        throw std::runtime_error(vs_error);
+        throw Exception(vs_error);
     }
 
     if (!ps_compiled)
     {
         gl::DeleteShader(vertShaderID);
         gl::DeleteShader(fragShaderID);
-        throw std::runtime_error(ps_error);
+        throw Exception(ps_error);
     }
 
     hProgram = gl::CreateProgram();
@@ -66,7 +68,7 @@ HWShaderOpenGL::HWShaderOpenGL(const sptr<ShaderInfo>& info)
     if (linkStatus == gl::FALSE)
     {
         gl::DeleteProgram(hProgram);
-        throw std::runtime_error("error: failed to create shader program");
+        throw Exception("error: failed to create shader program");
     }
 
     for (int i = 0, sz = (int)info->attributes.size(); i < sz; ++i)
@@ -114,13 +116,13 @@ void HWShaderOpenGL::Unbind()
     gl::UseProgram(0);
 }
 
-void HWShaderOpenGL::SetVertexBuffer(int id, const sptr<Buffer>& buffer, size_t offset, size_t stride)
+void HWShaderOpenGL::SetVertexBuffer(int id, const gptr<Buffer>& buffer, size_t offset, size_t stride)
 {
     if (id >= 0)
     {
-        assert(buffer->GetType() == BufferType::Vertex);
-        auto pb = spcast<HWBufferOpenGL>(buffer->GetHWBuffer());
-        assert(pb);
+        Assert(buffer->GetType() == BufferType::Vertex);
+        auto pb = gpcast<HWBufferOpenGL>(buffer->GetHWBuffer());
+        Assert(pb);
 
         auto& attrib = info->attributes[id];
 
@@ -130,11 +132,11 @@ void HWShaderOpenGL::SetVertexBuffer(int id, const sptr<Buffer>& buffer, size_t 
     }
 }
 
-void HWShaderOpenGL::SetIndexBuffer(const sptr<Buffer>& buffer)
+void HWShaderOpenGL::SetIndexBuffer(const gptr<Buffer>& buffer)
 {
-    assert(buffer->GetType() == BufferType::Index);
-    auto pb = spcast<HWBufferOpenGL>(buffer->GetHWBuffer());
-    assert(pb);
+    Assert(buffer->GetType() == BufferType::Index);
+    auto pb = gpcast<HWBufferOpenGL>(buffer->GetHWBuffer());
+    Assert(pb);
     pb->Bind();
 }
 
@@ -197,16 +199,16 @@ void HWShaderOpenGL::SetUniform(int id, const Color& value)
     }
 }
 
-void HWShaderOpenGL::SetUniform(int id, const sptr<Texture>& texture)
+void HWShaderOpenGL::SetUniform(int id, const gptr<Texture>& texture)
 {
     if (id >= 0)
     {
-        sptr<HWTexture> hwTex = texture->GetHWTexture();
+        gptr<HWTexture> hwTex = texture->GetHWTexture();
         if (!hwTex)
             return;
 
-        auto pt = spcast<HWTextureOpenGL>(hwTex);
-        assert(pt);
+        auto pt = gpcast<HWTextureOpenGL>(hwTex);
+        Assert(pt);
 
         int textureUnit = id;
         int samplerSlot = info->uniforms[id].slot;

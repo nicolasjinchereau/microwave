@@ -4,10 +4,11 @@
 
 export module Microwave.Utilities.BinPacking.BSPNode;
 import Microwave.Math;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import Microwave.System.Object;
 import Microwave.Utilities.BinPacking.RectMapping;
-import <cassert>;
+import <MW/System/Debug.h>;
 
 export namespace mw {
 inline namespace utilities {
@@ -35,14 +36,14 @@ public:
 class BSPNode
 {
 public:
-    wptr<IBSPNodePool> nodePool;
+    wgptr<IBSPNodePool> nodePool;
     IntRect rect = IntRect();
     BSPNodeType type = BSPNodeType::Empty;
     RectMapping* pMapping = nullptr;
     BSPNodePtr left;
     BSPNodePtr right;
 
-    BSPNode(const wptr<IBSPNodePool>& nodePool);
+    BSPNode(const wgptr<IBSPNodePool>& nodePool);
 
     void Reset(const IntRect& rc);
     BSPNode* Insert(RectMapping& mapping, int padding, bool allowRotation);
@@ -53,14 +54,14 @@ public:
     }
 
     static void Deallocate(BSPNode* pNode) {
-        assert(pNode);
+        Assert(pNode);
         ::operator delete(pNode);
     }
 };
 
 void BSPNodeDeleter::operator()(BSPNode* pNode)
 {
-    assert(pNode);
+    Assert(pNode);
 
     if (auto pool = pNode->nodePool.lock()) {
         pool->ReturnNode(pNode);

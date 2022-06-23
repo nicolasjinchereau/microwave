@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.System.Internal.ApplicationDispatcherWindows;
+import Microwave.System.Exception;
 import <MW/System/Internal/PlatformHeaders.h>;
 import <chrono>;
 
@@ -12,8 +13,8 @@ constexpr int WM_DISPATCHER_WAKE = WM_APP + 100;
 namespace mw {
 inline namespace system {
 
-sptr<ApplicationDispatcher> ApplicationDispatcher::New() {
-    return spnew<ApplicationDispatcherWindows>();
+gptr<ApplicationDispatcher> ApplicationDispatcher::New() {
+    return gpnew<ApplicationDispatcherWindows>();
 }
 
 void ApplicationDispatcherWindows::Wake()
@@ -36,13 +37,13 @@ ApplicationDispatcherWindows::~ApplicationDispatcherWindows()
         DestroyWindow(hWndMsg);
 }
 
-sptr<DispatchAction> ApplicationDispatcherWindows::InvokeAsync(
-    std::function<void()> function, std::chrono::steady_clock::time_point when
+gptr<DispatchAction> ApplicationDispatcherWindows::InvokeAsync(
+    gfunction<void()> function, std::chrono::steady_clock::time_point when
 )
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    auto action = spnew<DispatchAction>(std::move(function), when);
+    auto action = gpnew<DispatchAction>(std::move(function), when);
     sorted_insert(actions, action, DispatchActionComparison());
     Wake();
     return action;
@@ -134,11 +135,11 @@ void ApplicationDispatcherWindows::CreateMessageWindow()
     wcex.hIconSm = NULL;
 
     if (!RegisterClassEx(&wcex))
-        throw std::runtime_error("failed to register window class for dispatcher message target window");
+        throw Exception("failed to register window class for dispatcher message target window");
 
     hWndMsg = CreateWindow(name, name, WS_DISABLED, 0, 0, 32, 32, HWND_MESSAGE, NULL, hInstance, this);
     if (!hWndMsg)
-        throw std::runtime_error("failed to create target window for dispatcher");
+        throw Exception("failed to create target window for dispatcher");
 }
 
 LRESULT CALLBACK ApplicationDispatcherWindows::CreateWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -198,15 +199,15 @@ void ApplicationDispatcherWindows::ProcessActions()
     }
 }
 
-sptr<DispatchAction> ApplicationDispatcherWindows::GetNextAction()
+gptr<DispatchAction> ApplicationDispatcherWindows::GetNextAction()
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    sptr<DispatchAction> action;
+    gptr<DispatchAction> action;
 
     if (run && !actions.empty() && std::chrono::steady_clock::now() >= actions.front()->when) {
         action = std::move(actions.front());
-        actions.pop_front();
+        actions.erase(actions.begin());
     }
 
     UpdateActionTimer();

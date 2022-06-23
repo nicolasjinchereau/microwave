@@ -25,7 +25,7 @@ class HWContextOpenGL;
 class HWTextureOpenGL : public HWTexture
 {
 public:
-    sptr<HWContextOpenGL> context;
+    gptr<HWContextOpenGL> context;
     gl::Uint textureID = 0;
     float maxAniso = 1;
     IVec2 size;
@@ -33,18 +33,18 @@ public:
     bool dynamic = {};
 
     HWTextureOpenGL(
-        const sptr<HWContextOpenGL>& context,
+        const gptr<HWContextOpenGL>& context,
         const IVec2& size,
         PixelDataFormat format,
         bool dynamic,
         const std::span<std::byte>& data);
 
     HWTextureOpenGL(
-        const sptr<HWContextOpenGL>& context,
+        const gptr<HWContextOpenGL>& context,
         const IVec2& size,
         PixelDataFormat format,
         bool dynamic,
-        const sptr<HWBuffer>& buffer);
+        const gptr<HWBuffer>& buffer);
 
     virtual ~HWTextureOpenGL();
 

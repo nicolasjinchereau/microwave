@@ -29,13 +29,13 @@ class CapsuleCollider : public Collider, public IRenderEvents
     float radius = 0.5f;
     float height = 1.0f;
 
-    sptr<Mesh> gizmoBodyMesh;
-    sptr<Mesh> gizmoCapMesh;
+    gptr<Mesh> gizmoBodyMesh;
+    gptr<Mesh> gizmoCapMesh;
     Mat4 mtxCapTop;
     Mat4 mtxBody;
     Mat4 mtxCapBot;
-    sptr<Material> gizmoMat;
-    std::vector<sptr<Renderable>> renderables;
+    gptr<Material> gizmoMat;
+    gvector<gptr<Renderable>> renderables;
 
     friend PhysicsWorld;
 public:
@@ -60,7 +60,7 @@ public:
 
     void UpdateGizmo();
 
-    virtual void GetRenderables(Sink<sptr<Renderable>> sink) override;
+    virtual void GetRenderables(Sink<gptr<Renderable>> sink) override;
 };
 
 } // scene

@@ -10,8 +10,8 @@ import <vector>;
 namespace mw {
 inline namespace system {
 
-sptr<Window> Window::New(const std::string title, const IVec2& pos, const IVec2& size) {
-    return spnew<WindowMacOS>(title, pos, size);
+gptr<Window> Window::New(const std::string title, const IVec2& pos, const IVec2& size) {
+    return gpnew<WindowMacOS>(title, pos, size);
 }
 
 WindowMacOS::WindowMacOS()
@@ -212,7 +212,7 @@ Keycode WindowMacOS::TranslateKey(int keycode)
     return (Keycode)((int)Keycode::Unknown + keycode);
 }
 
-sptr<HWRenderTarget> WindowMacOS::GetHWRenderTarget() {
+gptr<HWRenderTarget> WindowMacOS::GetHWRenderTarget() {
     return surface;
 }
 

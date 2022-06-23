@@ -12,14 +12,14 @@ namespace Test {
 
 void PlayerWheel::OnCollisionStart(const Collision& collision)
 {
-    if(auto p = player.lock())
-        p->UpdateGroundedState(collision);
+    if(player)
+        player->UpdateGroundedState(collision);
 }
 
 void PlayerWheel::OnCollisionUpdate(const Collision& collision)
 {
-    if (auto p = player.lock())
-        p->UpdateGroundedState(collision);
+    if (player)
+        player->UpdateGroundedState(collision);
 }
 
 } // Test

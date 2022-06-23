@@ -12,7 +12,6 @@ import Microwave.Graphics.Internal.HWShader;
 import Microwave.Graphics.Internal.HWSurface;
 import Microwave.Graphics.Internal.HWTextureOpenGL;
 import Microwave.Graphics.Internal.OpenGLAPI;
-import Microwave.System.Console;
 import Microwave.System.Pointers;
 import Microwave.System.Internal.WindowWindows;
 import <MW/System/Internal/PlatformHeaders.h>;
@@ -24,9 +23,9 @@ inline namespace gfx {
 class HWContextOpenGL : public HWContext
 {
 public:
-    sptr<HWDriverContext> driverContext;
+    gptr<HWDriverContext> driverContext;
     bool depthWriteEnabled = false;
-    sptr<HWTexture> defaultTexture;
+    gptr<HWTexture> defaultTexture;
 
     HWContextOpenGL();
     virtual ~HWContextOpenGL(){}
@@ -34,8 +33,8 @@ public:
     virtual void SetActive(bool active) override;
 
     virtual Vec2 GetDepthRangeNDC() const override;
-    virtual void SetRenderTarget(const sptr<HWRenderTarget>& target) override;
-    virtual void Flip(const sptr<HWRenderTarget>& target) override;
+    virtual void SetRenderTarget(const gptr<HWRenderTarget>& target) override;
+    virtual void Flip(const gptr<HWRenderTarget>& target) override;
     virtual void SetSwapInterval(int interval) override;
     virtual void SetCullMode(CullMode mode) override;
     virtual void SetScissorTestEnabled(bool enabled) override;
@@ -60,7 +59,7 @@ public:
 
     virtual void SetBlendColor(Color color) override;
     virtual void SetViewport(const IntRect& rect) override;
-    virtual void Clear(const sptr<HWRenderTarget>& target, bool depth, bool color) override;
+    virtual void Clear(const gptr<HWRenderTarget>& target, bool depth, bool color) override;
     virtual void DrawArray(int start, int count, DrawMode mode) override;
     virtual void DrawIndexed(int start, int count, DrawMode mode) override;
     virtual void Flush() override;
@@ -76,33 +75,33 @@ public:
 
     virtual ShaderLanguage GetShaderLanguage() const override;
 
-    virtual sptr<HWShader> CreateShader(
-        const sptr<ShaderInfo>& info) override;
+    virtual gptr<HWShader> CreateShader(
+        const gptr<ShaderInfo>& info) override;
     
-    virtual sptr<HWRenderTexture> CreateRenderTexture(
-        const sptr<HWTexture>& tex) override;
+    virtual gptr<HWRenderTexture> CreateRenderTexture(
+        const gptr<HWTexture>& tex) override;
 
-    virtual sptr<HWBuffer> CreateBuffer(
+    virtual gptr<HWBuffer> CreateBuffer(
         BufferType type, BufferUsage usage,
         BufferCPUAccess cpuAccess, size_t size) override;
 
-    virtual sptr<HWBuffer> CreateBuffer(
+    virtual gptr<HWBuffer> CreateBuffer(
         BufferType type, BufferUsage usage,
         BufferCPUAccess cpuAccess,
         const std::span<std::byte>& data) override;
 
-    virtual sptr<HWSurface> CreateSurface(
-        const sptr<Window>& window) override;
+    virtual gptr<HWSurface> CreateSurface(
+        const gptr<Window>& window) override;
 
-    virtual sptr<HWTexture> CreateTexture(
+    virtual gptr<HWTexture> CreateTexture(
         const IVec2& size, PixelDataFormat format, bool dynamic,
         const std::span<std::byte>& data) override;
 
-    virtual sptr<HWTexture> CreateTexture(
+    virtual gptr<HWTexture> CreateTexture(
         const IVec2& size, PixelDataFormat format, bool dynamic,
-        const sptr<HWBuffer>& buffer) override;
+        const gptr<HWBuffer>& buffer) override;
 
-    virtual sptr<HWTexture> GetDefaultTexture() override;
+    virtual gptr<HWTexture> GetDefaultTexture() override;
 };
 
 } // gfx

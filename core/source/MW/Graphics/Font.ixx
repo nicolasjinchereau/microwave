@@ -71,14 +71,14 @@ class Font : public Object
     class Atlas
     {
     public:
-        sptr<Texture> texture;
+        gptr<Texture> texture;
         Atlas(const IVec2& size, FontMode fontMode);
     };
 
 public:
     typedef uint64_t GlyphKey;
 
-    sptr<FreeTypeFontFace> fontFace;
+    gptr<FreeTypeFontFace> fontFace;
     std::vector<GlyphInfo> glyphs;
     std::unordered_map<GlyphKey, size_t> charmap;
     BinPacker packer;

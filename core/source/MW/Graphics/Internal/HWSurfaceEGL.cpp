@@ -4,6 +4,7 @@
 
 module Microwave.Graphics.Internal.HWSurfaceEGL;
 import Microwave.Graphics.Internal.HWContextEGL;
+import Microwave.System.Exception;
 import <unordered_map>;
 import <stdexcept>;
 
@@ -14,8 +15,8 @@ extern android_app* androidApp{};
 inline namespace gfx {
 
 HWSurfaceEGL::HWSurfaceEGL(
-    const sptr<HWContextEGL>& context,
-    const sptr<WindowAndroid>& window)
+    const gptr<HWContextEGL>& context,
+    const gptr<WindowAndroid>& window)
     : context(context)
     , window(window)
 {
@@ -25,7 +26,7 @@ HWSurfaceEGL::HWSurfaceEGL(
 
     surface = eglCreateWindowSurface(context->display, context->config, androidApp->window, nullptr);
     if(surface == EGL_NO_SURFACE)
-        throw std::runtime_error("failed to create window surface");
+        throw Exception("failed to create window surface");
 }
 
 HWSurfaceEGL::~HWSurfaceEGL()
@@ -54,12 +55,12 @@ void HWSurfaceEGL::UpdateSize()
 
         surface = eglCreateWindowSurface(context->display, context->config, androidApp->window, nullptr);
         if(surface == EGL_NO_SURFACE)
-            throw std::runtime_error("failed to create window surface");
+            throw Exception("failed to create window surface");
 
         if(wasBound)
             context->SetRenderTarget(This<HWSurfaceEGL>());
     }
-    catch(std::exception& ex) {
+    catch(const Exception& ex) {
         Console::WriteLine("%", ex.what());
     }
 }

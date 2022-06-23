@@ -9,11 +9,11 @@ import Microwave.SceneGraph.Scene;
 namespace mw {
 inline namespace scene {
 
-sptr<Clock> Component::GetClock() {
+gptr<Clock> Component::GetClock() {
     return GetNode()->GetScene()->GetClock();
 }
 
-sptr<const Clock> Component::GetClock() const {
+gptr<const Clock> Component::GetClock() const {
     return GetNode()->GetScene()->GetClock();
 }
 
@@ -51,27 +51,27 @@ bool Component::IsNodeBranchActive() const
     return n ? n->IsBranchActive() : false;
 }
 
-sptr<const Node> Component::GetNode() const {
+gptr<const Node> Component::GetNode() const {
     return node.lock();
 }
 
-sptr<Node> Component::GetNode() {
+gptr<Node> Component::GetNode() {
     return node.lock();
 }
 
-sptr<const Scene> Component::GetScene() const {
+gptr<const Scene> Component::GetScene() const {
     auto n = node.lock();
     return n ? n->GetScene() : nullptr;
 }
 
-sptr<Scene> Component::GetScene() {
+gptr<Scene> Component::GetScene() {
     auto n = node.lock();
     return n ? n->GetScene() : nullptr;
 }
 
 bool Component::IsActiveAndEnabled() const
 {
-    sptr<Node> n;
+    gptr<Node> n;
     return enabled && ((n = node.lock()) ? n->IsBranchActive() : false);
 }
 

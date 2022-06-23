@@ -4,16 +4,17 @@
 
 module Microwave.SceneGraph.Components.AudioSource;
 import Microwave.Audio.AudioContext;
+import Microwave.System.Exception;
 import Microwave.System.ThreadPool;
 import Microwave.System.Pointers;
+import <MW/Audio/Internal/OpenAL.h>;
+import <MW/System/Debug.h>;
 import <array>;
 import <atomic>;
-import <cassert>;
 import <cstddef>;
 import <cstdint>;
 import <mutex>;
 import <vector>;
-import <MW/Audio/Internal/OpenAL.h>;
 
 namespace mw {
 inline namespace scene {
@@ -31,7 +32,7 @@ void StreamController::QueueBuffers(int count)
 
 void StreamController::Initialize(
     uint32_t sourceID,
-    const sptr<AudioClip>& clip)
+    const gptr<AudioClip>& clip)
 {
     std::lock_guard<std::mutex> lk(mut);
 
@@ -164,11 +165,11 @@ void AudioSource::Construct()
 {
     auto context = AudioContext::GetCurrent();
     if (!context)
-        throw std::runtime_error("cannot create an audio source with no active audio context");
+        throw Exception("cannot create an audio source with no active audio context");
 
     // generate an audio source
     alGenSources(1, &source);
-    assert(alIsSource(source));
+    Assert(alIsSource(source));
 
     alSource3f(source, AL_POSITION, 0.0, 0.0, 0.0f);
     alSource3f(source, AL_VELOCITY, 0.0, 0.0, 0.0);
@@ -201,7 +202,7 @@ void AudioSource::Destruct()
 
 void AudioSource::SetClipBuffer()
 {
-    assert(clip->GetBufferID());
+    Assert(clip->GetBufferID());
     alSourcei(source, AL_BUFFER, clip->GetBufferID());
 }
 
@@ -210,7 +211,7 @@ void AudioSource::UnsetClipBuffer()
     alSourcei(source, AL_BUFFER, 0);
 }
 
-void AudioSource::SetClip(const sptr<AudioClip>& newClip)
+void AudioSource::SetClip(const gptr<AudioClip>& newClip)
 {
     if (clip == newClip)
         return;
@@ -236,7 +237,7 @@ void AudioSource::SetClip(const sptr<AudioClip>& newClip)
     }
 }
 
-sptr<AudioClip> AudioSource::GetClip() const {
+gptr<AudioClip> AudioSource::GetClip() const {
     return clip;
 }
 

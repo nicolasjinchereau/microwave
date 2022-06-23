@@ -21,10 +21,10 @@ class HWDriverContext
 public:
     virtual ~HWDriverContext(){}
     virtual void SetActive(bool active) = 0;
-    virtual void SetRenderTarget(const sptr<HWRenderTarget>& target) = 0;
-    virtual void Flip(const sptr<HWRenderTarget>& target) = 0;
+    virtual void SetRenderTarget(const gptr<HWRenderTarget>& target) = 0;
+    virtual void Flip(const gptr<HWRenderTarget>& target) = 0;
     virtual void SetSwapInterval(int interval) = 0;
-    virtual sptr<HWSurface> CreateSurface(const sptr<Window>& window) = 0;
+    virtual gptr<HWSurface> CreateSurface(const gptr<Window>& window) = 0;
 };
 
 } // gfx

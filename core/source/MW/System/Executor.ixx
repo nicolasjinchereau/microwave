@@ -5,6 +5,7 @@
 export module Microwave.System.Executor;
 import Microwave.System.Awaitable;
 import Microwave.System.Object;
+import Microwave.System.Pointers;
 import Microwave.System.Task;
 import <condition_variable>;
 import <exception>;
@@ -21,16 +22,16 @@ inline namespace system {
 class Executor : public Object
 {
 protected:
-    virtual void Execute(const std::function<void()>& job) = 0;
+    virtual void Execute(const gfunction<void()>& job) = 0;
 public:
     virtual ~Executor() = default;
 
     template<class Fun, class T = std::invoke_result_t<Fun>>
     Task<T> Invoke(Fun&& fun)
     {
-        auto awaiter = spnew<Awaitable<T>>();
+        auto awaiter = gpnew<Awaitable<T>>();
 
-        std::function<void()> job = [f = std::forward<Fun>(fun), aw = awaiter]() mutable
+        gfunction<void()> job = [f = std::forward<Fun>(fun), aw = awaiter]() mutable
         {
             try
             {

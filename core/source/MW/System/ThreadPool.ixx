@@ -20,8 +20,8 @@ public:
         return GetInstance()->Invoke(std::forward<Fun>(fun));
     }
 
-    static const sptr<ThreadPool>& GetInstance() {
-        static sptr<ThreadPool> pool = spnew<ThreadPool>();
+    static const gptr<ThreadPool>& GetInstance() {
+        static gptr<ThreadPool> pool = gpnew<ThreadPool>();
         return pool;
     }
 };

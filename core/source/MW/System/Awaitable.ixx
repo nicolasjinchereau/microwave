@@ -3,11 +3,12 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.System.Awaitable;
-import Microwave.System.Dispatcher;
-import Microwave.System.Pointers;
 import Microwave.System.IAwaitable;
 import Microwave.System.IAwaiter;
-import <cassert>;
+import Microwave.System.Dispatcher;
+import Microwave.System.Exception;
+import Microwave.System.Pointers;
+import <MW/System/Debug.h>;
 import <condition_variable>;
 import <exception>;
 import <experimental/coroutine>;
@@ -35,8 +36,8 @@ struct AwaitableResult : AwaitableResult<void>
 
 struct AwaitingAwaiter
 {
-    sptr<IAwaiter> awaiter;
-    sptr<Dispatcher> dispatcher;
+    gptr<IAwaiter> awaiter;
+    gptr<Dispatcher> dispatcher;
 };
 
 template<class T>
@@ -47,7 +48,7 @@ public:
     std::condition_variable cond;
     bool finished = false;
     AwaitableResult<T> result;
-    std::vector<AwaitingAwaiter> awaiters;
+    gvector<AwaitingAwaiter> awaiters;
 
     virtual bool IsAwaitableReady() override
     {
@@ -56,11 +57,11 @@ public:
         return finished;
     }
 
-    virtual void OnAwaiterSuspended(const sptr<IAwaiter>& caller) override
+    virtual void OnAwaiterSuspended(const gptr<IAwaiter>& caller) override
     {
         std::lock_guard<std::mutex> lk(mut);
 
-        assert(caller);
+        Assert(caller);
         
         if (finished)
         {

@@ -28,10 +28,10 @@ protected:
     friend AudioSource;
 public:
 
-    static sptr<AudioContext> New();
+    static gptr<AudioContext> New();
 
-    static void SetCurrent(const sptr<AudioContext>& context);
-    static sptr<AudioContext> GetCurrent();
+    static void SetCurrent(const gptr<AudioContext>& context);
+    static gptr<AudioContext> GetCurrent();
 };
 
 } // audio

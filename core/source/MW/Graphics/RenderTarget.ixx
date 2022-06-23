@@ -16,7 +16,7 @@ class RenderTarget : public Object
 public:
     virtual ~RenderTarget(){}
     virtual IVec2 GetSize() const = 0;
-    virtual sptr<HWRenderTarget> GetHWRenderTarget() = 0;
+    virtual gptr<HWRenderTarget> GetHWRenderTarget() = 0;
 };
 
 } // gfx

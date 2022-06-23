@@ -27,13 +27,13 @@ void MeshCollider::FromJson(const json& obj, ObjectLinker* linker)
     dirty = true;
 }
 
-void MeshCollider::SetMesh(const sptr<Mesh>& mesh)
+void MeshCollider::SetMesh(const gptr<Mesh>& mesh)
 {
     this->mesh = mesh;
     dirty = true;
 }
 
-sptr<Mesh> MeshCollider::GetMesh() const {
+gptr<Mesh> MeshCollider::GetMesh() const {
     return mesh;
 }
 
@@ -45,7 +45,7 @@ void MeshCollider::UpdateGizmo()
         gizmoMat = assetLib->GetAsset<Material>(".internal/wire-gizmo.mat");
 }
 
-void MeshCollider::GetRenderables(Sink<sptr<Renderable>> sink)
+void MeshCollider::GetRenderables(Sink<gptr<Renderable>> sink)
 {
     if (!GetScene()->GetGizmosEnabled())
         return;
@@ -55,14 +55,14 @@ void MeshCollider::GetRenderables(Sink<sptr<Renderable>> sink)
 
     UpdateGizmo();
 
-    sptr<Node> node = GetNode();
-    sptr<Node> pivot = GetPivot();
+    gptr<Node> node = GetNode();
+    gptr<Node> pivot = GetPivot();
 
     Mat4 mtxModel = pivot->GetLocalToWorldMatrix();
     AABox bounds = mesh->bbox.Transform(mtxModel);
 
     if (!renderable)
-        renderable = spnew<Renderable>();
+        renderable = gpnew<Renderable>();
 
     renderable->vertexMapping = {
         { Semantic::POSITION, 0, mesh->vertexBuffer, 0, sizeof(Vec3) }

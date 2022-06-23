@@ -8,6 +8,7 @@ import Microwave.Graphics.Internal.HWDriverContext;
 import Microwave.Graphics.Internal.OpenGLAPI;
 import Microwave.Graphics.Internal.RenderTextureOpenGL;
 import Microwave.Graphics.Internal.WindowSurfaceAndroidOpenGL;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import <MW/System/Internal/PlatformHeaders.h>;
 import <memory>;
@@ -28,19 +29,19 @@ public:
     {
         display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
         if(display == EGL_NO_DISPLAY)
-            throw std::runtime_error("failed to get default display");
+            throw Exception("failed to get default display");
 
         if(!eglInitialize(display, 0, 0))
-            throw std::runtime_error("failed to initialize display");
+            throw Exception("failed to initialize display");
 
         config = ChooseConfig(display);
         if(!config)
-            throw std::runtime_error("supported display configuration not found");
+            throw Exception("supported display configuration not found");
 
         EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
         context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
         if(context == EGL_NO_CONTEXT)
-            throw std::runtime_error("failed to create EGL context");
+            throw Exception("failed to create EGL context");
 
         EGLint dummySurfaceAttribs[] = {
             EGL_WIDTH, 1,
@@ -52,11 +53,11 @@ public:
 
         dummySurface = eglCreatePbufferSurface(display, config, dummySurfaceAttribs);
         if(dummySurface == EGL_NO_SURFACE)
-            throw std::runtime_error("failed to create dummy surface for context");
+            throw Exception("failed to create dummy surface for context");
 
         boundSurface = dummySurface;
         if(!eglMakeCurrent(display, boundSurface, boundSurface, context))
-            throw std::runtime_error("failed to activate graphics context");
+            throw Exception("failed to activate graphics context");
     }
     
     ~HWDriverContextEGL()
@@ -81,15 +82,15 @@ public:
             eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
     }
 
-    virtual void SetRenderTarget(const sptr<HWRenderTarget>& target) override
+    virtual void SetRenderTarget(const gptr<HWRenderTarget>& target) override
     {
-        if (auto surf = spcast<HWSurfaceEGL>(target))
+        if (auto surf = gpcast<HWSurfaceEGL>(target))
         {
             boundSurface = surf->surface;
             eglMakeCurrent(display, boundSurface, boundSurface, context);
             gl::BindFramebuffer(GL_FRAMEBUFFER, 0);
         }
-        else if (auto tex = spcast<HWRenderTextureOpenGL>(target))
+        else if (auto tex = gpcast<HWRenderTextureOpenGL>(target))
         {
             boundSurface = dummySurface;
             eglMakeCurrent(display, boundSurface, boundSurface, context);
@@ -103,9 +104,9 @@ public:
         }
     }
 
-    virtual void Flip(const sptr<HWRenderTarget>& target) override
+    virtual void Flip(const gptr<HWRenderTarget>& target) override
     {
-        if (auto surf = spcast<HWSurfaceEGL>(target)) {
+        if (auto surf = gpcast<HWSurfaceEGL>(target)) {
             eglSwapBuffers(display, surf->surface);
         }
     }
@@ -116,11 +117,11 @@ public:
             wglSwapIntervalEXT(interval);
     }
 
-    virtual sptr<HWSurface> CreateSurface(const sptr<Window>& window) override
+    virtual gptr<HWSurface> CreateSurface(const gptr<Window>& window) override
     {
-        auto win = spcast<WindowAndroid>(window);
+        auto win = gpcast<WindowAndroid>(window);
         assert(win);
-        return spnew<HWSurfaceEGL>(win);
+        return gpnew<HWSurfaceEGL>(win);
     }
 
     EGLConfig ChooseConfig(EGLDisplay display)
@@ -128,7 +129,7 @@ public:
         EGLint numConfigs = 0;
 
         if(!eglGetConfigs(display, nullptr, 0, &numConfigs) || numConfigs == 0)
-            throw std::runtime_error("no graphics configurations available for this device");
+            throw Exception("no graphics configurations available for this device");
 
         std::unique_ptr<EGLConfig[]> configs = std::make_unique<EGLConfig[]>(numConfigs);
         eglGetConfigs(display, configs.get(), numConfigs, &numConfigs);

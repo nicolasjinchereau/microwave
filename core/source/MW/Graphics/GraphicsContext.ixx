@@ -20,17 +20,16 @@ import Microwave.System.Pointers;
 import <cstddef>;
 import <cstdlib>;
 import <span>;
-import <vector>;
 
 export namespace mw {
 inline namespace gfx {
 
 class GraphicsContext : public Object
 {
-    thread_local static sptr<GraphicsContext> currentContext;
+    thread_local static gptr<GraphicsContext> currentContext;
 public:
-    sptr<HWContext> context;
-    sptr<RenderTarget> renderTarget;
+    gptr<HWContext> context;
+    gptr<RenderTarget> renderTarget;
     IntRect viewportRect = IntRect();
     IntRect scissorRect = IntRect();
     Color clearColor = Color::White();
@@ -49,8 +48,8 @@ public:
     bool colorMask[4] = { true, true, true, true };
     int swapInterval = 1;
 
-    static void SetCurrent(const sptr<GraphicsContext>& current);
-    static sptr<GraphicsContext> GetCurrent();
+    static void SetCurrent(const gptr<GraphicsContext>& current);
+    static gptr<GraphicsContext> GetCurrent();
 
     GraphicsContext(GraphicsDriverType type = GraphicsDriverType::Default);
     ~GraphicsContext();
@@ -105,8 +104,8 @@ public:
     int GetSwapInterval() const;
     void SetSwapInterval(int interval);
 
-    sptr<RenderTarget> GetRenderTarget() const;
-    void SetRenderTarget(const sptr<RenderTarget>& target);
+    gptr<RenderTarget> GetRenderTarget() const;
+    void SetRenderTarget(const gptr<RenderTarget>& target);
     void RebindRenderTarget();
 
     void Clear(bool depth, bool color);

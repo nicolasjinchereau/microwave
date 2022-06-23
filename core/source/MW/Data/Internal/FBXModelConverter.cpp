@@ -7,10 +7,11 @@ import Microwave.Data.Internal.FBXUDPParser;
 import Microwave.Graphics.RenderQueue;
 import Microwave.IO.FileStream;
 import Microwave.Math;
-import Microwave.System.Console;
+import Microwave.System.Exception;
 import Microwave.System.Path;
+import <MW/Data/Internal/FBX_SDK.h>;
+import <MW/System/Debug.h>;
 import <algorithm>;
-import <cassert>;
 import <cstddef>;
 import <cstdint>;
 import <iomanip>;
@@ -24,7 +25,6 @@ import <sstream>;
 import <vector>;
 import <unordered_map>;
 import <unordered_set>;
-import <MW/Data/Internal/FBX_SDK.h>;
 
 namespace mw {
 inline namespace data {
@@ -50,7 +50,7 @@ public:
         }
 
         if (nameInstance == MaxInstances)
-            throw std::runtime_error("failed to generate unique name");
+            throw Exception("failed to generate unique name");
 
         pool.insert(name);
         return name;
@@ -63,14 +63,14 @@ public:
 
 class FbxMemoryStream : public fbxsdk::FbxStream
 {
-    sptr<Stream> stream;
+    gptr<Stream> stream;
     mutable std::span<std::byte>::iterator pos;
     int readerId;
     int writerId;
 public:
     FbxMemoryStream(
         fbxsdk::FbxManager* pSdkManager,
-        const sptr<Stream>& stream)
+        const gptr<Stream>& stream)
         : stream(stream)
     {
         readerId = pSdkManager->GetIOPluginRegistry()->FindReaderIDByDescription("FBX (*.fbx)");
@@ -100,7 +100,7 @@ public:
     }
 
     virtual size_t Write(const void* pData, fbxsdk::FbxUInt64 pSize) {
-        assert(0); // read only
+        Assert(0); // read only
         return 0;
     }
 
@@ -155,13 +155,13 @@ public:
 
 struct LoaderState
 {
-    sptr<Model> model;
+    gptr<Model> model;
     fbxsdk::FbxAnimEvaluator* animEvaluator = nullptr;
     fbxsdk::FbxAnimLayer* fbxAnimationLayer = nullptr;
     ModelSettings* pImportSettings = nullptr;
-    std::unordered_map<uint64_t, sptr<ModelNode>> nodesByUniqueID;
-    std::unordered_map<uint64_t, sptr<ModelMesh>> meshesByUniqueID;
-    std::unordered_map<std::string, sptr<ModelMaterial>> materials; // ByName
+    gmap<uint64_t, gptr<ModelNode>> nodesByUniqueID;
+    gmap<uint64_t, gptr<ModelMesh>> meshesByUniqueID;
+    gmap<std::string, gptr<ModelMaterial>> materials; // ByName
     std::vector<ModelNode*> skinnedMeshNodes;
     NamePool meshNames;
 
@@ -175,13 +175,13 @@ public:
 
     FBXModelConverterImpl(){}
 
-    static sptr<Model> Convert(
-        const sptr<Stream>& stream,
+    static gptr<Model> Convert(
+        const gptr<Stream>& stream,
         ModelSettings& importSettings)
     {
         LoaderState state;
         state.pImportSettings = &importSettings;
-        state.model = spnew<Model>();
+        state.model = gpnew<Model>();
 
         fbxsdk::FbxManager* sdkManager = fbxsdk::FbxManager::Create();
 
@@ -195,7 +195,7 @@ public:
             FbxMemoryStream fbxStream(sdkManager, stream);
 
             if (!importer->Initialize(&fbxStream, nullptr, -1, sdkManager->GetIOSettings()))
-                throw std::runtime_error("failed to initialize FBX importer");
+                throw Exception("failed to initialize FBX importer");
 
             fbxsdk::FbxScene* scene = fbxsdk::FbxScene::Create(sdkManager, "scene");
             bool didImport = importer->Import(scene);
@@ -203,7 +203,7 @@ public:
             importer = nullptr;
 
             if (!didImport)
-                throw std::runtime_error("failed to import FBX scene");
+                throw Exception("failed to import FBX scene");
 
             fbxsdk::FbxGeometryConverter cvt(sdkManager);
             cvt.Triangulate(scene, true, false);
@@ -244,7 +244,7 @@ public:
 
                 for (auto& spec : importSettings.clipSpecs)
                 {
-                    auto clip = spnew<ModelAnimationClip>();
+                    auto clip = gpnew<ModelAnimationClip>();
                     clip->name = spec.name;
                     clip->wrapMode = (ModelAnimationWrapMode)spec.wrapMode;
                     state.model->clips.push_back(std::move(clip));
@@ -283,7 +283,7 @@ public:
         return state.model;
     }
 
-    static sptr<ModelNode> CreateModelNode(
+    static gptr<ModelNode> CreateModelNode(
         LoaderState& state,
         ModelNode* parent,
         NamePool& siblingNames,
@@ -299,7 +299,7 @@ public:
         Quat localRot = FromFBX(lTransform.GetQ());
         Vec3 localScale = FromFBX(lTransform.GetS());
 
-        auto node = spnew<ModelNode>();
+        auto node = gpnew<ModelNode>();
         size_t nodeIndex = state.model->nodes.size();
         state.nodesByUniqueID[fbxNode->GetUniqueID()] = node;
         state.model->nodes.push_back(node);
@@ -342,7 +342,7 @@ public:
     static void ImportCollider(
         LoaderState& state, fbxsdk::FbxNode* fbxNode, ModelNode* node)
     {
-        sptr<ModelCollider> collider;
+        gptr<ModelCollider> collider;
 
         fbxsdk::FbxProperty udp = fbxNode->FindProperty("UDP3DSMAX");
         if (udp.IsValid())
@@ -353,7 +353,7 @@ public:
             auto colliderType = props.TryGet<std::string>("ColliderType");
             if (colliderType)
             {
-                collider = spnew<ModelCollider>();
+                collider = gpnew<ModelCollider>();
                 collider->name = *colliderType;
 
                 if (auto colliderNodeName = props.TryGet<std::string>("ColliderNode"))
@@ -424,7 +424,7 @@ public:
         node->collider = collider;
     }
 
-    static sptr<ModelMesh> ImportCollisionMesh(
+    static gptr<ModelMesh> ImportCollisionMesh(
         LoaderState& state, fbxsdk::FbxNode* fbxNode)
     {
         auto fbxMesh = fbxNode->GetMesh();
@@ -436,7 +436,7 @@ public:
         int triCount = fbxMesh->GetPolygonCount();
         int fbxVertCount = fbxMesh->GetControlPointsCount();
 
-        sptr<ModelMesh> mesh = spnew<ModelMesh>();
+        gptr<ModelMesh> mesh = gpnew<ModelMesh>();
         mesh->name = (const char*)fbxNode->GetNameOnly();
         mesh->elements.emplace_back();
 
@@ -486,7 +486,7 @@ public:
 
         // convert triangles to lines
         std::set<uint64_t> edges;
-        assert(element.indices.size() % 3 == 0);
+        Assert(element.indices.size() % 3 == 0);
 
         for (size_t i = 0; i != element.indices.size(); i += 3)
         {
@@ -514,7 +514,7 @@ public:
         }
 
         auto removedAttrib = fbxNode->RemoveNodeAttribute(fbxMesh);
-        assert(removedAttrib); // if null, remove failed
+        Assert(removedAttrib); // if null, remove failed
         fbxMesh->Destroy();
 
         return mesh;
@@ -529,7 +529,7 @@ public:
         if (!fbxNode->GetVisibility())
         {
             auto removedAttrib = fbxNode->RemoveNodeAttribute(fbxMesh);
-            assert(removedAttrib); // if null, remove failed
+            Assert(removedAttrib); // if null, remove failed
             fbxMesh->Destroy();
             return;
         }
@@ -546,7 +546,7 @@ public:
         std::string name = state.meshNames.GetUniqueName(node->name);
 
         // create actual mesh
-        auto mesh = spnew<ModelMesh>();
+        auto mesh = gpnew<ModelMesh>();
         mesh->name = name;
 
         // MESH
@@ -571,7 +571,7 @@ public:
             fbxsdk::FbxSurfaceMaterial* fbxMaterial = fbxNode->GetMaterial(i);
             if (fbxMaterial)
             {
-                sptr<ModelMaterial> mat;
+                gptr<ModelMaterial> mat;
 
                 std::string name = (const char*)fbxMaterial->GetNameOnly();
 
@@ -841,7 +841,7 @@ public:
 
                 auto frameCount = spec.stop - spec.start + 1;
 
-                auto track = spnew<AnimationTrack>();
+                auto track = gpnew<AnimationTrack>();
                 track->frames.reserve(frameCount);
 
                 fbxsdk::FbxTime startFrameTime;
@@ -868,9 +868,9 @@ public:
         }
     }
 
-    static sptr<ModelMaterial> FromFBX(fbxsdk::FbxSurfaceMaterial* fbxMaterial)
+    static gptr<ModelMaterial> FromFBX(fbxsdk::FbxSurfaceMaterial* fbxMaterial)
     {
-        sptr<ModelMaterial> mat = spnew<ModelMaterial>();
+        gptr<ModelMaterial> mat = gpnew<ModelMaterial>();
 
         mat->name = fbxMaterial->GetNameOnly();
 
@@ -1050,8 +1050,8 @@ public:
     }
 };
 
-sptr<Model> FBXModelConverter::Convert(
-    const sptr<Stream>& stream,
+gptr<Model> FBXModelConverter::Convert(
+    const gptr<Stream>& stream,
     ModelSettings& importSettings)
 {
     return FBXModelConverterImpl::Convert(stream, importSettings);

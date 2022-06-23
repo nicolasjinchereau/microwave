@@ -29,9 +29,9 @@ void Coin::OnCollisionStart(const Collision& collision)
     auto name = collision.body->GetNode()->GetName();
     if (name == "Player")
     {
-        if(auto g = game.lock())
+        if(game)
         {
-            g->OnCoinCollected(this);
+            game->OnCoinCollected(this);
         }
     }
 }

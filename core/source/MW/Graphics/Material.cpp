@@ -11,12 +11,13 @@ import Microwave.Graphics.RenderQueue;
 import Microwave.Graphics.Shader;
 import Microwave.Graphics.Texture;
 import Microwave.Math;
+import Microwave.System.Exception;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.UUID;
-import <cassert>;
+import <MW/System/Debug.h>;
 import <cstdint>;
 import <string>;
 import <unordered_map>;
@@ -26,10 +27,10 @@ inline namespace gfx {
 
 void Material::SetActive(const MaterialPropertyBlock* extra)
 {
-    assert(shader);
+    Assert(shader);
 
     auto graphics = GraphicsContext::GetCurrent();
-    assert(graphics);
+    Assert(graphics);
 
     shader->Bind();
 
@@ -83,7 +84,7 @@ void Material::FromJson(const json& obj, ObjectLinker* linker)
     depthTest = obj.value("depthTest", depthTest);
     depthWriteEnabled = obj.value("depthWriteEnabled", depthWriteEnabled);
     renderQueue = obj.value("renderQueue", renderQueue);
-    ObjectLinker::RestoreAsset(linker, SharedFrom(this), shader, obj, "shader");
+    ObjectLinker::RestoreAsset(linker, self(this), shader, obj, "shader");
 
     const json& props = obj["properties"];
     properties->FromJson(props, linker);

@@ -25,14 +25,14 @@ inline namespace gfx {
 // uLightPos : Vec4
 // uAmbientColor : Vec4
 // uLightColor : Vec4;
-// uDiffuseTex : sptr<Texture>
+// uDiffuseTex : gptr<Texture>
 // uDiffuseTex_ST : Vec4
 // uDiffuseFactor : float
 // uDiffuseColor : Color
-// uNormalTex : sptr<Texture>
+// uNormalTex : gptr<Texture>
 // uNormalTex_ST : Vec4
 // uNormalFactor : float
-// uSpecularTex : sptr<Texture>
+// uSpecularTex : gptr<Texture>
 // uSpecularTex_ST : Vec4
 // uSpecularFactor : float
 // uSpecularColor : Color
@@ -55,8 +55,8 @@ public:
     DepthTest depthTest = DepthTest::LessOrEqual;
     bool depthWriteEnabled = true;
     uint32_t renderQueue = RenderQueue::Opaque;
-    sptr<MaterialPropertyBlock> properties = spnew<MaterialPropertyBlock>();
-    sptr<Shader> shader;
+    gptr<MaterialPropertyBlock> properties = gpnew<MaterialPropertyBlock>();
+    gptr<Shader> shader;
 
     Material(){}
 
@@ -68,8 +68,8 @@ public:
     void SetUniform(const std::string& name, const Mat3& value);
     void SetUniform(const std::string& name, const Mat4& value);
     void SetUniform(const std::string& name, const Color& value);
-    void SetUniform(const std::string& name, const sptr<Texture>& value);
-    sptr<Texture> GetTexture(const std::string& name);
+    void SetUniform(const std::string& name, const gptr<Texture>& value);
+    gptr<Texture> GetTexture(const std::string& name);
 
     void SetBlendFactors(BlendFactor src, BlendFactor dest);
 
@@ -111,11 +111,11 @@ void Material::SetUniform(const std::string& name, const Color& value) {
     properties->SetUniform(name, value);
 }
 
-void Material::SetUniform(const std::string& name, const sptr<Texture>& value) {
+void Material::SetUniform(const std::string& name, const gptr<Texture>& value) {
     properties->SetUniform(name, value);
 }
 
-sptr<Texture> Material::GetTexture(const std::string& name) {
+gptr<Texture> Material::GetTexture(const std::string& name) {
     return properties->GetTexture(name);
 }
 

@@ -3,9 +3,9 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.System.EventHandlerList;
-import Microwave.System.Console;
+import Microwave.IO.Terminal;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
-import <exception>;
 import <utility>;
 import <vector>;
 
@@ -15,17 +15,17 @@ inline namespace system {
 template<class Handler>
 class EventHandlerList
 {
-    std::vector<wptr<Handler>> handlers;
-    std::vector<sptr<Handler>> cache;
+    gvector<wgptr<Handler>> handlers;
+    gvector<gptr<Handler>> cache;
 public:
 
-    void Add(const sptr<Handler>& handler)
+    void Add(const gptr<Handler>& handler)
     {
         Flush();
         handlers.push_back(handler);
     }
 
-    void Remove(const sptr<Handler>& handler)
+    void Remove(const gptr<Handler>& handler)
     {
         for (auto it = handlers.begin();
             it != handlers.end(); )
@@ -54,8 +54,8 @@ public:
             try {
                 ((*h).*fun)(std::forward<Args>(args)...);
             }
-            catch (std::exception& ex) {
-                Console::WriteLine(ex.what());
+            catch (const Exception& ex) {
+                writeln(ex.what());
             }
         }
 
@@ -78,8 +78,8 @@ public:
             try {
                 ((*h).*fun)(std::forward<Args>(args)...);
             }
-            catch (std::exception& ex) {
-                Console::WriteLine("event handler invocation falied: %", ex.what());
+            catch (const Exception& ex) {
+                writeln("event handler invocation falied: ", ex.what());
             }
         }
 

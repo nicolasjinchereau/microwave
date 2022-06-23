@@ -56,7 +56,7 @@ class BinPacker
     std::vector<RectMapping> input;
     std::vector<RectMapping> overflow;
     std::vector<IVec2> binSizes;
-    sptr<BSPNodeAllocator> nodeAllocator = spnew<BSPNodeAllocator>();
+    gptr<BSPNodeAllocator> nodeAllocator = gpnew<BSPNodeAllocator>();
     std::vector<Bin> bins;
 
     bool dynamicPacking = false;

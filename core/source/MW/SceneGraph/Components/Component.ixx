@@ -21,7 +21,7 @@ class Component : public Object
     inline static Type::Pin<Component> pin;
 
     bool enabled = true;
-    wptr<Node> node;
+    wgptr<Node> node;
 
     friend Node;
 public:
@@ -29,8 +29,8 @@ public:
     Component(){}
     virtual ~Component(){}
 
-    sptr<Clock> GetClock();
-    sptr<const Clock> GetClock() const;
+    gptr<Clock> GetClock();
+    gptr<const Clock> GetClock() const;
 
     virtual void ToJson(json& obj) const override;
     virtual void FromJson(const json& obj, ObjectLinker* linker) override;
@@ -50,11 +50,11 @@ public:
 
     virtual void Draw(Camera* camera) {}
 
-    sptr<const Node> GetNode() const;
-    sptr<Node> GetNode();
+    gptr<const Node> GetNode() const;
+    gptr<Node> GetNode();
 
-    sptr<const Scene> GetScene() const;
-    sptr<Scene> GetScene();
+    gptr<const Scene> GetScene() const;
+    gptr<Scene> GetScene();
 
     bool IsEnabled() const;
     void SetEnabled(bool enable);

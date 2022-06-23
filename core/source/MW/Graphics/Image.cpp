@@ -7,7 +7,7 @@ import Microwave.Graphics.GraphicsTypes;
 import Microwave.IO.File;
 import Microwave.IO.FileStream;
 import Microwave.Math;
-import Microwave.System.Console;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import Microwave.Utilities.Util;
 import <png.h>;
@@ -81,11 +81,11 @@ Image::Image(const path& p, ImageFileFormat fileFormat) {
     Load(stream, fileFormat);
 }
 
-Image::Image(const sptr<FileStream>& stream) {
+Image::Image(const gptr<FileStream>& stream) {
     Load(stream);
 }
 
-Image::Image(const sptr<FileStream>& stream, ImageFileFormat fileFormat) {
+Image::Image(const gptr<FileStream>& stream, ImageFileFormat fileFormat) {
     Load(stream, fileFormat);
 }
 
@@ -120,7 +120,7 @@ ImageInfo Image::GetInfo(const path& p, ImageFileFormat fileFormat)
         return GetInfoEXR(p);
     }
     else {
-        throw std::runtime_error("unsupported file type");
+        throw Exception("unsupported file type");
     }
 }
 
@@ -141,7 +141,7 @@ ImageInfo Image::GetInfo(const path& p)
         return GetInfoEXR(p);
     }
     else {
-        throw std::runtime_error("unsupported file type");
+        throw Exception("unsupported file type");
     }
 }
 
@@ -151,7 +151,7 @@ ImageInfo Image::GetInfoTGA(const path& p)
 
     auto stream = File::Open(p, OpenMode::In | OpenMode::Binary);
     if (!stream)
-        throw std::runtime_error("could not open file");
+        throw Exception("could not open file");
 
     uint8_t headerBytes[18];
 
@@ -161,7 +161,7 @@ ImageInfo Image::GetInfoTGA(const path& p)
 
     int bytesRead = stream->Read(buff);
     if (bytesRead != 18)
-        throw std::runtime_error("failed to read from file");
+        throw Exception("failed to read from file");
 
     TargaHeader header = TargaHeader::Unpack(headerBytes);
     
@@ -178,30 +178,30 @@ ImageInfo Image::GetInfoPNG(const path& p)
 
     auto stream = File::Open(p, OpenMode::In | OpenMode::Binary);
     if (!stream)
-        throw std::runtime_error("could not open file");
+        throw Exception("could not open file");
 
     std::array<uint8_t, 8> validSig { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
     std::array<uint8_t, 8> sig;
     
     if (stream->Read(std::as_writable_bytes(std::span(sig))) != sig.size())
-        throw std::runtime_error("png file read failed");
+        throw Exception("png file read failed");
 
     if(sig != validSig)
-        throw std::runtime_error("invalid png file");
+        throw Exception("invalid png file");
     
     std::array<uint8_t, 4> validHdr { 'I', 'H', 'D', 'R' };
     std::array<uint8_t, 4> hdr;
 
     stream->Ignore(4);
     if (stream->Read(std::as_writable_bytes(std::span(hdr))) != hdr.size())
-        throw std::runtime_error("png file read failed");
+        throw Exception("png file read failed");
 
     if(hdr != validHdr)
-        throw std::runtime_error("invalid png header");
+        throw Exception("invalid png header");
 
     std::array<uint8_t, 8> sz;
     if (stream->Read(std::as_writable_bytes(std::span(sz))) != sz.size())
-        throw std::runtime_error("png file read failed");
+        throw Exception("png file read failed");
 
     info.size.x = (sz[0] << 24) + (sz[1] << 16) + (sz[2] << 8) + (sz[3] << 0);
     info.size.y = (sz[4] << 24) + (sz[5] << 16) + (sz[6] << 8) + (sz[7] << 0);
@@ -216,7 +216,7 @@ ImageInfo Image::GetInfoJPG(const path& p)
 
     auto stream = File::Open(p, OpenMode::In | OpenMode::Binary);
     if (!stream)
-        throw std::runtime_error("could not open file");
+        throw Exception("could not open file");
 
     while(true)
     {
@@ -290,7 +290,7 @@ ImageInfo Image::GetInfoJPG(const path& p)
     }
 
     if (!info)
-        throw std::runtime_error("image info not found");
+        throw Exception("image info not found");
 
     return *info;
 }
@@ -303,7 +303,7 @@ ImageInfo Image::GetInfoEXR(const path& p)
     
     int ret = ParseEXRVersionFromFile(&version, p.c_str());
     if(ret != 0) {
-        throw std::runtime_error("failed to read exr version");
+        throw Exception("failed to read exr version");
     }
 
     EXRHeader header;
@@ -316,7 +316,7 @@ ImageInfo Image::GetInfoEXR(const path& p)
         FreeEXRHeader(&header);
         std::string msg = err ? err : "failed to read exr header";
         FreeEXRErrorMessage(err);
-        throw std::runtime_error(msg);
+        throw Exception(msg);
     }
 
     info.format = PixelDataFormat::RGBAFloat;
@@ -346,7 +346,7 @@ void Image::Load(PixelDataFormat pixelFormat, const IVec2& size, std::span<std::
     std::copy(pixelData.begin(), pixelData.end(), data.get());
 }
 
-void Image::Load(const sptr<FileStream>& stream)
+void Image::Load(const gptr<FileStream>& stream)
 {
     auto path = stream->GetPath();
     auto ext = ToLower(path.extension());
@@ -373,11 +373,11 @@ void Image::Load(const sptr<FileStream>& stream)
     }
     else
     {
-        throw std::runtime_error("unsupported file type");
+        throw Exception("unsupported file type");
     }
 }
 
-void Image::Load(const sptr<FileStream>& stream, ImageFileFormat fileFormat)
+void Image::Load(const gptr<FileStream>& stream, ImageFileFormat fileFormat)
 {
     if (fileFormat == ImageFileFormat::TGA)
     {
@@ -401,7 +401,7 @@ void Image::Load(const sptr<FileStream>& stream, ImageFileFormat fileFormat)
     }
     else
     {
-        throw std::runtime_error("unsupported file type");
+        throw Exception("unsupported file type");
     }
 }
 
@@ -430,7 +430,7 @@ void Image::Load(ImageFileFormat fileFormat, std::span<std::byte> fileData)
 void ExpectBytes(const std::span<std::byte>& byte, ptrdiff_t count)
 {
     if (byte.size() < (size_t)count)
-        throw std::runtime_error("unexpected end of data");
+        throw Exception("unexpected end of data");
 }
 
 void Image::LoadTGA(std::span<std::byte> fileData)
@@ -449,11 +449,11 @@ void Image::LoadTGA(std::span<std::byte> fileData)
 
     if(type != TargaType::TrueColor
     && type != TargaType::TrueColorRLE)
-        throw std::runtime_error("Invalid file format. Only true-color TGA files are supported.");
+        throw Exception("Invalid file format. Only true-color TGA files are supported.");
 
     if(hdr.imageBitDepth != 24
     && hdr.imageBitDepth != 32)
-        throw std::runtime_error("Invalid file format. Only 24 and 32 bit files are supported.");
+        throw Exception("Invalid file format. Only 24 and 32 bit files are supported.");
 
     if (hdr.idLength > 0) {
         auto sz = hdr.idLength;
@@ -596,7 +596,7 @@ void Image::LoadPNG(std::span<std::byte> fileData)
 {
     png_struct* pPngStruct = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!pPngStruct) {
-        throw std::runtime_error("failed to initialize libpng.");
+        throw Exception("failed to initialize libpng.");
     }
 
     png_set_option(pPngStruct, PNG_SKIP_sRGB_CHECK_PROFILE, PNG_OPTION_ON);
@@ -604,7 +604,7 @@ void Image::LoadPNG(std::span<std::byte> fileData)
     png_info* pPngInfo = png_create_info_struct(pPngStruct);
     if (!pPngInfo) {
         png_destroy_read_struct(&pPngStruct, NULL, NULL);
-        throw std::runtime_error("failed to initialize libpng.");
+        throw Exception("failed to initialize libpng.");
     }
 
     const int PngSigSize = 8;
@@ -612,7 +612,7 @@ void Image::LoadPNG(std::span<std::byte> fileData)
     ExpectBytes(fileData, PngSigSize);
 
     if (png_sig_cmp((png_bytep)fileData.data(), 0, PngSigSize) != 0) {
-        throw std::runtime_error("error: invalid png file.");
+        throw Exception("error: invalid png file.");
     }
 
     uptr<std::byte*[]> rowPtrs;
@@ -683,7 +683,7 @@ void Image::LoadPNG(std::span<std::byte> fileData)
     {
         std::string error = (const char*)png_get_error_ptr(pPngStruct);
         png_destroy_read_struct(&pPngStruct, &pPngInfo, NULL);
-        throw std::runtime_error(!error.empty() ? error : "could not read png file");
+        throw Exception(!error.empty() ? error : "could not read png file");
     }
 
     size = tmpSize;
@@ -693,47 +693,47 @@ void Image::LoadPNG(std::span<std::byte> fileData)
 
 void Image::LoadJPG(std::span<std::byte> fileData)
 {
-    jpeg_error_mgr jerr;
-    jpeg_decompress_struct cinfo;
-
-    cinfo.err = jpeg_std_error(&jerr);
-    jpeg_create_decompress(&cinfo);
-
-    jpeg_mem_src(&cinfo, (unsigned char*)fileData.data(), fileData.size());
-
-    if(jpeg_read_header(&cinfo, TRUE) != 1)
-    {
-        jpeg_destroy_decompress(&cinfo);
-        throw std::runtime_error("couldn't read jpg file");
-    }
-
-    jpeg_start_decompress(&cinfo);
-
-    IVec2 tmpSize = { (int)cinfo.output_width, (int)cinfo.output_height };
-    int channels = cinfo.output_components;
-    int stride = cinfo.output_width * channels;
-
-    if(channels != 3)
-    {
-        jpeg_destroy_decompress(&cinfo);
-        throw std::runtime_error("unsupported jpeg format");
-    }
-
-    auto tmpData = std::make_unique<std::byte[]>(tmpSize.x * tmpSize.y * channels);
-
-    for(std::byte* pRow = tmpData.get();
-        (int)cinfo.output_scanline < tmpSize.y;
-        pRow += stride)
-    {
-        jpeg_read_scanlines(&cinfo, (unsigned char**)&pRow, 1);
-    }
-
-    jpeg_finish_decompress(&cinfo);
-    jpeg_destroy_decompress(&cinfo);
-
-    size = tmpSize;
-    format = PixelDataFormat::RGB24;
-    data = std::move(tmpData);
+    //jpeg_error_mgr jerr;
+    //jpeg_decompress_struct cinfo;
+    //
+    //cinfo.err = jpeg_std_error(&jerr);
+    //jpeg_create_decompress(&cinfo);
+    //
+    //jpeg_mem_src(&cinfo, (unsigned char*)fileData.data(), fileData.size());
+    //
+    //if(jpeg_read_header(&cinfo, TRUE) != 1)
+    //{
+    //    jpeg_destroy_decompress(&cinfo);
+    //    throw Exception("couldn't read jpg file");
+    //}
+    //
+    //jpeg_start_decompress(&cinfo);
+    //
+    //IVec2 tmpSize = { (int)cinfo.output_width, (int)cinfo.output_height };
+    //int channels = cinfo.output_components;
+    //int stride = cinfo.output_width * channels;
+    //
+    //if(channels != 3)
+    //{
+    //    jpeg_destroy_decompress(&cinfo);
+    //    throw Exception("unsupported jpeg format");
+    //}
+    //
+    //auto tmpData = std::make_unique<std::byte[]>(tmpSize.x * tmpSize.y * channels);
+    //
+    //for(std::byte* pRow = tmpData.get();
+    //    (int)cinfo.output_scanline < tmpSize.y;
+    //    pRow += stride)
+    //{
+    //    jpeg_read_scanlines(&cinfo, (unsigned char**)&pRow, 1);
+    //}
+    //
+    //jpeg_finish_decompress(&cinfo);
+    //jpeg_destroy_decompress(&cinfo);
+    //
+    //size = tmpSize;
+    //format = PixelDataFormat::RGB24;
+    //data = std::move(tmpData);
 }
 
 void Image::LoadEXR(std::span<std::byte> fileData)
@@ -759,7 +759,7 @@ void Image::LoadEXR(std::span<std::byte> fileData)
             message = "failed to load EXR file";
         }
 
-        throw std::runtime_error(message);
+        throw Exception(message);
     }
 
     auto sz = tmpSize.x * tmpSize.y * 4 * sizeof(float);
@@ -776,7 +776,7 @@ void Image::Save(ImageFileFormat format, std::vector<std::byte>& output)
     switch (format)
     {
     case ImageFileFormat::TGA:
-        throw std::runtime_error("not supported");
+        throw Exception("not supported");
         break;
 
     case ImageFileFormat::PNG:
@@ -788,7 +788,7 @@ void Image::Save(ImageFileFormat format, std::vector<std::byte>& output)
         break;
 
     case ImageFileFormat::EXR:
-        throw std::runtime_error("not supported");
+        throw Exception("not supported");
         break;
     }
 }
@@ -805,12 +805,12 @@ void Image::SavePNG(std::vector<std::byte>& fileData)
 
     png_struct *pPngStruct = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!pPngStruct)
-        throw std::runtime_error("failed to initialize libpng.");
+        throw Exception("failed to initialize libpng.");
 
     png_info* pPngInfo = png_create_info_struct(pPngStruct);
     if (!pPngInfo) {
         png_destroy_write_struct(&pPngStruct, NULL);
-        throw std::runtime_error("failed to initialize libpng.");
+        throw Exception("failed to initialize libpng.");
     }
 
     if(setjmp(png_jmpbuf(pPngStruct)) == 0)
@@ -849,16 +849,16 @@ void Image::SavePNG(std::vector<std::byte>& fileData)
     {
         std::string error = (const char*)png_get_error_ptr(pPngStruct);
         png_destroy_write_struct(&pPngStruct, &pPngInfo);
-        throw std::runtime_error(!error.empty() ? error : "could not save png file");
+        throw Exception(!error.empty() ? error : "could not save png file");
     }
 }
 
 void Image::SaveJPG(std::vector<std::byte>& fileData)
 {
-    throw std::runtime_error("not fully implemented: won't handle float pixels");
-
+    throw Exception("not fully implemented: won't handle float pixels");
+    
     fileData.clear();
-
+    
     unsigned char* buffer = nullptr;
     size_t bufferSize = 0;
     struct jpeg_compress_struct cinfo;
@@ -866,7 +866,7 @@ void Image::SaveJPG(std::vector<std::byte>& fileData)
     cinfo.err = jpeg_std_error(&jerr);
     jpeg_create_compress(&cinfo);
     jpeg_mem_dest(&cinfo, &buffer, &bufferSize);
-
+    
     cinfo.image_width = size.x;
     cinfo.image_height = size.y;
     cinfo.input_components = 4; // GetBytesPerPixel(format);
@@ -874,10 +874,10 @@ void Image::SaveJPG(std::vector<std::byte>& fileData)
     jpeg_set_defaults(&cinfo);
     jpeg_set_quality(&cinfo, 75, TRUE);
     jpeg_start_compress(&cinfo, TRUE);
-
+    
     JSAMPROW row_pointer[1];
     auto rowStride = cinfo.image_width * cinfo.input_components;
-
+    
     while (cinfo.next_scanline < cinfo.image_height)
     {
         row_pointer[0] = (JSAMPLE*)&data[cinfo.next_scanline * rowStride];
@@ -886,7 +886,7 @@ void Image::SaveJPG(std::vector<std::byte>& fileData)
     
     jpeg_finish_compress(&cinfo);
     jpeg_destroy_compress(&cinfo);
-
+    
     fileData.assign((std::byte*)buffer, (std::byte*)buffer + bufferSize);
     free(buffer);
 }
@@ -902,14 +902,14 @@ void Image::SaveEXR(std::vector<std::byte>& fileData)
     //InitEXRImage(&image);
 
     //image.num_channels = 4;
-
+    //
     //std::vector<float> images[3];
-    //images[0].resize(width * height);
-    //images[1].resize(width * height);
-    //images[2].resize(width * height);
+    //images[0].resize(size.x * size.y);
+    //images[1].resize(size.x * size.y);
+    //images[2].resize(size.x * size.y);
 
     //// Split RGBRGBRGB... into R, G and B layer
-    //for (int i = 0; i < width * height; i++) {
+    //for (int i = 0; i < size.x * size.y; i++) {
     //    images[0][i] = rgb[3 * i + 0];
     //    images[1][i] = rgb[3 * i + 1];
     //    images[2][i] = rgb[3 * i + 2];
@@ -921,8 +921,8 @@ void Image::SaveEXR(std::vector<std::byte>& fileData)
     //image_ptr[2] = &(images[0].at(0)); // R
 
     //image.images = (unsigned char**)image_ptr;
-    //image.width = width;
-    //image.height = height;
+    //image.width = size.x;
+    //image.height = size.y;
 
     //header.num_channels = 3;
     //header.channels = (EXRChannelInfo*)malloc(sizeof(EXRChannelInfo) * header.num_channels);
@@ -938,7 +938,7 @@ void Image::SaveEXR(std::vector<std::byte>& fileData)
     //    header.requested_pixel_types[i] = TINYEXR_PIXELTYPE_HALF; // pixel type of output image to be stored in .EXR
     //}
 
-    //const char* err = NULL; // or nullptr in C++11 or later.
+    //const char* err = nullptr;
     //int ret = SaveEXRImageToFile(&image, &header, outfilename, &err);
     //if (ret != TINYEXR_SUCCESS) {
     //    fprintf(stderr, "Save EXR err: %s\n", err);
@@ -1253,7 +1253,7 @@ ConvertImageFunc GetConvertFunc(
         }
     }
 
-    throw std::runtime_error("Invalid source or destination format");
+    throw Exception("Invalid source or destination format");
 }
 
 void Image::Blit(
@@ -1262,13 +1262,13 @@ void Image::Blit(
     bool flipVertically)
 {
     if (srcFormat == PixelDataFormat::Unspecified)
-        throw std::runtime_error("'srcFormat' cannot be 'Unspecified'");
+        throw Exception("'srcFormat' cannot be 'Unspecified'");
 
     if (!src)
-        throw std::runtime_error("'src' cannot be null");
+        throw Exception("'src' cannot be null");
 
     if (!dst)
-        throw std::runtime_error("'dst' cannot be null");
+        throw Exception("'dst' cannot be null");
 
     IntRect clampedSrcRect;
     clampedSrcRect.x = Clamp(srcRect.x, 0, srcSize.x);
@@ -1318,10 +1318,10 @@ void Image::Blit(
 Image Image::Clone(PixelDataFormat targetFormat)
 {
     if (format == PixelDataFormat::Unspecified)
-        throw std::runtime_error("source Image format cannot be 'Unspecified'");
+        throw Exception("source Image format cannot be 'Unspecified'");
 
     if (!data)
-        throw std::runtime_error("source Image cannot be empty");
+        throw Exception("source Image cannot be empty");
 
     auto oldByteCount = size.x * size.y * GetBytesPerPixel(format);
     auto newByteCount = size.x * size.y * GetBytesPerPixel(targetFormat);
@@ -1358,7 +1358,7 @@ ImageFileFormat Image::GetFormatForFile(const path& filename)
         return ImageFileFormat::EXR;
     }
     else {
-        throw std::runtime_error("unsupported file type");
+        throw Exception("unsupported file type");
     }
 }
 

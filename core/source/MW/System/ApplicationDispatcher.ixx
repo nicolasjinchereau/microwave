@@ -4,6 +4,7 @@
 
 export module Microwave.System.ApplicationDispatcher;
 import Microwave.System.Dispatcher;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import <stdexcept>;
 
@@ -14,11 +15,11 @@ class App;
 
 class ApplicationDispatcher : public Dispatcher
 {
-    static sptr<ApplicationDispatcher> New();
+    static gptr<ApplicationDispatcher> New();
     friend App;
 
 public:
-    virtual void Run() final override { throw std::runtime_error("Use `Run(int, char*[])` instead of Dispatcher::Run."); }
+    virtual void Run() final override { throw Exception("Use `Run(int, char*[])` instead of Dispatcher::Run."); }
     virtual void Run(int argc, char* argv[]) = 0;
 };
 

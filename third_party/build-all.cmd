@@ -11,6 +11,9 @@ msbuild freetype2.sln /p:Configuration=Release /t:Clean;Rebuild
 cd ..\..\..\GLEW\projects\windows
 msbuild glew.sln /p:Configuration=Debug /t:Clean;Rebuild
 msbuild glew.sln /p:Configuration=Release /t:Clean;Rebuild
+cd ..\..\..\graph-collector\projects\windows
+msbuild graph-collector.sln /p:Configuration=Debug /t:Clean;Rebuild
+msbuild graph-collector.sln /p:Configuration=Release /t:Clean;Rebuild
 cd ..\..\..\hlslparser\projects\windows
 msbuild hlslparser.sln /p:Configuration=Debug /t:Clean;Rebuild
 msbuild hlslparser.sln /p:Configuration=Release /t:Clean;Rebuild

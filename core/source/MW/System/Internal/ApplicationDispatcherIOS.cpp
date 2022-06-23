@@ -6,7 +6,7 @@ module Microwave.System.Internal.ApplicationDispatcherIOS;
 import <stdexcept>;
 
 namespace detail {
-    thread_local mw::sptr<mw::ApplicationDispatcherIOS> _mainThreadDispatcher;
+    thread_local mw::gptr<mw::ApplicationDispatcherIOS> _mainThreadDispatcher;
 }
 
 @interface AppDelegate : UIResponder<UIApplicationDelegate>
@@ -25,8 +25,8 @@ namespace detail {
 namespace mw {
 inline namespace system {
 
-sptr<ApplicationDispatcher> ApplicationDispatcher::New() {
-    detail::_mainThreadDispatcher = spnew<ApplicationDispatcherIOS>();
+gptr<ApplicationDispatcher> ApplicationDispatcher::New() {
+    detail::_mainThreadDispatcher = gpnew<ApplicationDispatcherIOS>();
     return detail::_mainThreadDispatcher;
 }
 
@@ -57,14 +57,14 @@ ApplicationDispatcherIOS::~ApplicationDispatcherIOS()
 {
 }
 
-sptr<DispatchAction> ApplicationDispatcherIOS::InvokeAsync(
+gptr<DispatchAction> ApplicationDispatcherIOS::InvokeAsync(
     std::function<void()> function,
     DispatchTime when
 )
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    auto action = spnew<DispatchAction>(std::move(function), when);
+    auto action = gpnew<DispatchAction>(std::move(function), when);
     sorted_insert(actions, action, DispatchActionComparison());
     Wake();
     return action;
@@ -127,11 +127,11 @@ void ApplicationDispatcherIOS::ProcessActions()
     }
 }
 
-sptr<DispatchAction> ApplicationDispatcherIOS::GetNextAction()
+gptr<DispatchAction> ApplicationDispatcherIOS::GetNextAction()
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    sptr<DispatchAction> action;
+    gptr<DispatchAction> action;
 
     if (run && !actions.empty() && DispatchClock::now() >= actions.front()->when) {
         action = std::move(actions.front());

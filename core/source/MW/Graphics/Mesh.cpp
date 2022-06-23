@@ -4,6 +4,7 @@
 
 module Microwave.Graphics.Mesh;
 import Microwave.Graphics.GraphicsContext;
+import Microwave.System.Exception;
 import <algorithm>;
 import <unordered_map>;
 
@@ -96,7 +97,7 @@ void Mesh::UpdateBuffers()
 
     if (!vertices.empty())
     {
-        vertexBuffer = spnew<Buffer>(
+        vertexBuffer = gpnew<Buffer>(
             BufferType::Vertex, usage, cpuAccess,
             std::as_writable_bytes(std::span(vertices)));
     }
@@ -107,7 +108,7 @@ void Mesh::UpdateBuffers()
 
     if (!normals.empty())
     {
-        normalBuffer = spnew<Buffer>(
+        normalBuffer = gpnew<Buffer>(
             BufferType::Vertex, usage, cpuAccess,
             std::as_writable_bytes(std::span(normals)));
     }
@@ -118,7 +119,7 @@ void Mesh::UpdateBuffers()
 
     if (!texcoords.empty())
     {
-        texcoordBuffer = spnew<Buffer>(
+        texcoordBuffer = gpnew<Buffer>(
             BufferType::Vertex, BufferUsage::Static, BufferCPUAccess::None,
             std::as_writable_bytes(std::span(texcoords)));
     }
@@ -129,7 +130,7 @@ void Mesh::UpdateBuffers()
 
     if (!boneIndices.empty())
     {
-        boneIndexBuffer = spnew<Buffer>(
+        boneIndexBuffer = gpnew<Buffer>(
             BufferType::Vertex, BufferUsage::Static, BufferCPUAccess::None,
             std::as_writable_bytes(std::span(boneIndices)));
     }
@@ -140,7 +141,7 @@ void Mesh::UpdateBuffers()
 
     if (!boneWeights.empty())
     {
-        boneWeightBuffer = spnew<Buffer>(
+        boneWeightBuffer = gpnew<Buffer>(
             BufferType::Vertex, BufferUsage::Static, BufferCPUAccess::None,
             std::as_writable_bytes(std::span(boneWeights)));
     }
@@ -153,7 +154,7 @@ void Mesh::UpdateBuffers()
     {
         if (!elem.indices.empty())
         {
-            elem.indexBuffer = spnew<Buffer>(
+            elem.indexBuffer = gpnew<Buffer>(
                 BufferType::Index, BufferUsage::Static, BufferCPUAccess::None,
                 std::as_writable_bytes(std::span(elem.indices)));
         }
@@ -185,7 +186,7 @@ void from_json(const json& obj, BoneLinkMode& linkMode)
     else if (val == "TotalOne")
         linkMode = BoneLinkMode::TotalOne;
     else
-        throw std::runtime_error("invalid bone link mode: " + val);
+        throw Exception({ "invalid bone link mode: ", val });
 }
 
 void to_json(json& obj, const Bone& bone)
@@ -245,7 +246,7 @@ void from_json(const json& obj, SkinType& skinType)
     else if (val == "Blend")
         skinType = SkinType::Blend;
     else
-        throw std::runtime_error("invalid bone link mode: " + val);
+        throw Exception({ "invalid bone link mode: ", val });
 }
 
 void to_json(json& obj, const Mesh& mesh) {

@@ -22,9 +22,9 @@ class HWContextOpenGL;
 class HWSurfaceWGL : public HWSurface
 {
 public:
-    wptr<WindowWindows> window;
+    wgptr<WindowWindows> window;
 
-    HWSurfaceWGL(const sptr<WindowWindows>& window);
+    HWSurfaceWGL(const gptr<WindowWindows>& window);
     ~HWSurfaceWGL();
 
     virtual void UpdateSize() override;

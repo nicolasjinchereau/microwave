@@ -12,7 +12,6 @@ import Microwave.SceneGraph.LayerMask;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Scene;
 import <algorithm>;
-import <cassert>;
 import <cstdint>;
 import <vector>;
 import <utility>;
@@ -25,7 +24,7 @@ SceneRenderer::SceneRenderer()
     temp.reserve(16);
 }
 
-void SceneRenderer::Render(const sptr<Scene>& scene)
+void SceneRenderer::Render(const gptr<Scene>& scene)
 {
     auto graphics = GraphicsContext::GetCurrent();
 
@@ -34,7 +33,7 @@ void SceneRenderer::Render(const sptr<Scene>& scene)
 
     std::sort(
         scene->cameras.begin(), scene->cameras.end(),
-        [](const sptr<Camera>& a, const sptr<Camera>& b) {
+        [](const gptr<Camera>& a, const gptr<Camera>& b) {
             return a->GetRenderOrder() < b->GetRenderOrder();
         }
     );
@@ -46,7 +45,7 @@ void SceneRenderer::Render(const sptr<Scene>& scene)
 
         auto camCullingMask = camera->GetCullingMask();
 
-        for (sptr<IRenderEvents>& r : scene->renderEvents)
+        for (gptr<IRenderEvents>& r : scene->renderEvents)
         {
             auto comp = dynamic_cast<Component*>(r.get());
             if (comp->IsActiveAndEnabled())
@@ -70,7 +69,7 @@ void SceneRenderer::Render(const sptr<Scene>& scene)
 
         std::sort(
             renderables.begin(), renderables.end(),
-            [](const sptr<Renderable>& a, const sptr<Renderable>& b) {
+            [](const gptr<Renderable>& a, const gptr<Renderable>& b) {
                 return a->sortKey < b->sortKey;
             }
         );

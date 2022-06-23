@@ -9,6 +9,7 @@ import Microwave.Graphics.Color;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Graphics.RenderQueue;
 import Microwave.Math;
+import Microwave.System.Exception;
 import Microwave.System.Json;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
@@ -16,10 +17,8 @@ import Microwave.Utilities.Base64;
 import <algorithm>;
 import <cstdint>;
 import <cstddef>;
-import <exception>;
 import <span>;
 import <string>;
-import <stdexcept>;
 import <vector>;
 import <unordered_map>;
 import <zip.h>;
@@ -121,9 +120,9 @@ path ModelNode::GetRelativePath(ModelNode* toParent) const
     return path(std::move(relativePath));
 }
 
-sptr<Model> Model::Load(const sptr<Stream>& stream)
+gptr<Model> Model::Load(const gptr<Stream>& stream)
 {
-    auto model = spnew<Model>();
+    auto model = gpnew<Model>();
 
     zip_t* zip = nullptr;
     zip_source* source = nullptr;
@@ -141,32 +140,32 @@ sptr<Model> Model::Load(const sptr<Stream>& stream)
             fileData.data(), fileData.size(), 0, &zerror);
 
         if (!source)
-            throw std::exception();
+            throw Exception();
 
         zip = zip_open_from_source(source, 0, &zerror);
         if (!zip)
-            throw std::runtime_error("failed to open zip file");
+            throw Exception("failed to open zip file");
 
         struct zip_stat st;
         zip_stat_init(&st);
         int error = zip_stat(zip, InternalFilename, 0, &st);
         if (error < 0)
-            throw std::exception();
+            throw Exception();
 
         std::string text;
         text.resize((size_t)st.size);
 
         zip_file* file = zip_fopen(zip, InternalFilename, 0);
         if (!file)
-            throw std::exception();
+            throw Exception();
 
         size_t read = (size_t)zip_fread(file, text.data(), st.size);
         if (read != st.size)
-            throw std::exception();
+            throw Exception();
 
         error = zip_fclose(file);
         if (error < 0)
-            throw std::exception();
+            throw Exception();
 
         zip_discard(zip);
         zip = nullptr;
@@ -176,7 +175,7 @@ sptr<Model> Model::Load(const sptr<Stream>& stream)
 
         *model = obj;
     }
-    catch (const std::exception& ex)
+    catch (const Exception& ex)
     {
         std::string error = zip ? zip_strerror(zip) : ex.what();
 
@@ -190,13 +189,13 @@ sptr<Model> Model::Load(const sptr<Stream>& stream)
             zip = nullptr;
         }
 
-        throw std::runtime_error(error);
+        throw Exception(error);
     }
 
     return model;
 }
 
-void Model::Save(const sptr<Model>& model, const path& ouptut)
+void Model::Save(const gptr<Model>& model, const path& ouptut)
 {
     json obj = *model;
     std::string text = obj.dump();
@@ -209,19 +208,19 @@ void Model::Save(const sptr<Model>& model, const path& ouptut)
 
         zip = zip_open(ouptut.c_str(), ZIP_CREATE | ZIP_TRUNCATE, &error);
         if (!zip)
-            throw std::runtime_error("failed to create zip file");
+            throw Exception("failed to create zip file");
 
         zip_source_t* source = zip_source_buffer(zip, text.data(), text.size(), 0);
         if (!source)
-            throw std::exception();
+            throw Exception();
 
         auto res = zip_file_add(zip, InternalFilename, source, ZIP_FL_ENC_UTF_8);
         if (res < 0)
-            throw std::exception();
+            throw Exception();
 
         auto index = zip_name_locate(zip, InternalFilename, 0);
         if (index < 0)
-            throw std::exception();
+            throw Exception();
 
         // 0 - 9
         float compression = 1.0f;
@@ -230,13 +229,13 @@ void Model::Save(const sptr<Model>& model, const path& ouptut)
 
         int result = zip_set_file_compression(zip, index, ZIP_CM_XZ, compressionLevel);
         if (result < 0)
-            throw std::runtime_error("mgz file compression failed");
+            throw Exception("mgz file compression failed");
 
         result = zip_close(zip);
         if (result < 0)
-            throw std::exception();
+            throw Exception();
     }
-    catch (const std::exception& ex)
+    catch (const Exception& ex)
     {
         std::string error = zip ? zip_strerror(zip) : ex.what();
 
@@ -245,7 +244,7 @@ void Model::Save(const sptr<Model>& model, const path& ouptut)
             zip = nullptr;
         }
 
-        throw std::runtime_error(error);
+        throw Exception(error);
     }
 }
 
@@ -465,7 +464,7 @@ void from_json(const json& obj, ModelNode& node)
     {
         for (auto& cobj : *it)
         {
-            auto c = spnew<ModelNode>();
+            auto c = gpnew<ModelNode>();
             from_json(cobj, *c);
             c->parent = &node;
             node.children.push_back(c);
@@ -512,7 +511,7 @@ void from_json(const json& obj, ModelAnimationClip& clip)
 
         for (auto& [key, trackObj] : trackObjs.items())
         {
-            auto track = spnew<AnimationTrack>();
+            auto track = gpnew<AnimationTrack>();
             from_json(trackObj, *track);
             clip.tracks[key] = track;
         }
@@ -521,7 +520,7 @@ void from_json(const json& obj, ModelAnimationClip& clip)
 
 namespace detail {
 
-size_t CountModelNodes(const sptr<ModelNode>& node)
+size_t CountModelNodes(const gptr<ModelNode>& node)
 {
     size_t count = 1;
 
@@ -532,8 +531,8 @@ size_t CountModelNodes(const sptr<ModelNode>& node)
 };
 
 void StoreModelNodes(
-    const sptr<ModelNode>& node,
-    std::vector<sptr<ModelNode>>& nodes)
+    const gptr<ModelNode>& node,
+    gvector<gptr<ModelNode>>& nodes)
 {
     nodes[node->index] = node;
 
@@ -565,7 +564,7 @@ void from_json(const json& obj, Model& model)
 
     if (auto it = obj.find("rootNode"); it != obj.end())
     {
-        model.rootNode = spnew<ModelNode>();
+        model.rootNode = gpnew<ModelNode>();
         from_json(*it, *model.rootNode);
     }
 
@@ -578,7 +577,7 @@ void from_json(const json& obj, Model& model)
         const json& clipsObj = obj["clips"];
         for (auto& clipObj : clipsObj)
         {
-            auto clip = spnew<ModelAnimationClip>();
+            auto clip = gpnew<ModelAnimationClip>();
             from_json(clipObj, *clip);
             model.clips.push_back(std::move(clip));
         }

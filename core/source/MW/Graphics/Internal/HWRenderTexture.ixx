@@ -16,7 +16,7 @@ class HWRenderTexture : public HWRenderTarget
 public:
     virtual ~HWRenderTexture(){};
     virtual IVec2 GetSize() = 0;
-    virtual sptr<HWTexture> GetTexture() = 0;
+    virtual gptr<HWTexture> GetTexture() = 0;
 };
 
 } // gfx

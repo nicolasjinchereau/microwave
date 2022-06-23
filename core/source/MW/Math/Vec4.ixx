@@ -5,8 +5,9 @@
 export module Microwave.Math.Vec4;
 import Microwave.Math.Vec2;
 import Microwave.Math.Vec3;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <algorithm>;
-import <cassert>;
 import <cmath>;
 import <cstdint>;
 import <ostream>;
@@ -41,7 +42,7 @@ public:
     operator Vec3() const { return Vec3(x, y, z); }
 
     float& operator[](size_t index) {
-        assert(index >= 0 && index < 4);
+        Assert(index >= 0 && index < 4);
         return ((float*)this)[index];
     }
 

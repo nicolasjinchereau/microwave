@@ -4,6 +4,7 @@
 
 module Microwave.Graphics.Buffer;
 import Microwave.Graphics.GraphicsContext;
+import Microwave.System.Exception;
 import <stdexcept>;
 
 namespace mw {
@@ -13,11 +14,11 @@ Buffer::Buffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, si
     : type(type), usage(usage), cpuAccess(cpuAccess), size(size)
 {
     if (size == 0)
-        throw std::runtime_error("cannot create an empty buffer");
+        throw Exception("cannot create an empty buffer");
 
     auto graphics = GraphicsContext::GetCurrent();
     if (!graphics)
-        throw std::runtime_error("no active graphics context");
+        throw Exception("no active graphics context");
 
     buffer = graphics->context->CreateBuffer(type, usage, cpuAccess, size);
 }
@@ -26,11 +27,11 @@ Buffer::Buffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, co
     : type(type), usage(usage), cpuAccess(cpuAccess), size(data.size())
 {
     if (size == 0)
-        throw std::runtime_error("cannot create an empty buffer");
+        throw Exception("cannot create an empty buffer");
 
     auto graphics = GraphicsContext::GetCurrent();
     if (!graphics)
-        throw std::runtime_error("no active graphics context");
+        throw Exception("no active graphics context");
 
     buffer = graphics->context->CreateBuffer(type, usage, cpuAccess, data);
 }
@@ -38,10 +39,10 @@ Buffer::Buffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, co
 void Buffer::UpdateSubData(size_t offset, const std::span<std::byte>& data)
 {
     if (offset + data.size() > size)
-        throw std::runtime_error("specified range is out of bounds");
+        throw Exception("specified range is out of bounds");
 
     if (usage == BufferUsage::Static)
-        throw std::runtime_error("cannot update static buffer");
+        throw Exception("cannot update static buffer");
 
     if (!data.empty())
     {
@@ -76,7 +77,7 @@ size_t Buffer::GetSize() const {
     return size;
 }
 
-sptr<HWBuffer> Buffer::GetHWBuffer() const {
+gptr<HWBuffer> Buffer::GetHWBuffer() const {
     return buffer;
 }
 

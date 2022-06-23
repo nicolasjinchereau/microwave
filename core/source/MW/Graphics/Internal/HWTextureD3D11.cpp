@@ -7,13 +7,13 @@ import Microwave.Graphics.Image;
 import Microwave.Graphics.Internal.HWContextD3D11;
 import Microwave.Graphics.Internal.HWBufferD3D11;
 import Microwave.Math;
-import Microwave.System.Console;
+import Microwave.System.Exception;
+import <MW/System/Internal/PlatformHeaders.h>;
+import <MW/System/Debug.h>;
 import <algorithm>;
-import <cassert>;
 import <regex>;
 import <stdexcept>;
 import <unordered_map>;
-import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -48,7 +48,7 @@ std::unordered_map<TextureFilterMode, D3D11_FILTER> filterModes = {
 } // d3d11
 
 HWTextureD3D11::HWTextureD3D11(
-    const sptr<HWContextD3D11>& context,
+    const gptr<HWContextD3D11>& context,
     const IVec2& size,
     PixelDataFormat format,
     bool dynamic,
@@ -62,18 +62,18 @@ HWTextureD3D11::HWTextureD3D11(
 }
 
 HWTextureD3D11::HWTextureD3D11(
-    const sptr<HWContextD3D11>& context,
+    const gptr<HWContextD3D11>& context,
     const IVec2& size,
     PixelDataFormat format,
     bool dynamic,
-    const sptr<HWBuffer>& buffer)
+    const gptr<HWBuffer>& buffer)
     : context(context)
     , size(size)
     , format(format)
     , dynamic(dynamic)
 {
-    auto buff = spcast<HWBufferD3D11>(buffer);
-    assert(buff);
+    auto buff = gpcast<HWBufferD3D11>(buffer);
+    Assert(buff);
 
     auto data = buff->Map(BufferMapAccess::WriteNoSync);
     CreateTexture(data);
@@ -100,7 +100,7 @@ void HWTextureD3D11::CreateTexture(const std::span<std::byte>& data)
         int srcByteCount = size.x * size.y * bytesPerPixelSrc;
 
         if (data.size() != srcByteCount)
-            throw std::runtime_error("data size does not match buffer");
+            throw Exception("data size does not match buffer");
 
         if (internalFormat != format)
         {
@@ -174,7 +174,7 @@ void HWTextureD3D11::CreateTexture(const std::span<std::byte>& data)
         &textureDesc, pSubResData, &texture);
 
     if (FAILED(res))
-        throw std::runtime_error("texture creation failed");
+        throw Exception("texture creation failed");
 
     D3D11_SHADER_RESOURCE_VIEW_DESC shaderResViewDesc;
     shaderResViewDesc.Format = textureDesc.Format;
@@ -186,7 +186,7 @@ void HWTextureD3D11::CreateTexture(const std::span<std::byte>& data)
         texture.Get(), &shaderResViewDesc, &resourceView);
 
     if (FAILED(res))
-        throw std::runtime_error("texture creation failed");
+        throw Exception("texture creation failed");
 
     if(generateMipmaps)
     {
@@ -210,13 +210,13 @@ void HWTextureD3D11::SetPixels(const std::span<std::byte>& data, const IntRect& 
         return;
 
     if (!dynamic)
-        throw std::runtime_error("texture is not dynamic");
+        throw Exception("texture is not dynamic");
 
     auto bytesPerPixelSrc = GetBytesPerPixel(format);
     auto bytesPerPixelDst = GetBytesPerPixel(internalFormat);
 
     if (data.size() != rect.w * rect.h * bytesPerPixelSrc)
-        throw std::runtime_error("incorrect data size");
+        throw Exception("incorrect data size");
 
     std::span<std::byte> buffer = data;
     std::vector<std::byte> temp;
@@ -284,7 +284,7 @@ void HWTextureD3D11::UpdateSamplerState()
 
     auto res = context->device->CreateSamplerState(&samplerDesc, &samplerState);
     if (FAILED(res))
-        throw std::runtime_error("could not create sampler state for texture");
+        throw Exception("could not create sampler state for texture");
 }
 
 } // gfx

@@ -21,7 +21,7 @@ inline namespace system {
 class WindowWindows : public Window
 {
 public:
-    sptr<Dispatcher> dispatcher;
+    gptr<Dispatcher> dispatcher;
     HWND hWnd = nullptr;
     HDC hDC = nullptr;
     int buttonsDown = 0;
@@ -59,7 +59,7 @@ public:
     static int GetWindowHeight(HWND hWnd);
     static std::string GetWindowTitle(HWND hWnd);
 
-    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
+    virtual gptr<HWRenderTarget> GetHWRenderTarget() override;
 };
 
 } // system

@@ -4,6 +4,7 @@
 
 export module Microwave.Audio.Internal.OggDecoder;
 import Microwave.IO.Stream;
+import Microwave.System.Exception;
 import <vorbis/vorbisfile.h>;
 import <cstdint>;
 import <stdexcept>;
@@ -26,7 +27,7 @@ public:
 
         int ret = ov_open_callbacks((void*)stream, &file, NULL, -1, callbacks);
         if (ret != 0)
-            throw std::runtime_error("couldn't open ogg file");
+            throw Exception("couldn't open ogg file");
 
         info = ov_info(&file, -1);
     }

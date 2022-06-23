@@ -10,6 +10,7 @@ import Microwave.Data.Database.AssetImporter;
 import Microwave.Data.Library.AssetSettings;
 import Microwave.IO.File;
 import Microwave.IO.Stream;
+import Microwave.System.Exception;
 import Microwave.System.Json;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
@@ -31,7 +32,7 @@ public:
 
     virtual void ImportFile(
         AssetMetadata& meta,
-        const sptr<Stream>& stream,
+        const gptr<Stream>& stream,
         const path& dataDir) override
     {
         AudioClipSettings settings = meta.settings;
@@ -44,7 +45,7 @@ public:
         else if (ext == ".wav")
             settings.fileFormat = AudioFileFormat::Wav;
         else
-            throw std::runtime_error("unsupported audio file format");
+            throw Exception("unsupported audio file format");
 
         ArtifactMetadata art;
         art.sourcePath = meta.sourcePath;
@@ -56,7 +57,7 @@ public:
         if (path::exists(artifactFilePath))
             path::remove(artifactFilePath);
 
-        sptr<Stream> output = File::Open(artifactFilePath, OpenMode::Out | OpenMode::Binary);
+        gptr<Stream> output = File::Open(artifactFilePath, OpenMode::Out | OpenMode::Binary);
         stream->CopyTo(output);
         output = nullptr;
 

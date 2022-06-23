@@ -5,7 +5,6 @@
 export module Microwave.System.UUID;
 import Microwave.System.Json;
 import <array>;
-import <cassert>;
 import <cstdint>;
 import <functional>;
 import <iomanip>;

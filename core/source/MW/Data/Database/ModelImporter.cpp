@@ -15,19 +15,19 @@ import Microwave.SceneGraph.Components.MeshCollider;
 import Microwave.SceneGraph.Components.MeshRenderer;
 import Microwave.SceneGraph.Components.RigidBody;
 import Microwave.SceneGraph.Components.SphereCollider;
-import Microwave.System.Console;
-import <cassert>;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 
 namespace mw {
 inline namespace data {
 
 struct ModelImporter::ParserState
 {
-    sptr<Node> rootNode;
-    std::unordered_map<std::string, sptr<Mesh>> meshes;
-    std::unordered_map<std::string, MaterialInfo> materials;
-    std::vector<sptr<AnimationClip>> clips;
-    std::vector<sptr<MeshRenderer>> meshRenderers;
+    gptr<Node> rootNode;
+    gmap<std::string, gptr<Mesh>> meshes;
+    gmap<std::string, MaterialInfo> materials;
+    gvector<gptr<AnimationClip>> clips;
+    gvector<gptr<MeshRenderer>> meshRenderers;
 };
 
 std::span<std::string> ModelImporter::GetSupportedFileTypes() {
@@ -37,24 +37,24 @@ std::span<std::string> ModelImporter::GetSupportedFileTypes() {
 
 void ModelImporter::ImportFile(
     AssetMetadata& meta,
-    const sptr<Stream>& stream,
+    const gptr<Stream>& stream,
     const path& dataDir)
 {
     ModelSettings settings = meta.settings;
     
     auto ext = ToLower(meta.sourcePath.extension().string());
-    assert(ext == ".fbx");
+    Assert(ext == ".fbx");
 
-    sptr<Model> model = FBXModelConverter::Convert(stream, settings);
+    gptr<Model> model = FBXModelConverter::Convert(stream, settings);
 
     ParserState state;
     ParseModel(model, state);
     
     // save all generated asset artifacts
     std::unordered_map<std::string, ArtifactMetadata> artifacts;
-    std::unordered_map<std::string, sptr<Object>> objects;
+    gmap<std::string, gptr<Object>> objects;
 
-    auto RetainOldUUID = [&](ArtifactMetadata& newArt, const sptr<Object>& obj)
+    auto RetainOldUUID = [&](ArtifactMetadata& newArt, const gptr<Object>& obj)
     {
         auto it = std::find_if(
             meta.artifacts.begin(),
@@ -159,7 +159,7 @@ bool ModelImporter::Resolve(
         {
             MaterialSettings& matSettings = it->second;
 
-            sptr<Material> mat;
+            gptr<Material> mat;
 
             for (auto& [uniform, binding] : matSettings.textureBindings)
             {
@@ -178,7 +178,7 @@ bool ModelImporter::Resolve(
                         mat = Object::CreateFromJson<Material>(json::parse(txt), nullptr);
                     }
 
-                    sptr<Texture> tex = assetLib->GetAsset<Texture>(*uuid);
+                    gptr<Texture> tex = assetLib->GetAsset<Texture>(*uuid);
                     mat->SetUniform(uniform, tex);
                     binding.uuid = uuid;
                 }
@@ -222,13 +222,13 @@ bool ModelImporter::Resolve(
     return resolvedReference;
 }
 
-void ModelImporter::ParseModel(const sptr<Model>& model, ParserState& state)
+void ModelImporter::ParseModel(const gptr<Model>& model, ParserState& state)
 {
     state.rootNode = ParseModelNode(model->rootNode, state);
     
     for (auto& modelClip : model->clips)
     {
-        auto clip = spnew<AnimationClip>();
+        auto clip = gpnew<AnimationClip>();
         clip->SetName(modelClip->name);
         clip->SetWrapMode((AnimationWrapMode)modelClip->wrapMode);
 
@@ -255,9 +255,9 @@ void ModelImporter::ParseModel(const sptr<Model>& model, ParserState& state)
     }
 }
 
-sptr<Node> ModelImporter::ParseModelNode(const sptr<ModelNode>& modelNode, ParserState& state)
+gptr<Node> ModelImporter::ParseModelNode(const gptr<ModelNode>& modelNode, ParserState& state)
 {
-    auto node = spnew<Node>();
+    auto node = gpnew<Node>();
 
     node->SetName(modelNode->name);
     node->SetLocalPosition(modelNode->localPosition);
@@ -272,8 +272,8 @@ sptr<Node> ModelImporter::ParseModelNode(const sptr<ModelNode>& modelNode, Parse
 
     if (modelNode->mesh)
     {
-        sptr<Mesh> mesh;
-        std::vector<sptr<Material>> materials;
+        gptr<Mesh> mesh;
+        gvector<gptr<Material>> materials;
 
         if (auto it = state.meshes.find(modelNode->mesh->name);
             it != state.meshes.end())
@@ -282,7 +282,7 @@ sptr<Node> ModelImporter::ParseModelNode(const sptr<ModelNode>& modelNode, Parse
         }
         else
         {
-            mesh = spnew<Mesh>();
+            mesh = gpnew<Mesh>();
             mesh->SetName(modelNode->mesh->name);
             mesh->vertices = std::move(modelNode->mesh->vertices);
             mesh->normals = std::move(modelNode->mesh->normals);
@@ -306,7 +306,7 @@ sptr<Node> ModelImporter::ParseModelNode(const sptr<ModelNode>& modelNode, Parse
 
         for (auto& elem : modelNode->mesh->elements)
         {
-            sptr<Material> mat;
+            gptr<Material> mat;
 
             auto it = state.materials.find(elem.material->name);
             if (it != state.materials.end())
@@ -315,7 +315,7 @@ sptr<Node> ModelImporter::ParseModelNode(const sptr<ModelNode>& modelNode, Parse
             }
             else
             {
-                mat = spnew<Material>();
+                mat = gpnew<Material>();
                 mat->SetName(elem.material->name);
                 mat->colorBlendOperation = elem.material->colorBlendOperation;
                 mat->alphaBlendOperation = elem.material->alphaBlendOperation;
@@ -406,8 +406,8 @@ sptr<Node> ModelImporter::ParseModelNode(const sptr<ModelNode>& modelNode, Parse
         }
         else if (colliderType == ModelColliderType::Convex)
         {
-            assert(modelNode->collider->mesh);
-            sptr<Mesh> mesh = spnew<Mesh>();
+            Assert(modelNode->collider->mesh);
+            gptr<Mesh> mesh = gpnew<Mesh>();
             mesh->SetName(modelNode->collider->mesh->name);
             mesh->vertices = std::move(modelNode->collider->mesh->vertices);
             auto& elem = modelNode->collider->mesh->elements[0];

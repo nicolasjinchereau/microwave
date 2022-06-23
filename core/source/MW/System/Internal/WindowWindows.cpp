@@ -5,6 +5,7 @@
 module Microwave.System.Internal.WindowWindows;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.Internal.HWRenderTarget;
+import Microwave.System.Exception;
 import <stdexcept>;
 import <vector>;
 import <MW/System/Internal/PlatformHeaders.h>;
@@ -25,8 +26,8 @@ constexpr int _VK_OEM_8      = 0xDF;
 namespace mw {
 inline namespace system {
 
-sptr<Window> Window::New(const std::string title, const IVec2& pos, const IVec2& size) {
-    return spnew<WindowWindows>(title, pos, size);
+gptr<Window> Window::New(const std::string title, const IVec2& pos, const IVec2& size) {
+    return gpnew<WindowWindows>(title, pos, size);
 }
 
 WindowWindows::WindowWindows()
@@ -173,7 +174,7 @@ HWND WindowWindows::CreateNativeWindow(const std::string title, const IVec2& pos
     wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
 
     if (!RegisterClassEx(&wcex))
-        throw std::runtime_error("failed to register window class");
+        throw Exception("failed to register window class");
 
     HWND hWnd = CreateWindow(
         className,
@@ -189,11 +190,11 @@ HWND WindowWindows::CreateNativeWindow(const std::string title, const IVec2& pos
         this);
 
     if (hWnd == NULL)
-        throw std::runtime_error("call to CreateWindow failed");
+        throw Exception("call to CreateWindow failed");
 
     hDC = GetDC(hWnd);
     if (hDC == NULL)
-        throw std::runtime_error("call to get window device context");
+        throw Exception("call to get window device context");
 
     PIXELFORMATDESCRIPTOR pfd = {
         sizeof(PIXELFORMATDESCRIPTOR),
@@ -418,15 +419,15 @@ Keycode WindowWindows::TranslateKey(int keycode)
     return (Keycode)((int)Keycode::Unknown + keycode);
 }
 
-sptr<HWRenderTarget> WindowWindows::GetHWRenderTarget()
+gptr<HWRenderTarget> WindowWindows::GetHWRenderTarget()
 {
     if (!surface)
     {
         auto graphics = GraphicsContext::GetCurrent();
         if (!graphics)
-            throw std::runtime_error("no active graphics context");
+            throw Exception("no active graphics context");
 
-        surface = graphics->context->CreateSurface(SharedFrom(this));
+        surface = graphics->context->CreateSurface(self(this));
     }
 
     return surface;

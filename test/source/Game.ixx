@@ -26,25 +26,27 @@ class Game : public Script
            , public ISceneInputEvents
 {
 public:
-    sptr<Camera> camera;
-    sptr<Camera> uiCamera;
+    gptr<Camera> camera;
+    gptr<Camera> uiCamera;
     
-    sptr<Node> level;
-    std::vector<sptr<Node>> coins;
-    sptr<Player> player;
-    sptr<Node> playerStart;
-    sptr<BigDoors> exitDoor;
+    gptr<Node> level;
+    gvector<gptr<Node>> coins;
+    gptr<Player> player;
+    gptr<Node> playerStart;
+    gptr<BigDoors> exitDoor;
 
-    sptr<Canvas> canvas;
-    sptr<View> gamePanel;
-    sptr<TextView> loadingText;
-    sptr<CoinCounter> coinCounter;
-    sptr<BatteryMeter> batteryMeter;
-    sptr<WinScreen> winScreen;
-    sptr<LossScreen> lossScreen;
-    sptr<AudioSource> music;
-    sptr<AudioSource> levelPassSound;
-    sptr<AudioSource> levelFailSound;
+    gptr<Canvas> canvas;
+    gptr<View> gamePanel;
+    gptr<TextView> loadingText;
+    gptr<CoinCounter> coinCounter;
+    gptr<BatteryMeter> batteryMeter;
+    gptr<WinScreen> winScreen;
+    gptr<LossScreen> lossScreen;
+    gptr<AudioSource> music;
+    gptr<AudioSource> levelPassSound;
+    gptr<AudioSource> levelFailSound;
+
+    gvector<gptr<Texture>> allTextures;
 
     float startTime = 0;
     bool playing = false;
@@ -82,13 +84,16 @@ public:
         auto scene = GetNode()->GetScene();
         auto assetLibrary = App::Get()->GetAssetLibrary();
 
+        auto rootNode = scene->GetRootNode();
+
         // set up UI camera
-        uiCamera = scene->GetRootNode()->AddChild()->AddComponent<Camera>();
+        auto uiCamNode = rootNode->AddChild();
+        uiCamera = uiCamNode->AddComponent<Camera>();
         uiCamera->SetMode(CameraViewMode::OrthoFixedHeight);
         uiCamera->SetCullingMask(LayerMask::UI);
         uiCamera->SetRenderOrder(1);
 
-        canvas = scene->GetRootNode()->AddChild()->AddComponent<Canvas>();
+        canvas = rootNode->AddChild()->AddComponent<Canvas>();
         canvas->SetReferenceSize(Vec2(2048, 1536));
         canvas->SetCamera(uiCamera);
 
@@ -124,12 +129,12 @@ public:
         auto exitDoorTriggerNode = level->GetChild("ExitDoorTrigger");
         auto exitDoorTrigger = exitDoorTriggerNode->AddComponent<ExitDoorTrigger>();
         exitDoorTrigger->exitDoor = exitDoor;
-        exitDoorTrigger->game = SharedFrom(this);
+        exitDoorTrigger->game = self(this);
 
         coins = level->FindChildren("Coin", true);
         for (auto& coin : coins) {
             auto c = coin->AddComponent<Coin>();
-            c->game = SharedFrom(this);
+            c->game = self(this);
         }
 
         auto gears = level->FindChildren("SpinningGear", true);
@@ -146,7 +151,7 @@ public:
         light->SetIntensity(1.0f);
         
         // set up main camera
-        auto camNode = spnew<Node>();
+        auto camNode = gpnew<Node>();
         camNode->SetLocalPosition(2, 4, -8);
         camNode->LookAt(Vec3(2, 1, 0));
         camera = camNode->AddComponent<Camera>();
@@ -158,7 +163,7 @@ public:
         camera->GetNode()->SetActive(false);
 
         // set up player
-        auto playerNode = scene->GetRootNode()->AddChild(spnew<Node>());
+        auto playerNode = scene->GetRootNode()->AddChild(gpnew<Node>());
         player = playerNode->AddComponent<Player>();
         co_await player->InitAsync();
 
@@ -190,12 +195,12 @@ public:
         co_await batteryMeter->InitAsync();
 
         winScreen = gamePanel->GetNode()->AddChild()->AddComponent<WinScreen>();
-        winScreen->game = SharedFrom(this);
+        winScreen->game = self(this);
         co_await winScreen->InitAsync();
         winScreen->GetNode()->SetActive(false);
         
         lossScreen = gamePanel->GetNode()->AddChild()->AddComponent<LossScreen>();
-        lossScreen->game = SharedFrom(this);
+        lossScreen->game = self(this);
         co_await lossScreen->InitAsync();
         lossScreen->GetNode()->SetActive(false);
 
@@ -212,7 +217,7 @@ public:
         auto levelFailClip = co_await assetLibrary->GetAssetAsync<AudioClip>("Audio/Sounds/LevelFail.wav");
 
         // set up audio
-        auto musicNode = spnew<Node>();
+        auto musicNode = gpnew<Node>();
         music = musicNode->AddComponent<AudioSource>();
         scene->GetRootNode()->AddChild(musicNode);
         music->SetClip(song);
@@ -226,13 +231,16 @@ public:
         levelFailSound->SetClip(levelFailClip);
     }
 
-    void ResetGame()
+    Task<void> ResetGameAsync()
     {
         auto scene = GetNode()->GetScene();
         scene->GetRootNode()->ClearChildren();
+        
+        co_await GC::CollectAsync();
+        
         scene->GetRootNode()->AddChild()->AddComponent<Game>();
     }
-
+    
     virtual void Update() override
     {
         if (!playing)
@@ -245,8 +253,6 @@ public:
         }
     }
 
-    std::vector<sptr<Texture>> allTextures;
-
     virtual void OnKeyDown(Keycode key) override
     {
         if (!playing)
@@ -258,7 +264,7 @@ public:
         }
         else if(key == Keycode::R)
         {
-            ResetGame();
+            ResetGameAsync();
         }
         else if (key == Keycode::K)
         {
@@ -285,6 +291,10 @@ public:
             }
 
             allTextures.clear();
+        }
+        else if (key == Keycode::C)
+        {
+            GC::CollectAsync();
         }
     }
 

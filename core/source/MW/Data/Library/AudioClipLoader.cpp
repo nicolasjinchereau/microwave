@@ -18,13 +18,13 @@ import Microwave.System.UUID;
 namespace mw {
 inline namespace data {
 
-Task<sptr<Object>> AudioClipLoader::LoadAsync(
+Task<gptr<Object>> AudioClipLoader::LoadAsync(
     const path& filePath,
     const AssetArtifact& artifact,
-    const sptr<Executor>& executor
+    const gptr<Executor>& executor
 ) const
 {
-    sptr<AudioClip> obj;
+    gptr<AudioClip> obj;
 
     auto audio = AudioContext::GetCurrent();
     if (audio)
@@ -33,7 +33,7 @@ Task<sptr<Object>> AudioClipLoader::LoadAsync(
 
         obj = co_await executor->Invoke(
             [fp = filePath, fmt = clipSettings.fileFormat, strm = clipSettings.streamFromDisk]{
-                return spnew<AudioClip>(
+                return gpnew<AudioClip>(
                     fp,
                     fmt,
                     strm);

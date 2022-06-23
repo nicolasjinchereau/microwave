@@ -53,16 +53,6 @@ static auto InsertSorted(std::vector<T>& cont, S&& val, Compare comp)
     return cont.insert(it, std::forward<S>(val));
 }
 
-template<class T, class V>
-std::vector<T>::iterator Erase(std::vector<T>& vec, const V& value)
-{
-    auto it = std::find(vec.begin(), vec.end(), value);
-    if (it != vec.end()) {
-        it = vec.erase(it);
-    }
-    return it;
-}
-
 template<class T>
 std::span<std::byte> MakeByteSpan(T& obj) {
     return std::span<std::byte>((std::byte*)&obj, sizeof(T));

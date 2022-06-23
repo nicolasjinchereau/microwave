@@ -12,9 +12,9 @@ import <vector>;
 namespace mw {
 inline namespace gfx {
 
-sptr<Mesh> GizmoUtility::CreateBox()
+gptr<Mesh> GizmoUtility::CreateBox()
 {
-    sptr<Mesh> mesh = spnew<Mesh>();
+    gptr<Mesh> mesh = gpnew<Mesh>();
     mesh->SetName("BoxGizmo");
 
     mesh->vertices.reserve(8);
@@ -45,9 +45,9 @@ sptr<Mesh> GizmoUtility::CreateBox()
     return mesh;
 }
 
-sptr<Mesh> GizmoUtility::CreateSphere()
+gptr<Mesh> GizmoUtility::CreateSphere()
 {
-    sptr<Mesh> mesh = spnew<Mesh>();
+    gptr<Mesh> mesh = gpnew<Mesh>();
     mesh->SetName("SphereGizmo");
 
     mesh->vertices.resize(72);
@@ -90,9 +90,9 @@ sptr<Mesh> GizmoUtility::CreateSphere()
     return mesh;
 }
 
-sptr<Mesh> GizmoUtility::CreateHalfSphere()
+gptr<Mesh> GizmoUtility::CreateHalfSphere()
 {
-    sptr<Mesh> mesh = spnew<Mesh>();
+    gptr<Mesh> mesh = gpnew<Mesh>();
     mesh->SetName("HalfSphereGizmo");
 
     mesh->vertices.resize(50);
@@ -146,9 +146,9 @@ sptr<Mesh> GizmoUtility::CreateHalfSphere()
     return mesh;
 }
 
-sptr<Mesh> GizmoUtility::CreateCylinder()
+gptr<Mesh> GizmoUtility::CreateCylinder()
 {
-    sptr<Mesh> mesh = spnew<Mesh>();
+    gptr<Mesh> mesh = gpnew<Mesh>();
     mesh->SetName("CylinderGizmo");
 
     mesh->vertices.resize(48);

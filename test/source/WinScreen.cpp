@@ -39,17 +39,15 @@ std::string WinScreen::GetTimeString(int totalSeconds)
 
 void WinScreen::PlayAgain()
 {
-    if (auto g = game.lock())
-    {
-        g->ResetGame();
-    }
+    if (game)
+        game->ResetGameAsync();
 }
 
 Task<void> WinScreen::InitAsync()
 {
     auto assetLibrary = App::Get()->GetAssetLibrary();
 
-    auto node = GetNode();
+    gptr<Node> node = GetNode();
 
     auto font = co_await assetLibrary->GetAssetAsync<Font>("Fonts/comic_bold.ttf");
     auto blueBackgroundTex = co_await assetLibrary->GetAssetAsync<Texture>("Textures/UI/BlueBackground.png");

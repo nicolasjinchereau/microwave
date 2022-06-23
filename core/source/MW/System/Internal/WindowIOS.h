@@ -23,7 +23,7 @@ inline namespace mw {
 class WindowIOS : public Window
 {
 public:
-    sptr<Dispatcher> dispatcher;
+    gptr<Dispatcher> dispatcher;
     MainWindow* mainWindow = nil;
     int buttonsDown = 0;
     bool shiftPressed = false;
@@ -32,7 +32,7 @@ public:
     std::string title;
     bool visible = false;
     bool resizeable = false;
-    sptr<HWSurface> surface;
+    gptr<HWSurface> surface;
 
     WindowIOS();
     ~WindowIOS();
@@ -52,7 +52,7 @@ public:
     virtual void Close()  override;
     virtual uintptr_t GetHandle() const override;
 
-    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
+    virtual gptr<HWRenderTarget> GetHWRenderTarget() override;
 
     MainWindow* CreateNativeWindow();
     MainView* CreateNativeView();
@@ -67,7 +67,7 @@ public:
 {
     @public ViewController* viewController;
     @public CAEAGLLayer* eaglLayer;
-    @public mw::wptr<mw::WindowIOS> window;
+    @public mw::gwptr<mw::WindowIOS> window;
     @public UIInterfaceOrientation orientation;
 }
 @end

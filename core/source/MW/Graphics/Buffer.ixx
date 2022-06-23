@@ -16,7 +16,7 @@ inline namespace gfx {
 
 class Buffer : public Object
 {
-    sptr<HWBuffer> buffer;
+    gptr<HWBuffer> buffer;
     BufferType type = {};
     BufferUsage usage = {};
     BufferCPUAccess cpuAccess = {};
@@ -32,7 +32,7 @@ public:
     BufferUsage GetUsage() const;
     BufferCPUAccess GetCPUAccess() const;
     size_t GetSize() const;
-    sptr<HWBuffer> GetHWBuffer() const;
+    gptr<HWBuffer> GetHWBuffer() const;
 };
 
 } // gfx

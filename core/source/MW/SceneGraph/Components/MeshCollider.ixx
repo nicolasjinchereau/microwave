@@ -23,9 +23,9 @@ class MeshCollider : public Collider, public IRenderEvents
 {
     inline static Type::Pin<MeshCollider> pin;
 
-    sptr<Mesh> mesh;
-    sptr<Material> gizmoMat;
-    sptr<Renderable> renderable;
+    gptr<Mesh> mesh;
+    gptr<Material> gizmoMat;
+    gptr<Renderable> renderable;
 
     friend PhysicsWorld;
 public:
@@ -36,12 +36,12 @@ public:
     virtual void ToJson(json& obj) const override;
     virtual void FromJson(const json& obj, ObjectLinker* linker) override;
 
-    void SetMesh(const sptr<Mesh>& mesh);
-    sptr<Mesh> GetMesh() const;
+    void SetMesh(const gptr<Mesh>& mesh);
+    gptr<Mesh> GetMesh() const;
 
     void UpdateGizmo();
 
-    virtual void GetRenderables(Sink<sptr<Renderable>> sink) override;
+    virtual void GetRenderables(Sink<gptr<Renderable>> sink) override;
 };
 
 } // scene

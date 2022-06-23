@@ -93,8 +93,8 @@ public:
 
     float GetDepth(const Vec3& pos) const;
     
-    static sptr<Camera> GetCurrentCamera();
-    static void SetCurrentCamera(const wptr<Camera>& cam);
+    static gptr<Camera> GetCurrentCamera();
+    static void SetCurrentCamera(const wgptr<Camera>& cam);
     static void SetCurrentCamera(std::nullptr_t);
 
     // Component overrides
@@ -105,7 +105,7 @@ protected:
     void SetDirty() const;
     void UpdateView() const;
 
-    static wptr<Camera> _currentCamera;
+    static wgptr<Camera> _currentCamera;
 
     mutable bool _dirty = true;
     mutable Mat4 _mtxProjection;

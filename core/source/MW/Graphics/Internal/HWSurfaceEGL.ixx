@@ -18,14 +18,14 @@ class HWContextEGL;
 class HWSurfaceEGL : public HWSurface
 {
 public:
-    sptr<HWContextEGL> context;
-    wptr<WindowAndroid> window;
+    gptr<HWContextEGL> context;
+    wgptr<WindowAndroid> window;
 
     EGLSurface surface = EGL_NO_SURFACE;
 
     HWSurfaceEGL(
-        const sptr<HWContextEGL>& context,
-        const sptr<WindowAndroid>& window);
+        const gptr<HWContextEGL>& context,
+        const gptr<WindowAndroid>& window);
 
     ~HWSurfaceEGL();
 

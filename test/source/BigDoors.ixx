@@ -14,8 +14,8 @@ class BigDoors : public Script
                , public IUserEvents
 {
 public:
-    sptr<Animator> anim;
-    sptr<AudioSource> doorSound;
+    gptr<Animator> anim;
+    gptr<AudioSource> doorSound;
 
     virtual void Start() override
     {

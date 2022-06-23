@@ -11,10 +11,12 @@ import Microwave.Graphics.Types;
 import Microwave.Graphics.LineEnumerator;
 import Microwave.Math;
 import Microwave.System.App;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import Microwave.Utilities.BinPacking.BinPacker;
+import <MW/Graphics/Internal/FreeType2.h>;
+import <MW/System/Debug.h>;
 import <algorithm>;
-import <cassert>;
 import <cstddef>;
 import <cstdlib>;
 import <cstdint>;
@@ -24,7 +26,6 @@ import <stdexcept>;
 import <unordered_map>;
 import <utf8.h>;
 import <vector>;
-import <MW/Graphics/Internal/FreeType2.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -54,21 +55,21 @@ public:
             int ret;
 
             if (fileData.empty())
-                throw std::runtime_error("file data is empty");
+                throw Exception("file data is empty");
 
             data.reserve(fileData.size());
             data.assign(fileData.begin(), fileData.end());
 
             ret = FT_Init_FreeType(&library);
             if (ret != 0)
-                throw std::runtime_error("failed to initialize FreeType library");
+                throw Exception("failed to initialize FreeType library");
 
             ret = FT_New_Memory_Face(library, (FT_Byte*)data.data(), data.size(), 0, &face);
             if (ret != 0)
-                throw std::runtime_error("failed to create font face");
+                throw Exception("failed to create font face");
 
             if (!(face->face_flags & FT_FACE_FLAG_SCALABLE) || !(face->face_flags & FT_FACE_FLAG_HORIZONTAL))
-                throw std::runtime_error("font is not scaleable");
+                throw Exception("font is not scaleable");
         }
         catch (...)
         {
@@ -87,11 +88,11 @@ public:
 
     void SetPixelHeight(int height)
     {
-        assert(height > 0);
+        Assert(height > 0);
 
         int ret = FT_Set_Pixel_Sizes(face, 0, height);
         if (ret != 0)
-            throw std::runtime_error("unsupported font size");
+            throw Exception("unsupported font size");
 
         this->pixelHeight = height;
     }
@@ -146,7 +147,7 @@ Font::Atlas::Atlas(const IVec2& size, FontMode fontMode)
     data.resize(size.x * size.y, fillColor);
     
     auto pixels = std::span<Color32>(data);
-    texture = spnew<Texture>(
+    texture = gpnew<Texture>(
         std::as_writable_bytes(pixels), PixelDataFormat::RGBA32, size, true);
 }
 
@@ -164,7 +165,7 @@ Font::Font(
         margin(margin)
 {
     packer.StartDynamicPacking(atlasSize, margin, true);
-    fontFace = spnew<FreeTypeFontFace>(fileData);
+    fontFace = gpnew<FreeTypeFontFace>(fileData);
     
     SetPixelHeight(32);
 }
@@ -252,7 +253,7 @@ void Font::AddCharacter(char32_t code)
     
     int err = FT_Load_Char(face, code, GetMetricFlags(fontMode));
     if (err != 0)
-        throw std::runtime_error("Failed to load char");
+        throw Exception("Failed to load char");
 
     glyph.slot = 0;
     glyph.code = code;
@@ -482,7 +483,7 @@ void Font::GetTextGeometry(
     int totalWidth = 0;
     int totalHeight = 0;
 
-    LineEnumerator lines(SharedFrom(this), text, wrapText ? bounds.x : 0);
+    LineEnumerator lines(self(this), text, wrapText ? bounds.x : 0);
     while (lines.MoveNext())
     {
         LineInfo li = GetLineInfo(alignment, bounds.x, lines.GetCurrentLine(), lines.DidOverflow());
@@ -502,7 +503,7 @@ void Font::GetTextGeometry(
     else if ((int)alignment & AlignBitsBottom)
         y = totalHeight - lineHeight;
     else
-        assert(0); // no vertical alignment spacified
+        Assert(0); // no vertical alignment spacified
 
     // vertices per font atlas
     std::vector<std::vector<UIVertex>> vtmp;

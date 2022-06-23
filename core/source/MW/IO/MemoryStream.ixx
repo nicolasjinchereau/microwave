@@ -4,6 +4,7 @@
 
 export module Microwave.IO.MemoryStream;
 import Microwave.IO.Stream;
+import Microwave.System.Exception;
 import Microwave.System.Json;
 import Microwave.System.ThreadPool;
 import Microwave.Utilities.Base64;
@@ -11,7 +12,6 @@ import <algorithm>;
 import <array>;
 import <cstdlib>;
 import <cstdint>;
-import <cassert>;
 import <fstream>;
 import <memory>;
 import <span>;
@@ -83,7 +83,7 @@ public:
             newPos = (size_t)(data.size() + offset);
 
         if (newPos > data.size())
-            throw std::runtime_error("new position is out of bounds");
+            throw Exception("new position is out of bounds");
 
         position = newPos;
 

@@ -5,9 +5,8 @@
 module Microwave.Audio.Internal.AudioContextOpenAL;
 import Microwave.Audio.AudioContext;
 import Microwave.SceneGraph.Components.AudioSource;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
-import Microwave.Utilities.Format;
-import <cassert>;
 import <MW/Audio/Internal/OpenAL.h>;
 
 namespace mw {
@@ -17,11 +16,11 @@ AudioContextOpenAL::AudioContextOpenAL()
 {
     device = alcOpenDevice(NULL);
     if (!device)
-        throw FormattedError("error {}: failed to create OpenAL device", (int)alGetError());
+        throw Exception({ "error ", (int)alGetError(), ": failed to create OpenAL device" });
 
     context = alcCreateContext(device, NULL);
     if (!device)
-        throw FormattedError("error {}: failed to create OpenAL context", (int)alGetError());
+        throw Exception({ "error ", (int)alGetError(), ": failed to create OpenAL context" });
 
     auto oldContext = alcGetCurrentContext();
     alcMakeContextCurrent(context);
@@ -79,9 +78,9 @@ void AudioContextOpenAL::ProcessEvent(ALenum eventType, ALuint object, ALuint pa
     }
 }
 
-sptr<AudioContext> AudioContext::New()
+gptr<AudioContext> AudioContext::New()
 {
-    return spnew<AudioContextOpenAL>();
+    return gpnew<AudioContextOpenAL>();
 }
 
 } // audio

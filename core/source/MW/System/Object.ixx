@@ -3,14 +3,16 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.System.Object;
-import Microwave.System.Console;
+import Microwave.IO.Terminal;
+import Microwave.System.Exception;
 import Microwave.System.Json;
 import Microwave.System.Pointers;
 import Microwave.System.Task;
 import Microwave.System.UUID;
 import Microwave.System.Spinlock;
+import <MW/System/Debug.h>;
+import <gc/gc.h>;
 import <boost/type_index.hpp>;
-import <cassert>;
 import <memory>;
 import <stack>;
 import <string>;
@@ -44,13 +46,13 @@ class ITypeHandle
 {
 public:
     static auto& handlesByName() {
-        static std::unordered_map<std::string, const ITypeHandle*> container;
+        static gmap<std::string, const ITypeHandle*> container;
         return container;
     }
 
     static auto& handlesByIndex()
     {
-        static std::unordered_map<std::type_index, const ITypeHandle*, TypeIndexHash> container;
+        static gmap<std::type_index, const ITypeHandle*, TypeIndexHash> container;
         return container;
     }
 
@@ -59,7 +61,7 @@ public:
     virtual ~ITypeHandle() = default;
     virtual const std::type_info& info() const = 0;
     virtual const std::string& name() const = 0;
-    virtual sptr<Object> create() const = 0;
+    virtual gptr<Object> create() const = 0;
 };
 
 template<class T>
@@ -80,7 +82,7 @@ public:
         handlesByName()[typeName] = this;
         handlesByIndex()[std::type_index(typeid(T))] = this;
 
-        //Console::WriteLine("Type: %", typeName);
+        //writeln("Type: ", typeName);
     }
 
     virtual const std::type_info& info() const override {
@@ -91,13 +93,13 @@ public:
         return typeName;
     }
 
-    virtual sptr<Object> create() const override
+    virtual gptr<Object> create() const override
     {
         if constexpr (std::is_default_constructible_v<T>) {
-            return spnew<T>();
+            return gpnew<T>();
         }
         else {
-            return sptr<Object>();
+            return gptr<Object>();
         }
     }
 };
@@ -111,7 +113,7 @@ public:
 
     const std::type_info& info() const { return handle->info(); }
     const std::string& name() const { return handle->name(); }
-    sptr<Object> create() const { return handle->create(); }
+    gptr<Object> create() const { return handle->create(); }
 
     bool operator==(const Type& other) const { return handle == other.handle; }
     bool operator!=(const Type& other) const { return handle == other.handle; }
@@ -120,7 +122,7 @@ public:
     static Type Get();
 
     static std::optional<Type> Find(const std::string& name);
-    static std::optional<Type> Find(const sptr<Object>& obj);
+    static std::optional<Type> Find(const gptr<Object>& obj);
     static std::optional<Type> Find(const Object* obj);
 
     // instantiate this to enable Type::Find functions
@@ -139,15 +141,15 @@ struct ILink
     virtual ~ILink() = default;
     virtual Task<void> LinkAsync(
         ObjectLinker* linker,
-        const sptr<Executor>& executor) = 0;
+        const gptr<Executor>& executor) = 0;
 };
 
 class ObjectLinker
 {
-    std::unordered_map<UUID, sptr<Object>> objects;
-    std::vector<uptr<ILink>> links;
+    gmap<UUID, gptr<Object>> objects;
+    gvector<uptr<ILink>> links;
 
-    static bool AddObject(ObjectLinker* linker, const sptr<Object>& object);
+    static bool AddObject(ObjectLinker* linker, const gptr<Object>& object);
 
     friend Object;
     friend ILink;
@@ -161,72 +163,72 @@ public:
     static void SaveLink(
         json& obj,
         const std::string& keyForUUID,
-        const sptr<T>& ptr);
+        const gptr<T>& ptr);
 
     template<class T> requires std::is_base_of_v<Object, T>
     static void SaveAsset(
         json& val,
-        const sptr<T>& ptr);
+        const gptr<T>& ptr);
 
     template<class T> requires std::is_base_of_v<Object, T>
     static void SaveAsset(
         json& obj,
         const std::string& keyForUUID,
-        const sptr<T>& ptr);
+        const gptr<T>& ptr);
 
     template<class T> //requires std::is_base_of_v<Object, T>
     static bool RestoreLink(
         ObjectLinker* linker,
-        const sptr<Object>& hostObject,
-        wptr<T>& assignee,
+        const gptr<Object>& hostObject,
+        wgptr<T>& assignee,
         const UUID& targetObjectID);
 
     template<class T> //requires std::is_base_of_v<Object, T>
     static bool RestoreLink(
         ObjectLinker* linker,
-        const sptr<Object>& hostObject,
-        wptr<T>& assignee,
+        const gptr<Object>& hostObject,
+        wgptr<T>& assignee,
         const json& obj,
         const std::string& keyOfUUID);
 
     template<class T> //requires std::is_base_of_v<Object, T>
     static bool RestoreLink(
         ObjectLinker* linker,
-        const sptr<Object>& hostObject,
-        sptr<T>& assignee,
+        const gptr<Object>& hostObject,
+        gptr<T>& assignee,
         const UUID& targetObjectID);
 
     template<class T>
     static bool RestoreLink(
         ObjectLinker* linker,
-        const sptr<Object>& hostObject,
-        sptr<T>& assignee,
+        const gptr<Object>& hostObject,
+        gptr<T>& assignee,
         const json& obj,
         const std::string& keyOfUUID);
 
     template<class T> //requires std::is_base_of_v<Object, T>
     static bool RestoreAsset(
         ObjectLinker* linker,
-        const sptr<Object>& hostObject,
-        sptr<T>& assignee,
+        const gptr<Object>& hostObject,
+        gptr<T>& assignee,
         const UUID& targetAssetID);
 
     template<class T>
     static bool RestoreAsset(
         ObjectLinker* linker,
-        const sptr<Object>& hostObject,
-        sptr<T>& assignee,
+        const gptr<Object>& hostObject,
+        gptr<T>& assignee,
         const json& obj,
         const std::string& keyOfUUID);
 
     static Task<void> LinkAsync(
         ObjectLinker* linker,
-        const sptr<Executor>& executor);
+        const gptr<Executor>& executor);
 
     static void Link(ObjectLinker* linker);
 };
 
-class Object : public sp_from_this<Object>
+class Object : public gc::graph_object<Object>
 {
     inline static Type::Pin<Object> pin;
 protected:
@@ -260,7 +262,7 @@ public:
             }
 
             for(auto name : typeNames)
-                Console::WriteLine("%", name);
+                writeln(name);
         }
     };
 
@@ -311,40 +313,28 @@ public:
     {
         uuid = obj["uuid"];
         name = obj["name"];
-        ObjectLinker::AddObject(linker, SharedFrom(this));
+        ObjectLinker::AddObject(linker, self(this));
     }
 
-    template<class T> requires std::is_base_of_v<Object, T>
-    sptr<T> SharedFrom(T* thisPtr) {
-        assert(static_cast<Object*>(thisPtr) == this);
-        return sptr<T>(shared_from_this(), thisPtr);
-    }
-
-    template<class T> requires std::is_base_of_v<Object, T>
-    sptr<const T> SharedFrom(const T* thisPtr) const {
-        assert(static_cast<const Object*>(thisPtr) == this);
-        return sptr<const T>(shared_from_this(), thisPtr);
-    }
-
-    //static void SaveToJson(const sptr<Object>& target, json& obj)
+    //static void SaveToJson(const gptr<Object>& target, json& obj)
     //{
     //    auto type = Type::Find(target);
     //    if (!type)
-    //        throw std::runtime_error("Type is not pinned.");
+    //        throw Exception("Type is not pinned.");
 
     //    target->ToJson(obj);
     //}
 
-    static sptr<Object> CreateFromJson(const json& obj, ObjectLinker* linker)
+    static gptr<Object> CreateFromJson(const json& obj, ObjectLinker* linker)
     {
         std::string typeName = obj.value("objectType", std::string());
 
         if (typeName.empty() || typeName == "unknown")
-            throw std::runtime_error("unknown type");
+            throw Exception("unknown type");
 
         auto type = Type::Find(typeName);
         if (!type)
-            throw std::runtime_error("type not found");
+            throw Exception("type not found");
 
         auto target = type->create();
         target->FromJson(obj, linker);
@@ -352,8 +342,8 @@ public:
     }
 
     template<class T>
-    static sptr<T> CreateFromJson(const json& obj, ObjectLinker* linker) {
-        return spcast<T>(CreateFromJson(obj, linker));
+    static gptr<T> CreateFromJson(const json& obj, ObjectLinker* linker) {
+        return gpcast<T>(CreateFromJson(obj, linker));
     }
 };
 
@@ -374,13 +364,13 @@ std::optional<Type> Type::Find(const std::string& name)
     return ret;
 }
 
-std::optional<Type> Type::Find(const sptr<Object>& obj) {
+std::optional<Type> Type::Find(const gptr<Object>& obj) {
     return Find(obj.get());
 }
 
 std::optional<Type> Type::Find(const Object* obj)
 {
-    assert(obj);
+    Assert(obj);
     std::optional<Type> ret;
 
     auto idx = std::type_index(typeid(*obj));
@@ -393,7 +383,7 @@ std::optional<Type> Type::Find(const Object* obj)
     return ret;
 }
 
-bool ObjectLinker::AddObject(ObjectLinker* linker, const sptr<Object>& object)
+bool ObjectLinker::AddObject(ObjectLinker* linker, const gptr<Object>& object)
 {
     if (!linker)
         return false;
@@ -406,31 +396,31 @@ bool ObjectLinker::AddObject(ObjectLinker* linker, const sptr<Object>& object)
 template<class T, class A>
 struct ObjectLink : ILink
 {
-    sptr<Object> hostObject;
+    gptr<Object> hostObject;
     A& assignee;
     UUID targetObjectID;
 
     ObjectLink(
-        const sptr<Object>& hostObject,
+        const gptr<Object>& hostObject,
         A& assignee,
         const UUID& targetObjectID)
             : hostObject(hostObject),
             assignee(assignee),
             targetObjectID(targetObjectID)
     {
-        assert(hostObject);
+        Assert(hostObject);
     }
 
     virtual Task<void> LinkAsync(
         ObjectLinker* linker,
-        const sptr<Executor>& executor) override
+        const gptr<Executor>& executor) override
     {
-        assert(hostObject);
+        Assert(hostObject);
 
         auto it = linker->GetObjects().find(targetObjectID);
         if (it != linker->GetObjects().end())
         {
-            assignee = spcast<T>(it->second);
+            assignee = gpcast<T>(it->second);
         }
 
         co_return;
@@ -440,37 +430,37 @@ struct ObjectLink : ILink
 namespace detail
 {
 
-Task<sptr<Object>> GetAssetAsync(
+Task<gptr<Object>> GetAssetAsync(
     const UUID& uuid,
-    const sptr<Executor>& executor);
+    const gptr<Executor>& executor);
 
 }
 
 template<class T, class A>
 struct AssetLink : ILink
 {
-    sptr<Object> hostObject;
+    gptr<Object> hostObject;
     A& assignee;
     UUID targetAssetID;
 
     AssetLink(
-        const sptr<Object>& hostObject,
+        const gptr<Object>& hostObject,
         A& assignee,
         const UUID& targetAssetID)
         : hostObject(hostObject),
           assignee(assignee),
           targetAssetID(targetAssetID)
     {
-        assert(hostObject);
+        Assert(hostObject);
     }
 
     virtual Task<void> LinkAsync(
         ObjectLinker* linker,
-        const sptr<Executor>& executor) override
+        const gptr<Executor>& executor) override
     {
-        assert(hostObject);
+        Assert(hostObject);
         auto asset = co_await detail::GetAssetAsync(targetAssetID, executor);
-        assignee = spcast<T>(asset);
+        assignee = gpcast<T>(asset);
         co_return;
     }
 };
@@ -479,7 +469,7 @@ template<class T> requires std::is_base_of_v<Object, T>
 void ObjectLinker::SaveLink(
     json& obj,
     const std::string& keyForUUID,
-    const sptr<T>& ptr)
+    const gptr<T>& ptr)
 {
     obj[keyForUUID] = ptr ? json(ptr->GetUUID()) : json(nullptr);
 }
@@ -487,7 +477,7 @@ void ObjectLinker::SaveLink(
 template<class T> requires std::is_base_of_v<Object, T>
 void ObjectLinker::SaveAsset(
     json& val,
-    const sptr<T>& ptr)
+    const gptr<T>& ptr)
 {
     val = ptr ? json(ptr->GetUUID()) : json(nullptr);
 }
@@ -496,7 +486,7 @@ template<class T> requires std::is_base_of_v<Object, T>
 void ObjectLinker::SaveAsset(
     json& obj,
     const std::string& keyForUUID,
-    const sptr<T>& ptr)
+    const gptr<T>& ptr)
 {
     obj[keyForUUID] = ptr ? json(ptr->GetUUID()) : json(nullptr);
 }
@@ -504,15 +494,15 @@ void ObjectLinker::SaveAsset(
 template<class T>
 bool ObjectLinker::RestoreLink(
     ObjectLinker* linker,
-    const sptr<Object>& hostObject,
-    wptr<T>& assignee,
+    const gptr<Object>& hostObject,
+    wgptr<T>& assignee,
     const UUID& targetObjectID)
 {
     if (!linker)
         return false;
 
     linker->links.emplace_back(
-        upnew<ObjectLink<T, wptr<T>>>(hostObject, assignee, targetObjectID)
+        upnew<ObjectLink<T, wgptr<T>>>(hostObject, assignee, targetObjectID)
     );
 
     return true;
@@ -521,8 +511,8 @@ bool ObjectLinker::RestoreLink(
 template<class T>
 bool ObjectLinker::RestoreLink(
     ObjectLinker* linker,
-    const sptr<Object>& hostObject,
-    wptr<T>& assignee,
+    const gptr<Object>& hostObject,
+    wgptr<T>& assignee,
     const json& obj,
     const std::string& keyOfUUID)
 {
@@ -541,15 +531,15 @@ bool ObjectLinker::RestoreLink(
 template<class T>
 bool ObjectLinker::RestoreLink(
     ObjectLinker* linker,
-    const sptr<Object>& hostObject,
-    sptr<T>& assignee,
+    const gptr<Object>& hostObject,
+    gptr<T>& assignee,
     const UUID& targetObjectID)
 {
     if (!linker)
         return false;
 
     linker->links.emplace_back(
-        upnew<ObjectLink<T, sptr<T>>>(hostObject, assignee, targetObjectID)
+        upnew<ObjectLink<T, gptr<T>>>(hostObject, assignee, targetObjectID)
     );
 
     return true;
@@ -558,8 +548,8 @@ bool ObjectLinker::RestoreLink(
 template<class T>
 bool ObjectLinker::RestoreLink(
     ObjectLinker* linker,
-    const sptr<Object>& hostObject,
-    sptr<T>& assignee,
+    const gptr<Object>& hostObject,
+    gptr<T>& assignee,
     const json& obj,
     const std::string& keyOfUUID)
 {
@@ -578,15 +568,15 @@ bool ObjectLinker::RestoreLink(
 template<class T>
 bool ObjectLinker::RestoreAsset(
     ObjectLinker* linker,
-    const sptr<Object>& hostObject,
-    sptr<T>& assignee,
+    const gptr<Object>& hostObject,
+    gptr<T>& assignee,
     const UUID& targetAssetID)
 {
     if (!linker)
         return false;
 
     linker->links.emplace_back(
-        upnew<AssetLink<T, sptr<T>>>(hostObject, assignee, targetAssetID)
+        upnew<AssetLink<T, gptr<T>>>(hostObject, assignee, targetAssetID)
     );
 
     return true;
@@ -595,8 +585,8 @@ bool ObjectLinker::RestoreAsset(
 template<class T>
 bool ObjectLinker::RestoreAsset(
     ObjectLinker* linker,
-    const sptr<Object>& hostObject,
-    sptr<T>& assignee,
+    const gptr<Object>& hostObject,
+    gptr<T>& assignee,
     const json& obj,
     const std::string& keyOfUUID)
 {
@@ -613,13 +603,13 @@ bool ObjectLinker::RestoreAsset(
 }
 
 template<class T = Object> requires std::is_base_of_v<Object, T>
-inline sptr<T> Instantiate(const sptr<Object>& object)
+inline gptr<T> Instantiate(const gptr<Object>& object)
 {
     json obj;
     object->ToJson(obj);
 
     ObjectLinker linker;
-    sptr<T> ret = Object::CreateFromJson<T>(obj, &linker);
+    gptr<T> ret = Object::CreateFromJson<T>(obj, &linker);
     // update IDs of all objects to new unique ones
     if (ret) ObjectLinker::Link(&linker);
 

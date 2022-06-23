@@ -18,7 +18,7 @@ import <functional>;
 import <algorithm>;
 
 namespace detail {
-    thread_local mw::sptr<mw::ApplicationDispatcherAndroid> _mainThreadDispatcher;
+    thread_local mw::gptr<mw::ApplicationDispatcherAndroid> _mainThreadDispatcher;
 }
 
 namespace mw {
@@ -26,8 +26,8 @@ inline namespace system {
 
 extern android_app* androidApp;
 
-sptr<ApplicationDispatcher> ApplicationDispatcher::New() {
-    detail::_mainThreadDispatcher = spnew<ApplicationDispatcherAndroid>();
+gptr<ApplicationDispatcher> ApplicationDispatcher::New() {
+    detail::_mainThreadDispatcher = gpnew<ApplicationDispatcherAndroid>();
     return detail::_mainThreadDispatcher;
 }
 
@@ -40,14 +40,14 @@ ApplicationDispatcherAndroid::~ApplicationDispatcherAndroid()
 {
 }
 
-sptr<DispatchAction> ApplicationDispatcherAndroid::InvokeAsync(
+gptr<DispatchAction> ApplicationDispatcherAndroid::InvokeAsync(
     std::function<void()> function,
     DispatchTime when
 )
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    auto action = spnew<DispatchAction>(std::move(function), when);
+    auto action = gpnew<DispatchAction>(std::move(function), when);
     sorted_insert(actions, action, DispatchActionComparison());
     Wake();
     return action;
@@ -147,7 +147,7 @@ void ApplicationDispatcherAndroid::OnWindowCreated()
         auto app = Application::GetInstance();
 
         // reallocate graphics resources for existing surfaces
-        std::vector<sptr<Window>> windows;
+        std::vector<gptr<Window>> windows;
         app->GetWindows(windows);
 
         for (auto& win : windows)
@@ -157,7 +157,7 @@ void ApplicationDispatcherAndroid::OnWindowCreated()
         }
 
         // rebind render targets of existing graphics contexts
-        std::vector<sptr<gfx::GraphicsContext>> graphicsContexts;
+        std::vector<gptr<gfx::GraphicsContext>> graphicsContexts;
         app->GetGraphicsContexts(graphicsContexts);
 
         for (auto& gfx : graphicsContexts)
@@ -211,7 +211,7 @@ void ApplicationDispatcherAndroid::OnWindowDestroyed()
 {
     auto app = Application::GetInstance();
 
-    std::vector<sptr<Window>> windows;
+    std::vector<gptr<Window>> windows;
     app->GetWindows(windows);
 
     for (auto& win : windows)
@@ -309,11 +309,11 @@ void ApplicationDispatcherAndroid::ProcessActions()
     }
 }
 
-sptr<DispatchAction> ApplicationDispatcherAndroid::GetNextAction()
+gptr<DispatchAction> ApplicationDispatcherAndroid::GetNextAction()
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    sptr<DispatchAction> action;
+    gptr<DispatchAction> action;
 
     if (run && !actions.empty() && DispatchClock::now() >= actions.front()->when) {
         action = std::move(actions.front());

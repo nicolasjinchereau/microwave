@@ -12,17 +12,15 @@ namespace Test {
 
 void LossScreen::PlayAgain()
 {
-    if (auto g = game.lock())
-    {
-        g->ResetGame();
-    }
+    if (game)
+        game->ResetGameAsync();
 }
 
 Task<void> LossScreen::InitAsync()
 {
     auto assetLibrary = App::Get()->GetAssetLibrary();
 
-    auto node = GetNode();
+    gptr<Node> node = GetNode();
 
     auto blueBackgroundTex = co_await assetLibrary->GetAssetAsync<Texture>("Textures/UI/BlueBackground.png");
     auto font = co_await assetLibrary->GetAssetAsync<Font>("Fonts/comic_bold.ttf");

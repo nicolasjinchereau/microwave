@@ -57,7 +57,7 @@ struct ModelMeshElement
 {
     DrawMode drawMode = DrawMode::Triangles;
     std::vector<int> indices;
-    sptr<ModelMaterial> material;
+    gptr<ModelMaterial> material;
 };
 
 class ModelMesh
@@ -68,7 +68,7 @@ public:
     std::vector<Vec3> vertices;
     std::vector<Vec3> normals;
     std::vector<Vec2> texcoords;
-    std::vector<ModelMeshElement> elements;
+    gvector<ModelMeshElement> elements;
 
     SkinType skinType = SkinType::None;
     std::vector<Bone> bones;
@@ -104,7 +104,7 @@ struct ModelCollider
     float height = {}; // Y (3dsmax Z)
     float width = {};  // Z (3dsmax Y)
     float friction = 0.5f;
-    sptr<ModelMesh> mesh;
+    gptr<ModelMesh> mesh;
 };
 
 struct ModelNode
@@ -115,10 +115,10 @@ struct ModelNode
     Vec3 localPosition;
     Quat localRotation;
     Vec3 localScale = Vec3::One();
-    sptr<ModelMesh> mesh;
-    sptr<ModelCollider> collider;
+    gptr<ModelMesh> mesh;
+    gptr<ModelCollider> collider;
     ModelNode* parent = nullptr;
-    std::vector<sptr<ModelNode>> children;
+    gvector<gptr<ModelNode>> children;
 
     Vec3 position() const;
     Quat rotation() const;
@@ -138,7 +138,7 @@ struct ModelAnimationClip
 {
     std::string name;
     ModelAnimationWrapMode wrapMode = ModelAnimationWrapMode::Loop;
-    std::unordered_map<std::string, sptr<AnimationTrack>> tracks;
+    gmap<std::string, gptr<AnimationTrack>> tracks;
 };
 
 class Model
@@ -147,14 +147,14 @@ class Model
 public:
     int version = 1;
     float animationFPS = 0;
-    sptr<ModelNode> rootNode;
-    std::vector<sptr<ModelAnimationClip>> clips;
+    gptr<ModelNode> rootNode;
+    gvector<gptr<ModelAnimationClip>> clips;
 
     // filled on load
-    std::vector<sptr<ModelNode>> nodes;
+    gvector<gptr<ModelNode>> nodes;
 
-    static sptr<Model> Load(const sptr<Stream>& stream);
-    static void Save(const sptr<Model>& model, const path& ouptut);
+    static gptr<Model> Load(const gptr<Stream>& stream);
+    static void Save(const gptr<Model>& model, const path& ouptut);
 };
 
 void to_json(json& obj, const ModelMaterial& material);

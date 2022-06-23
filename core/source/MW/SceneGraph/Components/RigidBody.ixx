@@ -7,7 +7,6 @@ import Microwave.Math;
 import Microwave.SceneGraph.Components.Component;
 import Microwave.SceneGraph.Components.Collider;
 import Microwave.SceneGraph.Events;
-import Microwave.System.Console;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
@@ -43,12 +42,12 @@ class RigidBody : public Component
 {
     inline static Type::Pin<RigidBody> pin;
 
-    wptr<PhysicsWorld> world;
+    wgptr<PhysicsWorld> world;
     uptr<RigidBodyMotionState> motionState;
     uptr<btRigidBody> body;
     uptr<btCompoundShape> shape;
     std::vector<uptr<btCollisionShape>> childShapes;
-    std::vector<sptr<Collider>> colliders;
+    gvector<gptr<Collider>> colliders;
     bool structureDirty = true;
     bool transformDirty = true;
 

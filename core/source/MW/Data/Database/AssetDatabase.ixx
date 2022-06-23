@@ -28,18 +28,18 @@ class AssetDatabase : public Object
     path rootDir;
     path sourceDir;
     path dataDir;
-    std::unordered_map<std::string, sptr<AssetImporter>> importers; // by file extension
-    std::unordered_map<std::string, sptr<AssetMetadata>> metadata; // by relative path
+    gmap<std::string, gptr<AssetImporter>> importers; // by file extension
+    gmap<std::string, gptr<AssetMetadata>> metadata; // by relative path
     std::unordered_map<path, AssetRecord> catalog;
-    sptr<AssetLibrary> assetLibrary;
+    gptr<AssetLibrary> assetLibrary;
 
 public:
-    AssetDatabase(const sptr<AssetLibrary>& assetLibrary);
+    AssetDatabase(const gptr<AssetLibrary>& assetLibrary);
 
     const path& GetRootDir() const;
     const path& GetSourceDir() const;
     const path& GetDataDir() const;
-    const sptr<AssetLibrary>& GetAssetLibrary() const;
+    const gptr<AssetLibrary>& GetAssetLibrary() const;
 
     void SetDirty(const path& sourceFile);
     void Refresh(bool force = false);
@@ -55,9 +55,9 @@ public:
     void SetImportSettings(const path& sourceFile, const T& settings);
 
 private:
-    sptr<AssetImporter> GetImporter(const path& sourceFile);
+    gptr<AssetImporter> GetImporter(const path& sourceFile);
 
-    sptr<AssetMetadata> GetAssetMetadata(const path& sourcePath);
+    gptr<AssetMetadata> GetAssetMetadata(const path& sourcePath);
 
     void ExtractInternalAssets();
     void LoadCatalog();

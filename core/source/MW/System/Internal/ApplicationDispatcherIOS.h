@@ -31,7 +31,7 @@ public:
     virtual void Run(int argc, char* argv[]) override;
     virtual void Quit() override;
     virtual void SetContinuousDispatchRate(uint32_t rate) override;
-    virtual sptr<DispatchAction> InvokeAsync(
+    virtual gptr<DispatchAction> InvokeAsync(
         std::function<void()> function,
         DispatchTime when = DispatchTime()) override;
 
@@ -39,7 +39,7 @@ public:
 private:
 
     void ProcessActions();
-    sptr<DispatchAction> GetNextAction();
+    gptr<DispatchAction> GetNextAction();
     void UpdateActionTimer();
 };
 

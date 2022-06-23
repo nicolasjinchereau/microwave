@@ -28,12 +28,12 @@ class AnimationClip : public Object
 {
     inline static Type::Pin<AnimationClip> pin;
 
-    std::unordered_map<std::string, sptr<AnimationTrack>> tracks;
+    gmap<std::string, gptr<AnimationTrack>> tracks;
     AnimationWrapMode wrapMode = AnimationWrapMode::Once;
     float length = 0;
 public:
 
-    void AddTrack(const std::string& path, const sptr<AnimationTrack>& track);
+    void AddTrack(const std::string& path, const gptr<AnimationTrack>& track);
     void ClearTracks();
     const auto& GetTracks() const { return tracks; }
     float GetLength() const;
@@ -61,5 +61,5 @@ void from_json(const json& obj, AnimationWrapMode& wrapMode)
     wrapMode = modes[obj.get<std::string>("Once")];
 }
 
-}
-}
+} // gfx
+} // mw

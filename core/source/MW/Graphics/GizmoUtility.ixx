@@ -16,22 +16,22 @@ class GizmoUtility
 public:
     // 1 x 1 x 1
     // pivot: center
-    static sptr<Mesh> CreateBox();
+    static gptr<Mesh> CreateBox();
     
     // radius: 1
     // pivot: center
-    static sptr<Mesh> CreateSphere();
+    static gptr<Mesh> CreateSphere();
     
     // radius: 1
     // pivot: bottom
     // orientation: +Y
-    static sptr<Mesh> CreateHalfSphere();
+    static gptr<Mesh> CreateHalfSphere();
 
     // radius: 1
     // height: 1
     // pivot: center
     // orientation: +/-Y
-    static sptr<Mesh> CreateCylinder();
+    static gptr<Mesh> CreateCylinder();
 };
 
 } // gfx

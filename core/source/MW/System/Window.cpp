@@ -8,11 +8,11 @@ import Microwave.Graphics.Internal.HWSurface;
 namespace mw {
 inline namespace system {
 
-void Window::AddEventHandler(const sptr<IWindowEventHandler>& handler) {
+void Window::AddEventHandler(const gptr<IWindowEventHandler>& handler) {
     eventHandlers.Add(handler);
 }
 
-void Window::RemoveEventHandler(const sptr<IWindowEventHandler>& handler) {
+void Window::RemoveEventHandler(const gptr<IWindowEventHandler>& handler) {
     eventHandlers.Remove(handler);
 }
 

@@ -25,18 +25,18 @@ inline namespace gfx {
 class HWRenderTextureOpenGL : public HWRenderTexture
 {
 public:
-    sptr<HWTextureOpenGL> tex;
+    gptr<HWTextureOpenGL> tex;
     RenderTextureFormat format = RenderTextureFormat::RGBA32;
     gl::Uint frameBuffer = 0;
     gl::Uint depthBuffer = 0;
     int depthBits = 24;
     IVec2 size;
 
-    HWRenderTextureOpenGL(const sptr<HWTexture>& tex);
+    HWRenderTextureOpenGL(const gptr<HWTexture>& tex);
     ~HWRenderTextureOpenGL();
 
     virtual IVec2 GetSize() override;
-    virtual sptr<HWTexture> GetTexture() override;
+    virtual gptr<HWTexture> GetTexture() override;
 };
 
 } // gfx

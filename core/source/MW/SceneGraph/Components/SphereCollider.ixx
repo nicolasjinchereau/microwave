@@ -27,9 +27,9 @@ class SphereCollider : public Collider, public IRenderEvents
 
     float radius = 0.5f;
 
-    sptr<Mesh> gizmoMesh;
-    sptr<Material> gizmoMat;
-    sptr<Renderable> renderable;
+    gptr<Mesh> gizmoMesh;
+    gptr<Material> gizmoMat;
+    gptr<Renderable> renderable;
 public:
 
     SphereCollider(){}
@@ -45,7 +45,7 @@ public:
 
     void UpdateGizmo();
 
-    virtual void GetRenderables(Sink<sptr<Renderable>> sink) override;
+    virtual void GetRenderables(Sink<gptr<Renderable>> sink) override;
 };
 
 } // scene

@@ -21,6 +21,7 @@ import Microwave.Graphics.Color32;
 import Microwave.Graphics.Internal.HWRenderTextureOpenGL;
 import Microwave.Graphics.Internal.HWShaderOpenGL;
 import Microwave.Graphics.ShaderInfo;
+import Microwave.IO.Terminal;
 
 namespace mw {
 inline namespace gfx {
@@ -76,20 +77,20 @@ void GLAPIENTRY OnDebugMessage(
     if (severity == gl::DEBUG_SEVERITY_NOTIFICATION)
         return;
 
-    Console::WriteLine("OpenGL: %", std::string_view(message));
+    writeln("OpenGL: ", std::string_view(message));
 }
 } // detail
 
 HWContextOpenGL::HWContextOpenGL()
 {
 #if PLATFORM_WINDOWS
-    driverContext = spnew<HWDriverContextWGL>();
+    driverContext = gpnew<HWDriverContextWGL>();
 #elif PLATFORM_MACOS
-    driverContext = spnew<HWDriverContextNSGL>();
+    driverContext = gpnew<HWDriverContextNSGL>();
 #elif PLATFORM_IOS
-    driverContext = spnew<HWDriverContextEAGL>();
+    driverContext = gpnew<HWDriverContextEAGL>();
 #elif PLATFORM_ANDROID
-    driverContext = spnew<HWDriverContextEGL>();
+    driverContext = gpnew<HWDriverContextEGL>();
 #endif
 
     gl::Enable(gl::DEBUG_OUTPUT);
@@ -106,11 +107,11 @@ Vec2 HWContextOpenGL::GetDepthRangeNDC() const {
     return Vec2(-1.0f, 1.0f);
 }
 
-void HWContextOpenGL::SetRenderTarget(const sptr<HWRenderTarget>& target) {
+void HWContextOpenGL::SetRenderTarget(const gptr<HWRenderTarget>& target) {
     driverContext->SetRenderTarget(target);
 }
 
-void HWContextOpenGL::Flip(const sptr<HWRenderTarget>& target) {
+void HWContextOpenGL::Flip(const gptr<HWRenderTarget>& target) {
     driverContext->Flip(target);
 }
 
@@ -245,7 +246,7 @@ void HWContextOpenGL::SetViewport(const IntRect& rect) {
     gl::Viewport(rect.x, rect.y, rect.w, rect.h);
 }
 
-void HWContextOpenGL::Clear(const sptr<HWRenderTarget>& target, bool depth, bool color)
+void HWContextOpenGL::Clear(const gptr<HWRenderTarget>& target, bool depth, bool color)
 {
     if (target)
     {
@@ -307,48 +308,48 @@ ShaderLanguage HWContextOpenGL::GetShaderLanguage() const
 #endif
 }
 
-sptr<HWRenderTexture> HWContextOpenGL::CreateRenderTexture(const sptr<HWTexture>& tex) {
-    return spnew<HWRenderTextureOpenGL>(tex);
+gptr<HWRenderTexture> HWContextOpenGL::CreateRenderTexture(const gptr<HWTexture>& tex) {
+    return gpnew<HWRenderTextureOpenGL>(tex);
 }
 
-sptr<HWShader> HWContextOpenGL::CreateShader(const sptr<ShaderInfo>& info) {
-    return spnew<HWShaderOpenGL>(info);
+gptr<HWShader> HWContextOpenGL::CreateShader(const gptr<ShaderInfo>& info) {
+    return gpnew<HWShaderOpenGL>(info);
 }
 
-sptr<HWBuffer> HWContextOpenGL::CreateBuffer(
+gptr<HWBuffer> HWContextOpenGL::CreateBuffer(
     BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, size_t size)
 {
-    return spnew<HWBufferOpenGL>(type, usage, cpuAccess, size);
+    return gpnew<HWBufferOpenGL>(type, usage, cpuAccess, size);
 }
 
-sptr<HWBuffer> HWContextOpenGL::CreateBuffer(
+gptr<HWBuffer> HWContextOpenGL::CreateBuffer(
     BufferType type, BufferUsage usage,
     BufferCPUAccess cpuAccess, const std::span<std::byte>& data)
 {
-    return spnew<HWBufferOpenGL>(type, usage, cpuAccess, data);
+    return gpnew<HWBufferOpenGL>(type, usage, cpuAccess, data);
 }
 
-sptr<HWSurface> HWContextOpenGL::CreateSurface(const sptr<Window>& window) {
+gptr<HWSurface> HWContextOpenGL::CreateSurface(const gptr<Window>& window) {
     return driverContext->CreateSurface(window);
 }
 
-sptr<HWTexture> HWContextOpenGL::CreateTexture(
+gptr<HWTexture> HWContextOpenGL::CreateTexture(
     const IVec2& size, PixelDataFormat format, bool dynamic,
     const std::span<std::byte>& data)
 {
-    return spnew<HWTextureOpenGL>(
-        SharedFrom(this), size, format, dynamic, data);
+    return gpnew<HWTextureOpenGL>(
+        self(this), size, format, dynamic, data);
 }
 
-sptr<HWTexture> HWContextOpenGL::CreateTexture(
+gptr<HWTexture> HWContextOpenGL::CreateTexture(
     const IVec2& size, PixelDataFormat format, bool dynamic,
-    const sptr<HWBuffer>& buffer)
+    const gptr<HWBuffer>& buffer)
 {
-    return spnew<HWTextureOpenGL>(
-        SharedFrom(this), size, format, dynamic, buffer);
+    return gpnew<HWTextureOpenGL>(
+        self(this), size, format, dynamic, buffer);
 }
 
-sptr<HWTexture> HWContextOpenGL::GetDefaultTexture()
+gptr<HWTexture> HWContextOpenGL::GetDefaultTexture()
 {
     if (!defaultTexture)
     {
@@ -357,8 +358,8 @@ sptr<HWTexture> HWContextOpenGL::GetDefaultTexture()
         Color32 gray(127, 127, 127, 255);
         auto texBuff = std::as_writable_bytes(std::span<Color32>(&gray, 1));
 
-        defaultTexture = spnew<HWTextureOpenGL>(
-            SharedFrom(this), texSize, texFormat, false, texBuff);
+        defaultTexture = gpnew<HWTextureOpenGL>(
+            self(this), texSize, texFormat, false, texBuff);
     }
 
     return defaultTexture;

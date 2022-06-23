@@ -53,8 +53,8 @@ class D6Joint :
     bool structureDirty = true;
     bool propertiesDirty = true;
 
-    sptr<RigidBody> mainBody;
-    sptr<RigidBody> linkBody;
+    gptr<RigidBody> mainBody;
+    gptr<RigidBody> linkBody;
     Vec3 linkOffset; // in space of this node
     Vec3 linkPivotOffset; // in space of the link-body's node
 
@@ -85,7 +85,7 @@ public:
     virtual void ToJson(json& obj) const override;
     virtual void FromJson(const json& obj, ObjectLinker* linker) override;
 
-    void SetLinkBody(const sptr<RigidBody>& body);
+    void SetLinkBody(const gptr<RigidBody>& body);
 
     void SetLinkOffset(const Vec3& offset);
     Vec3 GetLinkOffset() const;

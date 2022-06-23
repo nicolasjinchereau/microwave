@@ -4,10 +4,11 @@
 
 export module Microwave.Audio.Internal.Mp3Decoder;
 import Microwave.IO.Stream;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <dr-mp3.h>;
 import <cstdint>;
 import <stdexcept>;
-import <cassert>;
 
 export namespace mw {
 inline namespace audio {
@@ -21,7 +22,7 @@ public:
     {
         auto ret = drmp3_init(&mp3, Mp3Read, Mp3Seek, stream, nullptr);
         if (!ret)
-            throw std::runtime_error("failed to open stream");
+            throw Exception("failed to open stream");
     }
 
     ~Mp3Decoder() {
@@ -63,7 +64,7 @@ public:
         else if (origin == drmp3_seek_origin_current)
             orig = SeekOrigin::Current;
         else
-            assert(0);
+            Assert(0);
 
         Stream* stream = (Stream*)pUserData;
         auto newPos = stream->Seek(offset, orig);

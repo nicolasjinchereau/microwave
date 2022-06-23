@@ -13,13 +13,13 @@ class HWRenderTexture;
 
 class RenderTexture : public RenderTarget
 {
-    sptr<HWRenderTexture> renderTexture;
+    gptr<HWRenderTexture> renderTexture;
 public:
     RenderTexture(const IVec2& size);
 
     virtual ~RenderTexture(){};
     virtual IVec2 GetSize() const override;
-    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
+    virtual gptr<HWRenderTarget> GetHWRenderTarget() override;
 };
 
 } // gfx

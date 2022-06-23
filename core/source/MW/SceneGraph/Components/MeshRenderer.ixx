@@ -29,9 +29,9 @@ class MeshRenderer :
 {
     inline static Type::Pin<MeshRenderer> pin;
 public:
-    sptr<Mesh> mesh;
-    std::vector<sptr<Material>> materials;
-    wptr<Node> rootBone;
+    gptr<Mesh> mesh;
+    gvector<gptr<Material>> materials;
+    wgptr<Node> rootBone;
     
     MeshRenderer(){}
     ~MeshRenderer(){}
@@ -43,13 +43,13 @@ public:
     virtual void ToJson(json& obj) const override;
     virtual void FromJson(const json& obj, ObjectLinker* linker) override;
 
-    virtual void GetRenderables(Sink<sptr<Renderable>> sink) override;
+    virtual void GetRenderables(Sink<gptr<Renderable>> sink) override;
 private:
     std::vector<Mat4> boneMatrices;
     std::vector<Vec3> blendedVerts;
     std::vector<Vec3> blendedNorms;
 
-    std::vector<sptr<Renderable>> renderables;
+    gvector<gptr<Renderable>> renderables;
 };
 
 }

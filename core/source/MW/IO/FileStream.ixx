@@ -8,12 +8,11 @@ module;
 export module Microwave.IO.FileStream;
 export import Microwave.Utilities.EnumFlags;
 import Microwave.IO.Stream;
+import Microwave.System.Exception;
 import Microwave.System.Path;
 import Microwave.System.ThreadPool;
-import Microwave.Utilities.Format;
 import <algorithm>;
 import <array>;
-import <cassert>;
 import <cstdlib>;
 import <cstdint>;
 import <cstdio>;
@@ -21,7 +20,6 @@ import <fstream>;
 import <filesystem>;
 import <memory>;
 import <string>;
-import <stdexcept>;
 import <type_traits>;
 import <unordered_map>;
 import <vector>;
@@ -68,7 +66,7 @@ public:
         try
         {
             if (p.empty())
-                throw std::runtime_error("'path' cannot be empty");
+                throw Exception("'path' cannot be empty");
 
             if ((openmode & (OpenMode::In | OpenMode::Out)) != 0) {
                 readable = true;
@@ -100,20 +98,20 @@ public:
 
             auto it = fopenModes.find(openmode & ~OpenMode::AtEnd);
             if (it == fopenModes.end())
-                throw std::runtime_error("invalid OpenMode");
+                throw Exception("invalid OpenMode");
 
             file = fopen(p.string().c_str(), it->second);
             if (!file)
-                throw std::runtime_error(format("failed to open file: %", errno));
+                throw Exception({ "failed to open file: ", errno });
 
             if ((openmode & OpenMode::AtEnd) != 0)
             {
                 auto res = FSeek(file, 0, SEEK_END);
                 if (res == -1)
-                    throw std::runtime_error("could not seek to end of file");
+                    throw Exception("could not seek to end of file");
             }
         }
-        catch (std::exception&)
+        catch (const Exception&)
         {
             if (file) {
                 std::fclose(file);
@@ -158,7 +156,7 @@ public:
     {
         auto pos = FTell(file);
         if (pos == -1)
-            throw std::runtime_error(format("failed to retrieve file position: %", errno));
+            throw Exception({ "failed to retrieve file position: ", errno });
 
         return (size_t)pos;
     }
@@ -173,7 +171,7 @@ public:
 
         auto res = FSeek(file, offset, origins[(int)origin]);
         if (res == -1)
-            throw std::runtime_error(format("failed seek to specified position: %", errno));
+            throw Exception({ "failed seek to specified position: ", errno });
 
         return (size_t)FTell(file);
     }
@@ -182,11 +180,11 @@ public:
     {
         int ret = FTruncate(file, length);
         if (ret != 0)
-            throw std::runtime_error("failed to resize file");
+            throw Exception("failed to resize file");
 
         ret = FSeek(file, 0, SEEK_SET);
         if (ret == -1)
-            throw std::runtime_error(format("failed seek to beginning of file: %", errno));
+            throw Exception({ "failed seek to beginning of file: ", errno });
     }
 
     virtual int Read(std::span<std::byte> buffer) override
@@ -198,14 +196,14 @@ public:
     {
         size_t written = fwrite(buffer.data(), 1, buffer.size(), file);
         if (written != buffer.size())
-            throw std::runtime_error(format("failed to write to file: %", ferror(file)));
+            throw Exception({ "failed to write to file: ", ferror(file) });
     }
 
     virtual void Flush() override
     {
         auto res = std::fflush(file);
         if (res == -1)
-            throw std::runtime_error(format("failed to close file: %", errno));
+            throw Exception({ "failed to close file: ", errno });
     }
 
     virtual void Close() override
@@ -213,7 +211,7 @@ public:
         if (file)
         {
             if (std::fclose(file) == -1)
-                throw std::runtime_error(format("failed to close file: %", errno));
+                throw Exception({ "failed to close file: ", errno });
 
             file = nullptr;
         }

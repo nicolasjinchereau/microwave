@@ -12,7 +12,6 @@ import Microwave.System.Object;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.Task;
-import <cassert>;
 import <cstddef>;
 import <cstdint>;
 import <span>;
@@ -43,7 +42,7 @@ class Texture : public Object
     TextureFilterMode filterMode = TextureFilterMode::Bilinear;
     float anisoLevel = 1;
 
-    sptr<HWTexture> tex;
+    gptr<HWTexture> tex;
     LoadState loadState = LoadState::Unloaded;
 
 public:
@@ -62,7 +61,7 @@ public:
         bool dynamic
     );
 
-    sptr<HWTexture> GetHWTexture();
+    gptr<HWTexture> GetHWTexture();
     PixelDataFormat GetFormat() const;
     IVec2 GetSize() const;
     bool IsDynamic() const;

@@ -6,8 +6,9 @@ export module Microwave.SceneGraph.Coroutine;
 import Microwave.SceneGraph.Scene;
 import Microwave.SceneGraph.Node;
 import Microwave.System.Clock;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
-import <cassert>;
+import <MW/System/Debug.h>;
 import <cstdint>;
 import <exception>;
 import <experimental/coroutine>;
@@ -67,17 +68,17 @@ public:
     }
 
     float GetSeconds() const {
-        assert(GetType() == WaitType::Seconds);
+        Assert(GetType() == WaitType::Seconds);
         return std::get<float>(value);
     }
 
     void SetSeconds(float seconds) {
-        assert(GetType() == WaitType::Seconds);
+        Assert(GetType() == WaitType::Seconds);
         value = seconds;
     }
 
     bool EvaluatePredicate() const {
-        assert(GetType() == WaitType::Predicate);
+        Assert(GetType() == WaitType::Predicate);
         return std::get<std::function<bool()>>(value)();
     }
 
@@ -189,18 +190,18 @@ public:
     }
 
     void Cancel() {
-        assert(handle);
+        Assert(handle);
         handle.promise().wait.Cancel();
     }
 
     bool IsCancelled() const {
-        assert(handle);
+        Assert(handle);
         return handle.promise().wait.GetType() == WaitType::Cancelled;
     }
 
-    bool Step(const sptr<Clock>& clock)
+    bool Step(const gptr<Clock>& clock)
     {
-        assert(handle);
+        Assert(handle);
         
         if (IsCancelled())
             return false;

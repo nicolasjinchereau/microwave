@@ -16,7 +16,7 @@ class Node;
 class Collider : public Component
 {
 protected:
-    wptr<Node> pivot;
+    wgptr<Node> pivot;
     bool dirty = false;
 public:
     Collider(){}
@@ -25,8 +25,8 @@ public:
     virtual void ToJson(json& obj) const override;
     virtual void FromJson(const json& obj, ObjectLinker* linker) override;
 
-    void SetPivot(const sptr<Node>& pivot);
-    sptr<Node> GetPivot();
+    void SetPivot(const gptr<Node>& pivot);
+    gptr<Node> GetPivot();
 
     void SetDirty(bool dirty) { this->dirty = dirty; }
     bool IsDirty() const { return dirty; }

@@ -34,7 +34,7 @@ public:
     uint32_t source = 0;
     int bufferFormat = 0;
     int sampleRate = 0;
-    sptr<AudioStream> stream;
+    gptr<AudioStream> stream;
     std::atomic<bool> looping;
     std::atomic<int> buffersCompleted;
 
@@ -43,7 +43,7 @@ public:
     
     void QueueBuffers(int count);
 
-    void Initialize(uint32_t source, const sptr<AudioClip>& clip);
+    void Initialize(uint32_t source, const gptr<AudioClip>& clip);
     void Terminate();
 
     void StartBuffering();
@@ -57,8 +57,8 @@ class AudioSource : public Component
     inline static Type::Pin<AudioSource> pin;
 
     uint32_t source = 0;
-    sptr<AudioClip> clip;
-    wptr<AudioContext> context;
+    gptr<AudioClip> clip;
+    wgptr<AudioContext> context;
     bool looping = false;
     StreamController streamController;
 
@@ -72,8 +72,8 @@ public:
     AudioSource() { Construct(); }
     ~AudioSource() { Destruct(); }
 
-    void SetClip(const sptr<AudioClip>& clip);
-    sptr<AudioClip> GetClip() const;
+    void SetClip(const gptr<AudioClip>& clip);
+    gptr<AudioClip> GetClip() const;
 
     void Play();
     void Stop();

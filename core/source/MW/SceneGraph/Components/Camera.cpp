@@ -16,7 +16,7 @@ import <span>;
 namespace mw {
 inline namespace scene {
 
-wptr<Camera> Camera::_currentCamera;
+wgptr<Camera> Camera::_currentCamera;
 
 void Camera::SetMode(CameraViewMode mode)
 {
@@ -402,16 +402,16 @@ void Camera::UpdateView() const
     _dirty = false;
 }
 
-sptr<Camera> Camera::GetCurrentCamera() {
+gptr<Camera> Camera::GetCurrentCamera() {
     return _currentCamera.lock();
 }
 
-void Camera::SetCurrentCamera(const wptr<Camera>& cam) {
+void Camera::SetCurrentCamera(const wgptr<Camera>& cam) {
     _currentCamera = cam;
 }
 
 void Camera::SetCurrentCamera(std::nullptr_t) {
-    SetCurrentCamera(wptr<Camera>());
+    SetCurrentCamera(wgptr<Camera>());
 }
 
 }

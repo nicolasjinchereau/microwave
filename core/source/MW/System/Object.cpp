@@ -11,11 +11,11 @@ namespace mw {
 inline namespace system {
 namespace detail {
 
-Task<sptr<Object>> GetAssetAsync(
+Task<gptr<Object>> GetAssetAsync(
     const UUID& uuid,
-    const sptr<Executor>& executor)
+    const gptr<Executor>& executor)
 {
-    sptr<Object> ret = co_await App::Get()->GetAssetLibrary()->GetAssetAsync(uuid, executor);
+    gptr<Object> ret = co_await App::Get()->GetAssetLibrary()->GetAssetAsync(uuid, executor);
     co_return ret;
 }
 
@@ -23,7 +23,7 @@ Task<sptr<Object>> GetAssetAsync(
 
 Task<void> ObjectLinker::LinkAsync(
     ObjectLinker* linker,
-    const sptr<Executor>& executor)
+    const gptr<Executor>& executor)
 {
     if (linker)
     {

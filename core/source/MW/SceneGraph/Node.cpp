@@ -60,7 +60,7 @@ void Node::FromJson(const json& obj, ObjectLinker* linker)
     for (auto& childObj : childrenObj)
     {
         auto child = Object::CreateFromJson<Node>(childObj, linker);
-        child->_parent = SharedFrom(this);
+        child->_parent = self(this);
         _children.push_back(std::move(child));
     }
 
@@ -68,7 +68,7 @@ void Node::FromJson(const json& obj, ObjectLinker* linker)
     for (auto& compObj : componentsObj)
     {
         auto comp = Object::CreateFromJson<Component>(compObj, linker);
-        comp->node = SharedFrom(this);
+        comp->node = self(this);
         _components.push_back(std::move(comp));
     }
 
@@ -100,8 +100,7 @@ bool Node::IsActive() const {
 
 bool Node::IsBranchActive() const
 {
-    sptr<Node> parent = _parent.lock();
-    return _active && (!parent || parent->IsBranchActive());
+    return _active && (!_parent || _parent->IsBranchActive());
 }
 
 void Node::SetDirty()
@@ -122,17 +121,17 @@ void Node::UpdateWorldTransform() const
 {
     if (_dirty)
     {
-        if (auto par = _parent.lock())
+        if (_parent)
         {
-            par->UpdateWorldTransform();
+            _parent->UpdateWorldTransform();
 
             Vec3 worldPos = _localPos;
             Quat worldRot = _localRot;
             Vec3 worldScale = _localScale;
 
-            Vec3 parentScale = par->_worldScale;
-            Quat parentRot = par->_worldRot;
-            Vec3 parentPos = par->_worldPos;
+            Vec3 parentScale = _parent->_worldScale;
+            Quat parentRot = _parent->_worldRot;
+            Vec3 parentPos = _parent->_worldPos;
 
             worldPos = worldPos.Multiply(parentScale);
             worldPos *= parentRot;
@@ -194,15 +193,14 @@ void Node::SetGlobalTransform(const Transform& transform)
 
 void Node::SetGlobalTransform(const Vec3& pos, const Quat& rot, const Vec3& scale)
 {
-    auto par = _parent.lock();
-    if (par)
+    if (_parent)
     {
-        Vec3 parentInvScale = Vec3::One().Divide(par->GetScale());
-        Quat parentInvRot = par->GetRotation().Inverse();
+        Vec3 parentInvScale = Vec3::One().Divide(_parent->GetScale());
+        Quat parentInvRot = _parent->GetRotation().Inverse();
 
         // position
         auto localPos = pos;
-        localPos -= par->GetPosition();
+        localPos -= _parent->GetPosition();
         localPos *= parentInvRot;
         localPos = localPos.Multiply(parentInvScale);
         _localPos = localPos;
@@ -251,11 +249,10 @@ Vec3 Node::GetPosition() const {
 //{
 //    Vec3 worldPos = _localPos;
 //
-//    auto par = _parent.lock();
-//    if (par) {
-//        worldPos = worldPos.Multiply(par->GetScale());
-//        worldPos *= par->GetRotation();
-//        worldPos += par->GetPosition();
+//    if (_parent) {
+//        worldPos = worldPos.Multiply(_parent->GetScale());
+//        worldPos *= _parent->GetRotation();
+//        worldPos += _parent->GetPosition();
 //    }
 //
 //    return worldPos;
@@ -265,11 +262,10 @@ Vec3 Node::WorldToLocalPos(const Vec3& pos) const
 {
     Vec3 localPos = pos;
 
-    auto par = _parent.lock();
-    if (par) {
-        localPos -= par->GetPosition();
-        localPos *= par->GetRotation().Inverse();
-        localPos = localPos.Divide(par->GetScale());
+    if (_parent) {
+        localPos -= _parent->GetPosition();
+        localPos *= _parent->GetRotation().Inverse();
+        localPos = localPos.Divide(_parent->GetScale());
     }
 
     return localPos;
@@ -289,8 +285,7 @@ Vec3 Node::GetLocalPosition() const {
 }
 
 void Node::SetRotation(const Quat& rot) {
-    auto par = _parent.lock();
-    _localRot = par ? rot * par->GetRotation().Inverse() : rot;
+    _localRot = _parent ? rot * _parent->GetRotation().Inverse() : rot;
     SetDirty();
 }
 
@@ -321,8 +316,7 @@ Quat Node::GetLocalRotation() const {
 }
 
 void Node::SetScale(const Vec3& scale) {
-    auto par = _parent.lock();
-    _localScale = par ? scale.Divide(par->GetScale()) : scale;
+    _localScale = _parent ? scale.Divide(_parent->GetScale()) : scale;
     SetDirty();
 }
 
@@ -416,7 +410,7 @@ Mat4 Node::GetWorldToLocalMatrix() const
 
 void Node::SignalStructureChanged()
 {
-    auto node = SharedFrom(this);
+    auto node = self(this);
     while (node)
     {
         for (auto& comp : node->_components)
@@ -426,23 +420,23 @@ void Node::SignalStructureChanged()
     }
 }
 
-sptr<Node> Node::AddChild() {
-    return AddChild(spnew<Node>());
+gptr<Node> Node::AddChild() {
+    return AddChild(gpnew<Node>());
 }
 
-sptr<Node> Node::AddChild(sptr<Node>&& child) {
+gptr<Node> Node::AddChild(gptr<Node>&& child) {
     AddChild(child);
     return std::move(child);
 }
 
-void Node::AddChild(const sptr<Node>& child) {
-    child->SetParent(SharedFrom(this));
+void Node::AddChild(const gptr<Node>& child) {
+    child->SetParent(self(this));
 }
 
-void Node::RemoveChild(const sptr<Node>& child)
+void Node::RemoveChild(const gptr<Node>& child)
 {
     auto childsParent = child->GetParent();
-    if (childsParent == SharedFrom(this))
+    if (childsParent == self(this))
         childsParent->SetParent(nullptr);
 }
 
@@ -454,10 +448,9 @@ void Node::ClearChildren()
     }
 }
 
-void Node::SetParent(const wptr<Node>& parent, bool preserveWorldTransform)
+void Node::SetParent(const gptr<Node>& newParent, bool preserveWorldTransform)
 {
-    auto oldParent = _parent.lock();
-    auto newParent = parent.lock();
+    auto oldParent = _parent;
 
     if (newParent == oldParent)
         return;
@@ -484,7 +477,7 @@ void Node::SetParent(const wptr<Node>& parent, bool preserveWorldTransform)
         auto it = std::find(
             oldParent->_children.begin(),
             oldParent->_children.end(),
-            SharedFrom(this));
+            self(this));
 
         oldParent->_children.erase(it);
         oldParent->SignalStructureChanged();
@@ -508,7 +501,7 @@ void Node::SetParent(const wptr<Node>& parent, bool preserveWorldTransform)
             _localScale = _localScale.Multiply(invParentScale);
         }
 
-        newParent->_children.push_back(SharedFrom(this));
+        newParent->_children.push_back(self(this));
 
         if (auto scene = newParent->GetScene())
             AttachToScene(scene);
@@ -518,25 +511,23 @@ void Node::SetParent(const wptr<Node>& parent, bool preserveWorldTransform)
     SignalStructureChanged();
 }
 
-sptr<Node> Node::GetParent() const {
-    return _parent.lock();
+gptr<Node> Node::GetParent() const {
+    return _parent;
 }
 
-sptr<const Scene> Node::GetScene() const {
-    return _scene.lock();
+gptr<const Scene> Node::GetScene() const {
+    return _scene;
 }
 
-sptr<Scene> Node::GetScene() {
-    return _scene.lock();
+gptr<Scene> Node::GetScene() {
+    return _scene;
 }
 
-void Node::SetScene(const sptr<Scene>& scene)
+void Node::SetScene(const gptr<Scene>& scene)
 {
-    auto curr = _scene.lock();
-
-    if (curr != scene)
+    if (_scene != scene)
     {
-        if (curr)
+        if (_scene)
             DetachFromScene();
 
         if (scene)
@@ -544,28 +535,28 @@ void Node::SetScene(const sptr<Scene>& scene)
     }
 }
 
-void Node::AttachToScene(const sptr<Scene>& scene)
+void Node::AttachToScene(const gptr<Scene>& scene)
 {
     _scene = scene;
-    if (scene)
+    if (_scene)
     {
         for (auto& c : _components) {
-            scene->RegisterComponent(c);
+            _scene->RegisterComponent(c);
             c->OnAttachedToScene();
         }
     }
 
     for (auto& c : _children)
-        c->AttachToScene(scene);
+        c->AttachToScene(_scene);
 }
 
 void Node::DetachFromScene()
 {
-    if (auto scene = _scene.lock())
+    if (_scene)
     {
         for (auto& c : _components) {
             c->OnDetachFromScene();
-            scene->UnregisterComponent(c);
+            _scene->UnregisterComponent(c);
         }
     }
 
@@ -579,22 +570,22 @@ size_t Node::GetChildCount() const {
     return _children.size();
 }
 
-sptr<Node> Node::GetChild(int index) const {
+gptr<Node> Node::GetChild(int index) const {
     return _children[index];
 }
 
-sptr<Node> Node::GetChild(const UUID& uuid) const
+gptr<Node> Node::GetChild(const UUID& uuid) const
 {
     struct R
     {
-        static sptr<Node> GetChild(const sptr<Node>& node, const UUID& uuid)
+        static gptr<Node> GetChild(const gptr<Node>& node, const UUID& uuid)
         {
             if (node->GetUUID() == uuid)
                 return node;
 
             for (auto& child : node->GetChildren())
             {
-                if (sptr<Node> c = GetChild(child, uuid))
+                if (gptr<Node> c = GetChild(child, uuid))
                     return std::move(c);
             }
 
@@ -602,18 +593,18 @@ sptr<Node> Node::GetChild(const UUID& uuid) const
         }
     };
     
-    sptr<Node> node = const_cast<Node*>(this)->SharedFrom(const_cast<Node*>(this));
+    gptr<Node> node = const_cast<Node*>(this)->self(const_cast<Node*>(this));
     return R::GetChild(node, uuid);
 }
 
-const std::vector<sptr<Node>>& Node::GetChildren() const {
+const gvector<gptr<Node>>& Node::GetChildren() const {
     return _children;
 }
 
-sptr<Component> Node::AddComponentImpl(const sptr<Component>& comp)
+gptr<Component> Node::AddComponentImpl(const gptr<Component>& comp)
 {
     auto oldOwner = comp->GetNode();
-    auto newOwner = SharedFrom(this);
+    auto newOwner = self(this);
 
     if (oldOwner != newOwner)
     {
@@ -623,8 +614,8 @@ sptr<Component> Node::AddComponentImpl(const sptr<Component>& comp)
         comp->node = newOwner;
         _components.push_back(comp);
 
-        if (auto scene = _scene.lock()) {
-            scene->RegisterComponent(comp);
+        if (_scene) {
+            _scene->RegisterComponent(comp);
             comp->OnAttachedToScene();
         }
 
@@ -634,36 +625,36 @@ sptr<Component> Node::AddComponentImpl(const sptr<Component>& comp)
     return comp;
 }
 
-void Node::RemoveComponent(const sptr<Component>& comp)
+void Node::RemoveComponent(const gptr<Component>& comp)
 {
-    auto sthis = SharedFrom(this);
+    auto sthis = self(this);
     auto owner = comp->GetNode();
 
     if (owner == sthis)
     {
-        if (auto scene = _scene.lock()) {
+        if (_scene) {
             comp->OnDetachFromScene();
-            scene->UnregisterComponent(comp);
+            _scene->UnregisterComponent(comp);
         }
         
-        Erase(_components, comp);
-        comp->node = wptr<Node>();
+        std::erase(_components, comp);
+        comp->node = wgptr<Node>();
 
         SignalStructureChanged();
     }
 }
 
-const std::vector<sptr<Component>>& Node::GetComponents() const {
+const gvector<gptr<Component>>& Node::GetComponents() const {
     return _components;
 }
 
 namespace detail {
     void getFullPathHelper(
-        const sptr<const Node>& node,
+        const gptr<const Node>& node,
         std::string& fullPath,
         int reserve = 0)
     {
-        sptr<Node> parent = node->GetParent();
+        gptr<Node> parent = node->GetParent();
         if (parent)
         {
             int res = reserve;
@@ -687,13 +678,13 @@ namespace detail {
 path Node::GetFullPath() const
 {
     std::string fullPath;
-    detail::getFullPathHelper(SharedFrom((const Node*)this), fullPath);
+    detail::getFullPathHelper(self(this), fullPath);
     return path(std::move(fullPath));
 }
 
-sptr<Node> Node::GetChild(const path& fullPath)
+gptr<Node> Node::GetChild(const path& fullPath)
 {
-    sptr<Node> node = SharedFrom(this);
+    gptr<Node> node = self(this);
     auto it = fullPath.begin();
 
     while (node && it != fullPath.end())
@@ -702,7 +693,7 @@ sptr<Node> Node::GetChild(const path& fullPath)
 
         auto itChild = std::find_if(
             node->_children.begin(), node->_children.end(),
-            [&](const sptr<Node>& n) { return n->GetName() == part; }
+            [&](const gptr<Node>& n) { return n->GetName() == part; }
         );
 
         if (itChild != node->_children.end())
@@ -719,10 +710,10 @@ sptr<Node> Node::GetChild(const path& fullPath)
     return node;
 }
 
-sptr<Node> Node::FindChild(std::string_view name, bool allowPartialMatch)
+gptr<Node> Node::FindChild(std::string_view name, bool allowPartialMatch)
 {
     return FindChild(
-        [=](const sptr<Node>& n)
+        [=](const gptr<Node>& n)
         {
             if(allowPartialMatch)
                 return n->GetName().find(name) != std::string::npos;
@@ -732,33 +723,33 @@ sptr<Node> Node::FindChild(std::string_view name, bool allowPartialMatch)
     );
 }
 
-sptr<Node> Node::FindChild(LayerMask mask)
+gptr<Node> Node::FindChild(LayerMask mask)
 {
     return FindChild(
-        [=](const sptr<Node>& n) {
+        [=](const gptr<Node>& n) {
             return (n->GetLayerMask() & mask) != 0;
         }
     );
 }
 
-std::vector<sptr<Node>> Node::FindChildren(std::string_view name, bool allowPartialMatch)
+gvector<gptr<Node>> Node::FindChildren(std::string_view name, bool allowPartialMatch)
 {
-    std::vector<sptr<Node>> ret;
+    gvector<gptr<Node>> ret;
     FindChildren(ret, name, allowPartialMatch);
     return ret;
 }
 
-std::vector<sptr<Node>> Node::FindChildren(LayerMask mask)
+gvector<gptr<Node>> Node::FindChildren(LayerMask mask)
 {
-    std::vector<sptr<Node>> ret;
+    gvector<gptr<Node>> ret;
     FindChildren(ret, mask);
     return ret;
 }
 
-void Node::FindChildren(std::vector<sptr<Node>>& out, std::string_view name, bool allowPartialMatch)
+void Node::FindChildren(gvector<gptr<Node>>& out, std::string_view name, bool allowPartialMatch)
 {
     FindChildren(out,
-        [=](const sptr<Node>& n)
+        [=](const gptr<Node>& n)
         {
             if (allowPartialMatch)
                 return n->GetName().find(name) != std::string::npos;
@@ -768,10 +759,10 @@ void Node::FindChildren(std::vector<sptr<Node>>& out, std::string_view name, boo
     );
 }
 
-void Node::FindChildren(std::vector<sptr<Node>>& out, LayerMask mask)
+void Node::FindChildren(gvector<gptr<Node>>& out, LayerMask mask)
 {
     FindChildren(out,
-        [=](const sptr<Node>& n) {
+        [=](const gptr<Node>& n) {
             return (n->GetLayerMask() & mask) != 0;
         }
     );

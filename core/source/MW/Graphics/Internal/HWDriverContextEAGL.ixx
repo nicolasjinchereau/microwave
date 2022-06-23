@@ -8,6 +8,7 @@ import Microwave.Graphics.Internal.HWDriverContext;
 import Microwave.Graphics.Internal.OpenGLAPI;
 import Microwave.Graphics.Internal.RenderTextureOpenGL;
 import Microwave.Graphics.Internal.WindowSurfaceAndroidOpenGL;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import <MW/System/Internal/PlatformHeaders.h>;
 import <memory>;
@@ -24,7 +25,7 @@ public:
     {
         context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
         if(!context)
-            throw std::runtime_error("failed to create EAGLContext");
+            throw Exception("failed to create EAGLContext");
 
         [EAGLContext setCurrentContext:context];
     }
@@ -42,14 +43,14 @@ public:
             [EAGLContext setCurrentContext:nil];
     }
 
-    virtual void SetRenderTarget(const sptr<HWRenderTarget>& target) override
+    virtual void SetRenderTarget(const gptr<HWRenderTarget>& target) override
     {
-        if (auto surf = spcast<HWSurfaceEAGL>(target))
+        if (auto surf = gpcast<HWSurfaceEAGL>(target))
         {
             gl::BindFramebuffer(GL_FRAMEBUFFER, surf->frameBuffer);
             gl::BindRenderbuffer(GL_RENDERBUFFER, surf->colorBuffer);
         }
-        else if (auto tex = spcast<HWRenderTextureOpenGL>(target))
+        else if (auto tex = gpcast<HWRenderTextureOpenGL>(target))
         {
             gl::BindFramebuffer(GL_FRAMEBUFFER, tex->frameBuffer);
             gl::BindRenderbuffer(GL_RENDERBUFFER, 0);
@@ -61,9 +62,9 @@ public:
         }
     }
 
-    virtual void Flip(const sptr<HWRenderTarget>& target) override
+    virtual void Flip(const gptr<HWRenderTarget>& target) override
     {
-        if (auto surf = spcast<HWSurfaceEAGL>(target))
+        if (auto surf = gpcast<HWSurfaceEAGL>(target))
         {
             gl::BindFramebuffer(GL_FRAMEBUFFER, surf->frameBuffer);
             gl::BindRenderbuffer(GL_RENDERBUFFER, surf->colorBuffer);
@@ -76,11 +77,11 @@ public:
     {
     }
 
-    virtual sptr<HWSurface> CreateSurface(const sptr<Window>& window) override
+    virtual gptr<HWSurface> CreateSurface(const gptr<Window>& window) override
     {
-        auto win = spcast<WindowIOS>(window);
+        auto win = gpcast<WindowIOS>(window);
         assert(win);
-        return spnew<HWSurfaceEAGL>(win);
+        return gpnew<HWSurfaceEAGL>(win);
     }
 };
 

@@ -16,7 +16,7 @@ class Coin : public Script
            , public ICollisionEvents
 {
 public:
-    wptr<Game> game;
+    gptr<Game> game;
     float rotationSpeed = 180.0f;
 
     virtual void Start() override;

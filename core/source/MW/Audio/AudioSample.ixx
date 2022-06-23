@@ -3,7 +3,8 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Audio.AudioSample;
-import <cassert>;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <cstddef>;
 import <cstdint>;
 import <span>;
@@ -80,11 +81,11 @@ inline void ConvertSample(
     if (sourceType == SampleType::Unspecified ||
         resultType == SampleType::Unspecified)
     {
-        throw std::runtime_error("cannot convert to/from unspecified sample type");
+        throw Exception("cannot convert to/from unspecified sample type");
     }
 
-    assert(source.size() == GetBytesPerSample(sourceType));
-    assert(result.size() == GetBytesPerSample(resultType));
+    Assert(source.size() == GetBytesPerSample(sourceType));
+    Assert(result.size() == GetBytesPerSample(resultType));
 
     if (sourceType == SampleType::Int8)
     {

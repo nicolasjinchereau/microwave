@@ -5,7 +5,8 @@
 module Microwave.SceneGraph.Components.MeshRenderer;
 import Microwave.Graphics.Shader;
 import Microwave.SceneGraph.Node;
-import <cassert>;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 
 namespace mw {
 inline namespace scene {
@@ -128,7 +129,7 @@ void MeshRenderer::FromJson(const json& obj, ObjectLinker* linker)
 {
     Component::FromJson(obj, linker);
 
-    ObjectLinker::RestoreAsset(linker, SharedFrom(this), mesh, obj, "mesh");
+    ObjectLinker::RestoreAsset(linker, self(this), mesh, obj, "mesh");
 
     auto& matIDs = obj["materials"];
     
@@ -138,20 +139,20 @@ void MeshRenderer::FromJson(const json& obj, ObjectLinker* linker)
     for(size_t i = 0; i != materials.size(); ++i)
     {
         UUID uuid = matIDs[i];
-        ObjectLinker::RestoreAsset(linker, SharedFrom(this), materials[i], uuid);
+        ObjectLinker::RestoreAsset(linker, self(this), materials[i], uuid);
     }
 
-    ObjectLinker::RestoreLink(linker, SharedFrom(this), rootBone, obj, "rootBone");
+    ObjectLinker::RestoreLink(linker, self(this), rootBone, obj, "rootBone");
 }
 
-void MeshRenderer::GetRenderables(Sink<sptr<Renderable>> sink)
+void MeshRenderer::GetRenderables(Sink<gptr<Renderable>> sink)
 {
     if (!mesh)
         return;
 
-    assert(mesh->vertexBuffer);
+    Assert(mesh->vertexBuffer);
 
-    sptr<Node> node = GetNode();
+    gptr<Node> node = GetNode();
     Mat4 mtxModel = node->GetLocalToWorldMatrix();
     Mat4 mtxNormal = mtxModel.Inverse().Transposed();
 
@@ -168,9 +169,9 @@ void MeshRenderer::GetRenderables(Sink<sptr<Renderable>> sink)
         auto& mat = materials[i];
 
         if(!renderables[i])
-            renderables[i] = spnew<Renderable>();
+            renderables[i] = gpnew<Renderable>();
         
-        sptr<Renderable> renderable = renderables[i];
+        gptr<Renderable> renderable = renderables[i];
 
         renderable->vertexMapping = {
             { Semantic::POSITION, 0, mesh->vertexBuffer, 0, sizeof(Vec3) },

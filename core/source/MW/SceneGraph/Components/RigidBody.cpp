@@ -12,10 +12,11 @@ import Microwave.SceneGraph.Components.MeshCollider;
 import Microwave.SceneGraph.Components.SphereCollider;
 import Microwave.SceneGraph.Internal.Bullet;
 import Microwave.SceneGraph.Internal.CapsuleShape;
-import <cassert>;
+import Microwave.System.Exception;
+import <MW/SceneGraph/Internal/Bullet.h>;
+import <MW/System/Debug.h>;
 import <string>;
 import <unordered_map>;
-import <MW/SceneGraph/Internal/Bullet.h>;
 
 namespace mw {
 inline namespace scene {
@@ -28,7 +29,7 @@ RigidBodyMotionState::RigidBodyMotionState(RigidBody* pBody)
 void RigidBodyMotionState::getWorldTransform(btTransform& worldTrans) const
 {
     auto node = pBody->GetNode();
-    assert(node);
+    Assert(node);
 
     auto pos = node->GetPosition();
     auto rot = node->GetRotation();
@@ -41,7 +42,7 @@ void RigidBodyMotionState::getWorldTransform(btTransform& worldTrans) const
 void RigidBodyMotionState::setWorldTransform(const btTransform& worldTrans)
 {
     auto node = pBody->GetNode();
-    assert(node);
+    Assert(node);
 
     Vec3 pos = Bullet::ToVec3(worldTrans.getOrigin());
     Quat rot = Bullet::ToQuat(worldTrans.getRotation());
@@ -122,16 +123,16 @@ void RigidBody::RebuildCollisionShape()
     struct R
     {
         static void FindColliders(
-            const sptr<Node>& node,
+            const gptr<Node>& node,
             bool isRoot,
-            std::vector<sptr<Collider>>& out)
+            gvector<gptr<Collider>>& out)
         {
             for (auto& c : node->GetComponents())
             {
-                if (!isRoot && spcast<RigidBody>(c))
+                if (!isRoot && gpcast<RigidBody>(c))
                     return;
 
-                if (auto t = spcast<Collider>(c))
+                if (auto t = gpcast<Collider>(c))
                     out.push_back(std::move(t));
             }
 
@@ -197,7 +198,7 @@ void RigidBody::UpdateStructure()
         if (auto scene = GetNode()->GetScene())
         {
             if(auto w = world.lock()) {
-                w->RemoveRigidBody(SharedFrom(this));
+                w->RemoveRigidBody(self(this));
                 world.reset();
             }
 
@@ -270,7 +271,7 @@ void RigidBody::UpdateStructure()
             body->setDamping(linearDamping, angularDamping);
 
             if (IsActiveAndEnabled()) {
-                scene->GetPhysics()->AddRigidBody(SharedFrom(this));
+                scene->GetPhysics()->AddRigidBody(self(this));
                 world = scene->GetPhysics();
             }
             
@@ -349,7 +350,7 @@ void RigidBody::OnAttachedToScene() {
 void RigidBody::OnDetachFromScene()
 {
     if(auto w = world.lock()) {
-        w->RemoveRigidBody(SharedFrom(this));
+        w->RemoveRigidBody(self(this));
         world.reset();
     }
 
@@ -366,7 +367,7 @@ void RigidBody::OnDisable()
 {
     if (auto w = world.lock())
     {
-        w->RemoveRigidBody(SharedFrom(this));
+        w->RemoveRigidBody(self(this));
         world.reset();
     }
 }

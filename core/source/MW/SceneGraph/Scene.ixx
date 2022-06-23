@@ -27,23 +27,23 @@ class Script;
 class Scene : public Object
 {
     inline static Type::Pin<Scene> pin;
+public:
+    gptr<Node> _rootNode;
 
-    sptr<Node> _rootNode;
+    gvector<gptr<Camera>> cameras;
+    gvector<gptr<Canvas>> canvases;
+    gvector<gptr<ISceneInputEvents>> sceneInputHandlers;
+    gvector<gptr<IUserEvents>> userStarts;
+    gvector<gptr<ISystemEvents>> systemStarts;
+    gvector<gptr<IUserEvents>> userUpdates;
+    gvector<gptr<ISystemEvents>> systemUpdates;
+    gvector<gptr<Script>> scripts;
+    gvector<gptr<DirectionalLight>> lights;
+    gvector<gptr<IRenderEvents>> renderEvents;
 
-    std::vector<sptr<Camera>> cameras;
-    std::vector<sptr<Canvas>> canvases;
-    std::vector<sptr<ISceneInputEvents>> sceneInputHandlers;
-    std::vector<sptr<IUserEvents>> userStarts;
-    std::vector<sptr<ISystemEvents>> systemStarts;
-    std::vector<sptr<IUserEvents>> userUpdates;
-    std::vector<sptr<ISystemEvents>> systemUpdates;
-    std::vector<sptr<Script>> scripts;
-    std::vector<sptr<DirectionalLight>> lights;
-    std::vector<sptr<IRenderEvents>> renderEvents;
-
-    std::vector<sptr<void>> updateCache;
-    sptr<PhysicsWorld> physicsWorld;
-    sptr<Clock> clock;
+    gvector<gptr<void>> updateCache;
+    gptr<PhysicsWorld> physicsWorld;
+    gptr<Clock> clock;
 
     Color ambientColor = Color(0.2f, 0.2f, 0.2f, 1.0f);
     bool gizmosEnabled = false;
@@ -59,13 +59,13 @@ public:
     Scene(){ Construct(); }
     ~Scene(){ Destruct(); }
 
-    sptr<Node> GetRootNode();
+    gptr<Node> GetRootNode();
 
-    sptr<PhysicsWorld> GetPhysics();
-    sptr<const PhysicsWorld> GetPhysics() const;
+    gptr<PhysicsWorld> GetPhysics();
+    gptr<const PhysicsWorld> GetPhysics() const;
 
-    sptr<Clock> GetClock();
-    sptr<const Clock> GetClock() const;
+    gptr<Clock> GetClock();
+    gptr<const Clock> GetClock() const;
 
     void SetAmbientColor(const Color& color);
     Color GetAmbientColor() const;
@@ -85,8 +85,8 @@ public:
     void Update();
 
 private:
-    void RegisterComponent(const sptr<Component>& comp);
-    void UnregisterComponent(const sptr<Component>& comp);
+    void RegisterComponent(const gptr<Component>& comp);
+    void UnregisterComponent(const gptr<Component>& comp);
 };
 
 } // scene

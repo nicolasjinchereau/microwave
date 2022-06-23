@@ -4,8 +4,9 @@
 
 module Microwave.Graphics.Internal.HWContextD3D11;
 import Microwave.Graphics.ShaderInfo;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <unordered_map>;
-import <cassert>;
 
 namespace mw {
 inline namespace gfx {
@@ -87,13 +88,13 @@ HWContextD3D11::HWContextD3D11()
         featureLevels, ARRAYSIZE(featureLevels), D3D11_SDK_VERSION,
         &tmpDevice, &mFeatureLevel, &tmpContext
     );
-    if(FAILED(res)) throw std::runtime_error("failed to create d3d11 device");
+    if(FAILED(res)) throw Exception("failed to create d3d11 device");
 
     res = tmpDevice.As(&device);
-    if(FAILED(res)) throw std::runtime_error("failed to get d3d11 device interface");
+    if(FAILED(res)) throw Exception("failed to get d3d11 device interface");
 
     res = tmpContext.As(&deviceContext);
-    if(FAILED(res)) throw std::runtime_error("failed to get d3d11 device context interface");
+    if(FAILED(res)) throw Exception("failed to get d3d11 device context interface");
 
     blendStateDirty = true;
     rasterizerStateDirty = true;
@@ -125,16 +126,16 @@ void HWContextD3D11::SetViewport(const IntRect& rect)
     deviceContext->RSSetViewports(1, &viewport);
 }
 
-void HWContextD3D11::SetRenderTarget(const sptr<HWRenderTarget>& target)
+void HWContextD3D11::SetRenderTarget(const gptr<HWRenderTarget>& target)
 {
-    if (auto surf = spcast<HWSurfaceD3D11>(target))
+    if (auto surf = gpcast<HWSurfaceD3D11>(target))
     {
         deviceContext->OMSetRenderTargets(
             1,
             surf->renderTargetView.GetAddressOf(),
             surf->depthStencilView.Get());
     }
-    else if (auto tex = spcast<HWRenderTextureD3D11>(target))
+    else if (auto tex = gpcast<HWRenderTextureD3D11>(target))
     {
         deviceContext->OMSetRenderTargets(
             1,
@@ -147,9 +148,9 @@ void HWContextD3D11::SetRenderTarget(const sptr<HWRenderTarget>& target)
     }
 }
 
-void HWContextD3D11::Flip(const sptr<HWRenderTarget>& target)
+void HWContextD3D11::Flip(const gptr<HWRenderTarget>& target)
 {
-    if (auto surf = spcast<HWSurfaceD3D11>(target))
+    if (auto surf = gpcast<HWSurfaceD3D11>(target))
     {
         surf->swapChain->Present(swapInterval, 0);
         
@@ -164,13 +165,13 @@ void HWContextD3D11::SetSwapInterval(int interval) {
     swapInterval = interval;
 }
 
-void HWContextD3D11::Clear(const sptr<HWRenderTarget>& target, bool depth, bool color)
+void HWContextD3D11::Clear(const gptr<HWRenderTarget>& target, bool depth, bool color)
 {
-    if (auto surf = spcast<HWSurfaceD3D11>(target)) {
+    if (auto surf = gpcast<HWSurfaceD3D11>(target)) {
         if (color) deviceContext->ClearRenderTargetView(surf->renderTargetView.Get(), clearColor);
         if (depth) deviceContext->ClearDepthStencilView(surf->depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
     }
-    else if (auto tex = spcast<HWRenderTextureD3D11>(target)) {
+    else if (auto tex = gpcast<HWRenderTextureD3D11>(target)) {
         if (color) deviceContext->ClearRenderTargetView(tex->renderTargetView.Get(), clearColor);
         if (depth) deviceContext->ClearDepthStencilView(tex->depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
     }
@@ -256,7 +257,7 @@ void HWContextD3D11::SetColorMask(bool red, bool green, bool blue, bool alpha)
 void HWContextD3D11::SetBlendColor(Color color)
 {
     blendColor = color;
-    assert(blendState.Get());
+    Assert(blendState.Get());
     deviceContext->OMSetBlendState(blendState.Get(), blendColor, 0xFFFFFFFF);
 }
 
@@ -297,55 +298,55 @@ ShaderLanguage HWContextD3D11::GetShaderLanguage() const {
     return ShaderLanguage::HLSL;
 }
 
-sptr<HWShader> HWContextD3D11::CreateShader(const sptr<ShaderInfo>& info) {
-    return spnew<HWShaderD3D11>(SharedFrom(this), info);
+gptr<HWShader> HWContextD3D11::CreateShader(const gptr<ShaderInfo>& info) {
+    return gpnew<HWShaderD3D11>(self(this), info);
 }
 
-sptr<HWRenderTexture> HWContextD3D11::CreateRenderTexture(const sptr<HWTexture>& tex) {
-    return spnew<HWRenderTextureD3D11>(tex);
+gptr<HWRenderTexture> HWContextD3D11::CreateRenderTexture(const gptr<HWTexture>& tex) {
+    return gpnew<HWRenderTextureD3D11>(tex);
 }
 
-sptr<HWSurface> HWContextD3D11::CreateSurface(const sptr<Window>& window)
+gptr<HWSurface> HWContextD3D11::CreateSurface(const gptr<Window>& window)
 {
-    auto win = spcast<WindowWindows>(window);
-    assert(win);
-    return spnew<HWSurfaceD3D11>(SharedFrom(this), win);
+    auto win = gpcast<WindowWindows>(window);
+    Assert(win);
+    return gpnew<HWSurfaceD3D11>(self(this), win);
 }
 
-sptr<HWBuffer> HWContextD3D11::CreateBuffer(
+gptr<HWBuffer> HWContextD3D11::CreateBuffer(
     BufferType type, BufferUsage usage,
     BufferCPUAccess cpuAccess, size_t size)
 {
-    return spnew<HWBufferD3D11>(
-        SharedFrom(this), type, usage, cpuAccess, size);
+    return gpnew<HWBufferD3D11>(
+        self(this), type, usage, cpuAccess, size);
 }
 
-sptr<HWBuffer> HWContextD3D11::CreateBuffer(
+gptr<HWBuffer> HWContextD3D11::CreateBuffer(
     BufferType type, BufferUsage usage,
     BufferCPUAccess cpuAccess,
     const std::span<std::byte>& data)
 {
-    return spnew<HWBufferD3D11>(
-        SharedFrom(this), type, usage, cpuAccess, data);
+    return gpnew<HWBufferD3D11>(
+        self(this), type, usage, cpuAccess, data);
 }
 
-sptr<HWTexture> HWContextD3D11::CreateTexture(
+gptr<HWTexture> HWContextD3D11::CreateTexture(
     const IVec2& size, PixelDataFormat format, bool dynamic,
     const std::span<std::byte>& data)
 {
-    return spnew<HWTextureD3D11>(
-        SharedFrom(this), size, format, dynamic, data);
+    return gpnew<HWTextureD3D11>(
+        self(this), size, format, dynamic, data);
 }
 
-sptr<HWTexture> HWContextD3D11::CreateTexture(
+gptr<HWTexture> HWContextD3D11::CreateTexture(
     const IVec2& size, PixelDataFormat format, bool dynamic,
-    const sptr<HWBuffer>& buffer)
+    const gptr<HWBuffer>& buffer)
 {
-    return spnew<HWTextureD3D11>(
-        SharedFrom(this), size, format, dynamic, buffer);
+    return gpnew<HWTextureD3D11>(
+        self(this), size, format, dynamic, buffer);
 }
 
-sptr<HWTexture> HWContextD3D11::GetDefaultTexture()
+gptr<HWTexture> HWContextD3D11::GetDefaultTexture()
 {
     if (!defaultTexture)
     {
@@ -354,8 +355,8 @@ sptr<HWTexture> HWContextD3D11::GetDefaultTexture()
         std::array<std::byte, 4> texBuff {
             (std::byte)0x7F, (std::byte)0x7F, (std::byte)0x7F, (std::byte)0xFF };
 
-        defaultTexture = spnew<HWTextureD3D11>(
-            SharedFrom(this), texSize, texFormat, false, texBuff);
+        defaultTexture = gpnew<HWTextureD3D11>(
+            self(this), texSize, texFormat, false, texBuff);
     }
 
     return defaultTexture;
@@ -372,7 +373,7 @@ void HWContextD3D11::UpdateDeviceStates()
 
         auto res = device->CreateBlendState(&blendDesc, &blendState);
         if(FAILED(res))
-            throw std::runtime_error("failed to create d3d11 blend state");
+            throw Exception("failed to create d3d11 blend state");
 
         deviceContext->OMSetBlendState(blendState.Get(), blendColor, 0xFFFFFFFF);
         blendStateDirty = false;
@@ -394,7 +395,7 @@ void HWContextD3D11::UpdateDeviceStates()
 
         auto res = device->CreateRasterizerState(&rasterDesc, &rasterizerState);
         if(FAILED(res))
-            throw std::runtime_error("failed to create d3d11 raster state");
+            throw Exception("failed to create d3d11 raster state");
         
         deviceContext->RSSetState(rasterizerState.Get());
         rasterizerStateDirty = false;
@@ -420,7 +421,7 @@ void HWContextD3D11::UpdateDeviceStates()
 
         auto res = device->CreateDepthStencilState(&depthStencilDesc, &depthStencilState);
         if(FAILED(res))
-            throw std::runtime_error("failed to create d3d11 depth stencil state");
+            throw Exception("failed to create d3d11 depth stencil state");
 
         deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1);
         depthStencilStateDirty = false;

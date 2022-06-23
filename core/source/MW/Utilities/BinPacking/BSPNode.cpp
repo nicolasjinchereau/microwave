@@ -3,14 +3,15 @@
 *--------------------------------------------------------------*/
 
 module Microwave.Utilities.BinPacking.BSPNode;
+import Microwave.System.Exception;
 import Microwave.Utilities.BinPacking.BSPNodeAllocator;
-import <cassert>;
+import <MW/System/Debug.h>;
 
 namespace mw {
 inline namespace utilities {
 inline namespace binpacking {
 
-BSPNode::BSPNode(const wptr<IBSPNodePool>& nodePool)
+BSPNode::BSPNode(const wgptr<IBSPNodePool>& nodePool)
     : nodePool(nodePool) {}
 
 void BSPNode::Reset(const IntRect& rc)
@@ -78,7 +79,7 @@ BSPNode* BSPNode::Insert(RectMapping& mapping, int padding, bool allowRotation)
 void BSPNode::SplitBranch(int padding)
 {
     auto pool = nodePool.lock();
-    assert(pool);
+    Assert(pool);
 
     if (!left) left = pool->GetNode();
     if (!right) right = pool->GetNode();

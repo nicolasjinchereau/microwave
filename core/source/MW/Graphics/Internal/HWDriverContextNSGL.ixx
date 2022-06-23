@@ -8,6 +8,7 @@ import Microwave.Graphics.Internal.HWDriverContext;
 import Microwave.Graphics.Internal.OpenGLAPI;
 import Microwave.Graphics.Internal.RenderTextureOpenGL;
 import Microwave.Graphics.Internal.WindowSurfaceAndroidOpenGL;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import <MW/System/Internal/PlatformHeaders.h>;
 import <memory>;
@@ -35,7 +36,7 @@ public:
         NSOpenGLPixelFormat* pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attribs];
         context = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:nil];
         if(!context)
-            throw std::runtime_error("error: failed to create context");
+            throw Exception("error: failed to create context");
 
         [context makeCurrentContext];
 
@@ -60,9 +61,9 @@ public:
             [context clearCurrentContext];
     }
 
-    virtual void SetRenderTarget(const sptr<HWRenderTarget>& target) override
+    virtual void SetRenderTarget(const gptr<HWRenderTarget>& target) override
     {
-        if (auto surf = spcast<HWSurfaceNSGL>(target))
+        if (auto surf = gpcast<HWSurfaceNSGL>(target))
         {
             if (auto win = surf->window.lock())
             {
@@ -70,7 +71,7 @@ public:
                 gl::BindFramebuffer(gl::FRAMEBUFFER, 0);
             }
         }
-        else if (auto tex = spcast<HWRenderTextureOpenGL>(target))
+        else if (auto tex = gpcast<HWRenderTextureOpenGL>(target))
         {
             [context setView: nil];
             gl::BindFramebuffer(gl::FRAMEBUFFER, tex->frameBuffer);
@@ -82,9 +83,9 @@ public:
         }
     }
 
-    virtual void Flip(const sptr<HWRenderTarget>& target) override
+    virtual void Flip(const gptr<HWRenderTarget>& target) override
     {
-        if (auto surf = spcast<HWSurfaceNSGL>(target))
+        if (auto surf = gpcast<HWSurfaceNSGL>(target))
         {
             gl::Flush();
             [context flushBuffer];
@@ -101,11 +102,11 @@ public:
         }
     }
 
-    virtual sptr<HWSurface> CreateSurface(const sptr<Window>& window) override
+    virtual gptr<HWSurface> CreateSurface(const gptr<Window>& window) override
     {
-        auto win = spcast<WindowMacOS>(window);
+        auto win = gpcast<WindowMacOS>(window);
         assert(win);
-        return spnew<HWSurfaceNSGL>(win);
+        return gpnew<HWSurfaceNSGL>(win);
     }
 };
 

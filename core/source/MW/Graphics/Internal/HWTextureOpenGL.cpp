@@ -5,15 +5,15 @@
 module Microwave.Graphics.Internal.HWTextureOpenGL;
 import Microwave.Graphics.Internal.HWBufferOpenGL;
 import Microwave.Graphics.Internal.HWContextOpenGL;
-import Microwave.System.Console;
+import Microwave.System.Exception;
 import Microwave.System.ThreadPool;
+import <MW/System/Internal/PlatformHeaders.h>;
+import <MW/System/Debug.h>;
 import <algorithm>;
-import <cassert>;
 import <cstring>;
 import <regex>;
 import <stdexcept>;
 import <unordered_map>;
-import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {
@@ -68,7 +68,7 @@ std::unordered_map<TextureFilterMode, int> magFilters = {
 } // opengl
 
 HWTextureOpenGL::HWTextureOpenGL(
-    const sptr<HWContextOpenGL>& context,
+    const gptr<HWContextOpenGL>& context,
     const IVec2& size,
     PixelDataFormat format,
     bool dynamic,
@@ -82,7 +82,7 @@ HWTextureOpenGL::HWTextureOpenGL(
     int byteCount = size.x * size.y * bytesPerPixel;
 
     if (data.size() != byteCount)
-        throw std::runtime_error("incorrect size for 'data'");
+        throw Exception("incorrect size for 'data'");
 
     gl::GenTextures(1, &textureID);
     gl::BindTexture(gl::TEXTURE_2D, textureID);
@@ -110,11 +110,11 @@ HWTextureOpenGL::HWTextureOpenGL(
 }
 
 HWTextureOpenGL::HWTextureOpenGL(
-    const sptr<HWContextOpenGL>& context,
+    const gptr<HWContextOpenGL>& context,
     const IVec2& size,
     PixelDataFormat format,
     bool dynamic,
-    const sptr<HWBuffer>& buffer)
+    const gptr<HWBuffer>& buffer)
     : context(context)
     , size(size)
     , format(format)
@@ -124,7 +124,7 @@ HWTextureOpenGL::HWTextureOpenGL(
     int byteCount = size.x * size.y * bytesPerPixel;
 
     if (buffer->GetSize() != byteCount)
-        throw std::runtime_error("incorrect buffer size");
+        throw Exception("incorrect buffer size");
 
     gl::GenTextures(1, &textureID);
     gl::BindTexture(gl::TEXTURE_2D, textureID);
@@ -133,7 +133,7 @@ HWTextureOpenGL::HWTextureOpenGL(
     auto intFmt = sizedInternalFormats[format];
     auto typ = componentTypes[format];
 
-    auto buff = spcast<HWBufferOpenGL>(buffer);
+    auto buff = gpcast<HWBufferOpenGL>(buffer);
 
     buff->Bind();
     gl::TexImage2D(gl::TEXTURE_2D, 0, fmt, size.x, size.y, 0, fmt, typ, 0);
@@ -168,19 +168,19 @@ void HWTextureOpenGL::SetPixels(const std::span<std::byte>& data, const IntRect&
         return;
 
     if (!dynamic)
-        throw std::runtime_error("texture is not dynamic");
+        throw Exception("texture is not dynamic");
 
     auto bytesPerPixel = GetBytesPerPixel(format);
 
     if (data.size() != rect.w * rect.h * bytesPerPixel)
-        throw std::runtime_error("incorrect data size");
+        throw Exception("incorrect data size");
 
     gl::BindTexture(gl::TEXTURE_2D, textureID);
 
-    assert(rect.x >= 0);
-    assert(rect.y >= 0);
-    assert(rect.x + rect.w <= size.x);
-    assert(rect.y + rect.h <= size.y);
+    Assert(rect.x >= 0);
+    Assert(rect.y >= 0);
+    Assert(rect.x + rect.w <= size.x);
+    Assert(rect.y + rect.h <= size.y);
 
 #if PLATFORM_IOS || PLATFORM_ANDROID
     auto fmt = textureFormats[format];

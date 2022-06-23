@@ -18,8 +18,8 @@ export class ExitDoorTrigger : public Script
                              , public ICollisionEvents
 {
 public:
-    wptr<BigDoors> exitDoor;
-    wptr<Game> game;
+    gptr<BigDoors> exitDoor;
+    gptr<Game> game;
 
     virtual void Start() override;
     virtual void OnCollisionStart(const Collision& collision) override;

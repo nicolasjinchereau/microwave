@@ -6,6 +6,7 @@ module Microwave.SceneGraph.Components.Animator;
 import Microwave.SceneGraph.Node;
 import Microwave.System.App;
 import Microwave.System.Clock;
+import Microwave.System.Exception;
 import <string>;
 import <unordered_map>;
 import <vector>;
@@ -41,8 +42,8 @@ void Animator::FromJson(const json& obj, ObjectLinker* linker)
 
     for (auto& [name, stateObj] : animStateObjs.GetObject())
     {
-        auto state = spnew<AnimationState>();
-        ObjectLinker::RestoreAsset(linker, SharedFrom(this), state->clip, stateObj, "clip");
+        auto state = gpnew<AnimationState>();
+        ObjectLinker::RestoreAsset(linker, self(this), state->clip, stateObj, "clip");
         state->speed = stateObj["speed"];
         animationStates[name] = std::move(state);
     }
@@ -76,15 +77,15 @@ void Animator::UpdateInfluences()
     }
 }
 
-void Animator::AddClip(const sptr<AnimationClip>& clip, const std::string& clipName)
+void Animator::AddClip(const gptr<AnimationClip>& clip, const std::string& clipName)
 {
-    auto state = spnew<AnimationState>();
+    auto state = gpnew<AnimationState>();
     state->clip = clip;
     animationStates[clipName] = state;
     dirtyInfluences = true;
 }
 
-void Animator::RemoveClip(const sptr<AnimationClip>& clip)
+void Animator::RemoveClip(const gptr<AnimationClip>& clip)
 {
     for(auto it = animationStates.begin();
         it != animationStates.end(); )
@@ -171,7 +172,7 @@ void Animator::UpdateAnimationStates()
 
 void Animator::Sample()
 {
-    sptr<Node> rootNode = GetNode();
+    gptr<Node> rootNode = GetNode();
 
     UpdateInfluences();
 
@@ -214,7 +215,7 @@ void Animator::Sample()
             inf.localRot.Normalize();
             inf.localScale /= inf.weight;
 
-            sptr<Node> node = rootNode->GetChild(path);
+            gptr<Node> node = rootNode->GetChild(path);
             if (node)
                 node->SetLocalTransform(inf.localPos, inf.localRot, inf.localScale);
         }
@@ -229,7 +230,7 @@ AnimationState& Animator::GetAnimationState(std::string_view clipName)
             return *state;
     }
 
-    throw std::runtime_error("Animator::operator[] -> clip not found");
+    throw Exception("Animator::operator[] -> clip not found");
 }
 
 AnimationState& Animator::operator[](std::string_view clipName) {

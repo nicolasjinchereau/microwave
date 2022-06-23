@@ -3,7 +3,6 @@
 *--------------------------------------------------------------*/
 
 module Microwave.SceneGraph.Scene;
-import Microwave.SceneGraph.Scene;
 import Microwave.SceneGraph.Components.Camera;
 import Microwave.SceneGraph.Components.Canvas;
 import Microwave.SceneGraph.Components.DirectionalLight;
@@ -19,37 +18,38 @@ namespace mw {
 inline namespace scene {
 
 void Scene::Construct() {
-    physicsWorld = spnew<PhysicsWorld>();
-    clock = spnew<Clock>();
+    physicsWorld = gpnew<PhysicsWorld>();
+    clock = gpnew<Clock>();
 }
 
 void Scene::Destruct() {
     physicsWorld.reset();
 }
 
-sptr<Node> Scene::GetRootNode()
+gptr<Node> Scene::GetRootNode()
 {
     if (!_rootNode) {
-        _rootNode = spnew<Node>();
-        _rootNode->SetScene(SharedFrom(this));
+        _rootNode = gpnew<Node>();
+        _rootNode->SetName("SceneRootNode");
+        _rootNode->SetScene(self(this));
     }
 
     return _rootNode;
 }
 
-sptr<PhysicsWorld> Scene::GetPhysics() {
+gptr<PhysicsWorld> Scene::GetPhysics() {
     return physicsWorld;
 };
 
-sptr<const PhysicsWorld> Scene::GetPhysics() const {
+gptr<const PhysicsWorld> Scene::GetPhysics() const {
     return physicsWorld;
 };
 
-sptr<Clock> Scene::GetClock() {
+gptr<Clock> Scene::GetClock() {
     return clock;
 }
 
-sptr<const Clock> Scene::GetClock() const {
+gptr<const Clock> Scene::GetClock() const {
     return clock;
 }
 
@@ -85,12 +85,12 @@ bool Scene::IsUpdateEnabled() const {
 
 template<class T, class Fun, class... Args>
 inline void RunUpdates(
-    std::vector<sptr<T>>& targets,
-    std::vector<sptr<void>>& updateCache,
-    std::vector<sptr<T>>* updatedTargets,
+    gvector<gptr<T>>& targets,
+    gvector<gptr<void>>& updateCache,
+    gvector<gptr<T>>* updatedTargets,
     Fun fun, Args&&... args)
 {
-    std::vector<sptr<T>>& updateCacheT = (std::vector<sptr<T>>&)updateCache;
+    gvector<gptr<T>>& updateCacheT = (gvector<gptr<T>>&)updateCache;
     updateCacheT = targets;
     if (updatedTargets) targets.clear();
 
@@ -101,12 +101,12 @@ inline void RunUpdates(
         {
             ((*obj).*fun)(std::forward<Args>(args)...);
 
-            if (updatedTargets && obj.use_count() > 1)
+            if (updatedTargets)// && obj.use_count() > 1)
                 updatedTargets->push_back(obj);
         }
         else
         {
-            if (updatedTargets && obj.use_count() > 1)
+            if (updatedTargets)// && obj.use_count() > 1)
                 targets.push_back(obj);
         }
     }
@@ -169,61 +169,61 @@ void Scene::Update()
     clock->Tick();
 }
 
-void Scene::RegisterComponent(const sptr<Component>& comp)
+void Scene::RegisterComponent(const gptr<Component>& comp)
 {
-    if (auto p = spcast<Camera>(comp))
+    if (auto p = gpcast<Camera>(comp))
         cameras.push_back(p);
 
-    if (auto p = spcast<Canvas>(comp))
+    if (auto p = gpcast<Canvas>(comp))
         canvases.push_back(p);
 
-    if (auto p = spcast<ISceneInputEvents>(comp))
+    if (auto p = gpcast<ISceneInputEvents>(comp))
         sceneInputHandlers.push_back(p);
 
-    if (auto p = spcast<IUserEvents>(comp))
+    if (auto p = gpcast<IUserEvents>(comp))
         userStarts.push_back(p);
 
-    if (auto p = spcast<ISystemEvents>(comp))
+    if (auto p = gpcast<ISystemEvents>(comp))
         systemStarts.push_back(p);
 
-    if (auto p = spcast<Script>(comp))
+    if (auto p = gpcast<Script>(comp))
         scripts.push_back(p);
 
-    if (auto p = spcast<DirectionalLight>(comp))
+    if (auto p = gpcast<DirectionalLight>(comp))
         lights.push_back(p);
 
-    if (auto p = spcast<IRenderEvents>(comp))
+    if (auto p = gpcast<IRenderEvents>(comp))
         renderEvents.push_back(p);
 }
 
-void Scene::UnregisterComponent(const sptr<Component>& comp)
+void Scene::UnregisterComponent(const gptr<Component>& comp)
 {
-    if (auto p = spcast<Camera>(comp))
+    if (auto p = gpcast<Camera>(comp))
         std::erase(cameras, p);
 
-    if (auto p = spcast<Canvas>(comp))
+    if (auto p = gpcast<Canvas>(comp))
         std::erase(canvases, p);
 
-    if (auto p = spcast<ISceneInputEvents>(comp))
+    if (auto p = gpcast<ISceneInputEvents>(comp))
         std::erase(sceneInputHandlers, p);
 
-    if (auto p = spcast<IUserEvents>(comp)) {
+    if (auto p = gpcast<IUserEvents>(comp)) {
         std::erase(userUpdates, p);
         std::erase(userStarts, p);
     }
 
-    if (auto p = spcast<ISystemEvents>(comp)) {
+    if (auto p = gpcast<ISystemEvents>(comp)) {
         std::erase(systemUpdates, p);
         std::erase(systemStarts, p);
     }
 
-    if (auto p = spcast<Script>(comp))
+    if (auto p = gpcast<Script>(comp))
         std::erase(scripts, p);
 
-    if (auto p = spcast<DirectionalLight>(comp))
+    if (auto p = gpcast<DirectionalLight>(comp))
         std::erase(lights, p);
 
-    if (auto p = spcast<IRenderEvents>(comp))
+    if (auto p = gpcast<IRenderEvents>(comp))
         std::erase(renderEvents, p);
 }
 

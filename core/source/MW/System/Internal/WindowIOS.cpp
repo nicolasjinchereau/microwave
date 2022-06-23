@@ -22,8 +22,8 @@ import <vector>;
 namespace mw {
 inline namespace system {
 
-sptr<Window> Window::New(const std::string title, const IVec2& pos, const IVec2& size) {
-    return spnew<WindowIOS>();
+gptr<Window> Window::New(const std::string title, const IVec2& pos, const IVec2& size) {
+    return gpnew<WindowIOS>();
 }
 
 WindowIOS::WindowIOS()
@@ -169,7 +169,7 @@ Keycode WindowIOS::TranslateKey(int keycode) {
     return Keycode::Space;
 }
 
-sptr<HWRenderTarget> WindowIOS::GetHWRenderTarget() {
+gptr<HWRenderTarget> WindowIOS::GetHWRenderTarget() {
     return surface;
 }
 

@@ -12,7 +12,7 @@ namespace mw {
 inline namespace gfx {
 
 LineEnumerator::LineEnumerator(
-    const sptr<const Font>& font,
+    const gptr<const Font>& font,
     const std::string& input,
     int maxLineWidth)
 {

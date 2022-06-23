@@ -28,12 +28,12 @@ public:
 
     uint32_t queueOverride = 0; // optional
     LayerMask layerMask = {};
-    sptr<Material> material;
+    gptr<Material> material;
     Mat4 mtxModel;
     AABox bounds;
     MaterialPropertyBlock extra;
     VertexMapping vertexMapping;
-    sptr<Buffer> indexBuffer;
+    gptr<Buffer> indexBuffer;
     size_t drawStart = {};
     size_t drawCount = {};
     DrawMode drawMode = DrawMode::Triangles;

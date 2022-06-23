@@ -63,7 +63,7 @@ public:
 
     bool IsStreamedFromDisk() const { return streamFromDisk; }
 
-    sptr<AudioStream> OpenAudioStream() const;
+    gptr<AudioStream> OpenAudioStream() const;
 
     // if 'IsStreamedFromDisk' is false, returns the shared audio buffer
     uint32_t GetBufferID() const { return buffer; }

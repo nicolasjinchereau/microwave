@@ -41,7 +41,7 @@ inline bool IsHyphen(char32_t code) {
 
 class LineEnumerator
 {
-    sptr<const Font> _font;
+    gptr<const Font> _font;
     std::string _input;
     int _maxLineWidth{};
 
@@ -58,7 +58,7 @@ class LineEnumerator
 
 public:
     LineEnumerator(
-        const sptr<const Font>& font,
+        const gptr<const Font>& font,
         const std::string& input,
         int maxLineWidth = 0); // 0 = no wrapping
 

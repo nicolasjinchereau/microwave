@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.SceneGraph.Components.Script;
+import Microwave.IO.Terminal;
 import Microwave.Math;
 import Microwave.SceneGraph.Components.Component;
 import Microwave.SceneGraph.Events;
@@ -10,12 +11,11 @@ import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Scene;
 import Microwave.SceneGraph.Coroutine;
 import Microwave.System.Clock;
-import Microwave.System.Console;
+import Microwave.System.Exception;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.Utilities.Util;
 import <algorithm>;
-import <exception>;
 import <vector>;
 
 export namespace mw {
@@ -52,8 +52,8 @@ public:
                 try {
                     done = !coroutine.Step(clock);
                 }
-                catch (std::exception& ex) {
-                    Console::WriteLine("Coroutine execution failed: %", ex.what());
+                catch (const Exception& ex) {
+                    writeln("Coroutine execution failed: ", ex.what());
                     done = true;
                 }
 

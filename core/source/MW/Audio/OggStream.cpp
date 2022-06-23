@@ -6,6 +6,7 @@ module Microwave.Audio.OggStream;
 import Microwave.Audio.AudioSample;
 import Microwave.Audio.Internal.OggDecoder;
 import Microwave.IO.Stream;
+import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import <cstddef>;
 import <cstdint>;
@@ -15,7 +16,7 @@ import <stdexcept>;
 namespace mw {
 inline namespace audio {
 
-OggStream::OggStream(const sptr<Stream>& stream)
+OggStream::OggStream(const gptr<Stream>& stream)
     : stream(stream), decoder(new OggDecoder(stream.get()))
 {
     sampleType = SampleType::Float32;
@@ -56,7 +57,7 @@ size_t OggStream::GetPosition() const {
 size_t OggStream::Seek(int64_t offset, SeekOrigin origin)
 {
     if (!CanSeek())
-        throw std::runtime_error("stream is not seekable");
+        throw Exception("stream is not seekable");
 
     int64_t frameOffset = offset / bytesPerFrame;
 
@@ -71,13 +72,13 @@ size_t OggStream::Seek(int64_t offset, SeekOrigin origin)
     
     int ret = decoder->pcmSeek(pos);
     if (ret != 0)
-        throw std::runtime_error("seek failed");
+        throw Exception("seek failed");
 
     return (size_t)(pos * bytesPerFrame);
 }
 
 void OggStream::SetLength(size_t length) {
-    throw std::runtime_error("not implemented");
+    throw Exception("not implemented");
 }
 
 int OggStream::Read(std::span<std::byte> output)
@@ -93,7 +94,7 @@ int OggStream::Read(std::span<std::byte> output)
         
         int framesRead = (int)decoder->readFloat(&samples, requestedFrames);
         if (framesRead < 0)
-            throw std::runtime_error("error reading file");
+            throw Exception("error reading file");
 
         if (framesRead == 0)
             break; // EOF
@@ -123,7 +124,7 @@ int OggStream::Read(std::span<std::byte> output)
 }
 
 void OggStream::Write(std::span<std::byte> buffer) {
-    throw std::runtime_error("stream is not writable");
+    throw Exception("stream is not writable");
 }
 
 void OggStream::Flush() {

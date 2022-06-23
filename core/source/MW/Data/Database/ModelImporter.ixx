@@ -28,7 +28,7 @@ inline namespace data {
 
 struct MaterialInfo
 {
-    sptr<Material> material;
+    gptr<Material> material;
     AssetBinding shaderBinding;
     std::unordered_map<std::string, AssetBinding> textureBindings;
 };
@@ -42,7 +42,7 @@ public:
 
     virtual void ImportFile(
         AssetMetadata& meta,
-        const sptr<Stream>& stream,
+        const gptr<Stream>& stream,
         const path& dataDir) override;
 
     virtual bool Resolve(
@@ -51,8 +51,8 @@ public:
         const path& sourceDir,
         const path& dataDir) override;
 
-    void ParseModel(const sptr<Model>& model, ParserState& state);
-    sptr<Node> ParseModelNode(const sptr<ModelNode>& modelNode, ParserState& state);
+    void ParseModel(const gptr<Model>& model, ParserState& state);
+    gptr<Node> ParseModelNode(const gptr<ModelNode>& modelNode, ParserState& state);
 };
 
 }

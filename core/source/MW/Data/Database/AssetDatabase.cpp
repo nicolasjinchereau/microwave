@@ -9,44 +9,45 @@ import Microwave.Data.Database.DefaultImporter;
 import Microwave.Data.Database.ModelImporter;
 import Microwave.Data.Database.TextureImporter;
 import Microwave.Data.Library.AssetLibrary;
-import Microwave.System.Console;
-import Microwave.System.Json;
 import Microwave.Graphics.Color32;
 import Microwave.Graphics.Image;
 import Microwave.IO.File;
 import Microwave.IO.MemoryStream;
+import Microwave.IO.Terminal;
+import Microwave.System.Exception;
+import Microwave.System.Json;
 import Microwave.Utilities.Util;
-import <cassert>;
+import <MW/Data/Internal/Assets.h>;
+import <MW/System/Debug.h>;
 import <iomanip>;
 import <stdexcept>;
-import <MW/Data/Internal/Assets.h>;
 
 namespace fs = std::filesystem;
 
 namespace mw {
 inline namespace data {
 
-AssetDatabase::AssetDatabase(const sptr<AssetLibrary>& assetLibrary)
+AssetDatabase::AssetDatabase(const gptr<AssetLibrary>& assetLibrary)
     : assetLibrary(assetLibrary)
 {
-    assert(assetLibrary);
+    Assert(assetLibrary);
     rootDir = assetLibrary->GetRootDir();
     sourceDir = rootDir / "source";
     dataDir = assetLibrary->GetDataDir();
 
-    sptr<AssetImporter> defaultImporter = spnew<DefaultImporter>();
+    gptr<AssetImporter> defaultImporter = gpnew<DefaultImporter>();
     for (auto& ext : defaultImporter->GetSupportedFileTypes())
         importers[ext] = defaultImporter;
 
-    sptr<AssetImporter> modelImporter = spnew<ModelImporter>();
+    gptr<AssetImporter> modelImporter = gpnew<ModelImporter>();
     for (auto& ext : modelImporter->GetSupportedFileTypes())
         importers[ext] = modelImporter;
 
-    sptr<AssetImporter> texImporter = spnew<TextureImporter>();
+    gptr<AssetImporter> texImporter = gpnew<TextureImporter>();
     for (auto& ext : texImporter->GetSupportedFileTypes())
         importers[ext] = texImporter;
 
-    sptr<AssetImporter> audImporter = spnew<AudioClipImporter>();
+    gptr<AssetImporter> audImporter = gpnew<AudioClipImporter>();
     for (auto& ext : audImporter->GetSupportedFileTypes())
         importers[ext] = audImporter;
 }
@@ -63,7 +64,7 @@ const path& AssetDatabase::GetDataDir() const {
     return dataDir;
 }
 
-const sptr<AssetLibrary>& AssetDatabase::GetAssetLibrary() const {
+const gptr<AssetLibrary>& AssetDatabase::GetAssetLibrary() const {
     return assetLibrary;
 }
 
@@ -108,7 +109,7 @@ void AssetDatabase::ExtractInternalAssets()
         {
             auto pixel = Color32(255, 255, 255, 255);
             auto data = std::span<std::byte>((std::byte*)&pixel, sizeof(Color32));
-            auto img = spnew<Image>(PixelDataFormat::RGBA32, IVec2(1, 1), data);
+            auto img = gpnew<Image>(PixelDataFormat::RGBA32, IVec2(1, 1), data);
 
             std::vector<std::byte> fileData;
             img->SavePNG(fileData);
@@ -219,7 +220,7 @@ void AssetDatabase::UpdateMetadata()
     {
         path sourcePath = path::relative(fullSourcePath, sourceDir);
 
-        auto meta = spnew<AssetMetadata>();
+        auto meta = gpnew<AssetMetadata>();
         meta->sourcePath = sourcePath;
         meta->settings = json::object();
         meta->artifacts = {};
@@ -234,7 +235,7 @@ void AssetDatabase::UpdateMetadata()
         path fullSourcePath = path(metaFilePath).replace_extension();
         path sourcePath = path::relative(fullSourcePath, sourceDir);
 
-        auto meta = spnew<AssetMetadata>();
+        auto meta = gpnew<AssetMetadata>();
         json obj = json::parse(File::ReadAllText(metaFilePath));
         from_json(obj, *meta);
         meta->dirty = false;
@@ -307,7 +308,7 @@ void AssetDatabase::ImportFiles(bool force)
     {
         if (meta->dirty || force)
         {
-            Console::WriteLine("Importing File: %", sourcePath);
+            writeln("Importing File: ", sourcePath);
 
             auto fullSourcePath = sourceDir / sourcePath;
             auto fullMetaPath = fullSourcePath + ".meta";
@@ -413,7 +414,7 @@ void AssetDatabase::RemoveOrphanedImports()
 void AssetDatabase::RemoveEmptyFolders(const path& dir)
 {
     if (!path::exists(dir))
-        throw std::runtime_error("path does not exist: " + dir);
+        throw Exception({ "path does not exist: ", dir });
 
     std::vector<path> children;
 
@@ -451,9 +452,9 @@ void AssetDatabase::RemoveIfIsEmptyDir(const path& targetPath)
     }
 }
 
-sptr<AssetImporter> AssetDatabase::GetImporter(const path& sourceFile)
+gptr<AssetImporter> AssetDatabase::GetImporter(const path& sourceFile)
 {
-    sptr<AssetImporter> importer;
+    gptr<AssetImporter> importer;
 
     auto ext = ToLower(sourceFile.extension().string());
 
@@ -510,9 +511,9 @@ void AssetDatabase::Deploy(const path& dest)
     File::WriteAllBytes(manifestPath, manifestData);
 }
 
-sptr<AssetMetadata> AssetDatabase::GetAssetMetadata(const path& sourcePath)
+gptr<AssetMetadata> AssetDatabase::GetAssetMetadata(const path& sourcePath)
 {
-    sptr<AssetMetadata> ret;
+    gptr<AssetMetadata> ret;
 
     auto it = metadata.find(sourcePath);
     if (it != metadata.end())
@@ -525,7 +526,7 @@ json AssetDatabase::GetImportSettings(const path& sourceFile)
 {
     auto meta = GetAssetMetadata(sourceFile);
     if (!meta)
-        throw std::runtime_error("no metadata found for specified source file");
+        throw Exception("no metadata found for specified source file");
 
     return meta->settings;
 }
@@ -534,7 +535,7 @@ void AssetDatabase::SetImportSettings(const path& sourceFile, const json& settin
 {
     auto meta = GetAssetMetadata(sourceFile);
     if (!meta)
-        throw std::runtime_error("no metadata found for specified source file");
+        throw Exception("no metadata found for specified source file");
 
     meta->settings = settings;
     meta->dirty = true;
@@ -548,14 +549,14 @@ void AssetDatabase::EnsureDirectoryExists(const path& dir)
     }
     else if (!path::is_directory(dir))
     {
-        throw std::runtime_error("specified path already exists and is not a directory");
+        throw Exception("specified path already exists and is not a directory");
     }
 }
 
 void AssetDatabase::ThrowOnInvalidPath(const path& p, const std::string& purpose)
 {
     if (p.empty() || !path::exists(p))
-        throw std::runtime_error(
+        throw Exception(
             "the path specified for '" + purpose + "' does not exist: '" + p + "'");
 }
 

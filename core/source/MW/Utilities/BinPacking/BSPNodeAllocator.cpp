@@ -3,7 +3,8 @@
 *--------------------------------------------------------------*/
 
 module Microwave.Utilities.BinPacking.BSPNodeAllocator;
-import <cassert>;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 
 namespace mw {
 inline namespace utilities {
@@ -37,14 +38,14 @@ BSPNodePtr BSPNodeAllocator::GetNode()
         mem = BSPNode::Allocate();
     }
 
-    auto pNode = new (mem) BSPNode(SharedFrom(this));
+    auto pNode = new (mem) BSPNode(self(this));
 
     return BSPNodePtr(pNode);
 }
 
 void BSPNodeAllocator::ReturnNode(BSPNode* pNode)
 {
-    assert(pNode);
+    Assert(pNode);
 
     pNode->~BSPNode();
     pool.push_back(pNode);

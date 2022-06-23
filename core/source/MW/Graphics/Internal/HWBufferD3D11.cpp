@@ -5,7 +5,8 @@
 module Microwave.Graphics.Internal.HWBufferD3D11;
 import Microwave.Graphics.Internal.HWContext;
 import Microwave.Graphics.Internal.HWContextD3D11;
-import <cassert>;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <stdexcept>;
 
 namespace mw {
@@ -48,14 +49,14 @@ std::unordered_map<BufferUsage, D3D11_USAGE> bufferUsage = {
 } // d3d11
 
 HWBufferD3D11::HWBufferD3D11(
-	const sptr<HWContext>& context,
+	const gptr<HWContext>& context,
 	BufferType type, BufferUsage usage,
 	BufferCPUAccess cpuAccess, size_t size)
-	: context(spcast<HWContextD3D11>(context))
+	: context(gpcast<HWContextD3D11>(context))
 	, type(type)
 	, size(size)
 {
-	assert(this->context);
+	Assert(this->context);
 
 	if (type == BufferType::Vertex || type == BufferType::Index)
 	{
@@ -75,7 +76,7 @@ HWBufferD3D11::HWBufferD3D11(
 
 		HRESULT res = this->context->device->CreateBuffer(&bufferDesc, &bufferData, &buffer);
 		if(FAILED(res))
-			throw std::runtime_error("could not create buffer");
+			throw Exception("could not create buffer");
 	}
 	else
 	{
@@ -84,18 +85,18 @@ HWBufferD3D11::HWBufferD3D11(
 }
 
 HWBufferD3D11::HWBufferD3D11(
-	const sptr<HWContext>& context,
+	const gptr<HWContext>& context,
 	BufferType type, BufferUsage usage,
 	BufferCPUAccess cpuAccess,
 	const std::span<std::byte>& data)
-	: context(spcast<HWContextD3D11>(context))
+	: context(gpcast<HWContextD3D11>(context))
 	, type(type)
 	, size(data.size())
 {
-	assert(this->context);
+	Assert(this->context);
 
 	if (data.empty())
-		throw std::runtime_error("'data' cannot be empty");
+		throw Exception("'data' cannot be empty");
 
 	if (type == BufferType::Vertex || type == BufferType::Index)
 	{
@@ -112,7 +113,7 @@ HWBufferD3D11::HWBufferD3D11(
 
 		HRESULT res = this->context->device->CreateBuffer(&bufferDesc, &bufferData, &buffer);
 		if(FAILED(res))
-			throw std::runtime_error("could not create buffer");
+			throw Exception("could not create buffer");
 	}
 	else
 	{
@@ -135,7 +136,7 @@ std::span<std::byte> HWBufferD3D11::Map(BufferMapAccess access)
 			D3D11_MAPPED_SUBRESOURCE resource;
 			HRESULT res = context->deviceContext->Map(buffer.Get(), 0, mapAccess, 0, &resource);
 			if(FAILED(res))
-				throw std::runtime_error(format("Failed to map buffer: %", GetLastError()));
+				throw Exception({ "Failed to map buffer: ", GetLastError() });
 
 			mapping = std::span<std::byte>{ (std::byte*)resource.pData, size };
 		}
@@ -168,7 +169,7 @@ size_t HWBufferD3D11::GetSize() const {
 }
 
 ComPtr<ID3D11Buffer> HWBufferD3D11::GetBuffer() const {
-	assert(buffer); // buffer not available for Pixel* buffers
+	Assert(buffer); // buffer not available for Pixel* buffers
 	return buffer;
 }
 

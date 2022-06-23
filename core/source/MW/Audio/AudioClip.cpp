@@ -4,11 +4,12 @@
 
 module Microwave.Audio.AudioClip;
 import Microwave.Audio.AudioStream;
-import Microwave.SceneGraph.Components.AudioSource;
 import Microwave.Audio.Mp3Stream;
 import Microwave.Audio.OggStream;
 import Microwave.Audio.WavStream;
 import Microwave.IO.File;
+import Microwave.SceneGraph.Components.AudioSource;
+import Microwave.System.Exception;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import <stdexcept>;
@@ -37,7 +38,7 @@ AudioClip::AudioClip(
     length = (float)frameCount / sampleRate;
 
     if (channelCount != 1 && channelCount != 2)
-        throw std::runtime_error("audio data must have 1 or 2 channels");
+        throw Exception("audio data must have 1 or 2 channels");
 
     SampleType sampleType = stream->GetSampleType();
     bool isMono = (channelCount == 1);
@@ -61,7 +62,7 @@ AudioClip::AudioClip(
         break;
 
     default:
-        throw std::runtime_error("unsupported audio format");
+        throw Exception("unsupported audio format");
     }
 
     // if not streaming, create one shared buffer
@@ -88,7 +89,7 @@ AudioClip::AudioClip(
         }
 
         if (totalBytesRead != dataSize)
-            throw std::runtime_error("unexpected end of stream");
+            throw Exception("unexpected end of stream");
 
         alGenBuffers(1, &buffer);
         alBufferData(buffer, bufferFormat, data.data(), dataSize, sampleRate);
@@ -103,20 +104,20 @@ AudioClip::~AudioClip()
     buffer = 0;
 }
 
-sptr<AudioStream> AudioClip::OpenAudioStream() const
+gptr<AudioStream> AudioClip::OpenAudioStream() const
 {
     auto file = File::Open(filePath, OpenMode::In | OpenMode::Binary);
     if (!file)
-        throw std::runtime_error("could not open file");
+        throw Exception("could not open file");
 
-    sptr<AudioStream> stream;
+    gptr<AudioStream> stream;
 
     if (format == AudioFileFormat::Mp3)
-        stream = spnew<Mp3Stream>(file);
+        stream = gpnew<Mp3Stream>(file);
     else if (format == AudioFileFormat::Ogg)
-        stream = spnew<OggStream>(file);
+        stream = gpnew<OggStream>(file);
     else if (format == AudioFileFormat::Wav)
-        stream = spnew<WavStream>(file);
+        stream = gpnew<WavStream>(file);
 
     return stream;
 }

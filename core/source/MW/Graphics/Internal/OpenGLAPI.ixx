@@ -3,11 +3,12 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Graphics.Internal.OpenGLAPI;
-import Microwave.System.Console;
-import <cassert>;
+import Microwave.IO.Terminal;
+import Microwave.System.Exception;
+import <MW/System/Internal/PlatformHeaders.h>;
+import <MW/System/Debug.h>;
 import <string>;
 import <unordered_map>;
-import <MW/System/Internal/PlatformHeaders.h>;
 
 export namespace mw {
 inline namespace gfx {
@@ -20,28 +21,28 @@ inline void HandleOpenGLErrors(const char* funcName, bool throwOnFailure = false
         switch (err)
         {
         case GL_INVALID_ENUM:
-            Console::WriteLine("gl::%: GL_INVALID_ENUM", funcName);
-            assert(!throwOnFailure);
+            writeln("gl::", funcName, ": GL_INVALID_ENUM");
+            Assert(!throwOnFailure);
             break;
 
         case GL_INVALID_VALUE:
-            Console::WriteLine("gl::%: GL_INVALID_VALUE", funcName);
-            assert(!throwOnFailure);
+            writeln("gl::", funcName, ": GL_INVALID_VALUE");
+            Assert(!throwOnFailure);
             break;
 
         case GL_INVALID_OPERATION:
-            Console::WriteLine("gl::%: GL_INVALID_OPERATION", funcName);
-            assert(!throwOnFailure);
+            writeln("gl::", funcName, ": GL_INVALID_OPERATION");
+            Assert(!throwOnFailure);
             break;
 
         case GL_OUT_OF_MEMORY:
-            Console::WriteLine("gl::%: GL_OUT_OF_MEMORY", funcName);
-            assert(!throwOnFailure);
+            writeln("gl::", funcName, ": GL_OUT_OF_MEMORY");
+            Assert(!throwOnFailure);
             break;
 
         default:
-            Console::WriteLine("gl::%: UNKNOWN ERROR", funcName);
-            assert(!throwOnFailure);
+            writeln("gl::", funcName, ": UNKNOWN ERROR");
+            Assert(!throwOnFailure);
             break;
         }
     }
@@ -75,8 +76,8 @@ inline void HandleEGLErrors(const char* funcName, bool throwOnFailure = false)
         auto it = errorTypes.find(err);
         std::string type = (it != errorTypes.end()) ? it->second : "UNKNOWN ERROR";
 
-        Console::WriteLine("gl::%: %", funcName, type);
-        assert(!throwOnFailure);
+        writeln("gl::", funcName, ": ", type);
+        Assert(!throwOnFailure);
     }
 }
 

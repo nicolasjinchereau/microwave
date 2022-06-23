@@ -19,8 +19,8 @@ import <stdexcept>;
 namespace mw {
 inline namespace system {
 
-sptr<ApplicationDispatcher> ApplicationDispatcher::New() {
-    return spnew<ApplicationDispatcherMacOS>();
+gptr<ApplicationDispatcher> ApplicationDispatcher::New() {
+    return gpnew<ApplicationDispatcherMacOS>();
 }
 
 void ApplicationDispatcherMacOS::Wake()
@@ -50,14 +50,14 @@ ApplicationDispatcherMacOS::~ApplicationDispatcherMacOS()
 {
 }
 
-sptr<DispatchAction> ApplicationDispatcherMacOS::InvokeAsync(
+gptr<DispatchAction> ApplicationDispatcherMacOS::InvokeAsync(
     std::function<void()> function,
     DispatchTime when
 )
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    auto action = spnew<DispatchAction>(std::move(function), when);
+    auto action = gpnew<DispatchAction>(std::move(function), when);
     sorted_insert(actions, action, DispatchActionComparison());
     Wake();
     return action;
@@ -117,11 +117,11 @@ void ApplicationDispatcherMacOS::ProcessActions()
     }
 }
 
-sptr<DispatchAction> ApplicationDispatcherMacOS::GetNextAction()
+gptr<DispatchAction> ApplicationDispatcherMacOS::GetNextAction()
 {
     std::unique_lock<std::mutex> lk(mut);
 
-    sptr<DispatchAction> action;
+    gptr<DispatchAction> action;
 
     if (run && !actions.empty() && DispatchClock::now() >= actions.front()->when) {
         action = std::move(actions.front());

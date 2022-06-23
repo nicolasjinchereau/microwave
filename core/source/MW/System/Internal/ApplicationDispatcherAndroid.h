@@ -25,14 +25,14 @@ public:
 
     virtual void Run(int argc, char* argv[]) override;
     virtual void Quit() override;
-    virtual sptr<DispatchAction> InvokeAsync(
+    virtual gptr<DispatchAction> InvokeAsync(
         std::function<void()> function,
         DispatchTime when = DispatchTime()) override;
 
 private:
     long long GetDispatchTimeout();
     void ProcessActions();
-    sptr<DispatchAction> GetNextAction();
+    gptr<DispatchAction> GetNextAction();
 
     static void OnCommand(android_app* pApp, int32_t cmd);
     static int32_t OnInput(struct android_app* app, AInputEvent* event);

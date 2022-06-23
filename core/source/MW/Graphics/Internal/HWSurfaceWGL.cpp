@@ -9,8 +9,8 @@ import Microwave.System.Internal.WindowWindows;
 namespace mw {
 inline namespace gfx {
 
-HWSurfaceWGL::HWSurfaceWGL(const sptr<WindowWindows>& window)
-    : window(spcast<WindowWindows>(window))
+HWSurfaceWGL::HWSurfaceWGL(const gptr<WindowWindows>& window)
+    : window(gpcast<WindowWindows>(window))
 {
 
 }

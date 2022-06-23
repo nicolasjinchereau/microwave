@@ -5,7 +5,6 @@
 export module Microwave.Graphics.Internal.HWBufferD3D11;
 import Microwave.Graphics.Internal.HWBuffer;
 import Microwave.System.Pointers;
-import Microwave.Utilities.Format;
 import <MW/System/Internal/PlatformHeaders.h>;
 import <span>;
 import <stdexcept>;
@@ -27,16 +26,16 @@ class HWBufferD3D11 : public HWBuffer
 	std::span<std::byte> mapping;
 	ComPtr<ID3D11Buffer> buffer;
 	std::vector<std::byte> pixelBuffer;
-	sptr<HWContextD3D11> context;
+	gptr<HWContextD3D11> context;
 public:
 
 	HWBufferD3D11(
-		const sptr<HWContext>& context,
+		const gptr<HWContext>& context,
 		BufferType type, BufferUsage usage,
 		BufferCPUAccess cpuAccess, size_t size);
 
 	HWBufferD3D11(
-		const sptr<HWContext>& context,
+		const gptr<HWContext>& context,
 		BufferType type, BufferUsage usage,
 		BufferCPUAccess cpuAccess,
 		const std::span<std::byte>& data);

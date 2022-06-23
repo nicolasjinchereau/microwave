@@ -7,8 +7,9 @@ import Microwave.System.Awaitable;
 import Microwave.System.IAwaitable;
 import Microwave.System.IAwaiter;
 import Microwave.System.Dispatcher;
+import Microwave.System.Exception;
+import <MW/System/Debug.h>;
 import <algorithm>;
-import <cassert>;
 import <chrono>;
 import <condition_variable>;
 import <cstddef>;
@@ -23,11 +24,11 @@ inline namespace system {
 template<class T>
 class Task
 {
-    sptr<IAwaitable<T>> awaitable;
+    gptr<IAwaitable<T>> awaitable;
 public:
     Task() = default;
 
-    Task(const sptr<IAwaitable<T>>& awaitable)
+    Task(const gptr<IAwaitable<T>>& awaitable)
         : awaitable(awaitable) {}
 
     Task(const Task&) = default;
@@ -41,32 +42,32 @@ public:
         return *this;
     }
 
-    sptr<IAwaiter> GetAwaiter() {
-        return spcast<IAwaiter>(awaitable);
+    gptr<IAwaiter> GetAwaiter() {
+        return gpcast<IAwaiter>(awaitable);
     }
 
     operator bool() const { return awaitable != nullptr; }
     bool operator!() const { return awaitable == nullptr; }
 
     bool await_ready() {
-        assert(awaitable);
+        Assert(awaitable);
         return awaitable->IsAwaitableReady();
     }
 
     template<class Promise>
     void await_suspend(std::experimental::coroutine_handle<Promise> caller)
     {
-        assert(awaitable);
+        Assert(awaitable);
         awaitable->OnAwaiterSuspended(caller.promise().awaiter.lock());
     }
 
     T await_resume() {
-        assert(awaitable);
+        Assert(awaitable);
         return awaitable->OnAwaiterResumed();
     }
 
     T GetResult() {
-        assert(awaitable);
+        Assert(awaitable);
         return awaitable->WaitForResult();
     }
     
@@ -84,7 +85,7 @@ class CompletedAwaitable : public IAwaitable<T>
 {
 public:
     virtual bool IsAwaitableReady() override { return true; }
-    virtual void OnAwaiterSuspended(const sptr<IAwaiter>& caller) override { assert(0); }
+    virtual void OnAwaiterSuspended(const gptr<IAwaiter>& caller) override { Assert(0); }
     virtual T OnAwaiterResumed() override { return {}; }
     virtual T WaitForResult() override { return {}; }
 };
@@ -98,7 +99,7 @@ inline Task<void> Task<T>::Delay(std::chrono::milliseconds length) {
 
 template<class T>
 inline Task<T> Task<T>::GetCompleted() {
-    return Task<T>(spnew<detail::CompletedAwaitable<T>>());
+    return Task<T>(gpnew<detail::CompletedAwaitable<T>>());
 }
 
 template<class T>
@@ -106,11 +107,11 @@ class CoroutineAwaitable : public Awaitable<T>, public IAwaiter
 {
 public:
     std::experimental::coroutine_handle<> state;
-    sptr<Dispatcher> owningDispatcher;
+    wgptr<Dispatcher> owningDispatcher;
 
     CoroutineAwaitable(
         std::experimental::coroutine_handle<> state,
-        const sptr<Dispatcher>& owningDispatcher)
+        const gptr<Dispatcher>& owningDispatcher)
         : state(state),
           owningDispatcher(owningDispatcher)
     {
@@ -118,9 +119,12 @@ public:
 
     ~CoroutineAwaitable()
     {
-        owningDispatcher->InvokeAsync([s = state]() mutable {
-            s.destroy();
-        });
+        if(auto disp = owningDispatcher.lock())
+        {
+            disp->InvokeAsync([s = state]() mutable {
+                s.destroy();
+            });
+        }
     }
 
     virtual void Resume() override {
@@ -131,7 +135,7 @@ public:
 template<class T>
 struct promise_base
 {
-    wptr<CoroutineAwaitable<T>> awaiter;
+    wgptr<CoroutineAwaitable<T>> awaiter;
 
     template<class U>
     void return_value(U&& value)
@@ -144,7 +148,7 @@ struct promise_base
 template<>
 struct promise_base<void>
 {
-    wptr<CoroutineAwaitable<void>> awaiter;
+    wgptr<CoroutineAwaitable<void>> awaiter;
 
     void return_void()
     {
@@ -163,7 +167,7 @@ struct Task<T>::promise_type : promise_base<T>
         auto handle = coroutine_handle<promise_type>::from_promise(*this);
         auto state = coroutine_handle<>::from_address(handle.address());
         auto dispatcher = Dispatcher::GetCurrent();
-        auto aw = spnew<CoroutineAwaitable<T>>(state, dispatcher);
+        auto aw = gpnew<CoroutineAwaitable<T>>(state, dispatcher);
         this->awaiter = aw;
         return Task<T>(aw);
     }

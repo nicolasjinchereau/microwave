@@ -25,15 +25,15 @@ class ImageView : public View, public IRenderEvents
 {
     inline static Type::Pin<ImageView> pin;
 protected:
-    sptr<Buffer> vertexBuffer;
-    sptr<Buffer> indexBuffer;
-    sptr<Material> mat;
+    gptr<Buffer> vertexBuffer;
+    gptr<Buffer> indexBuffer;
+    gptr<Material> mat;
     size_t indexCount = 0;
     bool meshDirty = true;
 
     Box border;
     Color color = Color::White();
-    sptr<Texture> tex;
+    gptr<Texture> tex;
 
     void UpdateMesh();
 
@@ -51,15 +51,15 @@ public:
     void SetColor(const Color& color);
     Color GetColor() const;
 
-    void SetTexture(const sptr<Texture>& tex);
-    sptr<Texture> GetTexture() const;
+    void SetTexture(const gptr<Texture>& tex);
+    gptr<Texture> GetTexture() const;
 
     virtual void OnSizeChanged() override;
     
-    virtual void GetRenderables(Sink<sptr<Renderable>> sink) override;
+    virtual void GetRenderables(Sink<gptr<Renderable>> sink) override;
 
 private:
-    sptr<Renderable> renderable;
+    gptr<Renderable> renderable;
 };
 
 } // scene

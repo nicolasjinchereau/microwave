@@ -24,16 +24,16 @@ public:
     int pointerID = -1;
     IVec2 lastPointerPos;
 
-    sptr<AudioSource> jumpSound;
-    sptr<AudioSource> landSound;
-    sptr<RigidBody> body;
-    sptr<Node> wheelAxle;
-    sptr<Node> wheel;
-    sptr<D6Joint> wheelJoint;
-    sptr<RigidBody> wheelBody;
-    sptr<SphereCollider> wheelCollider;
-    sptr<Animator> anim;
-    sptr<AudioSource> shutdownSound;
+    gptr<AudioSource> jumpSound;
+    gptr<AudioSource> landSound;
+    gptr<RigidBody> body;
+    gptr<Node> wheelAxle;
+    gptr<Node> wheel;
+    gptr<D6Joint> wheelJoint;
+    gptr<RigidBody> wheelBody;
+    gptr<SphereCollider> wheelCollider;
+    gptr<Animator> anim;
+    gptr<AudioSource> shutdownSound;
 
     const float BatteryLife = 60.0f * 2;
 
@@ -71,7 +71,7 @@ public:
         playerModel->SetLocalPosition(Vec3::Zero());
         playerModel->SetLocalRotation(Quat(0, 180.0f, 0));
 
-        auto colliderPivot = spnew<Node>();
+        auto colliderPivot = gpnew<Node>();
         node->AddChild(colliderPivot);
         colliderPivot->SetLocalPosition({ 0, 2.94f / 2 + 0.82f + 0.05f, 0 });
         node->SetLocalScale(Vec3(0.27f, 0.27f, 0.27f));
@@ -87,7 +87,7 @@ public:
         
         wheelAxle = node->GetChild("RootNode/WheelAxle");
 
-        wheel = spnew<Node>();
+        wheel = gpnew<Node>();
         wheel->SetName("Wheel");
         wheel->SetPosition(wheelAxle->GetPosition());
         wheel->SetRotation(wheelAxle->GetRotation());
@@ -106,7 +106,7 @@ public:
         wheelJoint->SetAngularTargetVelocity({ AngularVelocityFactor, 0, 0 });
 
         auto wheelScript = wheel->AddComponent<PlayerWheel>();
-        wheelScript->player = SharedFrom(this);
+        wheelScript->player = self(this);
 
         anim = GetNode()->FindComponentDownward<Animator>();
 
@@ -355,7 +355,7 @@ public:
             break;
 
         case mw::Keycode::X:
-            Console::WriteLine("Speed: %", body->GetVelocity().Length());
+            writeln("Speed: ", body->GetVelocity().Length());
             break;
         }
     }

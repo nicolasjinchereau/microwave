@@ -23,14 +23,14 @@ class HWShaderOpenGL : public HWShader
 public:
     gl::Uint hProgram = 0;
 
-    HWShaderOpenGL(const sptr<ShaderInfo>& info);
+    HWShaderOpenGL(const gptr<ShaderInfo>& info);
     ~HWShaderOpenGL();
 
     virtual void Bind() override;
     virtual void Unbind() override;
 
-    virtual void SetVertexBuffer(int id, const sptr<Buffer>& buffer, size_t offset, size_t stride) override;
-    virtual void SetIndexBuffer(const sptr<Buffer>& buffer) override;
+    virtual void SetVertexBuffer(int id, const gptr<Buffer>& buffer, size_t offset, size_t stride) override;
+    virtual void SetIndexBuffer(const gptr<Buffer>& buffer) override;
     
     virtual void SetUniform(int id, float value) override;
     virtual void SetUniform(int id, const Vec2& value) override;
@@ -40,7 +40,7 @@ public:
     virtual void SetUniform(int id, const Mat3& value) override;
     virtual void SetUniform(int id, const Mat4& value) override;
     virtual void SetUniform(int id, const Color& value) override;
-    virtual void SetUniform(int id, const sptr<Texture>& texture) override;
+    virtual void SetUniform(int id, const gptr<Texture>& texture) override;
 
     bool VerifyShaderCompilation(gl::Uint program, std::string& out_error);
 };

@@ -41,13 +41,13 @@ class Canvas : public View
 {
     inline static Type::Pin<Canvas> pin;
 protected:
-    std::vector<sptr<Node>> row0;
-    std::vector<sptr<Node>> row1;
-    std::vector<sptr<ICanvasInputEvents>> inputHandlers;
+    gvector<gptr<Node>> row0;
+    gvector<gptr<Node>> row1;
+    gvector<gptr<ICanvasInputEvents>> inputHandlers;
     
     Vec2 referenceSize;
     FitMode fitMode = FitMode::AdjustWidth;
-    wptr<Camera> camera;
+    wgptr<Camera> camera;
     
     bool structureDirty = true;
 
@@ -66,10 +66,10 @@ public:
     void SetFitMode(FitMode mode);
     FitMode GetFitMode() const;
 
-    void SetCamera(const sptr<Camera>& camera);
-    sptr<Camera> GetCamera() const;
+    void SetCamera(const gptr<Camera>& camera);
+    gptr<Camera> GetCamera() const;
 
-    Vec2 WorldToCanvasPos(const Vec3& pos, const sptr<Camera>& camera) const;
+    Vec2 WorldToCanvasPos(const Vec3& pos, const gptr<Camera>& camera) const;
     Vec2 WindowToCanvasPos(Window* window, IVec2 pos) const;
 
     void SendKeyDown(Window* window, Keycode key);

@@ -22,7 +22,7 @@ class WindowAndroid : public Window
     static int32_t OnInput(struct android_app* app, AInputEvent* event);
 
 public:
-    sptr<Dispatcher> dispatcher;
+    gptr<Dispatcher> dispatcher;
     //MainWindow* mainWindow = nil;
     int buttonsDown = 0;
     bool shiftPressed = false;
@@ -31,7 +31,7 @@ public:
     std::string title;
     bool visible = false;
     bool resizeable = false;
-    sptr<HWSurface> surface;
+    gptr<HWSurface> surface;
 
     WindowAndroid();
     ~WindowAndroid();
@@ -51,7 +51,7 @@ public:
     virtual void Close()  override;
     virtual uintptr_t GetHandle() const override;
 
-    virtual sptr<HWRenderTarget> GetHWRenderTarget() override;
+    virtual gptr<HWRenderTarget> GetHWRenderTarget() override;
 
     static Keycode TranslateKey(int keycode);
     void SetSizeInternal(const IVec2& size);
