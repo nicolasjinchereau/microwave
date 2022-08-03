@@ -8,6 +8,7 @@ import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Graphics.Internal.HWRenderTarget;
 import Microwave.Graphics.Internal.HWRenderTexture;
+import Microwave.Graphics.Internal.HWTexture;
 import Microwave.System.Exception;
 import <vector>;
 import <span>;
@@ -17,25 +18,23 @@ namespace mw {
 inline namespace gfx {
 
 RenderTexture::RenderTexture(const IVec2& size)
+    : Texture(PixelDataFormat::RGBA32, size, true)
 {
     auto graphics = GraphicsContext::GetCurrent();
     if (!graphics)
         throw Exception("no active graphics context");
 
-    std::vector<Color32> pixels;
-    pixels.resize(size.x * size.y);
-    auto data = std::as_writable_bytes(std::span(pixels));
-
-    auto tex = graphics->context->CreateTexture(size, PixelDataFormat::RGBA32, true, data);
-    tex->SetWrapMode(TextureWrapMode::Clamp);
-    tex->SetFilterMode(TextureFilterMode::Bilinear);
-    
-    renderTexture = graphics->context->CreateRenderTexture(tex);
+    renderTexture = graphics->context->CreateRenderTexture(GetHWTexture());
 }
 
 gptr<HWRenderTarget> RenderTexture::GetHWRenderTarget() {
     return renderTexture;
 }
+
+IVec2 RenderTexture::GetSize() const {
+    return renderTexture->GetSize();
+}
+
 
 } // gfx
 } // mw

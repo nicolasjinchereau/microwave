@@ -1,0 +1,618 @@
+{
+  "artifacts": [
+    {
+      "uuid": "fdb5a651f5ef4715a3f387e74df027ed",
+      "assetType": "Mesh",
+      "sourcePath": ".internal/box-gizmo.mesh",
+      "settings": {}
+    },
+    {
+      "uuid": "482d889bbba24b93be7150a8945d10d1",
+      "assetType": "Font",
+      "sourcePath": "Fonts/comic_bold.ttf",
+      "settings": {}
+    },
+    {
+      "uuid": "ac79e17f823446e48050f06115cf833e",
+      "assetType": "Texture",
+      "sourcePath": ".internal/white.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "e47d079fb3b244169ab779bb01b8bb50",
+      "assetType": "Mesh",
+      "sourcePath": ".internal/cylinder-gizmo.mesh",
+      "settings": {}
+    },
+    {
+      "uuid": "ff9b138444d8454994b30dcf832af930",
+      "assetType": "Shader",
+      "sourcePath": ".internal/default.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "ac1dd654fe054a5187d4cefedf877dc7",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/blueOval.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "6c2f565e58aa4f99917e9b3701d02902",
+      "assetType": "Shader",
+      "sourcePath": ".internal/lit_painted_textured.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "138a0b99d076473a9775f4b5cda30793",
+      "assetType": "Shader",
+      "sourcePath": ".internal/lit_painted.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "aaf726f10f52493fa3b76915653a8940",
+      "assetType": "Mesh",
+      "sourcePath": ".internal/half-sphere-gizmo.mesh",
+      "settings": {}
+    },
+    {
+      "uuid": "900a38a713f7494e9c297c250e4fd40b",
+      "assetType": "Mesh",
+      "sourcePath": ".internal/sphere-gizmo.mesh",
+      "settings": {}
+    },
+    {
+      "uuid": "bfe40048c1da411cb86013ae6d5f5284",
+      "assetType": "Shader",
+      "sourcePath": ".internal/lit_textured.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "ec895124aaa04ef6895e6792de7b540a",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/LoadIcon.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "e8681e45c8814c8c8e0bc0566850a0ac",
+      "assetType": "Shader",
+      "sourcePath": ".internal/lit_tinted.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "57646701f08d47dfb7605bc2831a4ae5",
+      "assetType": "Shader",
+      "sourcePath": "Shaders/painted-texture.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "5e43ffdf2b4b4d4a98341038ab8ae46a",
+      "assetType": "Font",
+      "sourcePath": "Fonts/consola.ttf",
+      "settings": {}
+    },
+    {
+      "uuid": "49436ac34dcd4d39abddfa93732c46a5",
+      "assetType": "Shader",
+      "sourcePath": ".internal/lit_tinted_textured.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "30fd1c671c9c4edd8415a420cffbfdb9",
+      "assetType": "Shader",
+      "sourcePath": ".internal/ui-default.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "ab9adba6cf194a1aaa4cdc77433c3f5d",
+      "assetType": "Shader",
+      "sourcePath": ".internal/unlit_painted.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "8015049782324ddfb6327270285c4f0c",
+      "assetType": "Shader",
+      "sourcePath": ".internal/unlit_painted_textured.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "5e6f35f9aca94f10810852679dc478db",
+      "assetType": "Shader",
+      "sourcePath": ".internal/unlit_text.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "ed1996a8c54342fb9ba605f485f56146",
+      "assetType": "Shader",
+      "sourcePath": ".internal/unlit_textured.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "344eb581825445158d4e3166e2fffe37",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/SaveIcon.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "6dfecad35d2648c1920e9dcf4d2e6f3d",
+      "assetType": "Shader",
+      "sourcePath": ".internal/unlit_tinted.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "00d2442d201d4c6a9d450b39b97666c1",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/SquareButtonGreen.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "e705f29115b142bba7d91e06e4304db4",
+      "assetType": "Shader",
+      "sourcePath": ".internal/unlit_tinted_textured.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "63d7adb398104b149cd932e4d27d0ce4",
+      "assetType": "Material",
+      "sourcePath": ".internal/wire-gizmo.mat",
+      "settings": {}
+    },
+    {
+      "uuid": "434120573c2a4979af0f38a5f47281ad",
+      "assetType": "Node",
+      "sourcePath": "Models/Player.fbx",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "a86f87d7f2f0447baf7c6cddc98acaf6",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/shoulder1.mesh",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "dc6337f865424ead891623dac1b230a8",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/arm1.mesh",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "b6600a5b4f5e4591b0026d89510e3310",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/WheelAxle.mesh",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "9e07072cc64a4f1bae1dd817c4251abd",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/spokes.mesh",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "5ca39108085a4221ae98178366800e79",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/wheel.mesh",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "32a80b6d62d94edaa0bfddac336bc79e",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/shoulder2.mesh",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "8cb72db99dd14c7699b7f80e645a8bd9",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/arm2.mesh",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "ea22706cbe5b4716bec16e6b2d65e134",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/body.mesh",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "da69dd2cb1764e22830189f715ac9403",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/Head.mesh",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "24b96321780f4ae6b161972fa5349355",
+      "assetType": "Material",
+      "sourcePath": "Models/Player.fbx/Player.mat",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "9a53e92fecd945ababd4aeb6bd02058a",
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/Player.fbx/Default.clip",
+      "settings": {
+        "scaleFactor": 1.0,
+        "keepRootTransform": false,
+        "materialSettings": {
+          "24b96321780f4ae6b161972fa5349355": {
+            "shaderBinding": {
+              "filename": "default.cg",
+              "uuid": "ff9b138444d8454994b30dcf832af930"
+            },
+            "textureBindings": {
+              "uDiffuseTex": {
+                "filename": "Player.png",
+                "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+              }
+            }
+          }
+        },
+        "clipSpecs": [
+          {
+            "name": "Default",
+            "start": -2,
+            "stop": 190,
+            "wrapMode": "Loop"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "a9aa5300462e43e8b88723af8ad75f4c",
+      "assetType": "Shader",
+      "sourcePath": "Shaders/tinted-texture.cg",
+      "settings": {}
+    },
+    {
+      "uuid": "4f3d2c354ba246b79b20bdbde4a7ed0c",
+      "assetType": "Texture",
+      "sourcePath": "Textures/Floor.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "b9563f1bc43b45beba3c7edb4ab060f9",
+      "assetType": "Texture",
+      "sourcePath": "Textures/Player.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "0d76197d8d904a798c95b870954af071",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/BlueBackground.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "a0e17e08176448eaa89167397f3a988f",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/CompileIcon.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "71d14b76387b47dc8e14696b68680167",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/SquareButtonBlue.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    },
+    {
+      "uuid": "d1cf10b02b79429783b35ba3ae661ec2",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/ThinBorder.png",
+      "settings": {
+        "fileFormat": "PNG",
+        "wrapMode": "Repeat",
+        "filterMode": "Bilinear"
+      }
+    }
+  ]
+}

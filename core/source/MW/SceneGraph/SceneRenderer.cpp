@@ -27,7 +27,7 @@ SceneRenderer::SceneRenderer()
 void SceneRenderer::Render(const gptr<Scene>& scene)
 {
     auto graphics = GraphicsContext::GetCurrent();
-
+    
     graphics->SetClearColor(Color::Clear());
     graphics->Clear(true, true);
 

@@ -117,6 +117,7 @@ GLSLGenerator::GLSLGenerator() :
     m_matrixCtorFunction[0]     = 0;
     m_matrixMulFunction[0]      = 0;
     m_clipFunction[0]           = 0;
+    m_tex2DFunction[0]          = 0;
     m_tex2DlodFunction[0]       = 0;
     m_tex2DbiasFunction[0]      = 0;
     m_tex3DlodFunction[0]       = 0;
@@ -145,6 +146,7 @@ bool GLSLGenerator::Generate(HLSLTree* tree, Target target, Version version, con
     ChooseUniqueName("matrix_ctor", m_matrixCtorFunction, sizeof(m_matrixCtorFunction));
     ChooseUniqueName("matrix_mul", m_matrixMulFunction, sizeof(m_matrixMulFunction));
     ChooseUniqueName("clip", m_clipFunction, sizeof(m_clipFunction));
+    ChooseUniqueName("tex2D", m_tex2DFunction, sizeof(m_tex2DFunction));
     ChooseUniqueName("tex2Dlod", m_tex2DlodFunction, sizeof(m_tex2DlodFunction));
     ChooseUniqueName("tex2Dbias", m_tex2DbiasFunction, sizeof(m_tex2DbiasFunction));
     ChooseUniqueName("tex2Dgrad", m_tex2DgradFunction, sizeof(m_tex2DgradFunction));
@@ -255,6 +257,15 @@ bool GLSLGenerator::Generate(HLSLTree* tree, Target target, Version version, con
         m_writer.WriteLine(0, "void %s(vec4  x) { if (any(lessThan(x, vec4(0.0, 0.0, 0.0, 0.0)))) %s;  }", m_clipFunction, discard);
     }
 
+    // Output the special function used for tex2D.
+    if (m_tree->NeedsFunction("tex2D"))
+    {
+        const char* function = m_versionLegacy ? "texture2D" : "texture";
+
+        const char* texCoordY = (m_options.flags & Flag_FlipTexCoordY) ? "1.0 - texCoord.y" : "texCoord.y";
+        m_writer.WriteLine(0, "vec4 %s(sampler2D samp, vec2 texCoord) { return %s(samp, vec2(texCoord.x, %s));  }", m_tex2DFunction, function, texCoordY);
+    }
+
     // Output the special function used to emulate tex2Dlod.
     if (m_tree->NeedsFunction("tex2Dlod"))
     {
@@ -271,7 +282,8 @@ bool GLSLGenerator::Generate(HLSLTree* tree, Target target, Version version, con
             function = "texture2DLodEXT";
         }
 
-        m_writer.WriteLine(0, "vec4 %s(sampler2D samp, vec4 texCoord) { return %s(samp, texCoord.xy, texCoord.w);  }", m_tex2DlodFunction, function);
+        const char* texCoordY = (m_options.flags & Flag_FlipTexCoordY) ? "1.0 - texCoord.y" : "texCoord.y";
+        m_writer.WriteLine(0, "vec4 %s(sampler2D samp, vec4 texCoord) { return %s(samp, vec2(texCoord.x, %s), texCoord.w);  }", m_tex2DlodFunction, function, texCoordY);
     }
 
     // Output the special function used to emulate tex2Dgrad.
@@ -852,11 +864,10 @@ void GLSLGenerator::OutputExpression(HLSLExpression* expression, const HLSLType*
 
 void GLSLGenerator::OutputIdentifier(const char* name)
 {
-
     // Remap intrinstic functions.
     if (String_Equal(name, "tex2D"))
     {
-        name = m_versionLegacy ? "texture2D" : "texture";
+        name = m_tex2DFunction;
     }
     else if (String_Equal(name, "tex2Dproj"))
     {

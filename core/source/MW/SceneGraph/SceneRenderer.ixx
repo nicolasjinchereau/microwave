@@ -11,7 +11,6 @@ import <vector>;
 export namespace mw {
 inline namespace scene {
 
-class Renderable;
 class Scene;
 
 class SceneRenderer

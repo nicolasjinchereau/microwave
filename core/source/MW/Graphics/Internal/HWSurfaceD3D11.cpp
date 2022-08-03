@@ -51,8 +51,8 @@ CD3D11_TEXTURE2D_DESC HWSurfaceD3D11::CreateDepthTextureDesc()
 {
     CD3D11_TEXTURE2D_DESC desc(
         DXGI_FORMAT_D24_UNORM_S8_UINT,
-        window->size.x,
-        window->size.y,
+        window->config.size.x,
+        window->config.size.y,
         1,
         1,
         D3D11_BIND_DEPTH_STENCIL);
@@ -115,8 +115,22 @@ void HWSurfaceD3D11::Destroy() {
 
 void HWSurfaceD3D11::UpdateSize()
 {
-    Destroy();
-    Create();
+    if (swapChain)
+    {
+        auto winSize = window->GetSize();
+
+        UINT bufferCount = 2;
+        UINT width = (UINT)math::RoundToInt(winSize.x);
+        UINT heigh = (UINT)math::RoundToInt(winSize.y);
+        UINT swapChainFlags = 0;
+
+        swapChain->ResizeBuffers(
+            bufferCount, width, heigh, DXGI_FORMAT_UNKNOWN, swapChainFlags);
+    }
+    else
+    {
+        Create();
+    }
 }
 
 IVec2 HWSurfaceD3D11::GetSize() const {

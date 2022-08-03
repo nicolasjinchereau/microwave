@@ -1,0 +1,11 @@
+{
+  "sourcePath": ".internal/lit_painted_textured.cg",
+  "artifacts": [
+    {
+      "uuid": "6c2f565e58aa4f99917e9b3701d02902",
+      "assetType": "Shader",
+      "sourcePath": ".internal/lit_painted_textured.cg"
+    }
+  ],
+  "settings": {}
+}

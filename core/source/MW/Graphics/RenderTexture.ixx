@@ -4,14 +4,16 @@
 
 export module Microwave.Graphics.RenderTexture;
 import Microwave.Graphics.RenderTarget;
+import Microwave.Graphics.Texture;
 
 export namespace mw {
 inline namespace gfx {
 
 class HWRenderTarget;
 class HWRenderTexture;
+class HWTexture;
 
-class RenderTexture : public RenderTarget
+class RenderTexture : public Texture, public RenderTarget
 {
     gptr<HWRenderTexture> renderTexture;
 public:

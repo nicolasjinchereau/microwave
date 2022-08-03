@@ -26,23 +26,19 @@ constexpr int _VK_OEM_8      = 0xDF;
 namespace mw {
 inline namespace system {
 
-gptr<Window> Window::New(const std::string title, const IVec2& pos, const IVec2& size) {
-    return gpnew<WindowWindows>(title, pos, size);
+gptr<Window> Window::New(const WindowConfig& config) {
+    return gpnew<WindowWindows>(config);
 }
 
 WindowWindows::WindowWindows()
-    : WindowWindows("", IVec2::Zero(), IVec2::Zero())
+    : WindowWindows(WindowConfig{})
 {
 }
 
 WindowWindows::WindowWindows(
-    const std::string title,
-    const IVec2& pos,
-    const IVec2& size)
+    const WindowConfig& config)
 {
-    this->title = title;
-    this->pos = pos;
-    this->size = size;
+    this->config = config;
     this->dispatcher = Dispatcher::GetCurrent();
 }
 
@@ -52,61 +48,70 @@ WindowWindows::~WindowWindows() {
 
 void WindowWindows::SetTitle(const std::string& title)
 {
-    this->title = title;
+    config.title = title;
     if (hWnd) SetWindowText(hWnd, title.c_str());
 }
 
 std::string WindowWindows::GetTitle() const {
-    return title;
+    return config.title;
 }
 
 void WindowWindows::SetPos(const IVec2& pos)
 {
-    this->pos = pos;
+    config.pos = pos;
     auto flags = SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER;
     SetWindowPos(hWnd, NULL, (int)(pos.x + 0.5f), (int)(pos.y + 0.5f), 0, 0, flags);
 }
 
 IVec2 WindowWindows::GetPos() const {
-    return pos;
+    return config.pos;
 }
 
 void WindowWindows::SetSize(const IVec2& size) {
-    this->size = size;
+    config.size = size;
     auto flags = SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER;
     SetWindowPos(hWnd, NULL, 0, 0, size.x, size.y, flags);
 }
 
 IVec2 WindowWindows::GetSize() const {
-    return size;
+    return config.size;
 }
 
 bool WindowWindows::IsVisible() const {
     return visible;
 }
 
-void WindowWindows::SetResizeable(bool resizeable)
+void WindowWindows::SetResizable(bool resizable)
 {
-    resizeable = resizeable;
+    config.resizable = resizable;
 
     if (hWnd)
     {
         int windowStyle = (int)GetWindowLongPtr(hWnd, GWL_STYLE);
-        windowStyle &= ~WS_SIZEBOX;
+        int resizableStyle = WS_SIZEBOX | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+
+        if(resizable)
+            windowStyle |= resizableStyle;
+        else
+            windowStyle &= ~resizableStyle;
+
         SetWindowLongPtr(hWnd, GWL_STYLE, windowStyle);
     }
 }
 
-bool WindowWindows::IsResizeable() const {
-    return resizeable;
+bool WindowWindows::IsResizable() const {
+    return config.resizable;
+}
+
+uint32_t WindowWindows::GetDPI() const {
+    return (uint32_t)GetDpiForWindow(hWnd);
 }
 
 void WindowWindows::Show()
 {
     if (!hWnd)
     {
-        hWnd = CreateNativeWindow(
-            title, pos, size, resizeable);
+        hWnd = CreateNativeWindow(config);
     }
 
     ShowWindow(hWnd, SW_SHOW);
@@ -136,19 +141,19 @@ uintptr_t WindowWindows::GetHandle() const {
     return (uintptr_t)hWnd;
 }
 
-HWND WindowWindows::CreateNativeWindow(const std::string title, const IVec2& pos, const IVec2& size, bool resizeable)
+HWND WindowWindows::CreateNativeWindow(const WindowConfig& config)
 {
     auto className = "MicrowaveWindow";
     int windowStyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU;
 
-    if (resizeable)
-        windowStyle |= WS_SIZEBOX;
+    if (config.resizable)
+        windowStyle |= WS_SIZEBOX | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
 
     RECT outerRect;
-    outerRect.left = pos.x;
-    outerRect.top = pos.y;
-    outerRect.right = pos.x + size.x;
-    outerRect.bottom = pos.y + size.y;
+    outerRect.left = config.pos.x;
+    outerRect.top = config.pos.y;
+    outerRect.right = config.pos.x + config.size.x;
+    outerRect.bottom = config.pos.y + config.size.y;
 
     AdjustWindowRect(&outerRect, windowStyle, false);
 
@@ -178,7 +183,7 @@ HWND WindowWindows::CreateNativeWindow(const std::string title, const IVec2& pos
 
     HWND hWnd = CreateWindow(
         className,
-        title.c_str(),
+        config.title.c_str(),
         windowStyle,
         outerX,
         outerY,
@@ -282,17 +287,17 @@ LRESULT CALLBACK WindowWindows::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
         return 0;
 
     case WM_MOVE:
-        nativeWindow->pos = IVec2(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-        nativeWindow->OnMove(nativeWindow->pos);
+        nativeWindow->config.pos = IVec2(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        nativeWindow->OnMove(nativeWindow->config.pos);
         return 0;
 
     case WM_SIZE:
-        nativeWindow->size = IVec2(LOWORD(lParam), HIWORD(lParam));
-        nativeWindow->OnResize(nativeWindow->size);
+        nativeWindow->config.size = IVec2(LOWORD(lParam), HIWORD(lParam));
+        nativeWindow->OnResize(nativeWindow->config.size);
         return 0;
 
     case WM_SETTEXT:
-        nativeWindow->title = GetWindowTitle(hWnd);
+        nativeWindow->config.title = GetWindowTitle(hWnd);
         break;
 
     case WM_KEYDOWN:

@@ -1,0 +1,15 @@
+{
+  "sourcePath": "Textures/UI/CompileIcon.png",
+  "artifacts": [
+    {
+      "uuid": "a0e17e08176448eaa89167397f3a988f",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/CompileIcon.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "wrapMode": "Repeat",
+    "filterMode": "Bilinear"
+  }
+}

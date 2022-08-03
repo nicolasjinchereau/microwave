@@ -5,12 +5,14 @@
 module Microwave.Graphics.Texture;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.Image;
+import Microwave.Graphics.Internal.HWTexture;
 import Microwave.IO.Terminal;
 import Microwave.System.Exception;
 import Microwave.System.ThreadPool;
 import <MW/System/Internal/PlatformHeaders.h>;
 import <MW/System/Debug.h>;
 import <algorithm>;
+import <chrono>;
 
 namespace mw {
 inline namespace gfx {
@@ -48,6 +50,30 @@ Texture::Texture(
 
     if (data.size() != size.x * size.y * GetBytesPerPixel(format))
         throw Exception("incorrect 'size' or 'format' for 'data'");
+
+    tex = graphics->context->CreateTexture(size, format, dynamic, data);
+    tex->SetWrapMode(wrapMode);
+    tex->SetFilterMode(filterMode);
+    tex->SetAnisoLevel(anisoLevel);
+
+    loadState = LoadState::Loaded;
+}
+
+Texture::Texture(
+    PixelDataFormat format,
+    const IVec2& size,
+    bool dynamic)
+    : format(format)
+    , size(size)
+    , dynamic(dynamic)
+{
+    auto graphics = GraphicsContext::GetCurrent();
+    if (!graphics)
+        throw Exception("no active graphics context");
+
+    std::vector<Color32> pixels;
+    pixels.resize(size.x * size.y);
+    auto data = std::as_writable_bytes(std::span(pixels));
 
     tex = graphics->context->CreateTexture(size, format, dynamic, data);
     tex->SetWrapMode(wrapMode);
@@ -176,28 +202,16 @@ Task<void> Texture::LoadFileAsync()
 
         auto totalBytes = size.x * size.y * GetBytesPerPixel(format);
 
-        gptr<HWBuffer> buffer = graphics->context->CreateBuffer(
-            BufferType::PixelUnpack,
-            BufferUsage::Static,
-            BufferCPUAccess::WriteOnly,
-            totalBytes);
-
-        std::span<std::byte> mapping = buffer->Map(BufferMapAccess::WriteNoSync);
-
         Assert(!filePath.empty());
 
-        co_await ThreadPool::InvokeAsync(
+        gptr<Image> img = co_await ThreadPool::InvokeAsync(
             [=](){
-                auto img = gpnew<Image>(filePath, fileFormat);
-                std::span<std::byte> data = img->GetData();
-                std::copy(data.begin(), data.end(), mapping.begin());
+                return gpnew<Image>(filePath, fileFormat);
             });
-
-        buffer->Unmap();
 
         if (loadState == LoadState::Loading)
         {
-            tex = graphics->context->CreateTexture(size, format, dynamic, buffer);
+            tex = graphics->context->CreateTexture(size, format, dynamic, img->GetData());
             tex->SetWrapMode(wrapMode);
             tex->SetFilterMode(filterMode);
             tex->SetAnisoLevel(anisoLevel);

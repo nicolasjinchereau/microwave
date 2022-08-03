@@ -139,8 +139,9 @@ void HWTextureD3D11::CreateTexture(const std::span<std::byte>& data)
     UINT mipLevels = 1;
     UINT resourceViewMipLevels = 1;
 
+    bindFlags |= D3D11_BIND_RENDER_TARGET;
+
     if (generateMipmaps) {
-        bindFlags |= D3D11_BIND_RENDER_TARGET;
         miscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
         mipLevels = 0; // generate all levels
         resourceViewMipLevels = -1; // generate all levels

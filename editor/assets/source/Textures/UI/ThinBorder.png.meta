@@ -1,0 +1,15 @@
+{
+  "sourcePath": "Textures/UI/ThinBorder.png",
+  "artifacts": [
+    {
+      "uuid": "d1cf10b02b79429783b35ba3ae661ec2",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/ThinBorder.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "wrapMode": "Repeat",
+    "filterMode": "Bilinear"
+  }
+}

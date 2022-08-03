@@ -126,10 +126,6 @@ public:
         const IVec2& size, PixelDataFormat format, bool dynamic,
         const std::span<std::byte>& data) override;
 
-    virtual gptr<HWTexture> CreateTexture(
-        const IVec2& size, PixelDataFormat format, bool dynamic,
-        const gptr<HWBuffer>& buffer) override;
-
     virtual gptr<HWTexture> GetDefaultTexture() override;
 
     void UpdateDeviceStates();

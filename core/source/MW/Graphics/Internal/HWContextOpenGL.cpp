@@ -341,14 +341,6 @@ gptr<HWTexture> HWContextOpenGL::CreateTexture(
         self(this), size, format, dynamic, data);
 }
 
-gptr<HWTexture> HWContextOpenGL::CreateTexture(
-    const IVec2& size, PixelDataFormat format, bool dynamic,
-    const gptr<HWBuffer>& buffer)
-{
-    return gpnew<HWTextureOpenGL>(
-        self(this), size, format, dynamic, buffer);
-}
-
 gptr<HWTexture> HWContextOpenGL::GetDefaultTexture()
 {
     if (!defaultTexture)

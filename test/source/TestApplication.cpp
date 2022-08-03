@@ -24,11 +24,11 @@ public:
     gptr<Scene> scene;
     gptr<SceneRenderer> sceneRenderer;
 
-    virtual void OnInitialize(AppConfig& config) override
+    virtual void OnInitialize(WindowConfig& config) override
     {
-        config.windowTitle = "Microwave";
-        config.windowPos = IVec2(300, 300);
-        config.windowSize = IVec2(1024, 576);
+        config.title = "Microwave";
+        config.pos = IVec2(300, 300);
+        config.size = IVec2(1024, 576);
     }
 
     virtual void OnStart() override

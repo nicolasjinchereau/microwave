@@ -1,0 +1,15 @@
+{
+  "sourcePath": "Textures/UI/SaveIcon.png",
+  "artifacts": [
+    {
+      "uuid": "344eb581825445158d4e3166e2fffe37",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/SaveIcon.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "wrapMode": "Repeat",
+    "filterMode": "Bilinear"
+  }
+}

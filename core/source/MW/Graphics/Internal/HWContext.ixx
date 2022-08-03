@@ -62,7 +62,6 @@ public:
     virtual gptr<HWBuffer> CreateBuffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, const std::span<std::byte>& data) = 0;
     virtual gptr<HWSurface> CreateSurface(const gptr<Window>& window) = 0;
     virtual gptr<HWTexture> CreateTexture(const IVec2& size, PixelDataFormat format, bool dynamic, const std::span<std::byte>& data) = 0;
-    virtual gptr<HWTexture> CreateTexture(const IVec2& size, PixelDataFormat format, bool dynamic, const gptr<HWBuffer>& buffer) = 0;
     virtual gptr<HWTexture> GetDefaultTexture() = 0;
 };
 

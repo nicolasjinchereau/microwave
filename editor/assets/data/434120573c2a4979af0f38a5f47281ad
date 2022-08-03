@@ -1,0 +1,451 @@
+{
+  "localScale": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0
+  },
+  "localPos": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "uuid": "434120573c2a4979af0f38a5f47281ad",
+  "objectType": "mw::scene::Node",
+  "layerMask": 1,
+  "name": "RootNode",
+  "localRot": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0,
+    "w": 1.0
+  },
+  "active": true,
+  "children": [
+    {
+      "localScale": {
+        "x": 0.009999999776482582,
+        "y": 0.009999999776482582,
+        "z": 0.009999999776482582
+      },
+      "localPos": {
+        "x": 0.0022521400824189186,
+        "y": 0.8174572587013245,
+        "z": -0.0009358834940940142
+      },
+      "uuid": "eb68a2bcfbe144c094a19180bb3101ad",
+      "objectType": "mw::scene::Node",
+      "layerMask": 1,
+      "name": "WheelAxle",
+      "localRot": {
+        "x": -1.7484555314695172e-07,
+        "y": -0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "active": true,
+      "children": [
+        {
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "localPos": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "uuid": "aa6d266e24f147b398415ef59aaee2bb",
+          "objectType": "mw::scene::Node",
+          "layerMask": 1,
+          "name": "wheel",
+          "localRot": {
+            "x": -0.04361920803785324,
+            "y": -0.0,
+            "z": 0.0,
+            "w": 0.9990482330322266
+          },
+          "active": true,
+          "children": [],
+          "components": [
+            {
+              "objectType": "mw::scene::MeshRenderer",
+              "uuid": "cf698c38e7c442d5b1c9b806a5b177f4",
+              "name": "",
+              "enabled": true,
+              "mesh": "5ca39108085a4221ae98178366800e79",
+              "materials": [
+                "24b96321780f4ae6b161972fa5349355"
+              ],
+              "rootBone": null
+            }
+          ]
+        },
+        {
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "localPos": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "uuid": "9ce4c952e09c4cf497b26bf3512ba311",
+          "objectType": "mw::scene::Node",
+          "layerMask": 1,
+          "name": "spokes",
+          "localRot": {
+            "x": 2.3841856489070778e-07,
+            "y": -8.742277657347586e-08,
+            "z": -9.72775072977496e-15,
+            "w": 1.0
+          },
+          "active": true,
+          "children": [],
+          "components": [
+            {
+              "uuid": "a699299081774e3483e81313d9a5251b",
+              "objectType": "mw::scene::MeshRenderer",
+              "enabled": true,
+              "name": "",
+              "mesh": "9e07072cc64a4f1bae1dd817c4251abd",
+              "materials": [
+                "24b96321780f4ae6b161972fa5349355"
+              ],
+              "rootBone": null
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "objectType": "mw::scene::MeshRenderer",
+          "uuid": "626e7d78f9fc48deb4af157a54553b62",
+          "name": "",
+          "enabled": true,
+          "mesh": "b6600a5b4f5e4591b0026d89510e3310",
+          "materials": [
+            "24b96321780f4ae6b161972fa5349355"
+          ],
+          "rootBone": null
+        }
+      ]
+    },
+    {
+      "localScale": {
+        "x": 0.012129000388085842,
+        "y": 0.012129000388085842,
+        "z": 0.012129000388085842
+      },
+      "localPos": {
+        "x": -1.768568515777588,
+        "y": 0.9847850203514099,
+        "z": -0.000935893040150404
+      },
+      "uuid": "2fbe6e6e98fd4bd3a7955db9391fef75",
+      "objectType": "mw::scene::Node",
+      "layerMask": 1,
+      "name": "Dummy003",
+      "localRot": {
+        "x": 0.04361937567591667,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.9990482330322266
+      },
+      "active": true,
+      "children": [
+        {
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "localPos": {
+            "x": 147.05569458007812,
+            "y": 83.86125183105469,
+            "z": -0.2701411247253418
+          },
+          "uuid": "293083f4b8e947cb8403b7107b27a8f0",
+          "objectType": "mw::scene::Node",
+          "layerMask": 1,
+          "name": "body",
+          "localRot": {
+            "x": -3.725290742551124e-09,
+            "y": -0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "active": true,
+          "children": [],
+          "components": [
+            {
+              "uuid": "26bf2a1c35df4151b52c8cdf777ba942",
+              "objectType": "mw::scene::MeshRenderer",
+              "enabled": true,
+              "name": "",
+              "mesh": "ea22706cbe5b4716bec16e6b2d65e134",
+              "materials": [
+                "24b96321780f4ae6b161972fa5349355"
+              ],
+              "rootBone": null
+            }
+          ]
+        },
+        {
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "localPos": {
+            "x": 284.0315246582031,
+            "y": 145.26788330078125,
+            "z": 5.625377655029297
+          },
+          "uuid": "e36b87b0f31f4b08b409828892840b24",
+          "objectType": "mw::scene::Node",
+          "layerMask": 1,
+          "name": "Dummy002",
+          "localRot": {
+            "x": 0.6963642835617065,
+            "y": 0.6963642239570618,
+            "z": 0.12278788536787033,
+            "w": -0.12278757989406586
+          },
+          "active": true,
+          "children": [
+            {
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "localPos": {
+                "x": -71.44725036621094,
+                "y": -43.678680419921875,
+                "z": -46.94145965576172
+              },
+              "uuid": "1a64fc3e6caf49d6875f334854079c02",
+              "objectType": "mw::scene::Node",
+              "layerMask": 1,
+              "name": "arm2",
+              "localRot": {
+                "x": -5.023577109852795e-10,
+                "y": 0.46174851059913635,
+                "z": -9.649896437480265e-10,
+                "w": 0.8870108723640442
+              },
+              "active": true,
+              "children": [],
+              "components": [
+                {
+                  "objectType": "mw::scene::MeshRenderer",
+                  "uuid": "057314d8fb9d4f14b1d3dae93e9b7f11",
+                  "name": "",
+                  "enabled": true,
+                  "mesh": "8cb72db99dd14c7699b7f80e645a8bd9",
+                  "materials": [
+                    "24b96321780f4ae6b161972fa5349355"
+                  ],
+                  "rootBone": null
+                }
+              ]
+            },
+            {
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "localPos": {
+                "x": 1.3259124755859375,
+                "y": -44.193336486816406,
+                "z": 1.4848556518554688
+              },
+              "uuid": "7e68c66d19264cf59ee29eb2f25387bf",
+              "objectType": "mw::scene::Node",
+              "layerMask": 1,
+              "name": "shoulder2",
+              "localRot": {
+                "x": -4.371138828673793e-08,
+                "y": 1.855174525691684e-15,
+                "z": -4.371139183945161e-08,
+                "w": 1.0
+              },
+              "active": true,
+              "children": [],
+              "components": [
+                {
+                  "uuid": "45c742e1b5a144569ec6f9841536aa45",
+                  "objectType": "mw::scene::MeshRenderer",
+                  "enabled": true,
+                  "name": "",
+                  "mesh": "32a80b6d62d94edaa0bfddac336bc79e",
+                  "materials": [
+                    "24b96321780f4ae6b161972fa5349355"
+                  ],
+                  "rootBone": null
+                }
+              ]
+            }
+          ],
+          "components": []
+        },
+        {
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "localPos": {
+            "x": 13.510009765625,
+            "y": 143.57989501953125,
+            "z": 9.29084587097168
+          },
+          "uuid": "9e05b351528f416b92113403aeb102bc",
+          "objectType": "mw::scene::Node",
+          "layerMask": 1,
+          "name": "Dummy001",
+          "localRot": {
+            "x": -0.5892218351364136,
+            "y": -6.027023324861602e-09,
+            "z": -4.395271702151149e-09,
+            "w": 0.8079712986946106
+          },
+          "active": true,
+          "children": [
+            {
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "localPos": {
+                "x": 39.97802734375,
+                "y": -48.86405563354492,
+                "z": -72.814208984375
+              },
+              "uuid": "77f0cda23a05420ab6d5a7301283822d",
+              "objectType": "mw::scene::Node",
+              "layerMask": 1,
+              "name": "arm1",
+              "localRot": {
+                "x": 0.3826833665370941,
+                "y": -1.2341988542274862e-10,
+                "z": -2.1109194947577237e-10,
+                "w": 0.9238795638084412
+              },
+              "active": true,
+              "children": [],
+              "components": [
+                {
+                  "uuid": "1e6d979f450b49679210a276326e8ec9",
+                  "objectType": "mw::scene::MeshRenderer",
+                  "enabled": true,
+                  "name": "",
+                  "mesh": "dc6337f865424ead891623dac1b230a8",
+                  "materials": [
+                    "24b96321780f4ae6b161972fa5349355"
+                  ],
+                  "rootBone": null
+                }
+              ]
+            },
+            {
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "localPos": {
+                "x": 40.49267578125,
+                "y": 3.054962158203125,
+                "z": -2.4900970458984375
+              },
+              "uuid": "f657ee29a6284aee8b320fea41f6ba7f",
+              "objectType": "mw::scene::Node",
+              "layerMask": 1,
+              "name": "shoulder1",
+              "localRot": {
+                "x": 2.7755575615628914e-17,
+                "y": -1.0547117675147803e-15,
+                "z": -3.3306688091776736e-16,
+                "w": 1.0
+              },
+              "active": true,
+              "children": [],
+              "components": [
+                {
+                  "objectType": "mw::scene::MeshRenderer",
+                  "uuid": "1019309f0afb4880a3590e8fc5dd72fd",
+                  "name": "",
+                  "enabled": true,
+                  "mesh": "a86f87d7f2f0447baf7c6cddc98acaf6",
+                  "materials": [
+                    "24b96321780f4ae6b161972fa5349355"
+                  ],
+                  "rootBone": null
+                }
+              ]
+            }
+          ],
+          "components": []
+        },
+        {
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "localPos": {
+            "x": 147.05567932128906,
+            "y": 192.63319396972656,
+            "z": 18.205490112304688
+          },
+          "uuid": "d42838f326694792b37ea16e67e4a330",
+          "objectType": "mw::scene::Node",
+          "layerMask": 1,
+          "name": "Head",
+          "localRot": {
+            "x": -0.04361938685178757,
+            "y": -1.7746663733957677e-15,
+            "z": -7.748363586928761e-17,
+            "w": 0.9990482330322266
+          },
+          "active": true,
+          "children": [],
+          "components": [
+            {
+              "objectType": "mw::scene::MeshRenderer",
+              "uuid": "2e8a5454fcfd44468a452db14683a894",
+              "name": "",
+              "enabled": true,
+              "mesh": "da69dd2cb1764e22830189f715ac9403",
+              "materials": [
+                "24b96321780f4ae6b161972fa5349355"
+              ],
+              "rootBone": null
+            }
+          ]
+        }
+      ],
+      "components": []
+    }
+  ],
+  "components": [
+    {
+      "objectType": "mw::scene::Animator",
+      "uuid": "064eb3d3885f4f4886bb8a2284ac85cf",
+      "name": "",
+      "enabled": true,
+      "animationStates": {
+        "Default": {
+          "clip": "9a53e92fecd945ababd4aeb6bd02058a",
+          "speed": 1.0
+        }
+      }
+    }
+  ]
+}

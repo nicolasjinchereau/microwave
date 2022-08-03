@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{4E40957C-3A77-960D-E363-7C10CF79120F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\source">
+      <UniqueIdentifier>{AE3E898A-1AF4-0180-A3E8-FB560F9DF883}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\source\MW">
+      <UniqueIdentifier>{21BA488C-0D88-3C92-F61B-ADB8E28818F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\source\MW\Tools">
+      <UniqueIdentifier>{61537FD2-4DE2-089C-F600-1D97E26E1942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\source\MW\Tools\External">
+      <UniqueIdentifier>{B3C24B42-1FDB-326C-E887-C205545FC705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{76FF3A1C-62A1-65F2-4B5C-7946379DEC42}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\core\source\MW\Tools\External\EditorExport.cpp">
+      <Filter>core\source\MW\Tools\External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Something.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

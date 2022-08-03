@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestApp", "TestApp.vcxproj", "{8655D639-F234-55D5-FB4C-E0AB67ABBB36}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F21BE648-5E86-9ABF-A7C4-4B65136E7814} = {F21BE648-5E86-9ABF-A7C4-4B65136E7814}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "microwave", "..\..\..\core\projects\windows\microwave.vcxproj", "{F21BE648-5E86-9ABF-A7C4-4B65136E7814}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8655D639-F234-55D5-FB4C-E0AB67ABBB36}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8655D639-F234-55D5-FB4C-E0AB67ABBB36}.Debug|Win32.Build.0 = Debug|Win32
+		{8655D639-F234-55D5-FB4C-E0AB67ABBB36}.Release|Win32.ActiveCfg = Release|Win32
+		{8655D639-F234-55D5-FB4C-E0AB67ABBB36}.Release|Win32.Build.0 = Release|Win32
+		{F21BE648-5E86-9ABF-A7C4-4B65136E7814}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F21BE648-5E86-9ABF-A7C4-4B65136E7814}.Debug|Win32.Build.0 = Debug|Win32
+		{F21BE648-5E86-9ABF-A7C4-4B65136E7814}.Release|Win32.ActiveCfg = Release|Win32
+		{F21BE648-5E86-9ABF-A7C4-4B65136E7814}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86E544C6-19AF-4DF0-BA04-8E68D718D808}
+	EndGlobalSection
+EndGlobal

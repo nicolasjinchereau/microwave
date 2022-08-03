@@ -28,7 +28,7 @@ v2p VSMain(appdata input)
 
 float4 PSMain(v2p input) : COLOR0
 {
-	float4 col = tex2D(uDiffuseTex, input.tex) * input.col;
+	float4 col = tex2Dlod(uDiffuseTex, float4(input.tex.xy, 0, 0)) * input.col;
 	return col;
 }
 )MW_SHADER_SOURCE"

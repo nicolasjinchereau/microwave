@@ -23,7 +23,7 @@ import <string>;
 export namespace mw {
 inline namespace data {
 
-class AssetDatabase;
+//class AssetDatabase;
 
 class TextureImporter : public AssetImporter
 {

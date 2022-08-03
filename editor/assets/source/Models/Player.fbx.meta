@@ -1,0 +1,91 @@
+{
+  "sourcePath": "Models/Player.fbx",
+  "artifacts": [
+    {
+      "uuid": "434120573c2a4979af0f38a5f47281ad",
+      "assetType": "Node",
+      "sourcePath": "Models/Player.fbx"
+    },
+    {
+      "uuid": "a86f87d7f2f0447baf7c6cddc98acaf6",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/shoulder1.mesh"
+    },
+    {
+      "uuid": "dc6337f865424ead891623dac1b230a8",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/arm1.mesh"
+    },
+    {
+      "uuid": "b6600a5b4f5e4591b0026d89510e3310",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/WheelAxle.mesh"
+    },
+    {
+      "uuid": "9e07072cc64a4f1bae1dd817c4251abd",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/spokes.mesh"
+    },
+    {
+      "uuid": "5ca39108085a4221ae98178366800e79",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/wheel.mesh"
+    },
+    {
+      "uuid": "32a80b6d62d94edaa0bfddac336bc79e",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/shoulder2.mesh"
+    },
+    {
+      "uuid": "8cb72db99dd14c7699b7f80e645a8bd9",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/arm2.mesh"
+    },
+    {
+      "uuid": "ea22706cbe5b4716bec16e6b2d65e134",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/body.mesh"
+    },
+    {
+      "uuid": "da69dd2cb1764e22830189f715ac9403",
+      "assetType": "Mesh",
+      "sourcePath": "Models/Player.fbx/Head.mesh"
+    },
+    {
+      "uuid": "24b96321780f4ae6b161972fa5349355",
+      "assetType": "Material",
+      "sourcePath": "Models/Player.fbx/Player.mat"
+    },
+    {
+      "uuid": "9a53e92fecd945ababd4aeb6bd02058a",
+      "assetType": "AnimationClip",
+      "sourcePath": "Models/Player.fbx/Default.clip"
+    }
+  ],
+  "settings": {
+    "scaleFactor": 1.0,
+    "keepRootTransform": false,
+    "clipSpecs": [
+      {
+        "name": "Default",
+        "start": -2,
+        "stop": 190,
+        "wrapMode": "Loop"
+      }
+    ],
+    "materialSettings": {
+      "24b96321780f4ae6b161972fa5349355": {
+        "shaderBinding": {
+          "filename": "default.cg",
+          "uuid": "ff9b138444d8454994b30dcf832af930"
+        },
+        "textureBindings": {
+          "uDiffuseTex": {
+            "filename": "Player.png",
+            "uuid": "b9563f1bc43b45beba3c7edb4ab060f9"
+          }
+        }
+      }
+    }
+  }
+}

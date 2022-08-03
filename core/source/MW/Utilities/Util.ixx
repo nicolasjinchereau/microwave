@@ -46,8 +46,43 @@ std::string GetExtension(const path& p)
     return ToLower(p.extension().string());
 }
 
+//size_t ReplaceAll(std::string& inout, std::string_view what, std::string_view with)
+//{
+//    std::size_t count = 0;
+//
+//    for (std::string::size_type pos = 0;
+//        (pos = inout.find(what.data(), pos, what.length())) != std::string::npos;
+//        pos += with.length(), ++count)
+//    {
+//        inout.replace(pos, what.length(), with.data(), with.length());
+//    }
+//
+//    return count;
+//}
+
+std::string ReplaceAll(const std::string& in, std::string_view what, std::string_view with)
+{
+    std::string result;
+    result.reserve(in.length());
+
+    std::string::size_type first = 0;
+
+    for (std::string::size_type last = 0;
+        (last = in.find(what.data(), first, what.length())) != std::string::npos;
+        first = last + what.length())
+    {
+        result.append(in.data() + first, in.data() + last);
+        result.append(with);
+    }
+
+    if (first != in.length())
+        result.append(in.data() + first, in.data() + in.length());
+
+    return result;
+}
+
 template<class T, class S, class Compare = std::less<T>>
-static auto InsertSorted(std::vector<T>& cont, S&& val, Compare comp)
+auto InsertSorted(std::vector<T>& cont, S&& val, Compare comp)
 {
     auto it = std::upper_bound(cont.begin(), cont.end(), val, comp);
     return cont.insert(it, std::forward<S>(val));

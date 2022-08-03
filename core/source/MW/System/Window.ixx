@@ -87,10 +87,19 @@ public:
     virtual void OnPointerUp(Window* window, IVec2 pos, int id) {}
 };
 
-class Window : public RenderTarget
+class WindowConfig
+{
+public:
+    std::string title;
+    IVec2 pos = IVec2(-1, -1);
+    IVec2 size = IVec2(800, 600);
+    bool resizable = false;
+};
+
+class Window : public Object, public RenderTarget
 {
 protected:
-    static gptr<Window> New(const std::string title, const IVec2& pos, const IVec2& size);
+    static gptr<Window> New(const WindowConfig& config);
     friend App;
 
     EventHandlerList<IWindowEventHandler> eventHandlers;
@@ -105,10 +114,11 @@ public:
     virtual void SetPos(const IVec2& pos) = 0;
     virtual IVec2 GetPos() const = 0;
     virtual void SetSize(const IVec2& size) = 0;
-    //virtual IVec2 GetSize() const = 0;
+    //virtual IVec2 GetSize() const = 0; // RenderTarget already has GetSize
     virtual bool IsVisible() const = 0;
-    virtual void SetResizeable(bool resizeable) = 0;
-    virtual bool IsResizeable() const = 0;
+    virtual void SetResizable(bool resizable) = 0;
+    virtual bool IsResizable() const = 0;
+    virtual uint32_t GetDPI() const = 0;
 
     virtual void Show() = 0;
     virtual void Hide() = 0;

@@ -490,6 +490,12 @@
     <ClCompile Include="..\..\source\MW\System\Window.ixx">
       <ObjectFileName>$(IntDir)\Window1.obj</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.cpp" />
+    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.ixx" />
+    <ClCompile Include="..\..\source\MW\Tools\IEditor.ixx" />
+    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.cpp" />
+    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.ixx" />
+    <ClCompile Include="..\..\source\MW\Tools\Tools.ixx" />
     <ClCompile Include="..\..\source\MW\Utilities\Base64.ixx" />
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNode.cpp" />
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNode.ixx">

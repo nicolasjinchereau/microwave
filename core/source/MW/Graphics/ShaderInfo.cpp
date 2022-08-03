@@ -247,12 +247,15 @@ ShaderInfo::ShaderInfo(const std::string& source, ShaderLanguage lang)
     {
         GLSLGenerator::Version version = glslVersions[lang];
 
+        GLSLGenerator::Options options{};
+        options.flags = GLSLGenerator::Flag_FlipTexCoordY;
+
         GLSLGenerator vsGenerator;
-        if (!vsGenerator.Generate(&tree, GLSLGenerator::Target_VertexShader, version, this->vertShaderEntryPoint.c_str()))
+        if (!vsGenerator.Generate(&tree, GLSLGenerator::Target_VertexShader, version, this->vertShaderEntryPoint.c_str(), options))
             throw Exception("failed to generate vertex shader");
 
         GLSLGenerator fsGenerator;
-        if (!fsGenerator.Generate(&tree, GLSLGenerator::Target_FragmentShader, version, this->fragShaderEntryPoint.c_str()))
+        if (!fsGenerator.Generate(&tree, GLSLGenerator::Target_FragmentShader, version, this->fragShaderEntryPoint.c_str(), options))
             throw Exception("failed to generate fragment shader");
 
         this->vertShaderSource = vsGenerator.GetResult();

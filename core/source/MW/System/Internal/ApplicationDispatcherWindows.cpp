@@ -67,6 +67,11 @@ gptr<DispatchAction> ApplicationDispatcherWindows::InvokeAsync(
 void ApplicationDispatcherWindows::Run(int argc, char* argv[])
 {
     run = true;
+    
+    //PROCESS_DPI_AWARENESS val;
+    //HRESULT res = GetProcessDpiAwareness(GetCurrentProcess(), &val);
+
+    HRESULT res = SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
 
     MSG msg;
 

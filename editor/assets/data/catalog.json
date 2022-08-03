@@ -1,0 +1,350 @@
+{
+  ".internal/box-gizmo.mesh": {
+    "metaLastModified": 1656365518471686300,
+    "sourceLastModified": 1650422733505990100,
+    "artifactRecords": {
+      "fdb5a651f5ef4715a3f387e74df027ed": {
+        "lastModified": 1656365518469685300
+      }
+    }
+  },
+  "Fonts/comic_bold.ttf": {
+    "metaLastModified": 1656365518482687700,
+    "sourceLastModified": 1649371950163325200,
+    "artifactRecords": {
+      "482d889bbba24b93be7150a8945d10d1": {
+        "lastModified": 1656365518481688600
+      }
+    }
+  },
+  ".internal/white.png": {
+    "metaLastModified": 1656365518493689500,
+    "sourceLastModified": 1649371950103894800,
+    "artifactRecords": {
+      "ac79e17f823446e48050f06115cf833e": {
+        "lastModified": 1656365518491688900
+      }
+    }
+  },
+  ".internal/cylinder-gizmo.mesh": {
+    "metaLastModified": 1656365518497686800,
+    "sourceLastModified": 1650422733506989400,
+    "artifactRecords": {
+      "e47d079fb3b244169ab779bb01b8bb50": {
+        "lastModified": 1656365518496685300
+      }
+    }
+  },
+  ".internal/default.cg": {
+    "metaLastModified": 1656365518507686900,
+    "sourceLastModified": 1649371950074219000,
+    "artifactRecords": {
+      "ff9b138444d8454994b30dcf832af930": {
+        "lastModified": 1656365518506685300
+      }
+    }
+  },
+  ".internal/lit_painted.cg": {
+    "metaLastModified": 1656365518521687300,
+    "sourceLastModified": 1649371950075217700,
+    "artifactRecords": {
+      "138a0b99d076473a9775f4b5cda30793": {
+        "lastModified": 1656365518520685600
+      }
+    }
+  },
+  "Textures/UI/blueOval.png": {
+    "metaLastModified": 1656365518513685700,
+    "sourceLastModified": 1649371950482831400,
+    "artifactRecords": {
+      "ac1dd654fe054a5187d4cefedf877dc7": {
+        "lastModified": 1656365518512683800
+      }
+    }
+  },
+  ".internal/lit_painted_textured.cg": {
+    "metaLastModified": 1656365518517687200,
+    "sourceLastModified": 1649371950076215300,
+    "artifactRecords": {
+      "6c2f565e58aa4f99917e9b3701d02902": {
+        "lastModified": 1656365518516685800
+      }
+    }
+  },
+  ".internal/half-sphere-gizmo.mesh": {
+    "metaLastModified": 1656365518529685300,
+    "sourceLastModified": 1650422733507989400,
+    "artifactRecords": {
+      "aaf726f10f52493fa3b76915653a8940": {
+        "lastModified": 1656365518528685300
+      }
+    }
+  },
+  ".internal/lit_textured.cg": {
+    "metaLastModified": 1656365518544684600,
+    "sourceLastModified": 1649371950076215300,
+    "artifactRecords": {
+      "bfe40048c1da411cb86013ae6d5f5284": {
+        "lastModified": 1656365518543684400
+      }
+    }
+  },
+  ".internal/sphere-gizmo.mesh": {
+    "metaLastModified": 1656365518537685300,
+    "sourceLastModified": 1650422733510990100,
+    "artifactRecords": {
+      "900a38a713f7494e9c297c250e4fd40b": {
+        "lastModified": 1656365518536684400
+      }
+    }
+  },
+  ".internal/lit_tinted.cg": {
+    "metaLastModified": 1656365518547685800,
+    "sourceLastModified": 1649371950077212500,
+    "artifactRecords": {
+      "e8681e45c8814c8c8e0bc0566850a0ac": {
+        "lastModified": 1656365518546684000
+      }
+    }
+  },
+  "Textures/UI/LoadIcon.png": {
+    "metaLastModified": 1656518701658148600,
+    "sourceLastModified": 1656518657023193100,
+    "artifactRecords": {
+      "ec895124aaa04ef6895e6792de7b540a": {
+        "lastModified": 1656518701657148800
+      }
+    }
+  },
+  ".internal/lit_tinted_textured.cg": {
+    "metaLastModified": 1656365518558684800,
+    "sourceLastModified": 1649371950078211600,
+    "artifactRecords": {
+      "49436ac34dcd4d39abddfa93732c46a5": {
+        "lastModified": 1656365518557686100
+      }
+    }
+  },
+  "Fonts/consola.ttf": {
+    "metaLastModified": 1656365518554686200,
+    "sourceLastModified": 1649371950167314400,
+    "artifactRecords": {
+      "5e43ffdf2b4b4d4a98341038ab8ae46a": {
+        "lastModified": 1656365518553686300
+      }
+    }
+  },
+  "Shaders/painted-texture.cg": {
+    "metaLastModified": 1656365518550684200,
+    "sourceLastModified": 1649371950181686100,
+    "artifactRecords": {
+      "57646701f08d47dfb7605bc2831a4ae5": {
+        "lastModified": 1656365518549685200
+      }
+    }
+  },
+  ".internal/ui-default.cg": {
+    "metaLastModified": 1656872538042412300,
+    "sourceLastModified": 1656872521316122400,
+    "artifactRecords": {
+      "30fd1c671c9c4edd8415a420cffbfdb9": {
+        "lastModified": 1656872538042412300
+      }
+    }
+  },
+  ".internal/unlit_painted.cg": {
+    "metaLastModified": 1656365518573684700,
+    "sourceLastModified": 1649371950100387600,
+    "artifactRecords": {
+      "ab9adba6cf194a1aaa4cdc77433c3f5d": {
+        "lastModified": 1656365518572683900
+      }
+    }
+  },
+  ".internal/unlit_painted_textured.cg": {
+    "metaLastModified": 1656365518580686200,
+    "sourceLastModified": 1649371950101384900,
+    "artifactRecords": {
+      "8015049782324ddfb6327270285c4f0c": {
+        "lastModified": 1656365518579685200
+      }
+    }
+  },
+  ".internal/unlit_text.cg": {
+    "metaLastModified": 1656365518583686700,
+    "sourceLastModified": 1649371950101898900,
+    "artifactRecords": {
+      "5e6f35f9aca94f10810852679dc478db": {
+        "lastModified": 1656365518582684300
+      }
+    }
+  },
+  ".internal/unlit_textured.cg": {
+    "metaLastModified": 1656365518591688300,
+    "sourceLastModified": 1649371950101898900,
+    "artifactRecords": {
+      "ed1996a8c54342fb9ba605f485f56146": {
+        "lastModified": 1656365518590686100
+      }
+    }
+  },
+  ".internal/unlit_tinted.cg": {
+    "metaLastModified": 1656365518595686600,
+    "sourceLastModified": 1649371950102897500,
+    "artifactRecords": {
+      "6dfecad35d2648c1920e9dcf4d2e6f3d": {
+        "lastModified": 1656365518594686500
+      }
+    }
+  },
+  "Textures/UI/SaveIcon.png": {
+    "metaLastModified": 1656518701660150200,
+    "sourceLastModified": 1656518679545088500,
+    "artifactRecords": {
+      "344eb581825445158d4e3166e2fffe37": {
+        "lastModified": 1656518701659151000
+      }
+    }
+  },
+  ".internal/unlit_tinted_textured.cg": {
+    "metaLastModified": 1656365518606685400,
+    "sourceLastModified": 1649371950102897500,
+    "artifactRecords": {
+      "e705f29115b142bba7d91e06e4304db4": {
+        "lastModified": 1656365518605686400
+      }
+    }
+  },
+  "Textures/UI/SquareButtonGreen.png": {
+    "metaLastModified": 1656365518603685800,
+    "sourceLastModified": 1649371950482831400,
+    "artifactRecords": {
+      "00d2442d201d4c6a9d450b39b97666c1": {
+        "lastModified": 1656365518602686600
+      }
+    }
+  },
+  ".internal/wire-gizmo.mat": {
+    "metaLastModified": 1656365518614686000,
+    "sourceLastModified": 1650422733514990700,
+    "artifactRecords": {
+      "63d7adb398104b149cd932e4d27d0ce4": {
+        "lastModified": 1656365518613686400
+      }
+    }
+  },
+  "Shaders/tinted-texture.cg": {
+    "metaLastModified": 1656365518622686600,
+    "sourceLastModified": 1649371950181686100,
+    "artifactRecords": {
+      "a9aa5300462e43e8b88723af8ad75f4c": {
+        "lastModified": 1656365518621686100
+      }
+    }
+  },
+  "Textures/UI/BlueBackground.png": {
+    "metaLastModified": 1656365518630685700,
+    "sourceLastModified": 1649371950477846100,
+    "artifactRecords": {
+      "0d76197d8d904a798c95b870954af071": {
+        "lastModified": 1656365518629686000
+      }
+    }
+  },
+  "Textures/test-box.png": {
+    "metaLastModified": 1656989543374627700,
+    "sourceLastModified": 1656989241477077000,
+    "artifactRecords": {
+      "eb44243dd652416897d83ee7c7e75593": {
+        "lastModified": 1656989543372626900
+      }
+    }
+  },
+  "Textures/UI/SquareButtonBlue.png": {
+    "metaLastModified": 1656365518634687500,
+    "sourceLastModified": 1649371950481833900,
+    "artifactRecords": {
+      "71d14b76387b47dc8e14696b68680167": {
+        "lastModified": 1656365518633686800
+      }
+    }
+  },
+  "Textures/UI/ThinBorder.png": {
+    "metaLastModified": 1656462210962350100,
+    "sourceLastModified": 1656453343196836600,
+    "artifactRecords": {
+      "d1cf10b02b79429783b35ba3ae661ec2": {
+        "lastModified": 1656462210960349500
+      }
+    }
+  },
+  "Models/Player.fbx": {
+    "metaLastModified": 1656898481513252200,
+    "sourceLastModified": 1649371950179473200,
+    "artifactRecords": {
+      "a86f87d7f2f0447baf7c6cddc98acaf6": {
+        "lastModified": 1656898479069534500
+      },
+      "ea22706cbe5b4716bec16e6b2d65e134": {
+        "lastModified": 1656898480093768800
+      },
+      "32a80b6d62d94edaa0bfddac336bc79e": {
+        "lastModified": 1656898479609503000
+      },
+      "8cb72db99dd14c7699b7f80e645a8bd9": {
+        "lastModified": 1656898479846505500
+      },
+      "da69dd2cb1764e22830189f715ac9403": {
+        "lastModified": 1656898480274798600
+      },
+      "5ca39108085a4221ae98178366800e79": {
+        "lastModified": 1656898479495502900
+      },
+      "9a53e92fecd945ababd4aeb6bd02058a": {
+        "lastModified": 1656898481231788800
+      },
+      "434120573c2a4979af0f38a5f47281ad": {
+        "lastModified": 1656898478964533900
+      },
+      "dc6337f865424ead891623dac1b230a8": {
+        "lastModified": 1656898479313503400
+      },
+      "b6600a5b4f5e4591b0026d89510e3310": {
+        "lastModified": 1656898479335503500
+      },
+      "9e07072cc64a4f1bae1dd817c4251abd": {
+        "lastModified": 1656898479387503100
+      },
+      "24b96321780f4ae6b161972fa5349355": {
+        "lastModified": 1656898481510230800
+      }
+    }
+  },
+  "Textures/Player.png": {
+    "metaLastModified": 1656898481311272500,
+    "sourceLastModified": 1649371950418786100,
+    "artifactRecords": {
+      "b9563f1bc43b45beba3c7edb4ab060f9": {
+        "lastModified": 1656898481310274300
+      }
+    }
+  },
+  "Textures/Floor.png": {
+    "metaLastModified": 1656946842096485400,
+    "sourceLastModified": 1649371950296784100,
+    "artifactRecords": {
+      "4f3d2c354ba246b79b20bdbde4a7ed0c": {
+        "lastModified": 1656946842094485200
+      }
+    }
+  },
+  "Textures/UI/CompileIcon.png": {
+    "metaLastModified": 1658213308561631100,
+    "sourceLastModified": 1658207471788121800,
+    "artifactRecords": {
+      "a0e17e08176448eaa89167397f3a988f": {
+        "lastModified": 1658213308559629600
+      }
+    }
+  }
+}

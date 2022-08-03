@@ -338,14 +338,6 @@ gptr<HWTexture> HWContextD3D11::CreateTexture(
         self(this), size, format, dynamic, data);
 }
 
-gptr<HWTexture> HWContextD3D11::CreateTexture(
-    const IVec2& size, PixelDataFormat format, bool dynamic,
-    const gptr<HWBuffer>& buffer)
-{
-    return gpnew<HWTextureD3D11>(
-        self(this), size, format, dynamic, buffer);
-}
-
 gptr<HWTexture> HWContextD3D11::GetDefaultTexture()
 {
     if (!defaultTexture)

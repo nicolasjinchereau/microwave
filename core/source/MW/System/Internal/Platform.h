@@ -42,3 +42,11 @@
 #ifndef PLATFORM_ANDROID
   #define PLATFORM_ANDROID 0
 #endif
+
+#if PLATFORM_WINDOWS || PLATFORM_WINDOWS_ARM
+#  define PLATFORM_EXPORT __declspec(dllexport)
+#  define PLATFORM_CALL __cdecl
+#else
+#  define PLATFORM_EXPORT __attribute__((used))
+#  define PLATFORM_CALL
+#endif

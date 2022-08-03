@@ -1,0 +1,47 @@
+#pragma vertex VSMain
+#pragma fragment PSMain
+
+struct VSInput
+{
+    float3 pos : POSITION;
+    float3 nor : NORMAL;
+    float2 tex : TEXCOORD0;
+};
+
+struct v2p
+{
+    float4 pos : SV_Position;
+    float3 nor : NORMAL;
+    float2 tex : TEXCOORD0;
+};
+
+uniform sampler2D uDiffuseTex;
+uniform float4    uDiffuseTex_ST;
+uniform float4    uDiffuseColor;
+uniform float4x4  uMtxMVP;
+uniform float4x4  uMtxNormal;
+
+v2p VSMain(VSInput input)
+{
+    v2p output;
+    output.pos = mul(float4(input.pos, 1.0), uMtxMVP);
+    output.nor = mul(float4(input.nor, 1.0), uMtxNormal).rgb;
+    output.tex = input.tex * uDiffuseTex_ST.xy + uDiffuseTex_ST.zw;
+    return output;
+}
+
+float4 Lighting(float4 color, float3 normal)
+{
+	float3 n = normalize(normal);
+    float3 l = normalize(float3(1.0, 0.0, -1.0));
+	float ndotl = saturate(dot(n, l));
+	float shade = lerp(0.1, 1.0, ndotl);
+	return float4(color.rgb * shade, color.a);
+}
+
+float4 PSMain(v2p input) : COLOR0
+{
+    float4 tex = tex2D(uDiffuseTex, input.tex);
+    float4 col = tex * uDiffuseColor;
+    return Lighting(col, input.nor);
+}

@@ -20,6 +20,7 @@ void Canvas::ToJson(json& obj) const
 {
     View::ToJson(obj);
 
+    obj["scaleFactor"] = scaleFactor;
     obj["referenceSize"] = referenceSize;
     obj["fitMode"] = fitMode;
 
@@ -30,6 +31,7 @@ void Canvas::FromJson(const json& obj, ObjectLinker* linker)
 {
     View::FromJson(obj, linker);
 
+    scaleFactor = obj.value("scaleFactor", scaleFactor);
     referenceSize = obj.value("referenceSize", referenceSize);
     fitMode = obj.value("fitMode", fitMode);
 
@@ -39,6 +41,14 @@ void Canvas::FromJson(const json& obj, ObjectLinker* linker)
 }
 
 Canvas::Canvas() {}
+
+void Canvas::SetScaleFactor(float scale) {
+    scaleFactor = scale;
+}
+
+float Canvas::GetScaleFactor() const {
+    return scaleFactor;
+}
 
 void Canvas::SetReferenceSize(const Vec2& size) {
     referenceSize = size;
@@ -222,19 +232,19 @@ void Canvas::FitCanvasToTarget()
         {
             auto targetSize = target->GetSize();
             auto aspect = (float)targetSize.x / targetSize.y;
-            SetSize(Vec2(referenceSize.y * aspect, referenceSize.y));
+            SetSize(Vec2(referenceSize.y * aspect, referenceSize.y) / scaleFactor);
         }
         else if (fitMode == FitMode::AdjustHeight) {
             auto targetSize = target->GetSize();
             auto aspect = (float)targetSize.y / targetSize.x;
-            SetSize(Vec2(referenceSize.x, referenceSize.x * aspect));
+            SetSize(Vec2(referenceSize.x, referenceSize.x * aspect) / scaleFactor);
         }
         else if (fitMode == FitMode::AdjustBoth) {
             auto targetSize = target->GetSize();
-            SetSize(Vec2((float)targetSize.x, (float)targetSize.y));
+            SetSize(Vec2((float)targetSize.x, (float)targetSize.y) / scaleFactor);
         }
         else {
-            SetSize(referenceSize);
+            SetSize(referenceSize / scaleFactor);
         }
     }
 }

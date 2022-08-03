@@ -19,22 +19,21 @@ import <vector>;
 export namespace mw {
 inline namespace scene {
 
-class Camera;
 class Node;
 
 enum class FitMode
 {
     // just use reference size
-    None,
+    None, // LockSize
 
     // adjust width to match render target aspect
-    AdjustWidth,
+    AdjustWidth, // LockHeightMatchAspect
 
     // adjust height to match render target aspect
-    AdjustHeight,
+    AdjustHeight, // LockWidthMatchAspect
 
     // adjust width and height to match target size
-    AdjustBoth
+    AdjustBoth // MatchSize
 };
 
 class Canvas : public View
@@ -45,6 +44,7 @@ protected:
     gvector<gptr<Node>> row1;
     gvector<gptr<ICanvasInputEvents>> inputHandlers;
     
+    float scaleFactor = 1.0f;
     Vec2 referenceSize;
     FitMode fitMode = FitMode::AdjustWidth;
     wgptr<Camera> camera;
@@ -59,6 +59,9 @@ public:
     virtual void FromJson(const json& obj, ObjectLinker* linker) override;
 
     Canvas();
+
+    void SetScaleFactor(float scale);
+    float GetScaleFactor() const;
 
     void SetReferenceSize(const Vec2& size);
     Vec2 GetReferenceSize() const;

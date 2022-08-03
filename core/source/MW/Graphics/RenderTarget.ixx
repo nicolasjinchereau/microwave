@@ -5,13 +5,14 @@
 export module Microwave.Graphics.RenderTarget;
 import Microwave.Math;
 import Microwave.System.Object;
+import Microwave.System.Pointers;
 
 export namespace mw {
 inline namespace gfx {
 
 class HWRenderTarget;
 
-class RenderTarget : public Object
+class RenderTarget
 {
 public:
     virtual ~RenderTarget(){}

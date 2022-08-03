@@ -41,6 +41,7 @@ public:
         Flag_EmulateConstantBuffer = 1 << 1,
         Flag_PackMatrixRowMajor = 1 << 2,
         Flag_LowerMatrixMultiplication = 1 << 3,
+        Flag_FlipTexCoordY = 1 << 4,
     };
 
     struct Options
@@ -141,6 +142,7 @@ private:
     char                m_matrixCtorFunction[64];
     char                m_matrixMulFunction[64];
     char                m_clipFunction[64];
+    char                m_tex2DFunction[64];
     char                m_tex2DlodFunction[64];
     char                m_tex2DbiasFunction[64];
     char                m_tex2DgradFunction[64];

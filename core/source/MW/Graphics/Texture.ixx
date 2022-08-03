@@ -5,7 +5,6 @@
 export module Microwave.Graphics.Texture;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Graphics.Image;
-import Microwave.Graphics.Internal.HWTexture;
 import Microwave.Math;
 import Microwave.System.Json;
 import Microwave.System.Object;
@@ -20,6 +19,8 @@ import <vector>;
 
 export namespace mw {
 inline namespace gfx {
+
+class HWTexture;
 
 enum class LoadState
 {
@@ -56,6 +57,12 @@ public:
 
     Texture(
         const std::span<std::byte>& data,
+        PixelDataFormat format,
+        const IVec2& size,
+        bool dynamic
+    );
+
+    Texture(
         PixelDataFormat format,
         const IVec2& size,
         bool dynamic

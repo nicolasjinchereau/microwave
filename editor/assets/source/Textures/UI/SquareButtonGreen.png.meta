@@ -1,0 +1,15 @@
+{
+  "sourcePath": "Textures/UI/SquareButtonGreen.png",
+  "artifacts": [
+    {
+      "uuid": "00d2442d201d4c6a9d450b39b97666c1",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/SquareButtonGreen.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "wrapMode": "Repeat",
+    "filterMode": "Bilinear"
+  }
+}

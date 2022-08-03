@@ -39,13 +39,6 @@ public:
         bool dynamic,
         const std::span<std::byte>& data);
 
-    HWTextureOpenGL(
-        const gptr<HWContextOpenGL>& context,
-        const IVec2& size,
-        PixelDataFormat format,
-        bool dynamic,
-        const gptr<HWBuffer>& buffer);
-
     virtual ~HWTextureOpenGL();
 
     virtual void SetPixels(const std::span<std::byte>& data, const IntRect& rect) override;

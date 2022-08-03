@@ -1,0 +1,11 @@
+{
+  "sourcePath": "Shaders/tinted-texture.cg",
+  "artifacts": [
+    {
+      "uuid": "a9aa5300462e43e8b88723af8ad75f4c",
+      "assetType": "Shader",
+      "sourcePath": "Shaders/tinted-texture.cg"
+    }
+  ],
+  "settings": {}
+}

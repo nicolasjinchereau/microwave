@@ -1,0 +1,15 @@
+{
+  "sourcePath": "Textures/UI/LoadIcon.png",
+  "artifacts": [
+    {
+      "uuid": "ec895124aaa04ef6895e6792de7b540a",
+      "assetType": "Texture",
+      "sourcePath": "Textures/UI/LoadIcon.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "wrapMode": "Repeat",
+    "filterMode": "Bilinear"
+  }
+}

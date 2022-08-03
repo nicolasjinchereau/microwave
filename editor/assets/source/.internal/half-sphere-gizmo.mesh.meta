@@ -1,0 +1,11 @@
+{
+  "sourcePath": ".internal/half-sphere-gizmo.mesh",
+  "artifacts": [
+    {
+      "uuid": "aaf726f10f52493fa3b76915653a8940",
+      "assetType": "Mesh",
+      "sourcePath": ".internal/half-sphere-gizmo.mesh"
+    }
+  ],
+  "settings": {}
+}

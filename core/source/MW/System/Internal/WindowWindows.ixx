@@ -25,14 +25,11 @@ public:
     HWND hWnd = nullptr;
     HDC hDC = nullptr;
     int buttonsDown = 0;
-    IVec2 pos = IVec2(-1, -1);
-    IVec2 size = IVec2(800, 600);
-    std::string title;
+    WindowConfig config;
     bool visible = false;
-    bool resizeable = false;
 
     WindowWindows();
-    WindowWindows(const std::string title, const IVec2& pos, const IVec2& size);
+    WindowWindows(const WindowConfig& config);
     ~WindowWindows();
 
     virtual void SetTitle(const std::string& title) override;
@@ -42,15 +39,16 @@ public:
     virtual void SetSize(const IVec2& size) override;
     virtual IVec2 GetSize() const override;
     virtual bool IsVisible() const override;
-    virtual void SetResizeable(bool resizeable) override;
-    virtual bool IsResizeable() const override;
+    virtual void SetResizable(bool resizable) override;
+    virtual bool IsResizable() const override;
+    virtual uint32_t GetDPI() const override;
 
     virtual void Show() override;
     virtual void Hide() override;
     virtual void Close()  override;
     virtual uintptr_t GetHandle() const override;
 
-    HWND CreateNativeWindow(const std::string title, const IVec2& pos, const IVec2& size, bool resizeable);
+    HWND CreateNativeWindow(const WindowConfig& config);
 
     static LRESULT CALLBACK CreateWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
     static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

@@ -1,0 +1,11 @@
+{
+  "sourcePath": ".internal/ui-default.cg",
+  "artifacts": [
+    {
+      "uuid": "30fd1c671c9c4edd8415a420cffbfdb9",
+      "assetType": "Shader",
+      "sourcePath": ".internal/ui-default.cg"
+    }
+  ],
+  "settings": {}
+}

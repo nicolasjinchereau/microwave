@@ -1,0 +1,108 @@
+{
+  "cullMode": "Back",
+  "uuid": "24b96321780f4ae6b161972fa5349355",
+  "objectType": "mw::gfx::Material",
+  "name": "Player",
+  "colorBlendOperation": "Add",
+  "sourceAlphaBlendFactor": "One",
+  "alphaBlendOperation": "Add",
+  "sourceColorBlendFactor": "One",
+  "properties": {
+    "uuid": "23ed4aa8c2394610825873652fa81787",
+    "objectType": "mw::gfx::MaterialPropertyBlock",
+    "name": "",
+    "properties": {
+      "uDiffuseTex": {
+        "value": "b9563f1bc43b45beba3c7edb4ab060f9",
+        "uuid": "3706d3270a1e4dbcb55c5d57de8d4b5b",
+        "objectType": "mw::gfx::MaterialPropertyTexture",
+        "name": "uDiffuseTex"
+      },
+      "uDiffuseTex_ST": {
+        "value": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "uuid": "75818e8901d041f6953a24af5e6b614f",
+        "objectType": "mw::gfx::MaterialPropertyFloat4",
+        "name": "uDiffuseTex_ST"
+      },
+      "uDiffuseColor": {
+        "value": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0,
+          "w": 1.0
+        },
+        "uuid": "4c502f82b81541a29005b080794e72dd",
+        "objectType": "mw::gfx::MaterialPropertyColor",
+        "name": "uDiffuseColor"
+      },
+      "uDiffuseFactor": {
+        "value": 1.0,
+        "uuid": "8448e7287f7943db8c5749d477b35fbc",
+        "objectType": "mw::gfx::MaterialPropertyFloat",
+        "name": "uDiffuseFactor"
+      },
+      "uSpecularTex_ST": {
+        "value": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "uuid": "132abb880a5c4e1385c0fcc21b2a1a57",
+        "objectType": "mw::gfx::MaterialPropertyFloat4",
+        "name": "uSpecularTex_ST"
+      },
+      "uNormalTex_ST": {
+        "value": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "uuid": "c7070bb6d45f4f6d825be31a864cc64d",
+        "objectType": "mw::gfx::MaterialPropertyFloat4",
+        "name": "uNormalTex_ST"
+      },
+      "uSpecularFactor": {
+        "value": 0.0,
+        "uuid": "1a00da19743e416e9e89874fe62502eb",
+        "objectType": "mw::gfx::MaterialPropertyFloat",
+        "name": "uSpecularFactor"
+      },
+      "uSpecularColor": {
+        "value": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0,
+          "w": 1.0
+        },
+        "uuid": "075ac4904fc84d0d97f56abde67cf384",
+        "objectType": "mw::gfx::MaterialPropertyColor",
+        "name": "uSpecularColor"
+      },
+      "uShininess": {
+        "value": 0.09999999403953552,
+        "uuid": "b5f689c245ff41b5b98b0feaa75fa5a5",
+        "objectType": "mw::gfx::MaterialPropertyFloat",
+        "name": "uShininess"
+      },
+      "uNormalFactor": {
+        "value": 1.0,
+        "uuid": "26f28d1e2a9141fa8236db125d26d684",
+        "objectType": "mw::gfx::MaterialPropertyFloat",
+        "name": "uNormalFactor"
+      }
+    }
+  },
+  "destColorBlendFactor": "Zero",
+  "destAlphaBlendFactor": "Zero",
+  "depthTest": "LessOrEqual",
+  "depthWriteEnabled": true,
+  "renderQueue": 2000,
+  "shader": "ff9b138444d8454994b30dcf832af930"
+}

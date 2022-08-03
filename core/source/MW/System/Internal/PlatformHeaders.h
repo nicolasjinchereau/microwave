@@ -13,6 +13,7 @@
 #  include <Windows.h>
 #  include <windowsx.h>
 #  include <wrl/client.h>
+#  include <shellscalingapi.h>
 #  include <d3d11_1.h>
 #  include <d3dcompiler.h>
 #  include <DirectXMath.h>
@@ -25,12 +26,18 @@
 #  import <OpenGL/OpenGL.h>
 #  import <OpenGL/gl3.h>
 #  import <OpenGL/gl3ext.h>
+#  import <sys/types.h>
+#  import <dlfcn.h>
 #elif PLATFORM_IOS
 #  import <OpenGLES/ES2/gl.h>
 #  import <OpenGLES/ES2/glext.h>
+#  import <sys/types.h>
+#  import <dlfcn.h>
 #elif PLATFORM_ANDROID
 #  include <GLES2/gl2.h>
 #  include <GLES2/gl2ext.h>
 #  include <EGL/egl.h>
 #  include <EGL/eglext.h>
+#  include <sys/types.h>
+#  include <dlfcn.h>
 #endif

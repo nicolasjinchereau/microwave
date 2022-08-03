@@ -20,14 +20,6 @@ import <vector>;
 export namespace mw {
 inline namespace system {
 
-class AppConfig
-{
-public:
-    std::string windowTitle;
-    IVec2 windowPos;
-    IVec2 windowSize;
-};
-
 class App : public Object, public IWindowEventHandler
 {
     static App* _instance;
@@ -48,7 +40,7 @@ public:
     gptr<ApplicationDispatcher> GetDispatcher();
     
     // only works on desktop platforms
-    gptr<Window> CreateWindow(const std::string title, const IVec2& pos, const IVec2& size);
+    gptr<Window> CreateWindow(const WindowConfig& config);
     const gvector<wgptr<Window>>& GetWindows();
     void GetWindows(gvector<gptr<Window>>& windows);
     gptr<Window> GetMainWindow();
@@ -56,7 +48,7 @@ public:
     void SetAssetLibrary(const gptr<AssetLibrary>& assetLibrary);
     gptr<AssetLibrary> GetAssetLibrary();
 
-    virtual void OnInitialize(AppConfig& config) {}
+    virtual void OnInitialize(WindowConfig& config) {}
     virtual void OnStart() {}
     virtual void OnActivate() {}
     virtual void OnDeactivate() {}

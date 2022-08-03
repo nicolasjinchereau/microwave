@@ -1,0 +1,15 @@
+{
+  "sourcePath": "Textures/Player.png",
+  "artifacts": [
+    {
+      "uuid": "b9563f1bc43b45beba3c7edb4ab060f9",
+      "assetType": "Texture",
+      "sourcePath": "Textures/Player.png"
+    }
+  ],
+  "settings": {
+    "fileFormat": "PNG",
+    "wrapMode": "Repeat",
+    "filterMode": "Bilinear"
+  }
+}

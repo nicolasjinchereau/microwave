@@ -88,6 +88,7 @@ public:
     PixelDataFormat GetFormat() const;
 
     std::span<std::byte> GetData();
+    std::span<const std::byte> GetData() const;
     std::byte* GetPixel(uint32_t x, uint32_t y);
 
     // 'format' of 'Unspecified' uses original format
@@ -97,6 +98,12 @@ public:
         std::byte* src, IVec2 srcSize, IntRect srcRect, PixelDataFormat srcFormat,
         std::byte* dst, IVec2 dstSize, IVec2 dstPos, PixelDataFormat dstFormat,
         bool flipVertically = false);
+
+    static void FlipVertical(
+        std::byte* buffer, IVec2 size, PixelDataFormat format);
+
+    static void FlipVertical(
+        const std::byte* src, std::byte* dst, IVec2 size, PixelDataFormat format);
 
     static ImageFileFormat GetFormatForFile(const path& filename);
 };

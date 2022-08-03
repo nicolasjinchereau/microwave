@@ -15,6 +15,7 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Test</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -44,7 +45,6 @@
     <OutDir>..\..\bin\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>..\..\obj\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>Test</TargetName>
-    <TargetExt>.exe</TargetExt>
     <ExternalIncludePath>..\..\..\core\source;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -52,7 +52,6 @@
     <OutDir>..\..\bin\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>..\..\obj\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>Test</TargetName>
-    <TargetExt>.exe</TargetExt>
     <ExternalIncludePath>..\..\..\core\source;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -68,7 +67,6 @@
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
-      <AdditionalModuleDependencies>..\..\..\core\bmi\$(PlatformName)\$(Configuration);%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -99,7 +97,6 @@
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
-      <AdditionalModuleDependencies>..\..\..\core\bmi\$(PlatformName)\$(Configuration);%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

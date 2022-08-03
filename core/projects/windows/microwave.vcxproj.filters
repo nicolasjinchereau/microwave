@@ -52,6 +52,9 @@
     <Filter Include="Utilities\BinPacking">
       <UniqueIdentifier>{E6FFDE8F-D28E-6859-7BAD-7C54671B79FF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{25230e35-b42b-4ed5-85ce-d82435617f9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\MW\Audio\Internal\OpenAL.h">
@@ -830,6 +833,24 @@
     </ClCompile>
     <ClCompile Include="..\..\source\MW\System\GC.ixx">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.ixx">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\IEditor.ixx">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\Tools.ixx">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.ixx">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.cpp">
+      <Filter>Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -90,54 +90,11 @@ HWTextureOpenGL::HWTextureOpenGL(
     auto fmt = textureFormats[format];
     auto intFmt = sizedInternalFormats[format];
     auto typ = componentTypes[format];
-    gl::TexImage2D(gl::TEXTURE_2D, 0, fmt, size.x, size.y, 0, fmt, typ, data.data());
 
-    gl::GenerateMipmap(gl::TEXTURE_2D);
+    std::unique_ptr<std::byte[]> tmp = std::make_unique<std::byte[]>(byteCount);
+    Image::FlipVertical(data.data(), tmp.get(), size, format);
 
-    int minFilter = minFilters[TextureFilterMode::Bilinear];
-    int magFilter = magFilters[TextureFilterMode::Bilinear];
-    gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, minFilter);
-    gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, magFilter);
-
-    auto mode = wrapModes[TextureWrapMode::Repeat];
-    gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, mode);
-    gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, mode);
-
-    //gl::GetFloatv(gl::MAX_TEXTURE_MAX_ANISOTROPY, &maxAniso);
-    //gl::TexParameterf(gl::TEXTURE_2D, gl::TEXTURE_MAX_ANISOTROPY, anisoLevel);
-
-    gl::BindTexture(gl::TEXTURE_2D, 0);
-}
-
-HWTextureOpenGL::HWTextureOpenGL(
-    const gptr<HWContextOpenGL>& context,
-    const IVec2& size,
-    PixelDataFormat format,
-    bool dynamic,
-    const gptr<HWBuffer>& buffer)
-    : context(context)
-    , size(size)
-    , format(format)
-    , dynamic(dynamic)
-{
-    int bytesPerPixel = GetBytesPerPixel(format);
-    int byteCount = size.x * size.y * bytesPerPixel;
-
-    if (buffer->GetSize() != byteCount)
-        throw Exception("incorrect buffer size");
-
-    gl::GenTextures(1, &textureID);
-    gl::BindTexture(gl::TEXTURE_2D, textureID);
-
-    auto fmt = textureFormats[format];
-    auto intFmt = sizedInternalFormats[format];
-    auto typ = componentTypes[format];
-
-    auto buff = gpcast<HWBufferOpenGL>(buffer);
-
-    buff->Bind();
-    gl::TexImage2D(gl::TEXTURE_2D, 0, fmt, size.x, size.y, 0, fmt, typ, 0);
-    buff->ClearBinding();
+    gl::TexImage2D(gl::TEXTURE_2D, 0, fmt, size.x, size.y, 0, fmt, typ, tmp.get());
 
     gl::GenerateMipmap(gl::TEXTURE_2D);
 
@@ -182,33 +139,16 @@ void HWTextureOpenGL::SetPixels(const std::span<std::byte>& data, const IntRect&
     Assert(rect.x + rect.w <= size.x);
     Assert(rect.y + rect.h <= size.y);
 
-#if PLATFORM_IOS || PLATFORM_ANDROID
     auto fmt = textureFormats[format];
     auto type = componentTypes[format];
-    auto stride = size.x * bytesPerPixel;
+    size_t byteCount = rect.w * rect.h * bytesPerPixel;
 
-    auto pPixel = data.get() + (rect.y * size.x + rect.x) * bytesPerPixel;
+    std::unique_ptr<std::byte[]> tmp = std::make_unique<std::byte[]>(byteCount);
+    Image::FlipVertical(data.data(), tmp.get(), rect.GetSize(), format);
 
-    for (int y = 0; y < rect.h; ++y)
-    {
-        gl::TexSubImage2D(gl::TEXTURE_2D, 0, rect.x, rect.y + y, rect.w, 1, fmt, type, pPixel);
-        pPixel += stride;
-    }
-#else
-    // affects reading from client memory
-    //gl::PixelStorei(gl::UNPACK_SKIP_ROWS, rect.y);
-    //gl::PixelStorei(gl::UNPACK_SKIP_PIXELS, rect.x);
-    //gl::PixelStorei(gl::UNPACK_ROW_LENGTH, size.x);
-    //gl::PixelStorei(gl::UNPACK_ROW_LENGTH, rect.w);
-
-    auto fmt = textureFormats[format];
-    auto type = componentTypes[format];
-    gl::TexSubImage2D(gl::TEXTURE_2D, 0, rect.x, rect.y, rect.w, rect.h, fmt, type, data.data());
-
-    //gl::PixelStorei(gl::UNPACK_SKIP_ROWS, 0);
-    //gl::PixelStorei(gl::UNPACK_SKIP_PIXELS, 0);
-    //gl::PixelStorei(gl::UNPACK_ROW_LENGTH, 0);
-#endif
+    gl::TexSubImage2D(gl::TEXTURE_2D, 0,
+        rect.x, (size.y - 1) - (rect.y + rect.h - 1), rect.w, rect.h,
+        fmt, type, tmp.get());
 
     gl::GenerateMipmap(gl::TEXTURE_2D);
 

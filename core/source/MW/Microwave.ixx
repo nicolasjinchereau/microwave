@@ -10,4 +10,5 @@ export import Microwave.IO;
 export import Microwave.Math;
 export import Microwave.SceneGraph;
 export import Microwave.System;
+export import Microwave.Tools;
 export import Microwave.Utilities;

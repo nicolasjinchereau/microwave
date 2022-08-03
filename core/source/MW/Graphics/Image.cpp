@@ -3,7 +3,7 @@
 *--------------------------------------------------------------*/
 
 module Microwave.Graphics.Image;
-import Microwave.Graphics.GraphicsTypes; 
+import Microwave.Graphics.GraphicsTypes;
 import Microwave.IO.File;
 import Microwave.IO.FileStream;
 import Microwave.Math;
@@ -968,9 +968,8 @@ void Image::FlipHorizontally()
 
 }
 
-void Image::FlipVertically()
-{
-
+void Image::FlipVertically() {
+    FlipVertical(data.get(), size, format);
 }
 
 PixelDataFormat Image::GetFormat() const {
@@ -983,6 +982,11 @@ IVec2 Image::GetSize() const {
 
 std::span<std::byte> Image::GetData() {
     return std::span<std::byte>(data.get(), size.x * size.y * GetBytesPerPixel(format));
+}
+
+std::span<const std::byte> Image::GetData() const {
+    auto p = const_cast<const std::byte*>(data.get());
+    return std::span<const std::byte>(p, size.x * size.y * GetBytesPerPixel(format));
 }
 
 std::byte* Image::GetPixel(uint32_t x, uint32_t y) {
@@ -1312,6 +1316,42 @@ void Image::Blit(
         std::byte* srcEnd = srcBegin + copyWidth * srcChannels;
         std::byte* dstBegin = &dst[(dstY * dstSize.x + dstX) * dstChannels];
         convertFunc(srcBegin, srcEnd, dstBegin);
+    }
+}
+
+void Image::FlipVertical(
+    std::byte* buffer, IVec2 size, PixelDataFormat format)
+{
+    if (format == PixelDataFormat::Unspecified)
+        throw Exception("format cannot be 'Unspecified'");
+
+    int y1 = 0;
+    int y2 = size.y - 1;
+    int stride = size.x * GetBytesPerPixel(format);
+
+    while (y1 < y2)
+    {
+        std::byte* row1 = buffer + (y1++) * stride;
+        std::byte* row2 = buffer + (y2--) * stride;
+        std::swap_ranges(row1, row1 + stride, row2);
+    }
+}
+
+void Image::FlipVertical(
+    const std::byte* src, std::byte* dst, IVec2 size, PixelDataFormat format)
+{
+    if (format == PixelDataFormat::Unspecified)
+        throw Exception("format cannot be 'Unspecified'");
+
+    int y1 = 0;
+    int y2 = size.y - 1;
+    int stride = size.x * GetBytesPerPixel(format);
+
+    while (y1 != size.y)
+    {
+        const std::byte* row1 = src + (y1++) * stride;
+        std::byte*       row2 = dst + (y2--) * stride;
+        std::copy(row1, row1 + stride, row2);
     }
 }
 

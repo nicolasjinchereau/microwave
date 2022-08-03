@@ -57,14 +57,13 @@ gptr<Window> App::GetMainWindow()
     return _mainWindow;
 }
 
-gptr<Window> App::CreateWindow(
-    const std::string title, const IVec2& pos, const IVec2& size)
+gptr<Window> App::CreateWindow(const WindowConfig& config)
 {
 #if PLATFORM_IOS || PLATFORM_ANDROID
     throw Exception("Creating windows is not supported on this platform. Please use `App::GetMainWindow`.");
 #endif
 
-    auto window = Window::New(title, pos, size);
+    auto window = Window::New(config);
     FlushWindowList();
     _allWindows.push_back(window);
     return window;
@@ -116,7 +115,7 @@ int App::Run(int argc, char *argv[])
     auto dispatcher = app->GetDispatcher();
     Dispatcher::SetCurrent(dispatcher);
 
-    gptr<AppConfig> config = gpnew<AppConfig>();
+    gptr<WindowConfig> config = gpnew<WindowConfig>();
 
     DoCollection();
     
@@ -125,7 +124,7 @@ int App::Run(int argc, char *argv[])
     });
 
     dispatcher->InvokeAsync([app, config]{
-        auto window = Window::New(config->windowTitle, config->windowPos, config->windowSize);
+        auto window = Window::New(*config);
         app->_allWindows.push_back(window);
         app->SetMainWindow(window);
         window->Show();

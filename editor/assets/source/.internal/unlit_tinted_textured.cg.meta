@@ -1,0 +1,11 @@
+{
+  "sourcePath": ".internal/unlit_tinted_textured.cg",
+  "artifacts": [
+    {
+      "uuid": "e705f29115b142bba7d91e06e4304db4",
+      "assetType": "Shader",
+      "sourcePath": ".internal/unlit_tinted_textured.cg"
+    }
+  ],
+  "settings": {}
+}
