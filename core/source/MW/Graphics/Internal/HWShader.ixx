@@ -10,7 +10,7 @@ import Microwave.Graphics.ShaderInfo;
 import Microwave.Math;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <cstdint>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -25,7 +25,7 @@ public:
 
     virtual void Bind() = 0;
     virtual void Unbind() = 0;
-    virtual void SetVertexBuffer(int id, const gptr<Buffer>& buffer, size_t offset, size_t stride) = 0;
+    virtual void SetVertexBuffer(int id, const gptr<Buffer>& buffer, std::size_t offset, std::size_t stride) = 0;
     virtual void SetIndexBuffer(const gptr<Buffer>& buffer) = 0;
     virtual void SetUniform(int id, float value) = 0;
     virtual void SetUniform(int id, const Vec2& value) = 0;

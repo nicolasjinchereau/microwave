@@ -5,12 +5,7 @@
 export module Microwave.Audio.AudioSample;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <cstddef>;
-import <cstdint>;
-import <span>;
-import <stdexcept>;
-import <type_traits>;
-import <algorithm>;
+import std;
 
 export namespace mw {
 inline namespace audio {
@@ -54,7 +49,7 @@ inline IntType FloatToInt(double value)
 }
 
 template<auto IntMax, typename FloatType> requires std::is_floating_point_v<FloatType>
-inline FloatType IntToFloat(int64_t value)
+inline FloatType IntToFloat(std::int64_t value)
 {
     auto m = IntMax;
     if (value < 0) m += 1;
@@ -69,11 +64,11 @@ inline void ConvertSample(
 {
     union {
         std::byte bytes[8];
-        int8_t int8Value;
-        int16_t int16Value;
-        int32_t int24Value;
-        int32_t int32Value;
-        int64_t int64Value;
+        std::int8_t int8Value;
+        std::int16_t int16Value;
+        std::int32_t int24Value;
+        std::int32_t int32Value;
+        std::int64_t int64Value;
         float float32Value;
         double float64Value;
     } sample;
@@ -90,26 +85,26 @@ inline void ConvertSample(
     if (sourceType == SampleType::Int8)
     {
         std::copy(source.data(), source.data() + 1, sample.bytes);
-        int8_t value = sample.int8Value;
+        std::int8_t value = sample.int8Value;
 
         if (resultType == SampleType::Int8) {
             sample.int8Value = value;
             std::copy(sample.bytes, sample.bytes + 1, result.data());
         }
         else if (resultType == SampleType::Int16) {
-            sample.int16Value = (int16_t)(0x100 * value);
+            sample.int16Value = (std::int16_t)(0x100 * value);
             std::copy(sample.bytes, sample.bytes + 2, result.data());
         }
         else if (resultType == SampleType::Int24) {
-            sample.int24Value = (int32_t)(0x10000 * value);
+            sample.int24Value = (std::int32_t)(0x10000 * value);
             std::copy(sample.bytes, sample.bytes + 3, result.data());
         }
         else if (resultType == SampleType::Int32) {
-            sample.int32Value = (int32_t)(0x1000000 * value);
+            sample.int32Value = (std::int32_t)(0x1000000 * value);
             std::copy(sample.bytes, sample.bytes + 4, result.data());
         }
         else if (resultType == SampleType::Int64) {
-            sample.int64Value = (int64_t)(0x100000000000000 * value);
+            sample.int64Value = (std::int64_t)(0x100000000000000 * value);
             std::copy(sample.bytes, sample.bytes + 8, result.data());
         }
         else if (resultType == SampleType::Float32) {
@@ -124,10 +119,10 @@ inline void ConvertSample(
     else if (sourceType == SampleType::Int16)
     {
         std::copy(source.data(), source.data() + 2, sample.bytes);
-        int16_t value = sample.int16Value;
+        std::int16_t value = sample.int16Value;
 
         if (resultType == SampleType::Int8) {
-            sample.int8Value = (int8_t)(value / 0x100);
+            sample.int8Value = (std::int8_t)(value / 0x100);
             std::copy(sample.bytes, sample.bytes + 1, result.data());
         }
         else if (resultType == SampleType::Int16) {
@@ -135,15 +130,15 @@ inline void ConvertSample(
             std::copy(sample.bytes, sample.bytes + 2, result.data());
         }
         else if (resultType == SampleType::Int24) {
-            sample.int24Value = (int32_t)(0x100 * value);
+            sample.int24Value = (std::int32_t)(0x100 * value);
             std::copy(sample.bytes, sample.bytes + 3, result.data());
         }
         else if (resultType == SampleType::Int32) {
-            sample.int32Value = (int32_t)(0x10000 * value);
+            sample.int32Value = (std::int32_t)(0x10000 * value);
             std::copy(sample.bytes, sample.bytes + 4, result.data());
         }
         else if (resultType == SampleType::Int64) {
-            sample.int64Value = (int64_t)(0x1000000000000 * value);
+            sample.int64Value = (std::int64_t)(0x1000000000000 * value);
             std::copy(sample.bytes, sample.bytes + 8, result.data());
         }
         else if (resultType == SampleType::Float32) {
@@ -159,14 +154,14 @@ inline void ConvertSample(
     {
         std::copy(source.data(), source.data() + 3, sample.bytes);
         sample.bytes[3] = std::byte(0);
-        int32_t value = sample.int24Value;
+        std::int32_t value = sample.int24Value;
 
         if (resultType == SampleType::Int8) {
-            sample.int8Value = (int8_t)(value / 0x10000);
+            sample.int8Value = (std::int8_t)(value / 0x10000);
             std::copy(sample.bytes, sample.bytes + 1, result.data());
         }
         else if (resultType == SampleType::Int16) {
-            sample.int16Value = (int16_t)(value / 0x100);
+            sample.int16Value = (std::int16_t)(value / 0x100);
             std::copy(sample.bytes, sample.bytes + 2, result.data());
         }
         else if (resultType == SampleType::Int24) {
@@ -174,11 +169,11 @@ inline void ConvertSample(
             std::copy(sample.bytes, sample.bytes + 3, result.data());
         }
         else if (resultType == SampleType::Int32) {
-            sample.int32Value = (int32_t)(0x100 * value);
+            sample.int32Value = (std::int32_t)(0x100 * value);
             std::copy(sample.bytes, sample.bytes + 4, result.data());
         }
         else if (resultType == SampleType::Int64) {
-            sample.int64Value = (int64_t)(0x10000000000 * value);
+            sample.int64Value = (std::int64_t)(0x10000000000 * value);
             std::copy(sample.bytes, sample.bytes + 8, result.data());
         }
         else if (resultType == SampleType::Float32) {
@@ -193,18 +188,18 @@ inline void ConvertSample(
     else if (sourceType == SampleType::Int32)
     {
         std::copy(source.data(), source.data() + 4, sample.bytes);
-        int32_t value = sample.int32Value;
+        std::int32_t value = sample.int32Value;
 
         if (resultType == SampleType::Int8) {
-            sample.int8Value = (int8_t)(value / 0x1000000);
+            sample.int8Value = (std::int8_t)(value / 0x1000000);
             std::copy(sample.bytes, sample.bytes + 1, result.data());
         }
         else if (resultType == SampleType::Int16) {
-            sample.int16Value = (int16_t)(value / 0x10000);
+            sample.int16Value = (std::int16_t)(value / 0x10000);
             std::copy(sample.bytes, sample.bytes + 2, result.data());
         }
         else if (resultType == SampleType::Int24) {
-            sample.int24Value = (int32_t)(value / 0x100);
+            sample.int24Value = (std::int32_t)(value / 0x100);
             std::copy(sample.bytes, sample.bytes + 3, result.data());
         }
         else if (resultType == SampleType::Int32) {
@@ -212,7 +207,7 @@ inline void ConvertSample(
             std::copy(sample.bytes, sample.bytes + 4, result.data());
         }
         else if (resultType == SampleType::Int64) {
-            sample.int64Value = (int64_t)(0x100000000 * value);
+            sample.int64Value = (std::int64_t)(0x100000000 * value);
             std::copy(sample.bytes, sample.bytes + 8, result.data());
         }
         else if (resultType == SampleType::Float32) {
@@ -227,22 +222,22 @@ inline void ConvertSample(
     else if (sourceType == SampleType::Int64)
     {
         std::copy(source.data(), source.data() + 8, sample.bytes);
-        int64_t value = sample.int64Value;
+        std::int64_t value = sample.int64Value;
 
         if (resultType == SampleType::Int8) {
-            sample.int8Value = (int8_t)(value / 0x100000000000000);
+            sample.int8Value = (std::int8_t)(value / 0x100000000000000);
             std::copy(sample.bytes, sample.bytes + 1, result.data());
         }
         else if (resultType == SampleType::Int16) {
-            sample.int16Value = (int16_t)(value / 0x1000000000000);
+            sample.int16Value = (std::int16_t)(value / 0x1000000000000);
             std::copy(sample.bytes, sample.bytes + 2, result.data());
         }
         else if (resultType == SampleType::Int24) {
-            sample.int24Value = (int32_t)(value / 0x10000000000);
+            sample.int24Value = (std::int32_t)(value / 0x10000000000);
             std::copy(sample.bytes, sample.bytes + 3, result.data());
         }
         else if (resultType == SampleType::Int32) {
-            sample.int32Value = (int32_t)(value / 0x100000000);
+            sample.int32Value = (std::int32_t)(value / 0x100000000);
             std::copy(sample.bytes, sample.bytes + 4, result.data());
         }
         else if (resultType == SampleType::Int64) {
@@ -264,23 +259,23 @@ inline void ConvertSample(
         float value = sample.float32Value;
 
         if (resultType == SampleType::Int8) {
-            sample.int8Value = FloatToInt<0x7F, int8_t>(value);
+            sample.int8Value = FloatToInt<0x7F, std::int8_t>(value);
             std::copy(sample.bytes, sample.bytes + 1, result.data());
         }
         else if (resultType == SampleType::Int16) {
-            sample.int16Value = FloatToInt<0x7FFF, int16_t>(value);
+            sample.int16Value = FloatToInt<0x7FFF, std::int16_t>(value);
             std::copy(sample.bytes, sample.bytes + 2, result.data());
         }
         else if (resultType == SampleType::Int24) {
-            sample.int24Value = FloatToInt<0x7FFFFF, int32_t>(value);
+            sample.int24Value = FloatToInt<0x7FFFFF, std::int32_t>(value);
             std::copy(sample.bytes, sample.bytes + 3, result.data());
         }
         else if (resultType == SampleType::Int32) {
-            sample.int32Value = FloatToInt<0x7FFFFFFF, int32_t>(value);
+            sample.int32Value = FloatToInt<0x7FFFFFFF, std::int32_t>(value);
             std::copy(sample.bytes, sample.bytes + 4, result.data());
         }
         else if (resultType == SampleType::Int64) {
-            sample.int64Value = FloatToInt<0x7FFFFFFFFFFFFFFF, int64_t>(value);
+            sample.int64Value = FloatToInt<0x7FFFFFFFFFFFFFFF, std::int64_t>(value);
             std::copy(sample.bytes, sample.bytes + 8, result.data());
         }
         else if (resultType == SampleType::Float32) {
@@ -298,23 +293,23 @@ inline void ConvertSample(
         double value = sample.float64Value;
 
         if (resultType == SampleType::Int8) {
-            sample.int8Value = FloatToInt<0x7F, int8_t>(value);
+            sample.int8Value = FloatToInt<0x7F, std::int8_t>(value);
             std::copy(sample.bytes, sample.bytes + 1, result.data());
         }
         else if (resultType == SampleType::Int16) {
-            sample.int16Value = FloatToInt<0x7FFF, int16_t>(value);
+            sample.int16Value = FloatToInt<0x7FFF, std::int16_t>(value);
             std::copy(sample.bytes, sample.bytes + 2, result.data());
         }
         else if (resultType == SampleType::Int24) {
-            sample.int24Value = FloatToInt<0x7FFFFF, int32_t>(value);
+            sample.int24Value = FloatToInt<0x7FFFFF, std::int32_t>(value);
             std::copy(sample.bytes, sample.bytes + 3, result.data());
         }
         else if (resultType == SampleType::Int32) {
-            sample.int32Value = FloatToInt<0x7FFFFFFF, int32_t>(value);
+            sample.int32Value = FloatToInt<0x7FFFFFFF, std::int32_t>(value);
             std::copy(sample.bytes, sample.bytes + 4, result.data());
         }
         else if (resultType == SampleType::Int64) {
-            sample.int64Value = FloatToInt<0x7FFFFFFFFFFFFFFF, int64_t>(value);
+            sample.int64Value = FloatToInt<0x7FFFFFFFFFFFFFFF, std::int64_t>(value);
             std::copy(sample.bytes, sample.bytes + 8, result.data());
         }
         else if (resultType == SampleType::Float32) {

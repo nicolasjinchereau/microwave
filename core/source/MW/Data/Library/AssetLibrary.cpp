@@ -31,11 +31,7 @@ import Microwave.System.ThreadPool;
 import Microwave.System.UUID;
 import Microwave.SceneGraph.Node;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <memory>;
-import <optional>;
-import <string>;
-import <unordered_map>;
+import std;
 
 namespace mw {
 inline namespace data {

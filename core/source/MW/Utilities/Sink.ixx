@@ -4,8 +4,7 @@
 
 export module Microwave.Utilities.Sink;
 import Microwave.System.Pointers;
-import <vector>;
-import <utility>;
+import std;
 
 export namespace mw {
 inline namespace utilities {

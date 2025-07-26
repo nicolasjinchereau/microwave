@@ -8,8 +8,7 @@ import Microwave.SceneGraph.Node;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <string>;
-import <utility>;
+import std;
 
 namespace mw {
 inline namespace gfx {

@@ -7,8 +7,7 @@ import Microwave.SceneGraph.Components.AudioSource;
 import Microwave.System.Pointers;
 import Microwave.System.Spinlock;
 import <MW/System/Debug.h>;
-import <memory>;
-import <mutex>;
+import std;
 
 namespace mw {
 inline namespace audio {

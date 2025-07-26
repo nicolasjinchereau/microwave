@@ -12,8 +12,7 @@ import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
-import <span>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace gfx {

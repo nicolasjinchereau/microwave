@@ -10,11 +10,11 @@ namespace mw {
 inline namespace utilities {
 inline namespace binpacking {
 
-BSPNodeAllocator::BSPNodeAllocator(uint32_t initialCapacity)
+BSPNodeAllocator::BSPNodeAllocator(std::uint32_t initialCapacity)
 {
     pool.reserve(initialCapacity);
 
-    for (uint32_t i = 0; i < initialCapacity; ++i)
+    for (std::uint32_t i = 0; i < initialCapacity; ++i)
         pool.push_back(BSPNode::Allocate() );
 }
 

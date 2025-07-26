@@ -7,11 +7,7 @@ import Microwave.Graphics.RenderTarget;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.SceneGraph.LayerMask;
 import Microwave.SceneGraph.Node;
-import <array>;
-import <cstddef>;
-import <cstdint>;
-import <ranges>;
-import <span>;
+import std;
 
 namespace mw {
 inline namespace scene {
@@ -82,11 +78,11 @@ LayerMask Camera::GetCullingMask() const {
     return _cullingMask;
 }
 
-void Camera::SetRenderOrder(uint32_t order) {
+void Camera::SetRenderOrder(std::uint32_t order) {
     _renderOrder = order;
 }
 
-uint32_t Camera::GetRenderOrder() const {
+std::uint32_t Camera::GetRenderOrder() const {
     return _renderOrder;
 }
 
@@ -113,7 +109,7 @@ bool Camera::CanSee(const std::span<Vec3>& vertices) const
     {
         bool inside = false;
 
-        for (size_t i = 0; i < vertices.size(); ++i)
+        for (std::size_t i = 0; i < vertices.size(); ++i)
         {
             if (_frustumPlanes[p].InFront(vertices[i]))
             {

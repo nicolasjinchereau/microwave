@@ -4,8 +4,7 @@
 
 export module Test.WinScreen;
 import Microwave;
-import <vector>;
-import <string>;
+import std;
 
 using namespace mw;
 

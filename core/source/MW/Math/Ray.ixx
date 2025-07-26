@@ -7,8 +7,7 @@ import Microwave.Math.Vec3;
 import Microwave.Math.Plane;
 import Microwave.Math.Triangle;
 import Microwave.Math.Sphere;
-import <cmath>;
-import <limits>;
+import std;
 
 export namespace mw {
 inline namespace math {

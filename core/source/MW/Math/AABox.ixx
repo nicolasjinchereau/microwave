@@ -7,8 +7,7 @@ import Microwave.Math.Vec3;
 import Microwave.Math.Vec4;
 import Microwave.Math.Mat4;
 import Microwave.Math.Operators;
-import <array>;
-import <utility>;
+import std;
 
 export namespace mw {
 inline namespace math {

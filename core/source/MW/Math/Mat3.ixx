@@ -4,10 +4,7 @@
 
 export module Microwave.Math.Mat3;
 import Microwave.Math.Vec3;
-import <algorithm>;
-import <cmath>;
-import <limits>;
-import <ostream>;
+import std;
 
 export namespace mw {
 inline namespace math {

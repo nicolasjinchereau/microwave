@@ -208,7 +208,7 @@ void Animator::Sample()
     // apply influences
     for(auto& [path, inf] : influences)
     {
-        if (inf.weight >= FLT_EPSILON)
+        if (inf.weight >= std::numeric_limits<float>::epsilon())
         {
             inf.localPos /= inf.weight;
             //inf.localRot /= inf.weight;
@@ -265,7 +265,7 @@ void Animator::Blend(std::string_view clipName, float targetWeight, float fadeLe
     state.fadingOut = false;
     state.targetWeight = targetWeight;
 
-    if (abs(state.targetWeight - state.weight) >= FLT_EPSILON)
+    if (abs(state.targetWeight - state.weight) >= std::numeric_limits<float>::epsilon())
     {
         state.weightFadeRate = 1.0f / fadeLength;
     }
@@ -286,7 +286,7 @@ void Animator::CrossFade(std::string_view clipName, float fadeLength)
             state->fadingOut = false;
             state->targetWeight = 1.0f;
 
-            if(abs(state->targetWeight - state->weight) >= FLT_EPSILON)
+            if(abs(state->targetWeight - state->weight) >= std::numeric_limits<float>::epsilon())
             {
                 state->weightFadeRate = 1.0f / fadeLength;
             }
@@ -300,7 +300,7 @@ void Animator::CrossFade(std::string_view clipName, float fadeLength)
         {
             state->targetWeight = 0.0f;
 
-            if (abs(state->targetWeight - state->weight) >= FLT_EPSILON)
+            if (abs(state->targetWeight - state->weight) >= std::numeric_limits<float>::epsilon())
             {
                 state->weightFadeRate = 1.0f / fadeLength;
                 state->fadingOut = true;

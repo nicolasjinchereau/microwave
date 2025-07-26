@@ -2,12 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/Audio/Internal/OpenAL.h>
+
 module Microwave.Audio.Internal.AudioContextOpenAL;
 import Microwave.Audio.AudioContext;
 import Microwave.SceneGraph.Components.AudioSource;
 import Microwave.System.Exception;
 import Microwave.System.Pointers;
-import <MW/Audio/Internal/OpenAL.h>;
+
 
 namespace mw {
 inline namespace audio {

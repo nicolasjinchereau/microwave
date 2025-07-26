@@ -2,18 +2,17 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 module Microwave.Graphics.Internal.HWTextureD3D11;
 import Microwave.Graphics.Image;
 import Microwave.Graphics.Internal.HWContextD3D11;
 import Microwave.Graphics.Internal.HWBufferD3D11;
 import Microwave.Math;
 import Microwave.System.Exception;
-import <MW/System/Internal/PlatformHeaders.h>;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <regex>;
-import <stdexcept>;
-import <unordered_map>;
+import std;
 
 namespace mw {
 inline namespace gfx {

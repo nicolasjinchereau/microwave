@@ -17,9 +17,7 @@ import Microwave.Graphics.Internal.HWTexture;
 import Microwave.Math;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <cstddef>;
-import <cstdlib>;
-import <span>;
+import std;
 
 export namespace mw {
 inline namespace gfx {

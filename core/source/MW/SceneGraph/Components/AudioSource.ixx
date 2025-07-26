@@ -8,12 +8,7 @@ import Microwave.Audio.AudioClip;
 import Microwave.Audio.AudioStream;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <array>;
-import <atomic>;
-import <cstddef>;
-import <cstdint>;
-import <mutex>;
-import <vector>;
+import std;
 
 export namespace mw {
 
@@ -31,19 +26,19 @@ public:
     constexpr static int BufferSize = 8192;
 
     std::mutex mut;
-    uint32_t source = 0;
+    std::uint32_t source = 0;
     int bufferFormat = 0;
     int sampleRate = 0;
     gptr<AudioStream> stream;
     std::atomic<bool> looping;
     std::atomic<int> buffersCompleted;
 
-    std::array<uint32_t, BufferCount> bufferIDs;
+    std::array<std::uint32_t, BufferCount> bufferIDs;
     std::vector<std::byte> data;
     
     void QueueBuffers(int count);
 
-    void Initialize(uint32_t source, const gptr<AudioClip>& clip);
+    void Initialize(std::uint32_t source, const gptr<AudioClip>& clip);
     void Terminate();
 
     void StartBuffering();
@@ -56,7 +51,7 @@ class AudioSource : public Component
 {
     inline static Type::Pin<AudioSource> pin;
 
-    uint32_t source = 0;
+    std::uint32_t source = 0;
     gptr<AudioClip> clip;
     wgptr<AudioContext> context;
     bool looping = false;

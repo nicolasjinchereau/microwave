@@ -2,6 +2,9 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 module Microwave.Graphics.Texture;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.Image;
@@ -9,10 +12,8 @@ import Microwave.Graphics.Internal.HWTexture;
 import Microwave.IO.Terminal;
 import Microwave.System.Exception;
 import Microwave.System.ThreadPool;
-import <MW/System/Internal/PlatformHeaders.h>;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <chrono>;
+import std;
 
 namespace mw {
 inline namespace gfx {

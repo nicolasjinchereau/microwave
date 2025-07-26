@@ -4,9 +4,10 @@
 
 module Microwave.Graphics.Mesh;
 import Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.GraphicsTypes;
+import Microwave.Graphics.Internal.HWBuffer;
 import Microwave.System.Exception;
-import <algorithm>;
-import <unordered_map>;
+import std;
 
 namespace mw {
 inline namespace gfx {
@@ -51,9 +52,9 @@ void Mesh::RecalcBounds()
     {
         Vec3 vmin = vertices[0];
         Vec3 vmax = vertices[0];
-        size_t nVerts = vertices.size();
+        std::size_t nVerts = vertices.size();
 
-        for (size_t v = 1; v < nVerts; v++)
+        for (std::size_t v = 1; v < nVerts; v++)
         {
             vmin.x = std::min(vmin.x, vertices[v].x);
             vmin.y = std::min(vmin.y, vertices[v].y);
@@ -67,7 +68,7 @@ void Mesh::RecalcBounds()
         Vec3 center = vmin + extents;
         float radius = 0.0f;
 
-        for (size_t v = 0; v < nVerts; v++)
+        for (std::size_t v = 0; v < nVerts; v++)
             radius = std::max(radius, (vertices[v] - center).LengthSq());
 
         if (radius > 0.0f)

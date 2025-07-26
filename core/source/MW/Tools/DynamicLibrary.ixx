@@ -3,9 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Tools.DynamicLibrary;
-import <cstddef>;
-import <cstdint>;
-import <string>;
+import std;
 
 export namespace mw {
 inline namespace tools {

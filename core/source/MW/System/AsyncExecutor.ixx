@@ -6,13 +6,7 @@ export module Microwave.System.AsyncExecutor;
 import Microwave.System.Dispatcher;
 import Microwave.System.Executor;
 import Microwave.System.Pointers;
-import <atomic>;
-import <condition_variable>;
-import <deque>;
-import <functional>;
-import <memory>;
-import <mutex>;
-import <thread>;
+import std;
 
 export namespace mw {
 inline namespace system {

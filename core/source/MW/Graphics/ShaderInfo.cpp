@@ -8,7 +8,7 @@ import <HLSLParser.h>;
 import <GLSLGenerator.h>;
 import <HLSLGenerator.h>;
 import <MSLGenerator.h>;
-import <regex>;
+import std;
 
 using namespace M4;
 
@@ -214,7 +214,7 @@ ShaderInfo::ShaderInfo(const std::string& source, ShaderLanguage lang)
         }
     }
 
-    for (size_t i = 0; i < this->attributes.size(); ++i) {
+    for (std::size_t i = 0; i < this->attributes.size(); ++i) {
         this->attribIDs[ this->attributes[i].name ] = i;
     }
 

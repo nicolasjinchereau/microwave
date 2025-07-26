@@ -18,9 +18,7 @@ import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.UUID;
 import <MW/System/Debug.h>;
-import <cstdint>;
-import <string>;
-import <unordered_map>;
+import std;
 
 namespace mw {
 inline namespace gfx {

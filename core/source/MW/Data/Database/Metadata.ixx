@@ -4,9 +4,7 @@ import Microwave.System.Json;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.UUID;
-import <cstdint>;
-import <unordered_map>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace data {
@@ -28,13 +26,13 @@ struct AssetMetadata
 
 struct ArtifactRecord
 {
-    uint64_t lastModified = 0;
+    std::uint64_t lastModified = 0;
 };
 
 struct AssetRecord
 {
-    uint64_t sourceLastModified = 0;
-    uint64_t metaLastModified = 0;
+    std::uint64_t sourceLastModified = 0;
+    std::uint64_t metaLastModified = 0;
     std::unordered_map<UUID, ArtifactRecord> artifactRecords;
 };
 

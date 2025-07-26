@@ -16,8 +16,7 @@ import Microwave.System.Object;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.Task;
-import <stdexcept>;
-import <string>;
+import std;
 
 namespace mw {
 inline namespace data {

@@ -2,10 +2,12 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 module Microwave.System.Internal.ApplicationDispatcherWindows;
 import Microwave.System.Exception;
-import <MW/System/Internal/PlatformHeaders.h>;
-import <chrono>;
+import std;
 
 constexpr int WM_DISPATCHER_QUIT = WM_APP + 1;
 constexpr int WM_DISPATCHER_WAKE = WM_APP + 100;
@@ -237,7 +239,7 @@ void ApplicationDispatcherWindows::UpdateActionTimer()
         {
             // TODO: figure out what to do about USER_TIMER_MINIMUM (SetTimer rounds up to this - 10ms)
             auto timeout = std::chrono::duration_cast<std::chrono::milliseconds>(when - now).count();
-            timerID = (uint64_t)SetTimer(hWndMsg, (UINT_PTR)1001, (UINT)timeout, NULL);
+            timerID = (std::uint64_t)SetTimer(hWndMsg, (UINT_PTR)1001, (UINT)timeout, NULL);
         }
     }
 }

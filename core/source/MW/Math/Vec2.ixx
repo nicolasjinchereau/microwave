@@ -5,8 +5,7 @@
 export module Microwave.Math.Vec2;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <ostream>;
-import <cmath>;
+import std;
 
 export namespace mw {
 inline namespace math {
@@ -27,12 +26,12 @@ public:
     Vec2() : Vec2(0, 0) { }
     Vec2(float x, float y) : x(x), y(y) { }
 
-    float& operator[](size_t index) {
+    float& operator[](std::size_t index) {
         Assert(index >= 0 && index < 2);
         return ((float*)this)[index];
     }
 
-    float operator[](size_t index) const {
+    float operator[](std::size_t index) const {
         return (*(Vec2*)this)[index];
     }
 

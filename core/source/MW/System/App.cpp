@@ -10,10 +10,10 @@ import Microwave.Graphics;
 import Microwave.System.Dispatcher;
 import Microwave.System.Exception;
 import Microwave.System.GC;
+import Microwave.System.Task;
 import Microwave.System.ThreadPool;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <stdexcept>;
+import std;
 
 namespace mw {
 inline namespace system {
@@ -27,6 +27,7 @@ gptr<App> App::Get()
     
     return _instance->self(_instance);
 }
+
 App::App()
 {
     Assert(_instance == nullptr);

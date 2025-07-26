@@ -5,16 +5,7 @@
 export module Microwave.System.Dispatcher;
 import Microwave.System.Pointers;
 import Microwave.System.EventHandlerList;
-import <algorithm>;
-import <atomic>;
-import <chrono>;
-import <condition_variable>;
-import <cstdint>;
-import <deque>;
-import <functional>;
-import <mutex>;
-import <utility>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace system {
@@ -70,8 +61,8 @@ public:
     virtual void Run();
     virtual void Quit();
 
-    virtual void SetContinuousDispatchRate(uint32_t rate);
-    virtual uint32_t GetContinuousDispatchRate() const;
+    virtual void SetContinuousDispatchRate(std::uint32_t rate);
+    virtual std::uint32_t GetContinuousDispatchRate() const;
 
     virtual void AddHandler(const gptr<IDispatchHandler>& handler);
     virtual void RemoveHandler(const gptr<IDispatchHandler>& handler);
@@ -87,7 +78,7 @@ protected:
     gvector<gptr<DispatchAction>> actions;
     std::chrono::steady_clock::time_point continuousDispatchWakeTime;
     std::chrono::milliseconds continuousDispatchInterval = std::chrono::milliseconds(0);
-    uint32_t continuousDispatchRate = 0;
+    std::uint32_t continuousDispatchRate = 0;
     
     EventHandlerList<IDispatchHandler> dispatchHandlers;
     gptr<DispatchAction> continuousDispatchAction;

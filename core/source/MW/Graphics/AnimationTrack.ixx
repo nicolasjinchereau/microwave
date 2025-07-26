@@ -7,9 +7,7 @@ import Microwave.System.Exception;
 import Microwave.System.Json;
 import Microwave.Math;
 import <MW/System/Debug.h>;
-import <climits>;
-import <cstdint>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -50,7 +48,8 @@ public:
         {
             const auto& a = *(it - 1);
             const auto& b = *it;
-            Assert((b.time - a.time) >= FLT_EPSILON);
+            
+            Assert((b.time - a.time) >= std::numeric_limits<float>::epsilon());
             auto t = (time - a.time) / (b.time - a.time);
 
             Transform ret;

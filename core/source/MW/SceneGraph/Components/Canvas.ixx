@@ -12,9 +12,7 @@ import Microwave.SceneGraph.Events;
 import Microwave.System.Json;
 import Microwave.System.Pointers;
 import Microwave.System.Window;
-import <string>;
-import <unordered_map>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace scene {

@@ -7,14 +7,7 @@ import Microwave.System.Awaitable;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.System.Task;
-import <condition_variable>;
-import <exception>;
-import <functional>;
-import <memory>;
-import <mutex>;
-import <thread>;
-import <type_traits>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace system {

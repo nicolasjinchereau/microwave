@@ -4,6 +4,7 @@
 
 module;
 #include <MW/System/Internal/Platform.h>
+#include <MW/System/Internal/PlatformHeaders.h>
 
 module Microwave.Graphics.Internal.HWContextOpenGL;
 
@@ -317,7 +318,7 @@ gptr<HWShader> HWContextOpenGL::CreateShader(const gptr<ShaderInfo>& info) {
 }
 
 gptr<HWBuffer> HWContextOpenGL::CreateBuffer(
-    BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, size_t size)
+    BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, std::size_t size)
 {
     return gpnew<HWBufferOpenGL>(type, usage, cpuAccess, size);
 }

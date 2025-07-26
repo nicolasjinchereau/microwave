@@ -13,9 +13,7 @@ import Microwave.System.Pointers;
 import Microwave.System.Task;
 import Microwave.IO.MemoryStream;
 import Microwave.IO.File;
-import <cstddef>;
-import <vector>;
-import <utility>;
+import std;
 
 export namespace mw {
 inline namespace data {

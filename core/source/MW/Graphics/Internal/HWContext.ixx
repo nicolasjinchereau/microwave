@@ -58,7 +58,7 @@ public:
 
     virtual gptr<HWShader> CreateShader(const gptr<ShaderInfo>& info) = 0;
     virtual gptr<HWRenderTexture> CreateRenderTexture(const gptr<HWTexture>& tex) = 0;
-    virtual gptr<HWBuffer> CreateBuffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, size_t size) = 0;
+    virtual gptr<HWBuffer> CreateBuffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, std::size_t size) = 0;
     virtual gptr<HWBuffer> CreateBuffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, const std::span<std::byte>& data) = 0;
     virtual gptr<HWSurface> CreateSurface(const gptr<Window>& window) = 0;
     virtual gptr<HWTexture> CreateTexture(const IVec2& size, PixelDataFormat format, bool dynamic, const std::span<std::byte>& data) = 0;

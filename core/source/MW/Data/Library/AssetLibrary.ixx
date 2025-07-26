@@ -14,10 +14,7 @@ import Microwave.System.Pointers;
 import Microwave.System.SyncExecutor;
 import Microwave.System.Task;
 import Microwave.System.UUID;
-import <memory>;
-import <optional>;
-import <string>;
-import <unordered_map>;
+import std;
 
 export namespace mw {
 

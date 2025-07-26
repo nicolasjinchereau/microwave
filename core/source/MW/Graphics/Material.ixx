@@ -13,8 +13,7 @@ import Microwave.Math;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <cstdint>;
-import <string>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -54,7 +53,7 @@ public:
     CullMode cullMode = CullMode::Back;
     DepthTest depthTest = DepthTest::LessOrEqual;
     bool depthWriteEnabled = true;
-    uint32_t renderQueue = RenderQueue::Opaque;
+    std::uint32_t renderQueue = RenderQueue::Opaque;
     gptr<MaterialPropertyBlock> properties = gpnew<MaterialPropertyBlock>();
     gptr<Shader> shader;
 

@@ -6,8 +6,7 @@ export module Microwave.SceneGraph.PhysicsWorld;
 import Microwave.Math;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <unordered_map>;
-import <vector>;
+import std;
 
 export {
 class btDefaultCollisionConfiguration;

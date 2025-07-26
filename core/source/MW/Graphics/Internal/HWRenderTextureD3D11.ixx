@@ -2,12 +2,14 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 export module Microwave.Graphics.Internal.HWRenderTextureD3D11;
 import Microwave.Graphics.Internal.HWRenderTexture;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Math;
 import Microwave.System.Pointers;
-import <MW/System/Internal/PlatformHeaders.h>;
 
 template<class T>
 using ComPtr = Microsoft::WRL::ComPtr<T>;

@@ -4,27 +4,18 @@
 
 module Microwave.Data.Internal.FBXModelConverter;
 import Microwave.Data.Internal.FBXUDPParser;
+import Microwave.Graphics.Color;
+import Microwave.Graphics.Mesh;
 import Microwave.Graphics.RenderQueue;
+import Microwave.IO.Stream;
 import Microwave.IO.FileStream;
 import Microwave.Math;
 import Microwave.System.Exception;
 import Microwave.System.Path;
+import Microwave.System.Pointers;
 import <MW/Data/Internal/FBX_SDK.h>;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <cstddef>;
-import <cstdint>;
-import <iomanip>;
-import <filesystem>;
-import <map>;
-import <set>;
-import <span>;
-import <stdexcept>;
-import <string>;
-import <sstream>;
-import <vector>;
-import <unordered_map>;
-import <unordered_set>;
+import std;
 
 namespace mw {
 inline namespace data {
@@ -99,15 +90,15 @@ public:
         return true;
     }
 
-    virtual size_t Write(const void* pData, fbxsdk::FbxUInt64 pSize) {
+    virtual std::size_t Write(const void* pData, fbxsdk::FbxUInt64 pSize) {
         Assert(0); // read only
         return 0;
     }
 
-    virtual size_t Read(void* pData, fbxsdk::FbxUInt64 pSize) const
+    virtual std::size_t Read(void* pData, fbxsdk::FbxUInt64 pSize) const
     {
         std::byte* pBuffer = (std::byte*)pData;
-        return stream->Read(std::span<std::byte>(pBuffer, (size_t)pSize));
+        return stream->Read(std::span<std::byte>(pBuffer, (std::size_t)pSize));
     }
 
     virtual int GetReaderID() const {
@@ -141,7 +132,7 @@ public:
     }
 
     virtual void SetPosition(fbxsdk::FbxInt64 pPosition) {
-        stream->SetPosition((size_t)pPosition);
+        stream->SetPosition((std::size_t)pPosition);
     }
 
     virtual int GetError() const {
@@ -159,8 +150,8 @@ struct LoaderState
     fbxsdk::FbxAnimEvaluator* animEvaluator = nullptr;
     fbxsdk::FbxAnimLayer* fbxAnimationLayer = nullptr;
     ModelSettings* pImportSettings = nullptr;
-    gmap<uint64_t, gptr<ModelNode>> nodesByUniqueID;
-    gmap<uint64_t, gptr<ModelMesh>> meshesByUniqueID;
+    gmap<std::uint64_t, gptr<ModelNode>> nodesByUniqueID;
+    gmap<std::uint64_t, gptr<ModelMesh>> meshesByUniqueID;
     gmap<std::string, gptr<ModelMaterial>> materials; // ByName
     std::vector<ModelNode*> skinnedMeshNodes;
     NamePool meshNames;
@@ -259,7 +250,7 @@ public:
             {
                 for (auto& bone : meshNode->mesh->bones)
                 {
-                    uint64_t linkNodeID = std::stoull(bone.linkNodePath.string());
+                    std::uint64_t linkNodeID = std::stoull(bone.linkNodePath.string());
                     auto linkNode = state.nodesByUniqueID[linkNodeID];
                     bone.linkNodePath = linkNode->GetFullPath(); // path from skeleton root
                 }
@@ -300,7 +291,7 @@ public:
         Vec3 localScale = FromFBX(lTransform.GetS());
 
         auto node = gpnew<ModelNode>();
-        size_t nodeIndex = state.model->nodes.size();
+        std::size_t nodeIndex = state.model->nodes.size();
         state.nodesByUniqueID[fbxNode->GetUniqueID()] = node;
         state.model->nodes.push_back(node);
 
@@ -459,7 +450,7 @@ public:
                 };
 
                 int vertIndex = -1;
-                for (size_t i = 0, sz = mesh->vertices.size(); i < sz; ++i)
+                for (std::size_t i = 0, sz = mesh->vertices.size(); i < sz; ++i)
                 {
                     if (IsSame(vertex, mesh->vertices[i])) {
                         vertIndex = i;
@@ -485,18 +476,18 @@ public:
             v = Vec4(v, 1) * vxf;
 
         // convert triangles to lines
-        std::set<uint64_t> edges;
+        std::set<std::uint64_t> edges;
         Assert(element.indices.size() % 3 == 0);
 
-        for (size_t i = 0; i != element.indices.size(); i += 3)
+        for (std::size_t i = 0; i != element.indices.size(); i += 3)
         {
-            uint64_t a = element.indices[i + 0];
-            uint64_t b = element.indices[i + 1];
-            uint64_t c = element.indices[i + 2];
+            std::uint64_t a = element.indices[i + 0];
+            std::uint64_t b = element.indices[i + 1];
+            std::uint64_t c = element.indices[i + 2];
 
-            uint64_t edge1 = (a < b) ? ((a << 32) | b) : ((b << 32) | a);
-            uint64_t edge2 = (b < c) ? ((b << 32) | c) : ((c << 32) | b);
-            uint64_t edge3 = (c < a) ? ((c << 32) | a) : ((a << 32) | c);
+            std::uint64_t edge1 = (a < b) ? ((a << 32) | b) : ((b << 32) | a);
+            std::uint64_t edge2 = (b < c) ? ((b << 32) | c) : ((c << 32) | b);
+            std::uint64_t edge3 = (c < a) ? ((c << 32) | a) : ((a << 32) | c);
 
             edges.insert(edge1);
             edges.insert(edge2);
@@ -505,10 +496,10 @@ public:
 
         element.indices.clear();
 
-        for (uint64_t edge : edges)
+        for (std::uint64_t edge : edges)
         {
-            uint64_t a = (edge >> 32) & 0xFFFFFFFF;
-            uint64_t b = edge & 0xFFFFFFFF;
+            std::uint64_t a = (edge >> 32) & 0xFFFFFFFF;
+            std::uint64_t b = edge & 0xFFFFFFFF;
             element.indices.push_back((int)a);
             element.indices.push_back((int)b);
         }
@@ -534,7 +525,7 @@ public:
             return;
         }
 
-        uint64_t meshID = fbxMesh->GetUniqueID();
+        std::uint64_t meshID = fbxMesh->GetUniqueID();
 
         auto it = state.meshesByUniqueID.find(meshID);
         if (it != state.meshesByUniqueID.end())
@@ -550,8 +541,8 @@ public:
         mesh->name = name;
 
         // MESH
-        std::map<int32_t, ModelMeshElement> elements;
-        std::unordered_multimap<int, uint32_t> newVertexMapping;
+        std::map<std::int32_t, ModelMeshElement> elements;
+        std::unordered_multimap<int, std::uint32_t> newVertexMapping;
 
         fbxsdk::FbxVector4* fbxVertices = fbxMesh->GetControlPoints();
         int triCount = fbxMesh->GetPolygonCount();
@@ -644,7 +635,7 @@ public:
 
                 // check for existing identical verts
                 int vertIndex = -1;
-                for (size_t i = 0, sz = mesh->vertices.size(); i < sz; ++i)
+                for (std::size_t i = 0, sz = mesh->vertices.size(); i < sz; ++i)
                 {
                     if (Identical(vertex, mesh->vertices[i]) &&
                         Identical(normal, mesh->normals[i]) &&
@@ -703,7 +694,7 @@ public:
 
             // one element per vertex
             // each element contains set of index/weight pairs
-            std::vector<std::vector<std::pair<uint32_t, float>>> vertWeightSets;
+            std::vector<std::vector<std::pair<std::uint32_t, float>>> vertWeightSets;
             vertWeightSets.resize(mesh->vertices.size());
 
             for (int c = 0; c < nClusters; ++c)
@@ -748,7 +739,7 @@ public:
             for (auto& weightSet : vertWeightSets)
             {
                 std::sort(weightSet.begin(), weightSet.end(),
-                    [](std::pair<uint32_t, float>& x, std::pair<uint32_t, float>& y) {
+                    [](std::pair<std::uint32_t, float>& x, std::pair<std::uint32_t, float>& y) {
                         return x.second > y.second;
                     });
             }
@@ -767,13 +758,13 @@ public:
                 // attatch unbound vertices to bone 0.
                 if (weightSet.size() == 0)
                 {
-                    weightSet.push_back(std::pair<uint32_t, float>(0, 1.0f));
+                    weightSet.push_back(std::pair<std::uint32_t, float>(0, 1.0f));
                 }
 
                 // fill up extra bone slots with zero weights
                 while (weightSet.size() < MaxBones)
                 {
-                    weightSet.push_back(std::pair<uint32_t, float>(0, 0.0f));
+                    weightSet.push_back(std::pair<std::uint32_t, float>(0, 0.0f));
                 }
 
                 // normalize bone weights unless link mode is additive
@@ -781,17 +772,17 @@ public:
                 {
                     float totalWeight = 0.0f;
 
-                    for (uint32_t i = 0; i < MaxBones; ++i)
+                    for (std::uint32_t i = 0; i < MaxBones; ++i)
                         totalWeight += weightSet[i].second;
 
                     if (totalWeight > 0.0f)
                     {
-                        for (uint32_t b = 0; b < MaxBones; ++b)
+                        for (std::uint32_t b = 0; b < MaxBones; ++b)
                             weightSet[b].second /= totalWeight;
                     }
                 }
 
-                for (uint32_t b = 0; b < MaxBones; ++b)
+                for (std::uint32_t b = 0; b < MaxBones; ++b)
                 {
                     mesh->boneIndices[v][b] = weightSet[b].first;
                     mesh->boneWeights[v][b] = weightSet[b].second;
@@ -834,7 +825,7 @@ public:
             fbxsdk::FbxAMatrix offset = GetGeometryOffset(fbxNode);
             auto nodePath = node->GetFullPath();
 
-            for(size_t i = 0; i != state.pImportSettings->clipSpecs.size(); ++i)
+            for(std::size_t i = 0; i != state.pImportSettings->clipSpecs.size(); ++i)
             {
                 auto& spec = state.pImportSettings->clipSpecs[i];
                 auto& clip = state.model->clips[i];

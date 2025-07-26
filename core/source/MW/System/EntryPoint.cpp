@@ -3,7 +3,7 @@
 *--------------------------------------------------------------*/
 
 import Microwave.System.App;
-import <cstdlib>;
+import std;
 #include <MW/System/Internal/Platform.h>
 
 #if PLATFORM_WINDOWS

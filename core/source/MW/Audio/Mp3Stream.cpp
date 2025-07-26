@@ -8,11 +8,7 @@ import Microwave.Audio.AudioSample;
 import Microwave.IO.Stream;
 import Microwave.System.Exception;
 import Microwave.System.Pointers;
-import <cstddef>;
-import <cstdint>;
-import <stdexcept>;
-import <span>;
-import <algorithm>;
+import std;
 
 namespace mw {
 inline namespace audio {
@@ -45,22 +41,22 @@ bool Mp3Stream::CanWrite() const {
     return false;
 }
 
-size_t Mp3Stream::GetLength() const {
-    return (size_t)dataSize;
+std::size_t Mp3Stream::GetLength() const {
+    return (std::size_t)dataSize;
 }
 
-size_t Mp3Stream::GetPosition() const {
-    return (size_t)(framePos * bytesPerFrame);
+std::size_t Mp3Stream::GetPosition() const {
+    return (std::size_t)(framePos * bytesPerFrame);
 }
 
-size_t Mp3Stream::Seek(int64_t offset, SeekOrigin origin)
+std::size_t Mp3Stream::Seek(std::int64_t offset, SeekOrigin origin)
 {
     if (!CanSeek())
         throw Exception("stream is not seekable");
 
-    int64_t frameOffset = offset / bytesPerFrame;
+    std::int64_t frameOffset = offset / bytesPerFrame;
 
-    int64_t pos = {};
+    std::int64_t pos = {};
 
     if (origin == SeekOrigin::Begin)
         pos = frameOffset;
@@ -69,16 +65,16 @@ size_t Mp3Stream::Seek(int64_t offset, SeekOrigin origin)
     else if (origin == SeekOrigin::End)
         pos = frameCount + frameOffset;
 
-    auto ret = decoder->SeekToPCMFrame((uint64_t)pos);
+    auto ret = decoder->SeekToPCMFrame((std::uint64_t)pos);
     if(!ret)
         throw Exception("seek failed");
 
     framePos = pos;
 
-    return (size_t)(framePos * bytesPerFrame);
+    return (std::size_t)(framePos * bytesPerFrame);
 }
 
-void Mp3Stream::SetLength(size_t length) {
+void Mp3Stream::SetLength(std::size_t length) {
     throw Exception("not implemented");
 }
 
@@ -91,9 +87,9 @@ int Mp3Stream::Read(std::span<std::byte> output)
 
     while (requestedFrames != 0)
     {
-        std::array<std::byte, 8 * sizeof(int16_t)> buffer{};
+        std::array<std::byte, 8 * sizeof(std::int16_t)> buffer{};
         
-        auto framesRead = decoder->ReadPCMFrames(1, (int16_t*)buffer.data());
+        auto framesRead = decoder->ReadPCMFrames(1, (std::int16_t*)buffer.data());
         if (framesRead == 0)
             break; // EOF
 

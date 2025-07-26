@@ -16,7 +16,7 @@ import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.Utilities.Sink;
-import <cstdint>;
+import std;
 
 export namespace mw {
 inline namespace scene {
@@ -28,7 +28,7 @@ protected:
     gptr<Buffer> vertexBuffer;
     gptr<Buffer> indexBuffer;
     gptr<Material> mat;
-    size_t indexCount = 0;
+    std::size_t indexCount = 0;
     bool meshDirty = true;
 
     Box border;

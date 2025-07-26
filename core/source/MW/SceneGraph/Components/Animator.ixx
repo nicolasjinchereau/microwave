@@ -11,9 +11,7 @@ import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
-import <string>;
-import <unordered_map>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace scene {

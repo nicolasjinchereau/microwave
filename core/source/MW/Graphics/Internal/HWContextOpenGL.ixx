@@ -2,6 +2,9 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 export module Microwave.Graphics.Internal.HWContextOpenGL;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Graphics.Internal.HWBufferOpenGL;
@@ -14,8 +17,7 @@ import Microwave.Graphics.Internal.HWTextureOpenGL;
 import Microwave.Graphics.Internal.OpenGLAPI;
 import Microwave.System.Pointers;
 import Microwave.System.Internal.WindowWindows;
-import <MW/System/Internal/PlatformHeaders.h>;
-import <unordered_map>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -83,7 +85,7 @@ public:
 
     virtual gptr<HWBuffer> CreateBuffer(
         BufferType type, BufferUsage usage,
-        BufferCPUAccess cpuAccess, size_t size) override;
+        BufferCPUAccess cpuAccess, std::size_t size) override;
 
     virtual gptr<HWBuffer> CreateBuffer(
         BufferType type, BufferUsage usage,

@@ -11,11 +11,7 @@ import Microwave.System.Object;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.Task;
-import <cstddef>;
-import <cstdint>;
-import <span>;
-import <string>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace gfx {

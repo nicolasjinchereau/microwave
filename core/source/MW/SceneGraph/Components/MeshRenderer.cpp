@@ -3,9 +3,15 @@
 *--------------------------------------------------------------*/
 
 module Microwave.SceneGraph.Components.MeshRenderer;
+import Microwave.Graphics.Mesh;
 import Microwave.Graphics.Shader;
+import Microwave.Graphics.ShaderInfo;
+import Microwave.Math;
 import Microwave.SceneGraph.Node;
+import Microwave.SceneGraph.Renderable;
 import Microwave.System.Exception;
+import Microwave.System.Pointers;
+import std;
 import <MW/System/Debug.h>;
 
 namespace mw {
@@ -32,8 +38,8 @@ void MeshRenderer::SystemLateUpdate()
     if (!rootBone)
         return;
 
-    size_t boneCount = mesh->bones.size();
-    size_t vertCount = mesh->vertices.size();
+    std::size_t boneCount = mesh->bones.size();
+    std::size_t vertCount = mesh->vertices.size();
 
     boneMatrices.resize(boneCount);
     blendedVerts.resize(vertCount);
@@ -42,7 +48,7 @@ void MeshRenderer::SystemLateUpdate()
     auto node = GetNode();
 
     // calculate all bone matrices
-    for (uint32_t i = 0; i < mesh->bones.size(); ++i)
+    for (std::uint32_t i = 0; i < mesh->bones.size(); ++i)
     {
         auto linkNode = rootBone->GetChild(mesh->bones[i].linkNodePath);
 
@@ -58,14 +64,14 @@ void MeshRenderer::SystemLateUpdate()
     // transform all vertices
     int nVerts = (int)mesh->vertices.size();
 
-    uint32_t maxBoneCount = 4; // 1-4
+    std::uint32_t maxBoneCount = 4; // 1-4
 
     for (int i = 0; i < nVerts; ++i)
     {
         Mat4 deformation = (mode == BoneLinkMode::Additive) ? Mat4::Identity() : Mat4::Zero();
         float totalWeight = 0;
 
-        for (uint32_t b = 0; b < maxBoneCount; ++b)
+        for (std::uint32_t b = 0; b < maxBoneCount; ++b)
         {
             float weight = mesh->boneWeights[i][b];
             Mat4 influence = boneMatrices[mesh->boneIndices[i][b]] * weight;
@@ -136,7 +142,7 @@ void MeshRenderer::FromJson(const json& obj, ObjectLinker* linker)
     materials.clear();
     materials.resize(matIDs.size());
 
-    for(size_t i = 0; i != materials.size(); ++i)
+    for(std::size_t i = 0; i != materials.size(); ++i)
     {
         UUID uuid = matIDs[i];
         ObjectLinker::RestoreAsset(linker, self(this), materials[i], uuid);

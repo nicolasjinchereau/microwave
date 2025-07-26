@@ -2,11 +2,14 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 module Microwave.Graphics.Internal.HWContextD3D11;
 import Microwave.Graphics.ShaderInfo;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <unordered_map>;
+import std;
 
 namespace mw {
 inline namespace gfx {
@@ -315,7 +318,7 @@ gptr<HWSurface> HWContextD3D11::CreateSurface(const gptr<Window>& window)
 
 gptr<HWBuffer> HWContextD3D11::CreateBuffer(
     BufferType type, BufferUsage usage,
-    BufferCPUAccess cpuAccess, size_t size)
+    BufferCPUAccess cpuAccess, std::size_t size)
 {
     return gpnew<HWBufferD3D11>(
         self(this), type, usage, cpuAccess, size);

@@ -2,10 +2,14 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 export module Microwave.Tools.SceneEditor;
 import Microwave.Audio.AudioContext;
 import Microwave.Data.Library.AssetLibrary;
 import Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.GraphicsTypes;
 import Microwave.Graphics.RenderTexture;
 import Microwave.IO.File;
 import Microwave.SceneGraph.Components.Camera;
@@ -15,7 +19,6 @@ import Microwave.SceneGraph.SceneRenderer;
 import Microwave.System.Pointers;
 import Microwave.Tools.DynamicLibrary;
 import Microwave.Tools.IEditor;
-import <MW/System/Internal/PlatformHeaders.h>;
 
 extern "C" {
     PLATFORM_EXPORT mw::IEditor* PLATFORM_CALL MWGetSceneEditor();
@@ -89,7 +92,7 @@ public:
         sceneRenderer->Render(scene);
     }
 
-    virtual void GetPixels(std::byte* pBuffer, size_t size) override
+    virtual void GetPixels(std::byte* pBuffer, std::size_t size) override
     {
         // get pixels from render texture into pBuffer
     }

@@ -4,13 +4,14 @@
 
 module Microwave.SceneGraph.Components.CapsuleCollider;
 import Microwave.Graphics.Shader;
+import Microwave.Graphics.ShaderInfo;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Scene;
 import Microwave.SceneGraph.Components.Camera;
 import Microwave.SceneGraph.Components.MeshRenderer;
 import Microwave.SceneGraph.Components.RigidBody;
 import Microwave.System.App;
-import <vector>;
+import std;
 
 namespace mw {
 inline namespace scene {

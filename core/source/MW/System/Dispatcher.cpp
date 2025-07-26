@@ -5,7 +5,7 @@
 module Microwave.System.Dispatcher;
 import Microwave.IO.Terminal;
 import Microwave.System.Exception;
-import <chrono>;
+import std;
 
 namespace mw {
 inline namespace system {
@@ -71,7 +71,7 @@ void Dispatcher::Quit()
     cv.notify_one();
 }
 
-void Dispatcher::SetContinuousDispatchRate(uint32_t rate)
+void Dispatcher::SetContinuousDispatchRate(std::uint32_t rate)
 {
     std::unique_lock<std::mutex> lk(mut);
 
@@ -116,7 +116,7 @@ void Dispatcher::SetContinuousDispatchRate(uint32_t rate)
     }
 }
 
-uint32_t Dispatcher::GetContinuousDispatchRate() const
+std::uint32_t Dispatcher::GetContinuousDispatchRate() const
 {
     std::unique_lock<std::mutex> lk(mut);
     return continuousDispatchRate;

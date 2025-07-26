@@ -8,10 +8,7 @@ import Microwave.Audio.Internal.OggDecoder;
 import Microwave.IO.Stream;
 import Microwave.System.Exception;
 import Microwave.System.Pointers;
-import <cstddef>;
-import <cstdint>;
-import <span>;
-import <stdexcept>;
+import std;
 
 namespace mw {
 inline namespace audio {
@@ -44,24 +41,24 @@ bool OggStream::CanWrite() const {
     return false;
 }
 
-size_t OggStream::GetLength() const {
+std::size_t OggStream::GetLength() const {
     auto size = decoder->pcmTotal() * bytesPerFrame;
-    return (size_t)size;
+    return (std::size_t)size;
 }
 
-size_t OggStream::GetPosition() const {
-    int64_t pos = decoder->pcmTell() * bytesPerFrame;
-    return (size_t)pos;
+std::size_t OggStream::GetPosition() const {
+    std::int64_t pos = decoder->pcmTell() * bytesPerFrame;
+    return (std::size_t)pos;
 }
 
-size_t OggStream::Seek(int64_t offset, SeekOrigin origin)
+std::size_t OggStream::Seek(std::int64_t offset, SeekOrigin origin)
 {
     if (!CanSeek())
         throw Exception("stream is not seekable");
 
-    int64_t frameOffset = offset / bytesPerFrame;
+    std::int64_t frameOffset = offset / bytesPerFrame;
 
-    int64_t pos = {};
+    std::int64_t pos = {};
 
     if (origin == SeekOrigin::Begin)
         pos = frameOffset;
@@ -74,10 +71,10 @@ size_t OggStream::Seek(int64_t offset, SeekOrigin origin)
     if (ret != 0)
         throw Exception("seek failed");
 
-    return (size_t)(pos * bytesPerFrame);
+    return (std::size_t)(pos * bytesPerFrame);
 }
 
-void OggStream::SetLength(size_t length) {
+void OggStream::SetLength(std::size_t length) {
     throw Exception("not implemented");
 }
 
@@ -112,7 +109,7 @@ int OggStream::Read(std::span<std::byte> output)
             int samp = i / numOfChan;
             sample.value = samples[chan][samp];
 
-            size_t bytesRead = totalSamplesRead * 4;
+            std::size_t bytesRead = totalSamplesRead * 4;
             std::ranges::copy(sample.bytes, &output[bytesRead]);
             ++totalSamplesRead;
         }

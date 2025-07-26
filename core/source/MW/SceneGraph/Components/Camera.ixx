@@ -10,10 +10,7 @@ import Microwave.Math;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <array>;
-import <cstddef>;
-import <cstdint>;
-import <span>;
+import std;
 
 export namespace mw {
 inline namespace scene {
@@ -74,8 +71,8 @@ public:
     void SetCullingMask(LayerMask mask);
     LayerMask GetCullingMask() const;
 
-    void SetRenderOrder(uint32_t order);
-    uint32_t GetRenderOrder() const;
+    void SetRenderOrder(std::uint32_t order);
+    std::uint32_t GetRenderOrder() const;
 
     const Mat4& GetViewProjectionMatrix() const;
     const Mat4& GetProjectionMatrix() const;

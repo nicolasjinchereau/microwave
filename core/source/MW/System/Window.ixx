@@ -9,9 +9,7 @@ import Microwave.System.Dispatcher;
 import Microwave.System.EventHandlerList;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <cstdint>;
-import <string>;
-import <vector>;
+import std;
 
 export namespace mw {
 
@@ -118,7 +116,7 @@ public:
     virtual bool IsVisible() const = 0;
     virtual void SetResizable(bool resizable) = 0;
     virtual bool IsResizable() const = 0;
-    virtual uint32_t GetDPI() const = 0;
+    virtual std::uint32_t GetDPI() const = 0;
 
     virtual void Show() = 0;
     virtual void Hide() = 0;

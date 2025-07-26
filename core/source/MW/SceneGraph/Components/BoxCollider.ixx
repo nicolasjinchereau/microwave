@@ -3,6 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.SceneGraph.Components.BoxCollider;
+import Microwave.Graphics.Material;
 import Microwave.Graphics.Mesh;
 import Microwave.Math;
 import Microwave.SceneGraph.Components.Collider;
@@ -10,6 +11,7 @@ import Microwave.SceneGraph.Events;
 import Microwave.SceneGraph.Renderable;
 import Microwave.System.Json;
 import Microwave.System.Pointers;
+import Microwave.System.Object;
 import Microwave.Utilities.Sink;
 
 export namespace mw {

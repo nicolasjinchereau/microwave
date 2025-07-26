@@ -6,7 +6,7 @@ export module Microwave.System.SyncExecutor;
 import Microwave.System.Executor;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <functional>;
+import std;
 
 export namespace mw {
 inline namespace system {

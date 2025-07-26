@@ -3,13 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Utilities.Base64;
-import <array>;
-import <cstddef>;
-import <cstdint>;
-import <cstdlib>;
-import <span>;
-import <string>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace utilities {
@@ -62,7 +56,7 @@ public:
 
         out.reserve(in.size());
 
-        for (uint8_t c : in)
+        for (std::uint8_t c : in)
         {
             if (lookup[c] == -1)
                 break;

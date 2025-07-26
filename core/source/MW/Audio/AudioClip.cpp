@@ -12,10 +12,7 @@ import Microwave.SceneGraph.Components.AudioSource;
 import Microwave.System.Exception;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
-import <stdexcept>;
-import <cstddef>;
-import <cstdint>;
-import <vector>;
+import std;
 import <MW/Audio/Internal/OpenAL.h>;
 
 namespace mw {
@@ -68,12 +65,12 @@ AudioClip::AudioClip(
     // if not streaming, create one shared buffer
     if (!streamFromDisk)
     {
-        size_t dataSize = stream->GetLength();
+        std::size_t dataSize = stream->GetLength();
 
         std::vector<std::byte> data;
         data.resize(dataSize);
 
-        size_t totalBytesRead = 0;
+        std::size_t totalBytesRead = 0;
 
         while (totalBytesRead != dataSize)
         {

@@ -11,9 +11,7 @@ import Microwave.System.Exception;
 import Microwave.Utilities.Util;
 import <MW/SceneGraph/Internal/Bullet.h>;
 import <MW/System/Debug.h>;
-import <array>;
-import <span>;
-import <utility>;
+import std;
 
 namespace mw {
 inline namespace scene {

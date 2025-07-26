@@ -4,10 +4,12 @@
 
 module Microwave.SceneGraph.Components.BoxCollider;
 import Microwave.Graphics.Shader;
+import Microwave.Graphics.ShaderInfo;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Renderable;
 import Microwave.SceneGraph.Scene;
 import Microwave.SceneGraph.Components.Camera;
+import Microwave.SceneGraph.Components.Component;
 import Microwave.SceneGraph.Components.MeshRenderer;
 import Microwave.SceneGraph.Components.BoxCollider;
 import Microwave.SceneGraph.Components.RigidBody;

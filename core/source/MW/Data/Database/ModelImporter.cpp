@@ -4,10 +4,14 @@
 
 module Microwave.Data.Database.ModelImporter;
 import Microwave.Data.Database.AssetDatabase;
+import Microwave.Data.Database.Metadata;
 import Microwave.Data.Library.AssetLibrary;
 import Microwave.Data.Internal.FBXModelConverter;
 import Microwave.Graphics.AnimationClip;
+import Microwave.Graphics.Material;
 import Microwave.Graphics.Mesh;
+import Microwave.IO.File;
+import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Components.Animator;
 import Microwave.SceneGraph.Components.BoxCollider;
 import Microwave.SceneGraph.Components.CapsuleCollider;
@@ -16,6 +20,10 @@ import Microwave.SceneGraph.Components.MeshRenderer;
 import Microwave.SceneGraph.Components.RigidBody;
 import Microwave.SceneGraph.Components.SphereCollider;
 import Microwave.System.Exception;
+import Microwave.System.Object;
+import Microwave.System.Pointers;
+import Microwave.Utilities.Util;
+import std;
 import <MW/System/Debug.h>;
 
 namespace mw {

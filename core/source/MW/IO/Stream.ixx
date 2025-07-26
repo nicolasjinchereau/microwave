@@ -8,11 +8,7 @@ import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.System.Task;
 import Microwave.System.ThreadPool;
-import <cstdint>;
-import <cstdlib>;
-import <memory>;
-import <span>;
-import <algorithm>;
+import std;
 
 export namespace mw {
 inline namespace io {
@@ -27,25 +23,25 @@ enum class SeekOrigin
 class Stream : public Object
 {
 public:
-    constexpr static size_t DefaultBufferSize = 8192;
+    constexpr static std::size_t DefaultBufferSize = 8192;
 
     virtual ~Stream() {}
 
     virtual bool CanRead() const = 0;
     virtual bool CanSeek() const = 0;
     virtual bool CanWrite() const = 0;
-    virtual size_t GetLength() const = 0;
-    virtual size_t GetPosition() const = 0;
-    virtual size_t Seek(int64_t offset, SeekOrigin origin) = 0;
-    virtual void SetLength(size_t length) = 0;
+    virtual std::size_t GetLength() const = 0;
+    virtual std::size_t GetPosition() const = 0;
+    virtual std::size_t Seek(std::int64_t offset, SeekOrigin origin) = 0;
+    virtual void SetLength(std::size_t length) = 0;
     virtual int Read(std::span<std::byte> buffer) = 0;
     virtual void Write(std::span<std::byte> buffer) = 0;
     virtual void Flush() = 0;
     virtual void Close() = 0;
     
     // implemented through calls to above functions
-    void Ignore(size_t bytes);
-    void SetPosition(size_t position);
+    void Ignore(std::size_t bytes);
+    void SetPosition(std::size_t position);
     Task<void> FlushAsync();
     Task<int> ReadAsync(std::span<std::byte> buffer);
     Task<void> WriteAsync(std::span<std::byte> buffer);
@@ -56,11 +52,11 @@ public:
     template<class T> void WriteValue(const T& value);
 };
 
-void Stream::Ignore(size_t bytes) {
+void Stream::Ignore(std::size_t bytes) {
     Seek(bytes, SeekOrigin::Current);
 }
 
-void Stream::SetPosition(size_t position) {
+void Stream::SetPosition(std::size_t position) {
     Seek(position, SeekOrigin::Begin);
 }
 
@@ -99,7 +95,7 @@ template<class T>
 T Stream::ReadValue()
 {
     T ret;
-    size_t read = Read({ (std::byte*)&ret, sizeof(T) });
+    std::size_t read = Read({ (std::byte*)&ret, sizeof(T) });
     if (read < sizeof(T)) throw Exception("unexpected end of stream");
     return ret;
 }
@@ -107,7 +103,7 @@ T Stream::ReadValue()
 template<class T>
 bool Stream::ReadValue(T& output)
 {
-    size_t read = Read({ (std::byte*)&output, sizeof(T) });
+    std::size_t read = Read({ (std::byte*)&output, sizeof(T) });
     return read == sizeof(T);
 }
 

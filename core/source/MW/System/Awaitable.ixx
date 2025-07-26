@@ -9,12 +9,7 @@ import Microwave.System.Dispatcher;
 import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import <MW/System/Debug.h>;
-import <condition_variable>;
-import <exception>;
-import <experimental/coroutine>;
-import <mutex>;
-import <stdexcept>;
-import <utility>;
+import std;
 
 export namespace mw {
 inline namespace system {

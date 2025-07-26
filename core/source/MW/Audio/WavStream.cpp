@@ -9,13 +9,7 @@ import Microwave.IO.Stream;
 import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import <MW/System/Debug.h>;
-import <array>;
-import <cstddef>;
-import <cstdint>;
-import <span>;
-import <stdexcept>;
-import <vector>;
-import <string.h>;
+import std;
 
 namespace mw {
 inline namespace audio {
@@ -29,7 +23,7 @@ enum class WavFormat : uint16_t
 struct WavChunkInfo
 {
     char type[4];
-    uint32_t size;
+    std::uint32_t size;
 };
 
 struct WavHeaderChunk
@@ -39,9 +33,9 @@ struct WavHeaderChunk
 
 struct WavDS64Chunk
 {
-    uint64_t riffSize;    // replaces header's WavChunkInfo::size if it's -1
-    uint64_t dataSize;    // replaces WavDataChunk::size if it's -1
-    uint64_t sampleCount; // replaces WavFactChunk::sampleCount if it's -1 (unused)
+    std::uint64_t riffSize;    // replaces header's WavChunkInfo::size if it's -1
+    std::uint64_t dataSize;    // replaces WavDataChunk::size if it's -1
+    std::uint64_t sampleCount; // replaces WavFactChunk::sampleCount if it's -1 (unused)
 };
 
 struct WavJunkChunk
@@ -53,8 +47,8 @@ struct WavFormatChunk
 {
     uint16_t audioFormat;    // WavFormat (1 means uncompressed)
     uint16_t numOfChan;      // Number of channels 1-5
-    uint32_t samplesPerSec;  // Sampling Frequency in Hz
-    uint32_t bytesPerSec;    // bytes per second
+    std::uint32_t samplesPerSec;  // Sampling Frequency in Hz
+    std::uint32_t bytesPerSec;    // bytes per second
     uint16_t blockAlign;     // bytes per frame
     uint16_t bitsPerSample;  // Number of bits per sample
     // extended format info (MS)
@@ -62,8 +56,8 @@ struct WavFormatChunk
 
 struct WavPeakChunk
 {
-    uint32_t version;
-    uint32_t timestamp;
+    std::uint32_t version;
+    std::uint32_t timestamp;
     //WavPeakPos peaks[]; // one per channel
 };
 
@@ -75,7 +69,7 @@ struct WavDataChunk
 WavStream::WavStream(const gptr<Stream>& stream)
     : stream(stream)
 {
-    uint64_t dataSize64 = 0;
+    std::uint64_t dataSize64 = 0;
     bool foundData = false;
 
     while (!foundData)
@@ -184,7 +178,7 @@ WavStream::WavStream(const gptr<Stream>& stream)
                     throw Exception("cannot read peak pos");
             }
 
-            size_t bytesRead = sizeof(WavPeakChunk) + sizeof(WavPeakPos) * GetChannels();
+            std::size_t bytesRead = sizeof(WavPeakChunk) + sizeof(WavPeakPos) * GetChannels();
             stream->Ignore(info.size - bytesRead);
 
             // skip padding byte
@@ -196,7 +190,7 @@ WavStream::WavStream(const gptr<Stream>& stream)
 
             if (info.size == 0xFFFFFFFF)
             {
-                if constexpr (sizeof(size_t) >= sizeof(uint64_t))
+                if constexpr (sizeof(std::size_t) >= sizeof(std::uint64_t))
                     dataSize = dataSize64;
                 else
                     throw Exception("RF64 wav only supported in 64 library");
@@ -228,20 +222,20 @@ bool WavStream::CanWrite() const {
     return false;
 }
 
-size_t WavStream::GetLength() const {
-    return (size_t)dataSize;
+std::size_t WavStream::GetLength() const {
+    return (std::size_t)dataSize;
 }
 
-size_t WavStream::GetPosition() const {
-    return stream->GetPosition() - (size_t)dataOffset;
+std::size_t WavStream::GetPosition() const {
+    return stream->GetPosition() - (std::size_t)dataOffset;
 }
 
-size_t WavStream::Seek(int64_t offset, SeekOrigin origin)
+std::size_t WavStream::Seek(std::int64_t offset, SeekOrigin origin)
 {
-    int64_t frameOffset = offset / bytesPerFrame;
-    int64_t byteOffset = frameOffset * bytesPerFrame;
+    std::int64_t frameOffset = offset / bytesPerFrame;
+    std::int64_t byteOffset = frameOffset * bytesPerFrame;
 
-    int64_t pos = {};
+    std::int64_t pos = {};
 
     if (origin == SeekOrigin::Begin)
         pos = dataOffset + byteOffset;
@@ -250,13 +244,13 @@ size_t WavStream::Seek(int64_t offset, SeekOrigin origin)
     else if (origin == SeekOrigin::End)
         pos = dataSize + byteOffset;
 
-    if (pos < (int64_t)dataOffset)
+    if (pos < (std::int64_t)dataOffset)
         throw Exception("seek position out of range");
 
     return stream->Seek(pos, SeekOrigin::Begin);
 }
 
-void WavStream::SetLength(size_t length) {
+void WavStream::SetLength(std::size_t length) {
     throw Exception("not implemented");
 }
 
@@ -267,7 +261,7 @@ int WavStream::Read(std::span<std::byte> output)
         
     int totalBytesRead = 0;
     
-    size_t frameBytesRead = 0;
+    std::size_t frameBytesRead = 0;
     std::array<std::byte, 64> buff; // enough to hold 8x64bit samples
 
     while (requestedFrames != 0)
@@ -276,7 +270,7 @@ int WavStream::Read(std::span<std::byte> output)
             buff.data() + frameBytesRead,
             bytesPerFrame - frameBytesRead);
 
-        size_t bytesRead = stream->Read(frameBuff);
+        std::size_t bytesRead = stream->Read(frameBuff);
         if (bytesRead == 0)
             break; // EOF
 
@@ -338,7 +332,7 @@ void WavStream::Save(const gptr<AudioStream>& stream, const gptr<Stream>& output
     if (!output)
         throw Exception("'output' cannot be null");
 
-    uint32_t size = 0;
+    std::uint32_t size = 0;
 
     size += sizeof(WavChunkInfo);
     size += sizeof(WavHeaderChunk);
@@ -369,8 +363,8 @@ void WavStream::Save(const gptr<AudioStream>& stream, const gptr<Stream>& output
 
     WavFormatChunk formatChunk;
     formatChunk.numOfChan = (uint16_t)stream->GetChannels();
-    formatChunk.samplesPerSec = (uint32_t)stream->GetSampleRate();
-    formatChunk.bytesPerSec = (uint32_t)(stream->GetBytesPerSample() * stream->GetSampleRate());
+    formatChunk.samplesPerSec = (std::uint32_t)stream->GetSampleRate();
+    formatChunk.bytesPerSec = (std::uint32_t)(stream->GetBytesPerSample() * stream->GetSampleRate());
     formatChunk.blockAlign = (uint16_t)(stream->GetBytesPerSample() * stream->GetChannels());
     formatChunk.bitsPerSample = (uint16_t)(stream->GetBytesPerSample() * 8);
 
@@ -417,7 +411,7 @@ void WavStream::Save(const gptr<AudioStream>& stream, const gptr<Stream>& output
 
     //WavPeakChunk peakChunk = {
     //    1,
-    //    (uint32_t)time(NULL)
+    //    (std::uint32_t)time(NULL)
     //};
 
     //stream->WriteValue(peakChunkInfo);
@@ -444,7 +438,7 @@ void WavStream::Save(const gptr<AudioStream>& stream, const gptr<Stream>& output
     //for (int c = 0; c < numOfChan; ++c)
     //    stream->WriteValue(peaks[c]);
 
-    size_t dataSize = stream->GetLength();
+    std::size_t dataSize = stream->GetLength();
 
     std::vector<std::byte> data;
     data.resize(dataSize);
@@ -455,7 +449,7 @@ void WavStream::Save(const gptr<AudioStream>& stream, const gptr<Stream>& output
     // DATA
     WavChunkInfo dataChunkInfo = {
         { 'd', 'a', 't', 'a' },
-        (uint32_t)dataSize
+        (std::uint32_t)dataSize
     };
 
     output->WriteValue(dataChunkInfo);

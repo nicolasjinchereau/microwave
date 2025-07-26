@@ -2,13 +2,14 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 module Microwave.System.Internal.WindowWindows;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.Internal.HWRenderTarget;
 import Microwave.System.Exception;
-import <stdexcept>;
-import <vector>;
-import <MW/System/Internal/PlatformHeaders.h>;
+import std;
 
 constexpr int _VK_OEM_1      = 0xBA;
 constexpr int _VK_OEM_PLUS   = 0xBB;
@@ -103,8 +104,8 @@ bool WindowWindows::IsResizable() const {
     return config.resizable;
 }
 
-uint32_t WindowWindows::GetDPI() const {
-    return (uint32_t)GetDpiForWindow(hWnd);
+std::uint32_t WindowWindows::GetDPI() const {
+    return (std::uint32_t)GetDpiForWindow(hWnd);
 }
 
 void WindowWindows::Show()

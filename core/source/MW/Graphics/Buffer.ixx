@@ -20,18 +20,18 @@ class Buffer : public Object
     BufferType type = {};
     BufferUsage usage = {};
     BufferCPUAccess cpuAccess = {};
-    size_t size = {};
+    std::size_t size = {};
 public:
-    Buffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, size_t size);
+    Buffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, std::size_t size);
     Buffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, const std::span<std::byte>& data);
 
-    void UpdateSubData(size_t offset, const std::span<std::byte>& data);
+    void UpdateSubData(std::size_t offset, const std::span<std::byte>& data);
     void Clear();
 
     BufferType GetType() const;
     BufferUsage GetUsage() const;
     BufferCPUAccess GetCPUAccess() const;
-    size_t GetSize() const;
+    std::size_t GetSize() const;
     gptr<HWBuffer> GetHWBuffer() const;
 };
 

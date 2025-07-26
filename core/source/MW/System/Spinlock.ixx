@@ -3,15 +3,13 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.System.Spinlock;
-import <atomic>;
-import <cstdint>;
-import <thread>;
+import std;
 
 template<int size = 0> struct ThreadIDType;
-template<> struct ThreadIDType<1> { using type = uint8_t; };
-template<> struct ThreadIDType<2> { using type = uint16_t; };
-template<> struct ThreadIDType<4> { using type = uint32_t; };
-template<> struct ThreadIDType<8> { using type = uint64_t; };
+template<> struct ThreadIDType<1> { using type = std::uint8_t; };
+template<> struct ThreadIDType<2> { using type = std::uint16_t; };
+template<> struct ThreadIDType<4> { using type = std::uint32_t; };
+template<> struct ThreadIDType<8> { using type = std::uint64_t; };
 
 export namespace mw {
 inline namespace system {
@@ -55,7 +53,7 @@ class RecursiveSpinlock
     }
 
     std::atomic<ThreadID> owner = 0;
-    size_t lockCount = 0;
+    std::size_t lockCount = 0;
 public:
     RecursiveSpinlock() {}
 
@@ -73,7 +71,7 @@ public:
             return;
         }
 
-        uint32_t expected = 0;
+        std::uint32_t expected = 0;
         while (!owner.compare_exchange_weak(expected, currentThreadId, std::memory_order_acquire))
         {
             while (owner.load(std::memory_order_relaxed) == expected)

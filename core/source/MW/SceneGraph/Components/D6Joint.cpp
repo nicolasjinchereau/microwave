@@ -8,8 +8,7 @@ import Microwave.SceneGraph.Internal.Bullet;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.PhysicsWorld;
 import Microwave.SceneGraph.Scene;
-import <unordered_map>;
-import <string>;
+import std;
 import <MW/SceneGraph/Internal/Bullet.h>;
 
 namespace mw {

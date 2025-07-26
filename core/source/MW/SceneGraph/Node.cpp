@@ -6,13 +6,7 @@ module Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Scene;
 import Microwave.SceneGraph.Components.Component;
 import Microwave.Utilities.Util;
-import <cstdint>;
-import <memory>;
-import <string>;
-import <vector>;
-import <tuple>;
-import <type_traits>;
-import <utility>;
+import std;
 
 namespace mw {
 inline namespace scene {
@@ -566,7 +560,7 @@ void Node::DetachFromScene()
         c->DetachFromScene();
 }
 
-size_t Node::GetChildCount() const {
+std::size_t Node::GetChildCount() const {
     return _children.size();
 }
 

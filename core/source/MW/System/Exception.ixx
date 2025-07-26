@@ -4,12 +4,7 @@
 
 export module Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <cstdio>;
-import <cstdlib>;
-import <exception>;
-import <source_location>;
-import <sstream>;
-import <string>;
+import std;
 
 export namespace mw {
 inline namespace system {

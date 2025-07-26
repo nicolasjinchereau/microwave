@@ -6,7 +6,7 @@ export module Microwave.Math.Plane;
 import Microwave.Math.Vec3;
 import Microwave.Math.Vec4;
 import Microwave.Math.Sphere;
-import <cmath>;
+import std;
 
 export namespace mw {
 inline namespace math {

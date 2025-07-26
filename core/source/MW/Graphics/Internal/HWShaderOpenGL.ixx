@@ -2,6 +2,9 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 export module Microwave.Graphics.Internal.HWShaderOpenGL;
 import Microwave.Graphics.Buffer;
 import Microwave.Graphics.Color;
@@ -12,8 +15,7 @@ import Microwave.Graphics.Internal.OpenGLAPI;
 import Microwave.Math;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <cstdint>;
-import <MW/System/Internal/PlatformHeaders.h>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -29,7 +31,7 @@ public:
     virtual void Bind() override;
     virtual void Unbind() override;
 
-    virtual void SetVertexBuffer(int id, const gptr<Buffer>& buffer, size_t offset, size_t stride) override;
+    virtual void SetVertexBuffer(int id, const gptr<Buffer>& buffer, std::size_t offset, std::size_t stride) override;
     virtual void SetIndexBuffer(const gptr<Buffer>& buffer) override;
     
     virtual void SetUniform(int id, float value) override;

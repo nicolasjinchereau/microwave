@@ -6,8 +6,7 @@ export module Microwave.Graphics.Types;
 import Microwave.Graphics.Color;
 import Microwave.Math;
 import Microwave.System.Json;
-import <unordered_map>;
-import <string>;
+import std;
 
 export namespace mw {
 inline namespace gfx {

@@ -2,6 +2,9 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 export module Microwave.Graphics.Internal.HWRenderTextureOpenGL;
 import Microwave.Graphics.Internal.OpenGLAPI;
 import Microwave.Graphics.Internal.HWRenderTexture;
@@ -9,7 +12,6 @@ import Microwave.Graphics.Internal.HWTexture;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Math;
 import Microwave.System.Pointers;
-import <MW/System/Internal/PlatformHeaders.h>;
 
 namespace mw {
 inline namespace gfx {

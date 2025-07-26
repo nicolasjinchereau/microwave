@@ -6,8 +6,7 @@ export module Microwave.Utilities.BinPacking.BSPNodeAllocator;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.Utilities.BinPacking.BSPNode;
-import <vector>;
-import <cstdint>;
+import std;
 
 export namespace mw {
 inline namespace utilities {
@@ -17,7 +16,7 @@ class BSPNodeAllocator : public IBSPNodePool
 {
     std::vector<BSPNode*> pool;
 public:
-    BSPNodeAllocator(uint32_t initialCapacity = 0);
+    BSPNodeAllocator(std::uint32_t initialCapacity = 0);
     ~BSPNodeAllocator();
 
     virtual BSPNodePtr GetNode() override;

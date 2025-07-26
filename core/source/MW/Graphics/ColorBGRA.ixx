@@ -4,30 +4,30 @@
 
 export module Microwave.Graphics.ColorBGRA;
 import Microwave.System.Json;
-import <cstdint>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
 
 struct ColorBGRA
 {
-    uint8_t b;
-    uint8_t g;
-    uint8_t r;
-    uint8_t a;
+    std::uint8_t b;
+    std::uint8_t g;
+    std::uint8_t r;
+    std::uint8_t a;
 
     ColorBGRA()
         : ColorBGRA(0, 0, 0, 0) { }
 
-    ColorBGRA(uint8_t b, uint8_t g, uint8_t r, uint8_t a)
+    ColorBGRA(std::uint8_t b, std::uint8_t g, std::uint8_t r, std::uint8_t a)
         : b(b), g(g), r(r), a(a) {}
 
-    ColorBGRA(uint32_t c) {
-        *(uint32_t*)this = c;
+    ColorBGRA(std::uint32_t c) {
+        *(std::uint32_t*)this = c;
     }
 
-    operator uint32_t() const {
-        return *(uint32_t*)this;
+    operator std::uint32_t() const {
+        return *(std::uint32_t*)this;
     }
 };
 

@@ -9,7 +9,8 @@ import Microwave.System.Clock;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.System.Window;
-import <vector>;
+import Microwave.Math;
+import std;
 
 export namespace mw {
 inline namespace scene {

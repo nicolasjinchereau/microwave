@@ -10,8 +10,7 @@ import Microwave.SceneGraph.Events;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <vector>;
-import <atomic>;
+import std;
 import <MW/SceneGraph/Internal/Bullet.h>;
 
 //export {

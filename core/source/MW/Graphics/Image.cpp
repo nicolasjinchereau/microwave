@@ -13,16 +13,12 @@ import Microwave.Utilities.Util;
 import <png.h>;
 import <jpeglib.h>;
 import <tinyexr.h>;
-import <cstddef>;
-import <cstdint>;
-import <span>;
-import <utility>;
-import <stdexcept>;
+import std;
 
 namespace mw {
 inline namespace gfx {
 
-enum class TargaType : uint8_t
+enum class TargaType : std::uint8_t
 {
     None = 0,
     ColorMapped = 1,    // 0b1
@@ -35,20 +31,20 @@ enum class TargaType : uint8_t
 
 struct TargaHeader
 {
-    uint8_t idLength;        // length of image ID section
-    uint8_t colorMapType;    // 1<<0 set if color map present
+    std::uint8_t idLength;        // length of image ID section
+    std::uint8_t colorMapType;    // 1<<0 set if color map present
     TargaType imageType;
     uint16_t colorMapStartIndex;
     uint16_t colorMapLength;
-    uint8_t colorMapBitDepth;
+    std::uint8_t colorMapBitDepth;
     uint16_t imageOriginX;
     uint16_t imageOriginY;
     uint16_t imageWidth;
     uint16_t imageHeight;
-    uint8_t imageBitDepth;
-    uint8_t imageDescriptor; // alpha depth(0-3), unused(4), upper-left-origin(5), interleaving(6-7)
+    std::uint8_t imageBitDepth;
+    std::uint8_t imageDescriptor; // alpha depth(0-3), unused(4), upper-left-origin(5), interleaving(6-7)
 
-    static TargaHeader Unpack(uint8_t (&bytes)[18])
+    static TargaHeader Unpack(std::uint8_t (&bytes)[18])
     {
         return {
             bytes[0],
@@ -153,7 +149,7 @@ ImageInfo Image::GetInfoTGA(const path& p)
     if (!stream)
         throw Exception("could not open file");
 
-    uint8_t headerBytes[18];
+    std::uint8_t headerBytes[18];
 
     auto buff = std::span<std::byte>(
         (std::byte*)headerBytes,
@@ -180,8 +176,8 @@ ImageInfo Image::GetInfoPNG(const path& p)
     if (!stream)
         throw Exception("could not open file");
 
-    std::array<uint8_t, 8> validSig { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
-    std::array<uint8_t, 8> sig;
+    std::array<std::uint8_t, 8> validSig { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
+    std::array<std::uint8_t, 8> sig;
     
     if (stream->Read(std::as_writable_bytes(std::span(sig))) != sig.size())
         throw Exception("png file read failed");
@@ -189,8 +185,8 @@ ImageInfo Image::GetInfoPNG(const path& p)
     if(sig != validSig)
         throw Exception("invalid png file");
     
-    std::array<uint8_t, 4> validHdr { 'I', 'H', 'D', 'R' };
-    std::array<uint8_t, 4> hdr;
+    std::array<std::uint8_t, 4> validHdr { 'I', 'H', 'D', 'R' };
+    std::array<std::uint8_t, 4> hdr;
 
     stream->Ignore(4);
     if (stream->Read(std::as_writable_bytes(std::span(hdr))) != hdr.size())
@@ -199,7 +195,7 @@ ImageInfo Image::GetInfoPNG(const path& p)
     if(hdr != validHdr)
         throw Exception("invalid png header");
 
-    std::array<uint8_t, 8> sz;
+    std::array<std::uint8_t, 8> sz;
     if (stream->Read(std::as_writable_bytes(std::span(sz))) != sz.size())
         throw Exception("png file read failed");
 
@@ -220,8 +216,8 @@ ImageInfo Image::GetInfoJPG(const path& p)
 
     while(true)
     {
-        uint8_t m1 = stream->ReadValue<uint8_t>();
-        uint8_t m2 = stream->ReadValue<uint8_t>();
+        std::uint8_t m1 = stream->ReadValue<std::uint8_t>();
+        std::uint8_t m2 = stream->ReadValue<std::uint8_t>();
 
         uint16_t marker = (m1 << 8) | m2;
 
@@ -240,26 +236,26 @@ ImageInfo Image::GetInfoJPG(const path& p)
             continue;
         }
 
-        size_t pos = stream->GetPosition();
+        std::size_t pos = stream->GetPosition();
 
-        uint8_t s1 = stream->ReadValue<uint8_t>();
-        uint8_t s2 = stream->ReadValue<uint8_t>();
+        std::uint8_t s1 = stream->ReadValue<std::uint8_t>();
+        std::uint8_t s2 = stream->ReadValue<std::uint8_t>();
         auto size = (s1 << 8) | s2;
 
         // SOF0 or SOF1 (Start of Frame for Baseline or Progressive DCT segment)
         if(marker == 0xFFC0 || marker == 0xFFC2)
         {
-            uint8_t bitsPerChan = stream->ReadValue<uint8_t>();
+            std::uint8_t bitsPerChan = stream->ReadValue<std::uint8_t>();
 
-            uint8_t h1 = stream->ReadValue<uint8_t>();
-            uint8_t h2 = stream->ReadValue<uint8_t>();
+            std::uint8_t h1 = stream->ReadValue<std::uint8_t>();
+            std::uint8_t h2 = stream->ReadValue<std::uint8_t>();
             uint16_t height = (h1 << 8) | h2;
 
-            uint8_t w1 = stream->ReadValue<uint8_t>();
-            uint8_t w2 = stream->ReadValue<uint8_t>();
+            std::uint8_t w1 = stream->ReadValue<std::uint8_t>();
+            std::uint8_t w2 = stream->ReadValue<std::uint8_t>();
             uint16_t width = (w1 << 8) | w2;
 
-            uint8_t channels = stream->ReadValue<uint8_t>();
+            std::uint8_t channels = stream->ReadValue<std::uint8_t>();
 
             info = {
                 PixelDataFormat::RGB24,
@@ -275,11 +271,11 @@ ImageInfo Image::GetInfoJPG(const path& p)
         {
             break;
 
-            //uint8_t t1 = stream->ReadValue<uint8_t>();
+            //std::uint8_t t1 = stream->ReadValue<std::uint8_t>();
 
             //while(true)
             //{
-            //    uint8_t t2 = stream->ReadValue<uint8_t>();
+            //    std::uint8_t t2 = stream->ReadValue<std::uint8_t>();
 
             //    if(t1 == 0xFF && t2 == 0xD9) // EOI (End of Image)
             //        break;
@@ -429,7 +425,7 @@ void Image::Load(ImageFileFormat fileFormat, std::span<std::byte> fileData)
 
 void ExpectBytes(const std::span<std::byte>& byte, ptrdiff_t count)
 {
-    if (byte.size() < (size_t)count)
+    if (byte.size() < (std::size_t)count)
         throw Exception("unexpected end of data");
 }
 
@@ -438,8 +434,8 @@ void Image::LoadTGA(std::span<std::byte> fileData)
     auto sz = sizeof(TargaHeader);
 
     ExpectBytes(fileData, 18);
-    uint8_t hdrBytes[18];
-    memcpy(hdrBytes, fileData.data(), sizeof(hdrBytes));
+    std::uint8_t hdrBytes[18];
+    std::memcpy(hdrBytes, fileData.data(), sizeof(hdrBytes));
     fileData = fileData.subspan(sizeof(hdrBytes));
     TargaHeader hdr = TargaHeader::Unpack(hdrBytes);
 
@@ -499,7 +495,7 @@ void Image::LoadTGA(std::span<std::byte> fileData)
         while(count < totalPixels)
         {
             ExpectBytes(fileData, 1);
-            uint8_t chunkHdr = (uint8_t)fileData[0];
+            std::uint8_t chunkHdr = (std::uint8_t)fileData[0];
             fileData = fileData.subspan(1);
 
             bool isRLE = (chunkHdr & 0b10000000) != 0;
@@ -561,10 +557,10 @@ void Image::LoadTGA(std::span<std::byte> fileData)
         int h = hdr.imageHeight;
         int w = hdr.imageWidth;
 
-        for(size_t y1 = 0, ye = h / 2;
+        for(std::size_t y1 = 0, ye = h / 2;
             y1 < ye; ++y1)
         {
-            size_t y2 = h - y1 - 1;
+            std::size_t y2 = h - y1 - 1;
 
             std::byte* r1_beg = tmpData.get() + y1 * w * bytesPerPixel;
             std::byte* r1_end = r1_beg + w * bytesPerPixel;
@@ -630,7 +626,7 @@ void Image::LoadPNG(std::span<std::byte> fileData)
                 return;
             }
 
-            memcpy(out_bytes, fileData.data(), length);
+            std::memcpy(out_bytes, fileData.data(), length);
             fileData = fileData.subspan(length);
         });
 
@@ -643,10 +639,10 @@ void Image::LoadPNG(std::span<std::byte> fileData)
         tmpSize.y = png_get_image_height(pPngStruct, pPngInfo);
 
         // bits per channel
-        uint32_t bitDepth = png_get_bit_depth(pPngStruct, pPngInfo);
+        std::uint32_t bitDepth = png_get_bit_depth(pPngStruct, pPngInfo);
 
         // (RGB, RGBA, Luminance, luminance alpha... palette... etc)
-        uint32_t colorType = png_get_color_type(pPngStruct, pPngInfo);
+        std::uint32_t colorType = png_get_color_type(pPngStruct, pPngInfo);
 
         // convert to 8 bits per channel
         if (bitDepth == 16)
@@ -744,7 +740,7 @@ void Image::LoadEXR(std::span<std::byte> fileData)
 
     int ret = LoadEXRFromMemory(
         &outRGBA, &tmpSize.x, &tmpSize.y,
-        (const uint8_t*)fileData.data(), fileData.size(),
+        (const std::uint8_t*)fileData.data(), fileData.size(),
         &err);
 
     if (ret < 0)
@@ -764,7 +760,7 @@ void Image::LoadEXR(std::span<std::byte> fileData)
 
     auto sz = tmpSize.x * tmpSize.y * 4 * sizeof(float);
     data = std::make_unique<std::byte[]>(sz);
-    memcpy(data.get(), outRGBA, sz);
+    std::memcpy(data.get(), outRGBA, sz);
     free(outRGBA);
 
     size = tmpSize;
@@ -836,10 +832,10 @@ void Image::SavePNG(std::vector<std::byte>& fileData)
 
         auto bytesPerPixel = GetBytesPerPixel(format);
 
-        std::unique_ptr<uint8_t*[]> rowPtrs(new uint8_t*[size.y]);
+        std::unique_ptr<std::uint8_t*[]> rowPtrs(new std::uint8_t*[size.y]);
 
         for(int y = 0; y < size.y; ++y)
-            rowPtrs[y] = (uint8_t*)(data.get() + y * size.x * bytesPerPixel);
+            rowPtrs[y] = (std::uint8_t*)(data.get() + y * size.x * bytesPerPixel);
 
         png_write_image(pPngStruct, rowPtrs.get());
         png_write_end(pPngStruct, pPngInfo);
@@ -860,7 +856,7 @@ void Image::SaveJPG(std::vector<std::byte>& fileData)
     fileData.clear();
     
     unsigned char* buffer = nullptr;
-    size_t bufferSize = 0;
+    std::size_t bufferSize = 0;
     struct jpeg_compress_struct cinfo;
     struct jpeg_error_mgr jerr;
     cinfo.err = jpeg_std_error(&jerr);
@@ -989,16 +985,16 @@ std::span<const std::byte> Image::GetData() const {
     return std::span<const std::byte>(p, size.x * size.y * GetBytesPerPixel(format));
 }
 
-std::byte* Image::GetPixel(uint32_t x, uint32_t y) {
+std::byte* Image::GetPixel(std::uint32_t x, std::uint32_t y) {
     return data.get() + (y * size.x + x) * GetBytesPerPixel(format);
 }
 
 std::byte ConvertToGrayscale(std::byte r, std::byte g, std::byte b)
 {
-    uint32_t rfrac = (uint32_t)r * 2990000;
-    uint32_t gfrac = (uint32_t)g * 5870000;
-    uint32_t bfrac = (uint32_t)b * 1140000;
-    uint32_t lum = ((rfrac + gfrac + bfrac) + 5000000) / 10000000;
+    std::uint32_t rfrac = (std::uint32_t)r * 2990000;
+    std::uint32_t gfrac = (std::uint32_t)g * 5870000;
+    std::uint32_t bfrac = (std::uint32_t)b * 1140000;
+    std::uint32_t lum = ((rfrac + gfrac + bfrac) + 5000000) / 10000000;
     return (std::byte)std::min(std::max(lum, 0U), 255U);
 }
 

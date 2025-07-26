@@ -11,18 +11,7 @@ import Microwave.IO.Stream;
 import Microwave.System.Exception;
 import Microwave.System.Path;
 import Microwave.System.ThreadPool;
-import <algorithm>;
-import <array>;
-import <cstdlib>;
-import <cstdint>;
-import <cstdio>;
-import <fstream>;
-import <filesystem>;
-import <memory>;
-import <string>;
-import <type_traits>;
-import <unordered_map>;
-import <vector>;
+import std;
 
 #if PLATFORM_WINDOWS
     import <io.h>;
@@ -102,11 +91,14 @@ public:
 
             file = fopen(p.string().c_str(), it->second);
             if (!file)
-                throw Exception({ "failed to open file: ", errno });
+            {
+                std::error_code ec = std::make_error_code(std::errc::io_error);
+                throw Exception({ "failed to open file: ", ec.value() });
+            }
 
             if ((openmode & OpenMode::AtEnd) != 0)
             {
-                auto res = FSeek(file, 0, SEEK_END);
+                auto res = FSeek(file, 0, std::ios_base::end);
                 if (res == -1)
                     throw Exception("could not seek to end of file");
             }
@@ -147,44 +139,53 @@ public:
         return writable;
     }
 
-    virtual size_t GetLength() const override {
+    virtual std::size_t GetLength() const override {
         std::error_code ec;
-        return (size_t)std::filesystem::file_size(p.string(), ec);
+        return (std::size_t)std::filesystem::file_size(p.string(), ec);
     }
 
-    virtual size_t GetPosition() const override
+    virtual std::size_t GetPosition() const override
     {
         auto pos = FTell(file);
         if (pos == -1)
-            throw Exception({ "failed to retrieve file position: ", errno });
+        {
+            std::error_code ec = std::make_error_code(std::errc::io_error);
+            throw Exception({ "failed to retrieve file position: ", ec.value() });
+        }
 
-        return (size_t)pos;
+        return (std::size_t)pos;
     }
 
-    virtual size_t Seek(int64_t offset, SeekOrigin origin) override
+    virtual std::size_t Seek(std::int64_t offset, SeekOrigin origin) override
     {
         static std::array<int, 3> origins{
-            SEEK_SET, // SeekOrigin::Begin
-            SEEK_CUR, // SeekOrigin::Current
-            SEEK_END  // SeekOrigin::End
+            std::ios_base::beg, // SeekOrigin::Begin
+            std::ios_base::cur, // SeekOrigin::Current
+            std::ios_base::end  // SeekOrigin::End
         };
 
         auto res = FSeek(file, offset, origins[(int)origin]);
         if (res == -1)
-            throw Exception({ "failed seek to specified position: ", errno });
+        {
+            std::error_code ec = std::make_error_code(std::errc::io_error);
+            throw Exception({ "failed seek to specified position: ", ec.value() });
+        }
 
-        return (size_t)FTell(file);
+        return (std::size_t)FTell(file);
     }
 
-    virtual void SetLength(size_t length) override
+    virtual void SetLength(std::size_t length) override
     {
         int ret = FTruncate(file, length);
         if (ret != 0)
             throw Exception("failed to resize file");
 
-        ret = FSeek(file, 0, SEEK_SET);
+        ret = FSeek(file, 0, std::ios_base::beg);
         if (ret == -1)
-            throw Exception({ "failed seek to beginning of file: ", errno });
+        {
+            std::error_code ec = std::make_error_code(std::errc::io_error);
+            throw Exception({ "failed seek to beginning of file: ", ec.value() });
+        }
     }
 
     virtual int Read(std::span<std::byte> buffer) override
@@ -194,7 +195,7 @@ public:
 
     virtual void Write(std::span<std::byte> buffer) override
     {
-        size_t written = fwrite(buffer.data(), 1, buffer.size(), file);
+        std::size_t written = fwrite(buffer.data(), 1, buffer.size(), file);
         if (written != buffer.size())
             throw Exception({ "failed to write to file: ", ferror(file) });
     }
@@ -203,7 +204,10 @@ public:
     {
         auto res = std::fflush(file);
         if (res == -1)
-            throw Exception({ "failed to close file: ", errno });
+        {
+            std::error_code ec = std::make_error_code(std::errc::io_error);
+            throw Exception({ "failed to close file: ", ec.value() });
+        }
     }
 
     virtual void Close() override
@@ -211,7 +215,10 @@ public:
         if (file)
         {
             if (std::fclose(file) == -1)
-                throw Exception({ "failed to close file: ", errno });
+            {
+                std::error_code ec = std::make_error_code(std::errc::io_error);
+                throw Exception({ "failed to close file: ", ec.value() });
+            }
 
             file = nullptr;
         }
@@ -222,7 +229,7 @@ public:
     }
 
 private:
-    static int FTruncate(FILE* file, size_t size)
+    static int FTruncate(FILE* file, std::size_t size)
     {
 #if PLATFORM_WINDOWS
         int ret = _chsize_s(fileno(file), size);
@@ -232,7 +239,7 @@ private:
         return ret;
     }
     
-    static int FSeek(FILE* file, int64_t offset, int origin) {
+    static int FSeek(FILE* file, std::int64_t offset, int origin) {
 #if PLATFORM_WINDOWS
         return _fseeki64(file, offset, origin);
 #else
@@ -240,7 +247,7 @@ private:
 #endif
     }
 
-    static int64_t FTell(FILE* file) {
+    static std::int64_t FTell(FILE* file) {
 #if PLATFORM_WINDOWS
         return _ftelli64(file);
 #else

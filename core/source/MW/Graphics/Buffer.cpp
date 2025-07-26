@@ -5,12 +5,12 @@
 module Microwave.Graphics.Buffer;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.System.Exception;
-import <stdexcept>;
+import std;
 
 namespace mw {
 inline namespace gfx {
 
-Buffer::Buffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, size_t size)
+Buffer::Buffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, std::size_t size)
     : type(type), usage(usage), cpuAccess(cpuAccess), size(size)
 {
     if (size == 0)
@@ -36,7 +36,7 @@ Buffer::Buffer(BufferType type, BufferUsage usage, BufferCPUAccess cpuAccess, co
     buffer = graphics->context->CreateBuffer(type, usage, cpuAccess, data);
 }
 
-void Buffer::UpdateSubData(size_t offset, const std::span<std::byte>& data)
+void Buffer::UpdateSubData(std::size_t offset, const std::span<std::byte>& data)
 {
     if (offset + data.size() > size)
         throw Exception("specified range is out of bounds");
@@ -73,7 +73,7 @@ BufferCPUAccess Buffer::GetCPUAccess() const {
     return cpuAccess;
 }
 
-size_t Buffer::GetSize() const {
+std::size_t Buffer::GetSize() const {
     return size;
 }
 

@@ -5,7 +5,7 @@
 export module Microwave.Graphics.Internal.HWBuffer;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <span>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -52,7 +52,7 @@ public:
 	virtual std::span<std::byte> Map(BufferMapAccess access) = 0;
 	virtual bool IsMapped() const = 0;
 	virtual void Unmap() = 0;
-	virtual size_t GetSize() const = 0;
+	virtual std::size_t GetSize() const = 0;
 };
 
 } // gfx

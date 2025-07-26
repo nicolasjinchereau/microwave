@@ -15,8 +15,7 @@ import Microwave.System.Exception;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.Utilities.Util;
-import <algorithm>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace scene {

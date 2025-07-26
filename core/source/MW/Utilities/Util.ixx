@@ -4,13 +4,7 @@
 
 export module Microwave.Utilities.Util;
 import Microwave.System.Path;
-import <algorithm>;
-import <cstddef>;
-import <span>;
-import <string>;
-import <vector>;
-import <type_traits>;
-import <functional>;
+import std;
 
 export namespace mw {
 inline namespace utilities {
@@ -18,7 +12,7 @@ inline namespace utilities {
 void ToLower(std::string& str)
 {
     for (auto& c : str)
-        c = (char)tolower(c);
+        c = (char)std::tolower(c);
 }
 
 std::string ToLower(const std::string& str)
@@ -31,7 +25,7 @@ std::string ToLower(const std::string& str)
 void ToUpper(std::string& str)
 {
     for (auto& c : str)
-        c = (char)toupper(c);
+        c = (char)std::toupper(c);
 }
 
 std::string ToUpper(const std::string& str)
@@ -46,7 +40,7 @@ std::string GetExtension(const path& p)
     return ToLower(p.extension().string());
 }
 
-//size_t ReplaceAll(std::string& inout, std::string_view what, std::string_view with)
+//std::size_t ReplaceAll(std::string& inout, std::string_view what, std::string_view with)
 //{
 //    std::size_t count = 0;
 //

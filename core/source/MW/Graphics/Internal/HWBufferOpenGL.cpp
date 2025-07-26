@@ -45,7 +45,7 @@ std::unordered_map<BufferUsage, gl::Enum> bufferUsage = {
 
 HWBufferOpenGL::HWBufferOpenGL(
 	BufferType type, BufferUsage usage,
-	BufferCPUAccess cpuAccess, size_t size)
+	BufferCPUAccess cpuAccess, std::size_t size)
 	: type(type), size(size)
 {
 	auto typ = bufferTypes[type];
@@ -118,7 +118,7 @@ void HWBufferOpenGL::Unmap()
 	}
 }
 
-size_t HWBufferOpenGL::GetSize() const {
+std::size_t HWBufferOpenGL::GetSize() const {
 	return size;
 }
 

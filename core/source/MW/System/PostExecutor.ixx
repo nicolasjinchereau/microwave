@@ -9,7 +9,7 @@ import Microwave.System.Executor;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import <MW/System/Debug.h>;
-import <functional>;
+import std;
 
 export namespace mw {
 inline namespace system {

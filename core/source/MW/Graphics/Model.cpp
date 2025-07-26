@@ -14,13 +14,7 @@ import Microwave.System.Json;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.Utilities.Base64;
-import <algorithm>;
-import <cstdint>;
-import <cstddef>;
-import <span>;
-import <string>;
-import <vector>;
-import <unordered_map>;
+import std;
 import <zip.h>;
 
 namespace mw {
@@ -153,13 +147,13 @@ gptr<Model> Model::Load(const gptr<Stream>& stream)
             throw Exception();
 
         std::string text;
-        text.resize((size_t)st.size);
+        text.resize((std::size_t)st.size);
 
         zip_file* file = zip_fopen(zip, InternalFilename, 0);
         if (!file)
             throw Exception();
 
-        size_t read = (size_t)zip_fread(file, text.data(), st.size);
+        std::size_t read = (std::size_t)zip_fread(file, text.data(), st.size);
         if (read != st.size)
             throw Exception();
 
@@ -520,9 +514,9 @@ void from_json(const json& obj, ModelAnimationClip& clip)
 
 namespace detail {
 
-size_t CountModelNodes(const gptr<ModelNode>& node)
+std::size_t CountModelNodes(const gptr<ModelNode>& node)
 {
-    size_t count = 1;
+    std::size_t count = 1;
 
     for (auto& child : node->children)
         count += CountModelNodes(child);
@@ -568,7 +562,7 @@ void from_json(const json& obj, Model& model)
         from_json(*it, *model.rootNode);
     }
 
-    size_t nodeCount = detail::CountModelNodes(model.rootNode);
+    std::size_t nodeCount = detail::CountModelNodes(model.rootNode);
     model.nodes.resize(nodeCount);
     detail::StoreModelNodes(model.rootNode, model.nodes);
 

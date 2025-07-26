@@ -4,7 +4,7 @@
 
 export module Microwave.Math.IntRect;
 import Microwave.Math.IVec2;
-import <cmath>;
+import std;
 
 export namespace mw {
 inline namespace math {

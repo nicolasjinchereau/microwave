@@ -2,6 +2,9 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 export module Microwave.Graphics.Internal.HWShaderD3D11;
 import Microwave.Graphics.Buffer;
 import Microwave.Graphics.Color;
@@ -10,11 +13,7 @@ import Microwave.Graphics.Internal.HWShader;
 import Microwave.Math;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <algorithm>;
-import <cstdint>;
-import <stdexcept>;
-import <string>;
-import <MW/System/Internal/PlatformHeaders.h>;
+import std;
 
 template<class T>
 using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -32,7 +31,7 @@ public:
     ComPtr<ID3D11PixelShader> pixelShader;
     ComPtr<ID3D11InputLayout> inputLayout;
     ComPtr<ID3D11Buffer> uniformBuffer;
-    std::vector<uint8_t> uniformData;
+    std::vector<std::uint8_t> uniformData;
 
     HWShaderD3D11(
         const gptr<HWContextD3D11>& context,
@@ -43,7 +42,7 @@ public:
     virtual void Bind() override;
     virtual void Unbind() override;
 
-    virtual void SetVertexBuffer(int id, const gptr<Buffer>& buffer, size_t offset, size_t stride) override;
+    virtual void SetVertexBuffer(int id, const gptr<Buffer>& buffer, std::size_t offset, std::size_t stride) override;
     virtual void SetIndexBuffer(const gptr<Buffer>& buffer) override;
 
     virtual void SetUniform(int id, float value) override;

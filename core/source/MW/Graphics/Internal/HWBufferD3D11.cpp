@@ -2,12 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 module Microwave.Graphics.Internal.HWBufferD3D11;
 import Microwave.Graphics.Internal.HWContext;
 import Microwave.Graphics.Internal.HWContextD3D11;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <stdexcept>;
+import std;
 
 namespace mw {
 inline namespace gfx {
@@ -51,7 +54,7 @@ std::unordered_map<BufferUsage, D3D11_USAGE> bufferUsage = {
 HWBufferD3D11::HWBufferD3D11(
 	const gptr<HWContext>& context,
 	BufferType type, BufferUsage usage,
-	BufferCPUAccess cpuAccess, size_t size)
+	BufferCPUAccess cpuAccess, std::size_t size)
 	: context(gpcast<HWContextD3D11>(context))
 	, type(type)
 	, size(size)
@@ -164,7 +167,7 @@ void HWBufferD3D11::Unmap()
 	}
 }
 
-size_t HWBufferD3D11::GetSize() const {
+std::size_t HWBufferD3D11::GetSize() const {
 	return size;
 }
 

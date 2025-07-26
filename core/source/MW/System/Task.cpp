@@ -4,7 +4,7 @@
 
 module Microwave.System.Task;
 import Microwave.System.ThreadPool;
-import <thread>;
+import std;
 
 namespace mw {
 inline namespace system {

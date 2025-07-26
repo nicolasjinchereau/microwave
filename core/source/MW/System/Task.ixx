@@ -8,15 +8,9 @@ import Microwave.System.IAwaitable;
 import Microwave.System.IAwaiter;
 import Microwave.System.Dispatcher;
 import Microwave.System.Exception;
+import Microwave.System.Pointers;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <chrono>;
-import <condition_variable>;
-import <cstddef>;
-import <experimental/coroutine>;
-import <memory>;
-import <type_traits>;
-import <utility>;
+import std;
 
 export namespace mw {
 inline namespace system {
@@ -55,7 +49,7 @@ public:
     }
 
     template<class Promise>
-    void await_suspend(std::experimental::coroutine_handle<Promise> caller)
+    void await_suspend(std::coroutine_handle<Promise> caller)
     {
         Assert(awaitable);
         awaitable->OnAwaiterSuspended(caller.promise().awaiter.lock());
@@ -106,11 +100,11 @@ template<class T>
 class CoroutineAwaitable : public Awaitable<T>, public IAwaiter
 {
 public:
-    std::experimental::coroutine_handle<> state;
+    std::coroutine_handle<> state;
     wgptr<Dispatcher> owningDispatcher;
 
     CoroutineAwaitable(
-        std::experimental::coroutine_handle<> state,
+        std::coroutine_handle<> state,
         const gptr<Dispatcher>& owningDispatcher)
         : state(state),
           owningDispatcher(owningDispatcher)
@@ -162,7 +156,7 @@ struct Task<T>::promise_type : promise_base<T>
 {
     Task<T> get_return_object()
     {
-        using std::experimental::coroutine_handle;
+        using std::coroutine_handle;
 
         auto handle = coroutine_handle<promise_type>::from_promise(*this);
         auto state = coroutine_handle<>::from_address(handle.address());
@@ -173,11 +167,11 @@ struct Task<T>::promise_type : promise_base<T>
     }
 
     auto initial_suspend() const {
-        return std::experimental::suspend_never{};
+        return std::suspend_never{};
     }
 
-    auto final_suspend() const {
-        return std::experimental::suspend_always{};
+    auto final_suspend() const noexcept {
+        return std::suspend_always{};
     }
 
     void unhandled_exception()

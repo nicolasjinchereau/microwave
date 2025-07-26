@@ -15,9 +15,7 @@ import Microwave.SceneGraph.Internal.CapsuleShape;
 import Microwave.System.Exception;
 import <MW/SceneGraph/Internal/Bullet.h>;
 import <MW/System/Debug.h>;
-import <string>;
-import <unordered_map>;
-
+import std;
 namespace mw {
 inline namespace scene {
 

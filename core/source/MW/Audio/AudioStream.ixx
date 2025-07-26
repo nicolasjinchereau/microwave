@@ -6,7 +6,7 @@ export module Microwave.Audio.AudioStream;
 import Microwave.Audio.AudioSample;
 import Microwave.IO.Stream;
 import Microwave.System.Object;
-import <cstdint>;
+import std;
 
 export namespace mw {
 inline namespace audio {

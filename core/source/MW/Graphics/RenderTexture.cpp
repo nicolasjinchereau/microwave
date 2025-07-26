@@ -10,9 +10,7 @@ import Microwave.Graphics.Internal.HWRenderTarget;
 import Microwave.Graphics.Internal.HWRenderTexture;
 import Microwave.Graphics.Internal.HWTexture;
 import Microwave.System.Exception;
-import <vector>;
-import <span>;
-import <cstddef>;
+import std;
 
 namespace mw {
 inline namespace gfx {

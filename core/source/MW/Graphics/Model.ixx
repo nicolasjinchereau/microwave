@@ -13,11 +13,7 @@ import Microwave.Math;
 import Microwave.System.Json;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
-import <cstdint>;
-import <span>;
-import <string>;
-import <vector>;
-import <unordered_map>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -50,7 +46,7 @@ struct ModelMaterial
     CullMode cullMode = CullMode::Back;
     DepthTest depthTest = DepthTest::LessOrEqual;
     bool depthWriteEnabled = true;
-    uint32_t renderQueue = RenderQueue::Opaque;
+    std::uint32_t renderQueue = RenderQueue::Opaque;
 };
 
 struct ModelMeshElement
@@ -109,7 +105,7 @@ struct ModelCollider
 
 struct ModelNode
 {
-    uint32_t index = 0;
+    std::uint32_t index = 0;
     std::string name;
     bool active = true;
     Vec3 localPosition;

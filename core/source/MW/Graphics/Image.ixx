@@ -9,13 +9,7 @@ import Microwave.Math;
 import Microwave.System.Json;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
-import <cstddef>;
-import <cstdint>;
-import <memory>;
-import <span>;
-import <string>;
-import <unordered_map>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -89,7 +83,7 @@ public:
 
     std::span<std::byte> GetData();
     std::span<const std::byte> GetData() const;
-    std::byte* GetPixel(uint32_t x, uint32_t y);
+    std::byte* GetPixel(std::uint32_t x, std::uint32_t y);
 
     // 'format' of 'Unspecified' uses original format
     Image Clone(PixelDataFormat format = PixelDataFormat::Unspecified);

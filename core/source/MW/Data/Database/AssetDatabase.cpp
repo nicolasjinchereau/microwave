@@ -10,17 +10,18 @@ import Microwave.Data.Database.ModelImporter;
 import Microwave.Data.Database.TextureImporter;
 import Microwave.Data.Library.AssetLibrary;
 import Microwave.Graphics.Color32;
+import Microwave.Graphics.GraphicsTypes;
 import Microwave.Graphics.Image;
 import Microwave.IO.File;
 import Microwave.IO.MemoryStream;
 import Microwave.IO.Terminal;
+import Microwave.Math;
 import Microwave.System.Exception;
 import Microwave.System.Json;
 import Microwave.Utilities.Util;
 import <MW/Data/Internal/Assets.h>;
 import <MW/System/Debug.h>;
-import <iomanip>;
-import <stdexcept>;
+import std;
 
 namespace fs = std::filesystem;
 
@@ -259,8 +260,8 @@ void AssetDatabase::UpdateMetadata()
         }
 
         // source/meta files modified?
-        uint64_t metaLastModified = File::GetLastWriteTime(fullMetaPath);
-        uint64_t sourceLastModified = File::GetLastWriteTime(fullSourcePath);
+        std::uint64_t metaLastModified = File::GetLastWriteTime(fullMetaPath);
+        std::uint64_t sourceLastModified = File::GetLastWriteTime(fullSourcePath);
 
         auto& rec = catalog[sourcePath];
 
@@ -287,7 +288,7 @@ void AssetDatabase::UpdateMetadata()
                 break;
             }
             
-            uint64_t artifactLastModified = File::GetLastWriteTime(artifactFile);
+            std::uint64_t artifactLastModified = File::GetLastWriteTime(artifactFile);
             auto& artRec = rec.artifactRecords[art.uuid];
 
             if (artRec.lastModified != artifactLastModified)

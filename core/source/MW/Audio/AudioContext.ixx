@@ -6,8 +6,7 @@ export module Microwave.Audio.AudioContext;
 import Microwave.System.Dispatcher;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <cstdint>;
-import <unordered_map>;
+import std;
 
 export namespace mw {
 
@@ -20,7 +19,7 @@ inline namespace audio {
 class AudioContext : public Object
 {
 protected:
-    std::unordered_map<uint32_t, AudioSource*> sources;
+    std::unordered_map<std::uint32_t, AudioSource*> sources;
 
     virtual void SetActive() = 0;
     void NotifyBuffersCompleted(AudioSource* source, int bufferCount);

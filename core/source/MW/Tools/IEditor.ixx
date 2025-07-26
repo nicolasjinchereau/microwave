@@ -3,8 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Tools.IEditor;
-import <cstddef>;
-import <cstdint>;
+import std;
 
 export namespace mw {
 inline namespace tools {
@@ -16,7 +15,7 @@ public:
 
     virtual void SetViewportSize(int width, int height) = 0;
     virtual void Render() = 0;
-    virtual void GetPixels(std::byte* pBuffer, size_t size) = 0;
+    virtual void GetPixels(std::byte* pBuffer, std::size_t size) = 0;
 };
 
 } // tools

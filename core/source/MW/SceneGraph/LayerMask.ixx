@@ -5,12 +5,12 @@
 export module Microwave.SceneGraph.LayerMask;
 export import Microwave.Utilities.EnumFlags;
 import Microwave.System.Json;
-import <cstdint>;
+import std;
 
 export namespace mw {
 inline namespace scene {
 
-enum class LayerMask : uint32_t
+enum class LayerMask : std::uint32_t
 {
     None    = 0,
     All     = 0xFFFFFFFF,
@@ -50,11 +50,11 @@ enum class LayerMask : uint32_t
 constexpr void EnableEnumFlags(LayerMask);
 
 void to_json(json& obj, const LayerMask& mask) {
-    obj = (uint32_t)mask;
+    obj = (std::uint32_t)mask;
 }
 
 void from_json(const json& obj, LayerMask& mask) {
-    mask = (LayerMask)obj.get<uint32_t>();
+    mask = (LayerMask)obj.get<std::uint32_t>();
 }
 
 } // scene

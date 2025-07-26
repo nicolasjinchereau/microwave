@@ -10,8 +10,7 @@ import Microwave.SceneGraph.Components.Component;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <climits>;
-import <array>;
+import std;
 import <MW/SceneGraph/Internal/Bullet.h>;
 
 //export {
@@ -72,8 +71,8 @@ class D6Joint :
     Vec3 linearMotorTargetVelocity;
     Vec3 angularMotorTargetVelocity;
 
-    Vec3 linearMotorMaxForce = { FLT_MAX, FLT_MAX, FLT_MAX };
-    Vec3 angularMotorMaxForce = { FLT_MAX, FLT_MAX, FLT_MAX };
+    Vec3 linearMotorMaxForce = { std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max() };
+    Vec3 angularMotorMaxForce = { std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max() };
 
     RotationOrder rotationOrder = RotationOrder::XYZ;
 

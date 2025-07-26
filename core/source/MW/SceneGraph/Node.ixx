@@ -10,13 +10,7 @@ import Microwave.System.Object;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.UUID;
-import <cstdint>;
-import <memory>;
-import <string>;
-import <vector>;
-import <tuple>;
-import <type_traits>;
-import <utility>;
+import std;
 
 export namespace mw {
 inline namespace scene {
@@ -125,7 +119,7 @@ public:
     const gvector<gptr<Node>>& GetChildren() const;
     const gvector<gptr<Component>>& GetComponents() const;
 
-    size_t GetChildCount() const;
+    std::size_t GetChildCount() const;
     gptr<Node> GetChild(int index) const;
     gptr<Node> GetChild(const UUID& uuid) const;
     gptr<Node> GetChild(const path& fullPath);

@@ -2,13 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 export module Microwave.System.Internal.WindowWindows;
 import Microwave.Math;
 import Microwave.System.Dispatcher;
 import Microwave.System.Pointers;
 import Microwave.System.Window;
-import <string>;
-import <MW/System/Internal/PlatformHeaders.h>;
+import std;
 
 export namespace mw {
 
@@ -41,7 +43,7 @@ public:
     virtual bool IsVisible() const override;
     virtual void SetResizable(bool resizable) override;
     virtual bool IsResizable() const override;
-    virtual uint32_t GetDPI() const override;
+    virtual std::uint32_t GetDPI() const override;
 
     virtual void Show() override;
     virtual void Hide() override;

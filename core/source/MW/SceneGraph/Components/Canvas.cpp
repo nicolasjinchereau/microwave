@@ -9,9 +9,7 @@ import Microwave.SceneGraph.Node;
 import Microwave.System.Exception;
 import Microwave.System.Object;
 import <MW/System/Debug.h>;
-import <string>;
-import <unordered_map>;
-import <vector>;
+import std;
 
 namespace mw {
 inline namespace scene {

@@ -2,12 +2,15 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 module Microwave.Graphics.Internal.HWRenderTextureD3D11;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.Internal.HWContextD3D11;
 import Microwave.Graphics.Internal.HWTextureD3D11;
 import Microwave.System.Exception;
-import <stdexcept>;
+import std;
 
 namespace mw {
 inline namespace gfx {

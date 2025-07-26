@@ -11,8 +11,7 @@ import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.PhysicsWorld;
 import Microwave.System.App;
 import Microwave.Utilities.Util;
-import <type_traits>;
-import <cstdint>;
+import std;
 
 namespace mw {
 inline namespace scene {

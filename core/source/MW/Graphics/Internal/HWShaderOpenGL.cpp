@@ -81,7 +81,7 @@ HWShaderOpenGL::HWShaderOpenGL(const gptr<ShaderInfo>& info)
         }
     }
 
-    for (size_t i = 0, sz = (int)info->uniforms.size(); i < sz; ++i)
+    for (std::size_t i = 0, sz = (int)info->uniforms.size(); i < sz; ++i)
     {
         auto name = info->uniforms[i].name.c_str();
 
@@ -116,7 +116,7 @@ void HWShaderOpenGL::Unbind()
     gl::UseProgram(0);
 }
 
-void HWShaderOpenGL::SetVertexBuffer(int id, const gptr<Buffer>& buffer, size_t offset, size_t stride)
+void HWShaderOpenGL::SetVertexBuffer(int id, const gptr<Buffer>& buffer, std::size_t offset, std::size_t stride)
 {
     if (id >= 0)
     {

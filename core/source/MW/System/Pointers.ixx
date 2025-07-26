@@ -3,13 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.System.Pointers;
-import <deque>;
-import <functional>;
-import <list>;
-import <memory>;
-import <unordered_map>;
-import <unordered_set>;
-import <vector>;
+import std;
 import <gc/gc.h>;
 
 export namespace mw {

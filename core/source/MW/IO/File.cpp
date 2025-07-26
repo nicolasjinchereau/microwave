@@ -8,12 +8,7 @@ module;
 module Microwave.IO.File;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <chrono>;
-import <fstream>;
-import <functional>;
-import <regex>;
-import <stdexcept>;
-import <utility>;
+import std;
 
 #if PLATFORM_IOS || PLATFORM_MACOS
 #  import <Foundation/Foundation.h>
@@ -265,7 +260,7 @@ Task<void> File::WriteAllTextAsync(const path& p, std::string_view text) {
     co_return co_await WriteAllBytesAsync(p, std::span<std::byte>((std::byte*)text.data(), text.size()));
 }
 
-uint64_t File::GetLastWriteTime(const path& filePath)
+std::uint64_t File::GetLastWriteTime(const path& filePath)
 {
     auto lastWrite = path::last_write_time(filePath);
 

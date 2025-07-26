@@ -9,12 +9,7 @@ import Microwave.System.ThreadPool;
 import Microwave.System.Pointers;
 import <MW/Audio/Internal/OpenAL.h>;
 import <MW/System/Debug.h>;
-import <array>;
-import <atomic>;
-import <cstddef>;
-import <cstdint>;
-import <mutex>;
-import <vector>;
+import std;
 
 namespace mw {
 inline namespace scene {
@@ -31,7 +26,7 @@ void StreamController::QueueBuffers(int count)
 }
 
 void StreamController::Initialize(
-    uint32_t sourceID,
+    std::uint32_t sourceID,
     const gptr<AudioClip>& clip)
 {
     std::lock_guard<std::mutex> lk(mut);
@@ -73,7 +68,7 @@ void StreamController::StartBuffering()
 
     for (; i != bufferIDs.size(); ++i)
     {
-        size_t bytesRead = stream->Read(data);
+        std::size_t bytesRead = stream->Read(data);
         if (bytesRead == 0)
             break;
 
@@ -135,7 +130,7 @@ void StreamController::ReplenishBuffers()
         ALuint bufferID;
         alSourceUnqueueBuffers(source, 1, &bufferID);
 
-        size_t bytesRead = stream->Read(data);
+        std::size_t bytesRead = stream->Read(data);
         if (bytesRead == 0)
         {
             if (looping) {

@@ -6,7 +6,7 @@ export module Microwave.Graphics.Color;
 import Microwave.Graphics.Color32;
 import Microwave.Math;
 import Microwave.System.Json;
-import <cstdint>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -49,7 +49,7 @@ struct Color
         a = invChanMax * (float)c.a;
     }
 
-    Color(uint32_t c)
+    Color(std::uint32_t c)
     {
         float invChanMax = 1.0f / 255.0f;
         b = invChanMax * (float)(c & 0xFF);
@@ -98,21 +98,21 @@ struct Color
         return ret;
     }
 
-    operator uint32_t()
+    operator std::uint32_t()
     {
-        uint32_t bb = ((uint32_t)(b * 255.0f) & 0xFF);
-        uint32_t gg = ((uint32_t)(g * 255.0f) & 0xFF) << 8;
-        uint32_t rr = ((uint32_t)(r * 255.0f) & 0xFF) << 16;
-        uint32_t aa = ((uint32_t)(a * 255.0f) & 0xFF) << 24;
+        std::uint32_t bb = ((std::uint32_t)(b * 255.0f) & 0xFF);
+        std::uint32_t gg = ((std::uint32_t)(g * 255.0f) & 0xFF) << 8;
+        std::uint32_t rr = ((std::uint32_t)(r * 255.0f) & 0xFF) << 16;
+        std::uint32_t aa = ((std::uint32_t)(a * 255.0f) & 0xFF) << 24;
         return bb | gg | rr | aa;
     }
 
     operator Color32()
     {
-        uint32_t bb = ((uint32_t)(b * 255.0f) & 0xFF);
-        uint32_t gg = ((uint32_t)(g * 255.0f) & 0xFF) << 8;
-        uint32_t rr = ((uint32_t)(r * 255.0f) & 0xFF) << 16;
-        uint32_t aa = ((uint32_t)(a * 255.0f) & 0xFF) << 24;
+        std::uint32_t bb = ((std::uint32_t)(b * 255.0f) & 0xFF);
+        std::uint32_t gg = ((std::uint32_t)(g * 255.0f) & 0xFF) << 8;
+        std::uint32_t rr = ((std::uint32_t)(r * 255.0f) & 0xFF) << 16;
+        std::uint32_t aa = ((std::uint32_t)(a * 255.0f) & 0xFF) << 24;
         return bb | gg | rr | aa;
     }
 

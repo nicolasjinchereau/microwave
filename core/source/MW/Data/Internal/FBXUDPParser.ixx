@@ -5,13 +5,7 @@
 export module Microwave.Data.Internal.FBXUDPParser;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <charconv>;
-import <cstdint>;
-import <optional>;
-import <string>;
-import <unordered_map>;
-import <variant>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace data {
@@ -28,10 +22,10 @@ public:
     {
         FBXUDPMap pmap;
 
-        size_t lineStart = 0;
+        std::size_t lineStart = 0;
         for (;;)
         {
-            size_t lineEnd = input.find('\n', lineStart);
+            std::size_t lineEnd = input.find('\n', lineStart);
             if (lineEnd == std::string_view::npos)
                 break;
 
@@ -90,10 +84,10 @@ private:
         auto left = str.begin();
         auto right = --str.end();
 
-        while (left != right && isspace((char8_t)*left))
+        while (left != right && std::isspace((char8_t)*left))
             ++left;
 
-        while (right != left && isspace((char8_t)*right))
+        while (right != left && std::isspace((char8_t)*right))
             --right;
 
         return std::string_view(left, right + 1);
@@ -148,7 +142,7 @@ private:
 
             while (p != e)
             {
-                while (p != e && *p && (*p == ',' || isspace(*p)))
+                while (p != e && *p && (*p == ',' || std::isspace(*p)))
                     ++p;
 
                 if (p == e)

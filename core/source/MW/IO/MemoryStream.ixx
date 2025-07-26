@@ -8,17 +8,7 @@ import Microwave.System.Exception;
 import Microwave.System.Json;
 import Microwave.System.ThreadPool;
 import Microwave.Utilities.Base64;
-import <algorithm>;
-import <array>;
-import <cstdlib>;
-import <cstdint>;
-import <fstream>;
-import <memory>;
-import <span>;
-import <stdexcept>;
-import <string>;
-import <type_traits>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace io {
@@ -31,14 +21,14 @@ class MemoryStream : public Stream
     bool seekable = true;
     bool writable = true;
     std::vector<std::byte> data;
-    size_t position = 0;
+    std::size_t position = 0;
 public:
 
-    constexpr static size_t DefaultBufferSize = 8192;
+    constexpr static std::size_t DefaultBufferSize = 8192;
 
     MemoryStream() {}
 
-    MemoryStream(size_t capacity) {
+    MemoryStream(std::size_t capacity) {
         data.reserve(capacity);
     }
 
@@ -63,24 +53,24 @@ public:
         return writable;
     }
 
-    virtual size_t GetLength() const override {
+    virtual std::size_t GetLength() const override {
         return data.size();
     }
 
-    virtual size_t GetPosition() const override {
+    virtual std::size_t GetPosition() const override {
         return position;
     }
 
-    virtual size_t Seek(int64_t offset, SeekOrigin origin) override
+    virtual std::size_t Seek(std::int64_t offset, SeekOrigin origin) override
     {
-        size_t newPos = 0;
+        std::size_t newPos = 0;
 
         if (origin == SeekOrigin::Begin)
-            newPos = (size_t)offset;
+            newPos = (std::size_t)offset;
         else if (origin == SeekOrigin::Current)
-            newPos = (size_t)(position + offset);
+            newPos = (std::size_t)(position + offset);
         else if (origin == SeekOrigin::End)
-            newPos = (size_t)(data.size() + offset);
+            newPos = (std::size_t)(data.size() + offset);
 
         if (newPos > data.size())
             throw Exception("new position is out of bounds");
@@ -90,7 +80,7 @@ public:
         return newPos;
     }
 
-    virtual void SetLength(size_t length) override
+    virtual void SetLength(std::size_t length) override
     {
         data.resize(length);
         position = std::min(position, length);

@@ -11,10 +11,7 @@ import Microwave.SceneGraph.Components.DirectionalLight;
 import Microwave.SceneGraph.LayerMask;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Scene;
-import <algorithm>;
-import <cstdint>;
-import <vector>;
-import <utility>;
+import std;
 
 namespace mw {
 inline namespace scene {
@@ -81,8 +78,8 @@ void SceneRenderer::Render(const gptr<Scene>& scene)
         for (auto& rend : renderables)
         {
             DirectionalLight* closestLight = nullptr;
-            float closestLightDist = FLT_MAX;
-
+            float closestLightDist = std::numeric_limits<float>::max();
+            
             for(auto& light : scene->lights)
             {
                 if ((rend->layerMask & light->GetCullingMask()) != 0)

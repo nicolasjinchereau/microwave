@@ -3,8 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Math.Constants;
-import <climits>;
-import <cmath>;
+import std;
 
 export namespace mw {
 inline namespace math {

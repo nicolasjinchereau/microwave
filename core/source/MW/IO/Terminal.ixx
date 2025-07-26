@@ -5,10 +5,7 @@
 export module Microwave.IO.Terminal;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <iostream>;
-import <syncstream>;
-import <type_traits>;
-import <utility>;
+import std;
 
 template<class T>
 auto check_null(T&& value) {

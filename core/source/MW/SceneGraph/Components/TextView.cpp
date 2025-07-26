@@ -4,13 +4,15 @@
 
 module Microwave.SceneGraph.Components.TextView;
 import Microwave.Graphics.GraphicsContext;
+import Microwave.Graphics.Internal.HWBuffer;
 import Microwave.Graphics.RenderQueue;
 import Microwave.Graphics.Shader;
+import Microwave.Graphics.ShaderInfo;
 import Microwave.Graphics.Types;
 import Microwave.SceneGraph.Node;
 import Microwave.SceneGraph.Components.Canvas;
 import Microwave.System.App;
-import <span>;
+import std;
 
 namespace mw {
 inline namespace scene {
@@ -172,7 +174,7 @@ void TextView::GetRenderables(Sink<gptr<Renderable>> sink)
 
     renderables.resize(vertexRanges.size());
 
-    for (size_t i = 0; i != vertexRanges.size(); ++i)
+    for (std::size_t i = 0; i != vertexRanges.size(); ++i)
     {
         if (i == font->atlases.size())
             break;

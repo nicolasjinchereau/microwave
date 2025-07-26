@@ -4,7 +4,7 @@
 
 export module Microwave.SceneGraph.Internal.CapsuleShape;
 import Microwave.SceneGraph.Axis;
-import <array>;
+import std;
 import <MW/SceneGraph/Internal/Bullet.h>;
 
 export namespace mw {

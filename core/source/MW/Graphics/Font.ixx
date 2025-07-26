@@ -11,13 +11,7 @@ import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.Utilities.BinPacking.BinPacker;
 import Microwave.Utilities.BinPacking.RectMapping;
-import <cstddef>;
-import <cstdlib>;
-import <cstdint>;
-import <span>;
-import <string>;
-import <unordered_map>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -76,11 +70,11 @@ class Font : public Object
     };
 
 public:
-    typedef uint64_t GlyphKey;
+    typedef std::uint64_t GlyphKey;
 
     gptr<FreeTypeFontFace> fontFace;
     std::vector<GlyphInfo> glyphs;
-    std::unordered_map<GlyphKey, size_t> charmap;
+    std::unordered_map<GlyphKey, std::size_t> charmap;
     BinPacker packer;
     std::vector<Atlas> atlases;
 
@@ -105,7 +99,7 @@ public:
          int margin);
 
     GlyphKey GetGlyphKey(char32_t code, int pixelHeight) const {
-        return ((uint64_t)code << 32) | ((uint64_t)pixelHeight);
+        return ((std::uint64_t)code << 32) | ((std::uint64_t)pixelHeight);
     }
 
     const GlyphInfo* GetGlyph(char32_t code) const;

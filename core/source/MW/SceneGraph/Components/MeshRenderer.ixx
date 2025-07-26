@@ -13,8 +13,7 @@ import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.Utilities.Sink;
-import <cstdint>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace scene {

@@ -8,10 +8,7 @@ import Microwave.Math;
 import Microwave.System.Json;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <cstddef>;
-import <cstdint>;
-import <span>;
-import <string>;
+import std;
 
 export namespace mw {
 inline namespace gfx {

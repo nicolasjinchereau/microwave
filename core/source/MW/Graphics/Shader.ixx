@@ -11,10 +11,7 @@ import Microwave.Graphics.Internal.HWShader;
 import Microwave.Math;
 import Microwave.System.Object;
 import Microwave.System.Pointers;
-import <initializer_list>;
-import <string>;
-import <unordered_map>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -24,15 +21,15 @@ struct VertexSlot
     Semantic semantic = {};
     int semanticIndex = 0;
     gptr<Buffer> buffer;
-    size_t offset = 0;
-    size_t stride = 0;
+    std::size_t offset = 0;
+    std::size_t stride = 0;
 
     VertexSlot(
         Semantic semantic,
         int semanticIndex,
         const gptr<Buffer>& buffer,
-        size_t offset,
-        size_t stride)
+        std::size_t offset,
+        std::size_t stride)
         : semantic(semantic)
         , semanticIndex(semanticIndex)
         , buffer(buffer)
@@ -42,8 +39,8 @@ struct VertexSlot
     VertexSlot(
         Semantic semantic,
         const gptr<Buffer>& buffer,
-        size_t offset,
-        size_t size)
+        std::size_t offset,
+        std::size_t size)
         : semantic(semantic)
         , semanticIndex(0)
         , buffer(buffer)
@@ -96,8 +93,8 @@ public:
     void Unbind();
 
     void SetVertexBuffer(const VertexMapping& vm);
-    void SetVertexBuffer(Semantic semantic, int semanticIndex, const gptr<Buffer>& buffer, size_t offset, size_t stride);
-    void SetVertexBuffer(const std::string& name, const gptr<Buffer>& buffer, size_t offset, size_t stride);
+    void SetVertexBuffer(Semantic semantic, int semanticIndex, const gptr<Buffer>& buffer, std::size_t offset, std::size_t stride);
+    void SetVertexBuffer(const std::string& name, const gptr<Buffer>& buffer, std::size_t offset, std::size_t stride);
     void SetIndexBuffer(const gptr<Buffer>& buffer);
 
     void SetUniform(const std::string& name, float value);

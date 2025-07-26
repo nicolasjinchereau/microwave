@@ -5,8 +5,7 @@
 export module Microwave.SceneGraph.SceneRenderer;
 import Microwave.SceneGraph.Renderable;
 import Microwave.System.Pointers;
-import <cstdint>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace scene {

@@ -5,8 +5,7 @@
 export module Microwave.Math.IVec2;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <cstdint>;
-import <ostream>;
+import std;
 
 export namespace mw {
 inline namespace math {
@@ -27,12 +26,12 @@ public:
     IVec2() : IVec2(0, 0) { }
     IVec2(int x, int y) : x(x), y(y) { }
 
-    int& operator[](size_t index) {
+    int& operator[](std::size_t index) {
         Assert(index >= 0 && index < 2);
         return ((int*)this)[index];
     }
 
-    int operator[](size_t index) const {
+    int operator[](std::size_t index) const {
         return (*(IVec2*)this)[index];
     }
 

@@ -4,8 +4,7 @@
 
 export module Microwave.SceneGraph.Axis;
 import Microwave.System.Json;
-import <string>;
-import <unordered_map>;
+import std;
 
 export namespace mw {
 inline namespace scene {

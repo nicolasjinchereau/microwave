@@ -8,9 +8,7 @@ import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.ShaderInfo;
 import Microwave.IO.Terminal;
 import Microwave.System.Exception;
-import <regex>;
-import <algorithm>;
-import <unordered_map>;
+import std;
 
 namespace mw {
 inline namespace gfx {
@@ -47,7 +45,7 @@ int Shader::GetAttributeID(const std::string& name)
 
 int Shader::GetAttributeID(Semantic semantic, int index)
 {
-    for(size_t i = 0; i != shader->info->attributes.size(); ++i)
+    for(std::size_t i = 0; i != shader->info->attributes.size(); ++i)
     {
         auto& attrib = shader->info->attributes[i];
 
@@ -126,11 +124,11 @@ void Shader::SetVertexBuffer(const VertexMapping& vm)
     }
 }
 
-void Shader::SetVertexBuffer(Semantic semantic, int semanticIndex, const gptr<Buffer>& buffer, size_t offset, size_t stride) {
+void Shader::SetVertexBuffer(Semantic semantic, int semanticIndex, const gptr<Buffer>& buffer, std::size_t offset, std::size_t stride) {
     shader->SetVertexBuffer(GetAttributeID(semantic, semanticIndex), buffer, offset, stride);
 }
 
-void Shader::SetVertexBuffer(const std::string& name, const gptr<Buffer>& buffer, size_t offset, size_t stride) {
+void Shader::SetVertexBuffer(const std::string& name, const gptr<Buffer>& buffer, std::size_t offset, std::size_t stride) {
     shader->SetVertexBuffer(GetAttributeID(name), buffer, offset, stride);
 }
 

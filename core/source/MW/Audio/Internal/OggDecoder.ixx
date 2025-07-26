@@ -6,8 +6,7 @@ export module Microwave.Audio.Internal.OggDecoder;
 import Microwave.IO.Stream;
 import Microwave.System.Exception;
 import <vorbis/vorbisfile.h>;
-import <cstdint>;
-import <stdexcept>;
+import std;
 
 export namespace mw {
 inline namespace audio {
@@ -36,7 +35,7 @@ public:
         ov_clear(&file);
     }
 
-    int64_t sampleRate() const {
+    std::int64_t sampleRate() const {
         return info->rate;
     }
 
@@ -44,28 +43,28 @@ public:
         return info->channels;
     }
 
-    int64_t pcmTotal() const {
+    std::int64_t pcmTotal() const {
         return ov_pcm_total((OggVorbis_File*)&file, -1);
     };
 
-    int pcmSeek(int64_t pos) const {
+    int pcmSeek(std::int64_t pos) const {
         return ov_pcm_seek((OggVorbis_File*)&file, pos);
     }
 
-    int64_t pcmTell() const {
+    std::int64_t pcmTell() const {
         return ov_pcm_tell((OggVorbis_File*)&file);
     }
 
-    int64_t readFloat(float*** sampleChannels, int frameCount, int* bitstream = nullptr)
+    std::int64_t readFloat(float*** sampleChannels, int frameCount, int* bitstream = nullptr)
     {
         int bs{};
         int* pBs = bitstream ? bitstream : &bs;
         return ov_read_float((OggVorbis_File*)&file, sampleChannels, frameCount, pBs);
     }
 
-    static size_t OggRead(void* ptr, size_t size, size_t count, void* datasource)
+    static std::size_t OggRead(void* ptr, std::size_t size, std::size_t count, void* datasource)
     {
-        size_t len = size * count;
+        std::size_t len = size * count;
         Stream* stream = (Stream*)datasource;
         return stream->Read(std::span<std::byte>((std::byte*)ptr, len));
     }

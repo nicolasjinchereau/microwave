@@ -6,8 +6,7 @@ module Microwave.Graphics.Internal.HWRenderTextureOpenGL;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.Internal.HWTextureOpenGL;
 import Microwave.System.Exception;
-import <stdexcept>;
-import <string>;
+import std;
 
 namespace mw {
 inline namespace gfx {

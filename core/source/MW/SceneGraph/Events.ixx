@@ -10,9 +10,7 @@ import Microwave.System.Object;
 import Microwave.System.Pointers;
 import Microwave.System.Window;
 import Microwave.Utilities.Sink;
-import <cstdint>;
-import <span>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace scene {

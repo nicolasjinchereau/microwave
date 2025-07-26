@@ -4,29 +4,23 @@
 
 export module Microwave.System.UUID;
 import Microwave.System.Json;
-import <array>;
-import <cstdint>;
-import <functional>;
-import <iomanip>;
-import <random>;
-import <string>;
-import <chrono>;
+import std;
 
 export namespace mw {
 inline namespace system {
 
 class UUID
 {
-    static uint64_t GetSeed() {
-        return (uint64_t)std::chrono::system_clock::now().time_since_epoch().count();
+    static std::uint64_t GetSeed() {
+        return (std::uint64_t)std::chrono::system_clock::now().time_since_epoch().count();
     }
 
     inline static std::mt19937_64 generator{ GetSeed() };
 
-    std::array<uint8_t, 16> data = {};
+    std::array<std::uint8_t, 16> data = {};
 
 public:
-    static void SetRandomSeed(uint64_t seed) {
+    static void SetRandomSeed(std::uint64_t seed) {
         generator.seed(seed);
     }
 
@@ -35,15 +29,15 @@ public:
         UUID ret;
 
         int i = 0;
-        uint64_t val = generator();
+        std::uint64_t val = generator();
         for (auto it = ret.data.begin(); it != ret.data.end(); ++it, ++i)
         {
-            if (i == sizeof(uint64_t)) {
+            if (i == sizeof(std::uint64_t)) {
                 val = generator();
                 i = 0;
             }
 
-            *it = (uint8_t)((val >> (i * 8)) & 0xFF);
+            *it = (std::uint8_t)((val >> (i * 8)) & 0xFF);
         }
 
         // set variant to 0b10xxxxxx
@@ -63,7 +57,7 @@ public:
 
         for (int i = 0; i != data.size(); ++i)
         {
-            uint8_t byte = data[i];
+            std::uint8_t byte = data[i];
             static const char* HexChars = "0123456789abcdef";
             buff[i * 2 + 0] = HexChars[(byte >> 4) & 0x0F];
             buff[i * 2 + 1] = HexChars[byte & 0x0F];
@@ -82,18 +76,18 @@ public:
         {
             static const char* HexChars = "0123456789abcdefABCDEF";
 
-            for (size_t i = 0; i != 32; i += 2)
+            for (std::size_t i = 0; i != 32; i += 2)
             {
                 char hex[3] = { str[i], str[i + 1], 0 };
 
-                if (!strchr(HexChars, hex[0]) || !strchr(HexChars, hex[1]))
+                if (!std::strchr(HexChars, hex[0]) || !std::strchr(HexChars, hex[1]))
                 {
                     ret.data.fill(0);
                     break;
                 }
 
                 int x = std::stoi(hex, nullptr, 16);
-                ret.data[i / 2] = (uint8_t)x;
+                ret.data[i / 2] = (std::uint8_t)x;
             }
         }
 
@@ -114,7 +108,7 @@ public:
     }
 
     bool empty() const {
-        return std::all_of(data.begin(), data.end(), [](uint8_t b) { return b == 0; });
+        return std::all_of(data.begin(), data.end(), [](std::uint8_t b) { return b == 0; });
     }
 
     operator bool() const {
@@ -146,7 +140,7 @@ export namespace std {
 template<>
 struct hash<mw::system::UUID>
 {
-    size_t operator()(const mw::system::UUID& u) const noexcept {
+    std::size_t operator()(const mw::system::UUID& u) const noexcept {
         return u.GetHash();
     }
 };

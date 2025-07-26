@@ -4,7 +4,7 @@
 
 export module Microwave.System.Clock;
 
-import <chrono>;
+import std;
 
 export namespace mw {
 inline namespace system {

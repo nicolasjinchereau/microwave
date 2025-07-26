@@ -5,8 +5,7 @@
 export module Microwave.Math.Functions;
 import Microwave.Math.Constants;
 import Microwave.Math.Quat;
-import <limits>;
-import <cmath>;
+import std;
 
 export namespace mw {
 inline namespace math {

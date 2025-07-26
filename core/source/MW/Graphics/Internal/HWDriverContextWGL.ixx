@@ -2,6 +2,9 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 export module Microwave.Graphics.Internal.HWDriverContextWGL;
 import Microwave.Graphics.RenderTarget;
 import Microwave.Graphics.Internal.HWDriverContext;
@@ -11,9 +14,8 @@ import Microwave.Graphics.Internal.HWSurfaceWGL;
 import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import Microwave.System.Internal.WindowWindows;
-import <MW/System/Internal/PlatformHeaders.h>;
 import <MW/System/Debug.h>;
-import <memory>;
+import std;
 
 export namespace mw {
 inline namespace gfx {

@@ -8,13 +8,7 @@ import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.Task;
 import Microwave.System.ThreadPool;
-import <cstddef>;
-import <cstdlib>;
-import <cstdint>;
-import <span>;
-import <string>;
-import <unordered_map>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace io {
@@ -60,7 +54,7 @@ public:
     static Task<void> WriteAllTextAsync(const path& p, std::string_view text);
 
     // returns unix nanoseconds
-    static uint64_t GetLastWriteTime(const path& filePath);
+    static std::uint64_t GetLastWriteTime(const path& filePath);
 };
 
 }

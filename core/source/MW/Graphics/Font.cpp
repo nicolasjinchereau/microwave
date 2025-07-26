@@ -6,6 +6,7 @@ module Microwave.Graphics.Font;
 import Microwave.Graphics.GraphicsContext;
 import Microwave.Graphics.GraphicsTypes;
 import Microwave.Graphics.Color32;
+import Microwave.Graphics.Color;
 import Microwave.Graphics.Texture;
 import Microwave.Graphics.Types;
 import Microwave.Graphics.LineEnumerator;
@@ -16,16 +17,8 @@ import Microwave.System.Pointers;
 import Microwave.Utilities.BinPacking.BinPacker;
 import <MW/Graphics/Internal/FreeType2.h>;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <cstddef>;
-import <cstdlib>;
-import <cstdint>;
-import <span>;
-import <string>;
-import <stdexcept>;
-import <unordered_map>;
 import <utf8.h>;
-import <vector>;
+import std;
 
 namespace mw {
 inline namespace gfx {
@@ -233,7 +226,7 @@ std::byte* GetDestAddrRotated(std::byte* dst, int x, int y, int bmpWidth, int bm
 
 const GlyphInfo* Font::GetGlyph(char32_t code) const
 {
-    uint64_t key = GetGlyphKey(code, pixelHeight);
+    std::uint64_t key = GetGlyphKey(code, pixelHeight);
 
     auto it = charmap.find(key);
     if (it == charmap.end())
@@ -385,7 +378,7 @@ void Font::AddCharacter(char32_t code)
     }
 
     // store the glyph
-    uint64_t key = GetGlyphKey(code, pixelHeight);
+    std::uint64_t key = GetGlyphKey(code, pixelHeight);
     glyphs.push_back(glyph);
     charmap[key] = glyphs.size() - 1;
 }
@@ -422,7 +415,7 @@ LineInfo Font::GetLineInfo(
 
     for (auto it = text.begin(); it != text.end(); )
     {
-        uint32_t code = utf8::next(it, text.end());
+        std::uint32_t code = utf8::next(it, text.end());
         int advance = GetAdvance(code, prev);
         prev = code;
 
@@ -574,7 +567,7 @@ void Font::GetTextGeometry(
         y -= (lineHeight + lineSpacing);
     }
 
-    size_t totalCount = 0;
+    std::size_t totalCount = 0;
     for (auto& vset : vtmp)
         totalCount += vset.size();
 

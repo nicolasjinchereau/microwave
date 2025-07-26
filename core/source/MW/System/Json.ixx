@@ -6,28 +6,9 @@ export module Microwave.System.Json;
 import Microwave.System.Exception;
 import Microwave.System.Pointers;
 import Microwave.System.Path;
+import std;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <array>;
-import <cfloat>;
-import <charconv>;
-import <cstdint>;
-import <cstddef>;
-import <forward_list>;
-import <iostream>;
-import <initializer_list>;
-import <list>;
-import <map>;
-import <optional>;
-import <stdexcept>;
-import <string>;
-import <sstream>;
-import <type_traits>;
-import <unordered_map>;
 import <utf8.h>;
-import <utility>;
-import <vector>;
-import <variant>;
 
 export namespace mw {
 inline namespace system {
@@ -50,7 +31,7 @@ enum class JsonTokenType
 
 struct JsonToken
 {
-    typedef std::variant<std::nullptr_t, int64_t, double, bool, char, std::string> DataStorageType;
+    typedef std::variant<std::nullptr_t, std::int64_t, double, bool, char, std::string> DataStorageType;
 
     DataStorageType data;
     JsonTokenType type = JsonTokenType::EndOfFile;
@@ -64,7 +45,7 @@ struct JsonToken
     JsonToken(JsonTokenType type, std::string::iterator pos, std::string&& value)
         : data(std::move(value)), type(type), pos(pos){}
 
-    JsonToken(JsonTokenType type, std::string::iterator pos, int64_t value)
+    JsonToken(JsonTokenType type, std::string::iterator pos, std::int64_t value)
         : data(value), type(type), pos(pos){}
 
     JsonToken(JsonTokenType type, std::string::iterator pos, double value)
@@ -79,8 +60,8 @@ struct JsonToken
     JsonToken(JsonTokenType type, std::string::iterator pos, std::nullptr_t value)
         : data(value), type(type), pos(pos){}
 
-    int64_t GetInteger() const {
-        return std::get<int64_t>(data);
+    std::int64_t GetInteger() const {
+        return std::get<std::int64_t>(data);
     }
 
     double GetFloat() const {
@@ -122,8 +103,8 @@ struct JsonToken
 
 class JsonLexer
 {
-    size_t line{};
-    size_t column{};
+    std::size_t line{};
+    std::size_t column{};
     std::string::iterator pos;
     std::string::iterator next;
     char32_t value{};
@@ -139,7 +120,7 @@ public:
         return value;
     }
 
-    size_t getOffset() const {
+    std::size_t getOffset() const {
         return pos - chars.begin();
     }
 
@@ -334,7 +315,7 @@ private:
 
                     for (int i = 0; i < 4; ++i)
                     {
-                        if (!isxdigit(value))
+                        if (!std::isxdigit(value))
                             throw Exception("invalid unicode escape sequence");
 
                         hex[i] = (char)value;
@@ -383,7 +364,7 @@ private:
         }
         else
         {
-            int64_t intValue;
+            std::int64_t intValue;
             ret = std::from_chars(beg, end, intValue);
             if(ret.ec != std::errc())
                 throw Exception("invalid number");
@@ -521,7 +502,7 @@ public:
     using ObjectType = std::unordered_map<std::string, json>;
     using ArrayType = std::vector<json>;
     using StringType = std::string;
-    using IntegerType = int64_t;
+    using IntegerType = std::int64_t;
     using FloatType = double;
     using BooleanType = bool;
 
@@ -671,11 +652,11 @@ public:
         return IsNull();
     }
 
-    json& at(size_t index) {
+    json& at(std::size_t index) {
         return GetArray().at(index);
     }
 
-    const json& at(size_t index) const {
+    const json& at(std::size_t index) const {
         return GetArray().at(index);
     }
 
@@ -687,7 +668,7 @@ public:
         return GetObject().at(key);
     }
     
-    json& operator[](size_t index)
+    json& operator[](std::size_t index)
     {
         if (IsNull())
             data.emplace<ArrayType>();
@@ -698,7 +679,7 @@ public:
         return GetArray()[index];
     }
 
-    const json& operator[](size_t index) const {
+    const json& operator[](std::size_t index) const {
         return GetArray().at(index);
     }
 
@@ -830,7 +811,7 @@ public:
             return false;
     }
 
-    size_t size() const
+    std::size_t size() const
     {
         if (IsObject())
             return GetObject().size();
@@ -1186,24 +1167,24 @@ void from_json(const json& obj, std::list<T, A>& cont)
     }
 }
 
-template<class T, size_t N>
+template<class T, std::size_t N>
 void to_json(json& obj, const std::array<T, N>& cont)
 {
     json val = json::array();
 
-    for(size_t i = 0; i != N; ++i) {
+    for(std::size_t i = 0; i != N; ++i) {
         val.push_back(cont[i]);
     }
 
     obj = std::move(val);
 }
 
-template<class T, size_t N>
+template<class T, std::size_t N>
 void from_json(const json& obj, std::array<T, N>& cont)
 {
     auto& arr = obj.GetArray();
     
-    for(size_t i = 0; i != N; ++i) {
+    for(std::size_t i = 0; i != N; ++i) {
         cont[i] = arr[i].get<T>();
     }
 }

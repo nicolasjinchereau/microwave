@@ -4,7 +4,7 @@
 
 export module Microwave.Graphics.LineEnumerator;
 import Microwave.System.Pointers;
-import <string>;
+import std;
 
 export namespace mw {
 inline namespace gfx {

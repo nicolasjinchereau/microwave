@@ -4,8 +4,7 @@
 
 export module Microwave.Graphics.GraphicsTypes;
 import Microwave.System.Json;
-import <cstdint>;
-import <string>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
@@ -110,7 +109,7 @@ enum class RenderTextureFormat : int
     RGBA32,
 };
 
-size_t GetBytesPerPixel(PixelDataFormat format)
+std::size_t GetBytesPerPixel(PixelDataFormat format)
 {
     switch(format)
     {

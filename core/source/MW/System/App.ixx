@@ -12,10 +12,7 @@ import Microwave.System.Pointers;
 import Microwave.System.Object;
 import Microwave.System.Spinlock;
 import Microwave.System.Window;
-import <cstdint>;
-import <mutex>;
-import <string>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace system {

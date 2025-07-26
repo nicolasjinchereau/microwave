@@ -6,7 +6,7 @@ export module Microwave.System.ApplicationDispatcher;
 import Microwave.System.Dispatcher;
 import Microwave.System.Exception;
 import Microwave.System.Pointers;
-import <stdexcept>;
+import std;
 
 export namespace mw {
 inline namespace system {

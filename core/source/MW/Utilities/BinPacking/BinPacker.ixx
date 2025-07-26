@@ -9,10 +9,7 @@ import Microwave.Utilities.BinPacking.Bin;
 import Microwave.Utilities.BinPacking.BSPNode;
 import Microwave.Utilities.BinPacking.BSPNodeAllocator;
 import Microwave.Utilities.BinPacking.RectMapping;
-import <algorithm>;
-import <array>;
-import <list>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace utilities {

@@ -15,10 +15,7 @@ import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.UUID;
 import Microwave.Utilities.Util;
-import <filesystem>;
-import <fstream>;
-import <span>;
-import <string>;
+import std;
 
 export namespace mw {
 inline namespace data {

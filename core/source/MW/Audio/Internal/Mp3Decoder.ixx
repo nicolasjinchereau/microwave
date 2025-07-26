@@ -7,8 +7,7 @@ import Microwave.IO.Stream;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
 import <dr-mp3.h>;
-import <cstdint>;
-import <stdexcept>;
+import std;
 
 export namespace mw {
 inline namespace audio {
@@ -29,27 +28,27 @@ public:
         drmp3_uninit(&mp3);
     }
 
-    uint32_t sampleRate() const {
+    std::uint32_t sampleRate() const {
         return mp3.sampleRate;
     }
 
-    uint32_t channels() const {
+    std::uint32_t channels() const {
         return mp3.channels;
     }
 
-    uint64_t pcmFrameCount() const {
+    std::uint64_t pcmFrameCount() const {
         return drmp3_get_pcm_frame_count((drmp3*)&mp3);
     }
 
-    bool SeekToPCMFrame(uint64_t frameIndex) {
+    bool SeekToPCMFrame(std::uint64_t frameIndex) {
         return drmp3_seek_to_pcm_frame((drmp3*)&mp3, frameIndex) == DRMP3_TRUE;
     }
 
-    uint64_t ReadPCMFrames(uint64_t framesToRead, int16_t* pBufferOut) {
+    std::uint64_t ReadPCMFrames(std::uint64_t framesToRead, std::int16_t* pBufferOut) {
         return drmp3_read_pcm_frames_s16((drmp3*)&mp3, framesToRead, pBufferOut);
     }
 
-    static size_t Mp3Read(void* pUserData, void* pBufferOut, size_t bytesToRead)
+    static std::size_t Mp3Read(void* pUserData, void* pBufferOut, std::size_t bytesToRead)
     {
         Stream* stream = (Stream*)pUserData;
         return stream->Read(std::span<std::byte>((std::byte*)pBufferOut, bytesToRead));

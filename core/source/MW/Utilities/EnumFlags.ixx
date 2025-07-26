@@ -3,7 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Utilities.EnumFlags;
-import <type_traits>;
+import std;
 
 export namespace mw {
 inline namespace utilities {

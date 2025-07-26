@@ -10,12 +10,7 @@ import Microwave.System.Json;
 import Microwave.System.Path;
 import Microwave.System.Pointers;
 import Microwave.System.UUID;
-import <cstdint>;
-import <filesystem>;
-import <string>;
-import <vector>;
-import <unordered_map>;
-import <unordered_set>;
+import std;
 
 export namespace mw {
 inline namespace data {

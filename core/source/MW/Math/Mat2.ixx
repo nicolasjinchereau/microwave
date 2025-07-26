@@ -3,10 +3,7 @@
 *--------------------------------------------------------------*/
 
 export module Microwave.Math.Mat2;
-import <ostream>;
-import <algorithm>;
-import <cmath>;
-import <limits>;
+import std;
 
 export namespace mw {
 inline namespace math {

@@ -5,12 +5,7 @@
 module Microwave.Utilities.BinPacking.BinPacker;
 import Microwave.System.Exception;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <array>;
-import <cmath>;
-import <memory>;
-import <stdexcept>;
-import <vector>;
+import std;
 
 namespace mw {
 inline namespace utilities {
@@ -23,7 +18,7 @@ Bin BinPacker::PackBin(
     bool allowRotation,
     std::vector<RectMapping>& overflow)
 {
-    for (size_t i = 0; i < binComparisons.size(); ++i)
+    for (std::size_t i = 0; i < binComparisons.size(); ++i)
     {
         sortedInput[i] = input;
         sort(sortedInput[i].begin(), sortedInput[i].end(), binComparisons[i]);
@@ -37,7 +32,7 @@ Bin BinPacker::PackBin(
 
     BSPNodePtr root = nodeAllocator->GetNode();
 
-    for (size_t i = 0; i < binComparisons.size(); ++i)
+    for (std::size_t i = 0; i < binComparisons.size(); ++i)
     {
         int binSizeCount = (int)binSizes.size();
         for (int size = bestSize; size < binSizeCount; ++size)

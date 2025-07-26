@@ -4,22 +4,7 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
 export module Microwave.System.Path;
-import <algorithm>;
-import <iomanip>;
-import <list>;
-import <locale>;
-import <memory>;
-import <system_error>;
-import <string>;
-import <string_view>;
-import <codecvt>;
-import <filesystem>;
-
-#pragma pack(push, _CRT_PACKING)
-#pragma warning(push, _STL_WARNING_LEVEL)
-#pragma warning(disable : _STL_DISABLED_WARNINGS)
-#pragma push_macro("new")
-#undef new
+import std;
 
 export namespace mw {
 inline namespace system {
@@ -66,7 +51,7 @@ template <class _Ty>
 _Ty _Unaligned_load(const void* _Ptr) { // load a _Ty from _Ptr
     static_assert(std::is_trivial_v<_Ty>, "Unaligned loads require trivial types");
     _Ty _Tmp;
-    memcpy(&_Tmp, _Ptr, sizeof(_Tmp));
+    std::memcpy(&_Tmp, _Ptr, sizeof(_Tmp));
     return _Tmp;
 }
 
@@ -76,7 +61,7 @@ inline bool _Is_drive_prefix(const char* const _First) {
     // pre: Little endian
     auto _Value = _Unaligned_load<unsigned int>(_First);
     _Value &= 0xFFFF'FFDFu; // transform lowercase drive letters into uppercase ones
-    _Value -= (static_cast<unsigned int>(':') << (sizeof(char) * CHAR_BIT)) | 'A';
+    _Value -= (static_cast<unsigned int>(':') << (sizeof(char) * std::numeric_limits<unsigned char>::digits)) | 'A';
     return _Value < 26;
 }
 
@@ -144,7 +129,7 @@ inline std::string_view _Parse_root_name(const std::string_view _Str) {
     // attempt to parse _Str as a path and return the root-name if it exists; otherwise, an empty view
     const auto _First = _Str.data();
     const auto _Last  = _First + _Str.size();
-    return std::string_view(_First, static_cast<size_t>(_Find_root_name_end(_First, _Last) - _First));
+    return std::string_view(_First, static_cast<std::size_t>(_Find_root_name_end(_First, _Last) - _First));
 }
 
 inline const char* _Find_relative_path(const char* const _First, const char* const _Last) {
@@ -158,14 +143,14 @@ inline std::string_view _Parse_root_directory(const std::string_view _Str) {
     const auto _Last          = _First + _Str.size();
     const auto _Root_name_end = _Find_root_name_end(_First, _Last);
     const auto _Relative_path = std::find_if_not(_Root_name_end, _Last, _Is_slash);
-    return std::string_view(_Root_name_end, static_cast<size_t>(_Relative_path - _Root_name_end));
+    return std::string_view(_Root_name_end, static_cast<std::size_t>(_Relative_path - _Root_name_end));
 }
 
 inline std::string_view _Parse_root_path(const std::string_view _Str) {
     // attempt to parse _Str as a path and return the root-path if it exists; otherwise, an empty view
     const auto _First = _Str.data();
     const auto _Last  = _First + _Str.size();
-    return std::string_view(_First, static_cast<size_t>(_Find_relative_path(_First, _Last) - _First));
+    return std::string_view(_First, static_cast<std::size_t>(_Find_relative_path(_First, _Last) - _First));
 }
 
 inline std::string_view _Parse_relative_path(const std::string_view _Str) {
@@ -173,7 +158,7 @@ inline std::string_view _Parse_relative_path(const std::string_view _Str) {
     const auto _First         = _Str.data();
     const auto _Last          = _First + _Str.size();
     const auto _Relative_path = _Find_relative_path(_First, _Last);
-    return std::string_view(_Relative_path, static_cast<size_t>(_Last - _Relative_path));
+    return std::string_view(_Relative_path, static_cast<std::size_t>(_Last - _Relative_path));
 }
 
 inline std::string_view _Parse_parent_path(const std::string_view _Str) {
@@ -195,7 +180,7 @@ inline std::string_view _Parse_parent_path(const std::string_view _Str) {
         --_Last;
     }
 
-    return std::string_view(_First, static_cast<size_t>(_Last - _First));
+    return std::string_view(_First, static_cast<std::size_t>(_Last - _First));
 }
 
 inline const char* _Find_filename(const char* const _First, const char* _Last) {
@@ -213,7 +198,7 @@ inline std::string_view _Parse_filename(const std::string_view _Str) {
     const auto _First    = _Str.data();
     const auto _Last     = _First + _Str.size();
     const auto _Filename = _Find_filename(_First, _Last);
-    return std::string_view(_Filename, static_cast<size_t>(_Last - _Filename));
+    return std::string_view(_Filename, static_cast<std::size_t>(_Last - _Filename));
 }
 
 constexpr const char* _Find_extension(const char* const _Filename, const char* const _Ads) {
@@ -256,7 +241,7 @@ inline std::string_view _Parse_stem(const std::string_view _Str) {
     const auto _Ads =
         std::find(_Filename, _Last, ':'); // strip alternate data streams in intra-filename decomposition
     const auto _Extension = _Find_extension(_Filename, _Ads);
-    return std::string_view(_Filename, static_cast<size_t>(_Extension - _Filename));
+    return std::string_view(_Filename, static_cast<std::size_t>(_Extension - _Filename));
 }
 
 inline std::string_view _Parse_extension(const std::string_view _Str) {
@@ -266,7 +251,7 @@ inline std::string_view _Parse_extension(const std::string_view _Str) {
     const auto _Filename = _Find_filename(_First, _Last);
     const auto _Ads = std::find(_Filename, _Last, ':'); // strip alternate data streams in intra-filename decomposition
     const auto _Extension = _Find_extension(_Filename, _Ads);
-    return std::string_view(_Extension, static_cast<size_t>(_Ads - _Extension));
+    return std::string_view(_Extension, static_cast<std::size_t>(_Ads - _Extension));
 }
 
 inline int _Range_compare(
@@ -399,7 +384,7 @@ public:
 
         if (_Other_root_name_end != _Other_last && _Is_slash(*_Other_root_name_end)) {
             // If _Other.has_root_directory() removes any root directory and relative-path from *this
-            _Text.erase(static_cast<size_t>(_My_root_name_end - _My_first));
+            _Text.erase(static_cast<std::size_t>(_My_root_name_end - _My_first));
         } else {
             // Otherwise, if (!has_root_directory && is_absolute) || has_filename appends path::preferred_separator
             if (_My_root_name_end == _My_last) {
@@ -432,7 +417,7 @@ public:
 
         // Then appends the native format pathname of _Other, omitting any root-name from its generic format
         // pathname, to the native format pathname.
-        _Text.append(_Other_root_name_end, static_cast<size_t>(_Other_last - _Other_root_name_end));
+        _Text.append(_Other_root_name_end, static_cast<std::size_t>(_Other_last - _Other_root_name_end));
         return *this;
     }
 
@@ -513,7 +498,7 @@ public:
         const auto _First    = _Text.data();
         const auto _Last     = _First + _Text.size();
         const auto _Filename = _Find_filename(_First, _Last);
-        _Text.erase(static_cast<size_t>(_Filename - _First));
+        _Text.erase(static_cast<std::size_t>(_Filename - _First));
         return *this;
     }
 
@@ -534,7 +519,7 @@ public:
 
         const _Reverse_iter _Rlast{_First};
 
-        _Text.erase(static_cast<size_t>(_Rlast - _Rslash_last));
+        _Text.erase(static_cast<std::size_t>(_Rlast - _Rslash_last));
     }
 
     path& replace_filename(const path& _Replacement) { // remove any filename from *this and append _Replacement
@@ -549,7 +534,7 @@ public:
         const auto _Filename  = _Find_filename(_First, _Last);
         const auto _Ads       = std::find(_Filename, _Last, L':');
         const auto _Extension = _Find_extension(_Filename, _Ads);
-        _Text.erase(static_cast<size_t>(_Extension - _First));
+        _Text.erase(static_cast<std::size_t>(_Extension - _First));
         return *this;
     }
 
@@ -813,7 +798,7 @@ public:
                 ++_Next;
             } else {
                 const auto _Filename_end = std::find_if(_Next + 1, _Last, _Is_slash);
-                _Lst.emplace_back(_Next, static_cast<size_t>(_Filename_end - _Next));
+                _Lst.emplace_back(_Next, static_cast<std::size_t>(_Filename_end - _Next));
                 _Next = _Filename_end;
             }
         }
@@ -1243,7 +1228,7 @@ public:
             // current element is the first of relative-path, and the prev element is root-directory
             __Seek_wrapped(_Position, _Root_name_end_ptr);
             _Element._Text.assign(
-                _Root_name_end_ptr, static_cast<size_t>(_Root_directory_end_ptr - _Root_name_end_ptr));
+                _Root_name_end_ptr, static_cast<std::size_t>(_Root_directory_end_ptr - _Root_name_end_ptr));
             return *this;
         }
 
@@ -1251,7 +1236,7 @@ public:
             // current element is root-directory or, if that doesn't exist, first
             // element of relative-path prev element therefore is root-name
             __Seek_wrapped(_Position, _First);
-            _Element._Text.assign(_First, static_cast<size_t>(_Root_name_end_ptr - _First));
+            _Element._Text.assign(_First, static_cast<std::size_t>(_Root_name_end_ptr - _First));
             return *this;
         }
 
@@ -1328,7 +1313,7 @@ inline void swap(path& _Left, path& _Right) noexcept {
     _Left.swap(_Right);
 }
 
-inline size_t hash_value(const path& _Path) noexcept {
+inline std::size_t hash_value(const path& _Path) noexcept {
     return std::hash<std::string>()(_Path.string());
 }
 
@@ -1420,7 +1405,7 @@ inline path::iterator path::begin() const {
         _First_end = _Root_name_end;
     }
 
-    return iterator(_Text.cbegin(), std::string_view(_First, static_cast<size_t>(_First_end - _First)), this);
+    return iterator(_Text.cbegin(), std::string_view(_First, static_cast<std::size_t>(_First_end - _First)), this);
 }
 
 inline path::iterator path::end() const noexcept /* strengthened */ {
@@ -1440,7 +1425,3 @@ struct hash<mw::system::path>
     }
 };
 }
-
-#pragma pop_macro("new")
-#pragma warning(pop)
-#pragma pack(pop)

@@ -13,19 +13,7 @@ import Microwave.System.Spinlock;
 import <MW/System/Debug.h>;
 import <gc/gc.h>;
 import <boost/type_index.hpp>;
-import <memory>;
-import <stack>;
-import <string>;
-import <typeinfo>;
-import <type_traits>;
-import <unordered_map>;
-import <vector>;
-import <functional>;
-import <optional>;
-import <typeindex>;
-import <mutex>;
-import <unordered_set>;
-import <set>;
+import std;
 
 export namespace mw {
 inline namespace system {
@@ -37,7 +25,7 @@ class Type;
 
 struct TypeIndexHash
 {
-    size_t operator()(const std::type_index& ti) const noexcept {
+    std::size_t operator()(const std::type_index& ti) const noexcept {
         return ti.hash_code();
     }
 };

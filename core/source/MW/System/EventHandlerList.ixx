@@ -6,8 +6,7 @@ export module Microwave.System.EventHandlerList;
 import Microwave.IO.Terminal;
 import Microwave.System.Exception;
 import Microwave.System.Pointers;
-import <utility>;
-import <vector>;
+import std;
 
 export namespace mw {
 inline namespace system {

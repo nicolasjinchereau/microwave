@@ -5,7 +5,7 @@
 module Microwave.Graphics.LineEnumerator;
 import Microwave.Graphics.Font;
 import Microwave.System.Pointers;
-import <string>;
+import std;
 import <utf8.h>;
 
 namespace mw {

@@ -30,7 +30,7 @@ class AudioClip : public Object
     AudioFileFormat format = {};
     bool streamFromDisk = {};
 
-    uint32_t buffer = 0;
+    std::uint32_t buffer = 0;
     int bufferFormat = 0;
     int frameCount = 0;
     int sampleRate = 0;
@@ -66,7 +66,7 @@ public:
     gptr<AudioStream> OpenAudioStream() const;
 
     // if 'IsStreamedFromDisk' is false, returns the shared audio buffer
-    uint32_t GetBufferID() const { return buffer; }
+    std::uint32_t GetBufferID() const { return buffer; }
 };
 
 void to_json(json& obj, const AudioFileFormat& fileFormat)

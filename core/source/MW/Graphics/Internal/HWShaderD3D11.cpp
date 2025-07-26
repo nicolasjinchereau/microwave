@@ -2,6 +2,9 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 module Microwave.Graphics.Internal.HWShaderD3D11;
 import Microwave.Graphics.Internal.HWBufferD3D11;
 import Microwave.Graphics.Internal.HWContextD3D11;
@@ -74,7 +77,7 @@ HWShaderD3D11::HWShaderD3D11(
     std::list<std::string> semanticNames;
     UINT elementOffset = 0;
 
-    for (uint32_t i = 0; i < info->attributes.size(); ++i)
+    for (std::uint32_t i = 0; i < info->attributes.size(); ++i)
     {
         auto& attrib = info->attributes[i];
         attrib.slot = i;
@@ -97,7 +100,7 @@ HWShaderD3D11::HWShaderD3D11(
             .SemanticName = semanticNames.back().c_str(),
             .SemanticIndex = (UINT)attrib.semanticIndex,
             .Format = format,
-            .InputSlot = (uint32_t)attrib.slot,
+            .InputSlot = (std::uint32_t)attrib.slot,
             .AlignedByteOffset = 0,
             .InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA,
             .InstanceDataStepRate = 0
@@ -117,10 +120,10 @@ HWShaderD3D11::HWShaderD3D11(
         throw Exception("could not create input layout for shader");
 
     // create a constant buffer for uniforms
-    uint32_t bufferSize = 0;
-    uint32_t samplerSlot = 0;
+    std::uint32_t bufferSize = 0;
+    std::uint32_t samplerSlot = 0;
 
-    for(uint32_t i = 0; i < info->uniforms.size(); ++i)
+    for(std::uint32_t i = 0; i < info->uniforms.size(); ++i)
     {
         ShaderUniform& uniform = info->uniforms[i];
 
@@ -181,7 +184,7 @@ void HWShaderD3D11::Unbind()
     context->deviceContext->PSSetShader(nullptr, nullptr, 0);
 }
 
-void HWShaderD3D11::SetVertexBuffer(int id, const gptr<Buffer>& buffer, size_t offset, size_t stride)
+void HWShaderD3D11::SetVertexBuffer(int id, const gptr<Buffer>& buffer, std::size_t offset, std::size_t stride)
 {
     if(id >= 0)
     {
@@ -207,19 +210,19 @@ void HWShaderD3D11::SetIndexBuffer(const gptr<Buffer>& buffer)
 template<class T>
 void SetUniformD3D(
     const gptr<HWContextD3D11>& context,
-    std::vector<uint8_t>& uniformData,
+    std::vector<std::uint8_t>& uniformData,
     UINT offset,
     ID3D11Buffer* buffer,
     const T& value)
 {
-    memcpy(uniformData.data() + offset, &value, sizeof(T));
+    std::memcpy(uniformData.data() + offset, &value, sizeof(T));
 
     D3D11_MAPPED_SUBRESOURCE resource;
     auto res = context->deviceContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
     if(SUCCEEDED(res))
     {
         //Assert((resource.RowPitch * resource.DepthPitch) == sizeof(T))
-        memcpy(resource.pData, uniformData.data(), uniformData.size());
+        std::memcpy(resource.pData, uniformData.data(), uniformData.size());
         context->deviceContext->Unmap(buffer, 0);
     }
 
@@ -288,8 +291,8 @@ void HWShaderD3D11::SetUniform(int id, const gptr<Texture>& texture)
 
         auto& uniform = info->uniforms[id];
 
-        uint32_t textureSlot = (uniform.slot >> 16);
-        uint32_t samplerSlot = (uniform.slot & 0xFFFF);
+        std::uint32_t textureSlot = (uniform.slot >> 16);
+        std::uint32_t samplerSlot = (uniform.slot & 0xFFFF);
 
         ID3D11ShaderResourceView* resView[1] = {
             pt->resourceView ? pt->resourceView.Get() : nullptr

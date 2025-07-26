@@ -2,18 +2,17 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
+import Microwave.Graphics.Image;
 module Microwave.Graphics.Internal.HWTextureOpenGL;
 import Microwave.Graphics.Internal.HWBufferOpenGL;
 import Microwave.Graphics.Internal.HWContextOpenGL;
 import Microwave.System.Exception;
 import Microwave.System.ThreadPool;
-import <MW/System/Internal/PlatformHeaders.h>;
 import <MW/System/Debug.h>;
-import <algorithm>;
-import <cstring>;
-import <regex>;
-import <stdexcept>;
-import <unordered_map>;
+import std;
 
 namespace mw {
 inline namespace gfx {
@@ -141,7 +140,7 @@ void HWTextureOpenGL::SetPixels(const std::span<std::byte>& data, const IntRect&
 
     auto fmt = textureFormats[format];
     auto type = componentTypes[format];
-    size_t byteCount = rect.w * rect.h * bytesPerPixel;
+    std::size_t byteCount = rect.w * rect.h * bytesPerPixel;
 
     std::unique_ptr<std::byte[]> tmp = std::make_unique<std::byte[]>(byteCount);
     Image::FlipVertical(data.data(), tmp.get(), rect.GetSize(), format);

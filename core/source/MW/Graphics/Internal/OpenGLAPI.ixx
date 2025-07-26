@@ -2,13 +2,14 @@
 *  Copyright (c) 2022 Nicolas Jinchereau. All rights reserved.  *
 *--------------------------------------------------------------*/
 
+module;
+#include <MW/System/Internal/PlatformHeaders.h>
+
 export module Microwave.Graphics.Internal.OpenGLAPI;
 import Microwave.IO.Terminal;
 import Microwave.System.Exception;
-import <MW/System/Internal/PlatformHeaders.h>;
 import <MW/System/Debug.h>;
-import <string>;
-import <unordered_map>;
+import std;
 
 export namespace mw {
 inline namespace gfx {
