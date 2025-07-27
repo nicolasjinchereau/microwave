@@ -69,7 +69,7 @@
 #include "math_defs.h"
 #include "opthelpers.h"
 #include "ringbuffer.h"
-#include "threads.h"
+#include "althreads.h"
 #include "voice_change.h"
 
 

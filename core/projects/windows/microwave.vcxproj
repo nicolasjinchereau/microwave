@@ -68,7 +68,6 @@
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
       <ModuleOutputFile>..\..\bmi\$(PlatformName)\$(Configuration)\</ModuleOutputFile>
-      <BuildStlModules>true</BuildStlModules>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -96,7 +95,6 @@
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
       <ModuleOutputFile>..\..\bmi\$(PlatformName)\$(Configuration)\</ModuleOutputFile>
-      <BuildStlModules>true</BuildStlModules>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -493,10 +491,14 @@
       <ObjectFileName>$(IntDir)\Window1.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.cpp" />
-    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.ixx" />
+    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.ixx">
+      <ObjectFileName>$(IntDir)\DynamicLibrary1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Tools\IEditor.ixx" />
     <ClCompile Include="..\..\source\MW\Tools\SceneEditor.cpp" />
-    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.ixx" />
+    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.ixx">
+      <ObjectFileName>$(IntDir)\SceneEditor1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Tools\Tools.ixx" />
     <ClCompile Include="..\..\source\MW\Utilities\Base64.ixx" />
     <ClCompile Include="..\..\source\MW\Utilities\BinPacking\BSPNode.cpp" />

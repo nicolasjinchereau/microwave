@@ -58,7 +58,7 @@
 #include "inprogext.h"
 #include "opthelpers.h"
 #include "ringbuffer.h"
-#include "threads.h"
+#include "althreads.h"
 #include "vector.h"
 #include "voice_change.h"
 

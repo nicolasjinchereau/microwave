@@ -295,7 +295,7 @@ project "Test"
             "../core/bmi/$(PlatformName)/$(Configuration)"
         }
         buildoptions {
-            "/await"
+            "/await:strict"
         }
         externalproject "microwave"
             location "../core/projects/windows"

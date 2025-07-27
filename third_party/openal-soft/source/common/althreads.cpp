@@ -21,7 +21,7 @@
 #include "config.h"
 
 #include "opthelpers.h"
-#include "threads.h"
+#include "althreads.h"
 
 #include <system_error>
 

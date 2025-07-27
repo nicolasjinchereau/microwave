@@ -99,7 +99,7 @@
 #include "pragmadefs.h"
 #include "ringbuffer.h"
 #include "strutils.h"
-#include "threads.h"
+#include "althreads.h"
 #include "vecmat.h"
 #include "vector.h"
 #include "voice_change.h"

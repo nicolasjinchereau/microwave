@@ -33,7 +33,7 @@
 #include "alcmain.h"
 #include "almalloc.h"
 #include "alu.h"
-#include "threads.h"
+#include "althreads.h"
 
 
 namespace {

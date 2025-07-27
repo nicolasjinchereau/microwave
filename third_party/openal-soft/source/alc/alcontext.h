@@ -20,7 +20,7 @@
 #include "atomic.h"
 #include "inprogext.h"
 #include "intrusive_ptr.h"
-#include "threads.h"
+#include "althreads.h"
 #include "vecmat.h"
 #include "vector.h"
 

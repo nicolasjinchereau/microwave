@@ -63,7 +63,7 @@
 #include "core/logging.h"
 #include "ringbuffer.h"
 #include "strutils.h"
-#include "threads.h"
+#include "althreads.h"
 
 
 /* Some headers seem to define these as macros for __uuidof, which is annoying

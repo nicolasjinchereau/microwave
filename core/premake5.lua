@@ -456,6 +456,6 @@ project "microwave"
             "4251" -- FBX SDK "needs to have dll-interface to be used..."
         }
         buildoptions {
-            "/await",
+            "/await:strict",
         }
         

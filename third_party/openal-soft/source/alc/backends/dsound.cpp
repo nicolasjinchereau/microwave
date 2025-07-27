@@ -51,7 +51,7 @@
 #include "dynload.h"
 #include "ringbuffer.h"
 #include "strutils.h"
-#include "threads.h"
+#include "althreads.h"
 
 /* MinGW-w64 needs this for some unknown reason now. */
 using LPCWAVEFORMATEX = const WAVEFORMATEX*;

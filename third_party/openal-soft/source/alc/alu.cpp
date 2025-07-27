@@ -74,7 +74,7 @@
 #include "opthelpers.h"
 #include "ringbuffer.h"
 #include "strutils.h"
-#include "threads.h"
+#include "althreads.h"
 #include "vecmat.h"
 #include "voice.h"
 #include "voice_change.h"

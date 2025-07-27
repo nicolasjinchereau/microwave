@@ -46,14 +46,14 @@
     <Filter Include="System\Internal">
       <UniqueIdentifier>{D6EDD2A1-4279-4066-4B8A-C35AB7949C66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{16CF2D0E-82E3-55BF-4B65-F91EB73852F0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Utilities">
       <UniqueIdentifier>{010A8043-6D74-34BA-B6B2-E55F225C120F}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utilities\BinPacking">
       <UniqueIdentifier>{E6FFDE8F-D28E-6859-7BAD-7C54671B79FF}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools">
-      <UniqueIdentifier>{25230e35-b42b-4ed5-85ce-d82435617f9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -726,6 +726,9 @@
     <ClCompile Include="..\..\source\MW\System\Executor.ixx">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\System\GC.ixx">
+      <Filter>System</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\System\IAwaitable.ixx">
       <Filter>System</Filter>
     </ClCompile>
@@ -789,6 +792,24 @@
     <ClCompile Include="..\..\source\MW\System\Window.ixx">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.ixx">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\IEditor.ixx">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.ixx">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\MW\Tools\Tools.ixx">
+      <Filter>Tools</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\Base64.ixx">
       <Filter>Utilities</Filter>
     </ClCompile>
@@ -830,27 +851,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\MW\Utilities\Utilities.ixx">
       <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\System\GC.ixx">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.ixx">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Tools\IEditor.ixx">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Tools\Tools.ixx">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.ixx">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Tools\DynamicLibrary.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\MW\Tools\SceneEditor.cpp">
-      <Filter>Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -44,7 +44,7 @@
 #include "core/logging.h"
 #include "ringbuffer.h"
 #include "strutils.h"
-#include "threads.h"
+#include "althreads.h"
 
 #ifndef WAVE_FORMAT_IEEE_FLOAT
 #define WAVE_FORMAT_IEEE_FLOAT  0x0003

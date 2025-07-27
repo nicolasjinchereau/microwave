@@ -142,6 +142,7 @@
     <ClInclude Include="..\..\source\common\aloptional.h" />
     <ClInclude Include="..\..\source\common\alspan.h" />
     <ClInclude Include="..\..\source\common\alstring.h" />
+    <ClInclude Include="..\..\source\common\althreads.h" />
     <ClInclude Include="..\..\source\common\atomic.h" />
     <ClInclude Include="..\..\source\common\dynload.h" />
     <ClInclude Include="..\..\source\common\intrusive_ptr.h" />
@@ -151,7 +152,6 @@
     <ClInclude Include="..\..\source\common\pragmadefs.h" />
     <ClInclude Include="..\..\source\common\ringbuffer.h" />
     <ClInclude Include="..\..\source\common\strutils.h" />
-    <ClInclude Include="..\..\source\common\threads.h" />
     <ClInclude Include="..\..\source\common\vecmat.h" />
     <ClInclude Include="..\..\source\common\vector.h" />
     <ClInclude Include="..\..\source\config.h" />
@@ -270,11 +270,11 @@
     <ClCompile Include="..\..\source\common\alfstream.cpp" />
     <ClCompile Include="..\..\source\common\almalloc.cpp" />
     <ClCompile Include="..\..\source\common\alstring.cpp" />
+    <ClCompile Include="..\..\source\common\althreads.cpp" />
     <ClCompile Include="..\..\source\common\dynload.cpp" />
     <ClCompile Include="..\..\source\common\polyphase_resampler.cpp" />
     <ClCompile Include="..\..\source\common\ringbuffer.cpp" />
     <ClCompile Include="..\..\source\common\strutils.cpp" />
-    <ClCompile Include="..\..\source\common\threads.cpp" />
     <ClCompile Include="..\..\source\core\ambdec.cpp" />
     <ClCompile Include="..\..\source\core\bs2b.cpp" />
     <ClCompile Include="..\..\source\core\bsinc_tables.cpp" />
